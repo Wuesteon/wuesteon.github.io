@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="de" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code Skills: Die Revolution der KI-Automatisierung | Nils Weiser</title>
+    <meta name="description" content="Claude Code Skills ermöglichen es, KI-Agenten wiederverwendbare Fähigkeiten beizubringen. Ein Blick auf die Zukunft der KI-gestützten Entwicklung.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <style>
+        .skill-card {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(34, 197, 94, 0.05) 100%);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .skill-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .skill-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(6, 182, 212, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .comparison-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        @media (max-width: 768px) {
+            .comparison-box {
+                grid-template-columns: 1fr;
+            }
+        }
+        .comparison-item {
+            background: rgba(6, 182, 212, 0.05);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+        .comparison-item h4 {
+            color: #22d3ee;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+        .tool-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #22d3ee;
+            margin: 0.25rem;
+        }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header -->
+    <section class="hero-bg pt-32 pb-12">
+        <div class="grid-pattern"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-3xl mx-auto">
+                <a href="../" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    Zurück zum Blog
+                </a>
+                <div class="flex items-center gap-3 mb-4 flex-wrap">
+                    <span class="blog-tag">Claude Code</span>
+                    <span class="blog-tag">AI Agents</span>
+                    <span class="blog-tag">Automatisierung</span>
+                    <span class="blog-date">2. Dezember 2025</span>
+                </div>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+                    Claude Code Skills: Der MCP-Killer?
+                </h1>
+                <p class="text-xl text-gray-400">
+                    Wie Skills die Art und Weise verändern, wie wir mit KI-Coding-Assistenten arbeiten. Und warum MCP für mich schon jetzt an Bedeutung verliert.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <article class="section-dark py-16">
+        <div class="container mx-auto px-6">
+            <div class="article-content">
+
+                <p>
+                    Anthropic hat mit <strong>Claude Code Skills</strong> ein neues System eingeführt, das die Interaktion mit KI-Agenten grundlegend verändert. Skills sind wiederverwendbare Fähigkeiten, die Claude lernt und konsistent anwendet. Wie ein Entwickler, der Best Practices verinnerlicht hat.
+                </p>
+
+                <h2>Was sind Skills?</h2>
+                <p>
+                    Skills sind Markdown-Dateien mit Metadaten und optionalen ausführbaren Skripten. Einmal erstellt lädt Claude sie automatisch, wenn sie zur Aufgabe passen.
+                </p>
+
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">
+                            <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                        <span class="text-white font-semibold">Der entscheidende Vorteil</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        Skills sind token-effizient: Jede Skill benötigt nur wenige Dutzend Extra-Tokens im Kontext. Die vollständigen Details werden erst geladen, wenn sie tatsächlich benötigt werden. Das macht Skills skalierbar. Man kann Hunderte definieren, ohne den Kontext zu überlasten.
+                    </p>
+                </div>
+
+                <h2>Skills vs. MCP: Ein Paradigmenwechsel</h2>
+                <p>
+                    Das Model Context Protocol (MCP) hat viel Aufmerksamkeit bekommen. Aber Skills lösen das Problem eleganter:
+                </p>
+
+                <div class="comparison-box">
+                    <div class="comparison-item">
+                        <h4>MCP</h4>
+                        <ul class="text-gray-400 text-sm space-y-2">
+                            <li>• Komplexe Protokoll-Spezifikationen</li>
+                            <li>• Kann Zehntausende Tokens verbrauchen</li>
+                            <li>• Erfordert Server-Implementierung</li>
+                            <li>• Steile Lernkurve</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>Skills</h4>
+                        <ul class="text-gray-400 text-sm space-y-2">
+                            <li>• Einfache Markdown-Dateien</li>
+                            <li>• Minimaler Token-Overhead</li>
+                            <li>• Keine Server nötig</li>
+                            <li>• In Minuten erstellt</li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <h2>Praktisches Beispiel: PDF-Verarbeitung</h2>
+                <p>
+                    Ein konkretes Beispiel zeigt die Eleganz des Systems: Der <code>pdf</code> Skill aus der offiziellen <a href="https://github.com/anthropics/skills" target="_blank" rel="noopener noreferrer">Anthropic Skills-Sammlung</a> bietet ein umfassendes Toolkit für PDF-Manipulation. Von Textextraktion bis zum Ausfüllen von Formularen.
+                </p>
+
+                <pre><code><span class="code-comment"># pdf/SKILL.md</span>
+<span class="code-keyword">---</span>
+<span class="code-function">name</span>: pdf
+<span class="code-function">description</span>: Comprehensive PDF manipulation toolkit
+<span class="code-function">tools</span>:
+  - pypdf, pdfplumber, reportlab
+  - pdftotext, qpdf, pdftk
+<span class="code-keyword">---</span>
+
+<span class="code-comment">## Kernfunktionen</span>
+- Text & Tabellen extrahieren (pdfplumber)
+- PDFs erstellen und zusammenführen (reportlab)
+- Formulare erkennen und ausfüllen
+- OCR für gescannte Dokumente
+
+<span class="code-comment">## Formular-Workflow</span>
+1. Prüfe auf ausfüllbare Felder
+2. Extrahiere Feld-Metadaten als JSON
+3. Fülle Felder programmatisch aus
+4. Generiere ausgefülltes PDF</code></pre>
+
+                <p>
+                    Das Besondere: Der Skill enthält Python-Skripte für verschiedene Workflows. Für ausfüllbare PDFs werden Felder automatisch erkannt. Für nicht-ausfüllbare Formulare gibt es einen Annotations-basierten Ansatz mit visueller Validierung.
+                </p>
+
+                <p>
+                    Das gleiche mit MCP? Dann bräuchte ich einen eigenen Server, müsste Tool-Schemas definieren, Error-Handling implementieren und das Ganze irgendwo hosten. Der Skill ist eine Markdown-Datei mit ein paar Python-Skripten. Fertig.
+                </p>
+
+                <h2>Die Superpowers-Bibliothek</h2>
+                <p>
+                    Die Entwickler-Community teilt bereits fertige Skills auf GitHub. Die <a href="https://github.com/obra/superpowers" target="_blank" rel="noopener noreferrer">"Superpowers"-Bibliothek</a> von Jesse Vincent ist ein gutes Beispiel, praxiserprobte Skills für den Entwickleralltag:
+                </p>
+
+                <ul>
+                    <li><strong>Selbst-verbessernde Skills:</strong> Eine Skill, die neue Skills erstellt</li>
+                    <li><strong>Git-Worktrees für paralleles Arbeiten:</strong> Claude arbeitet an mehreren Features gleichzeitig</li>
+                    <li><strong>Automatische Code-Reviews:</strong> Subagenten prüfen Code nach Best Practices</li>
+                    <li><strong>Community-Sharing:</strong> Skills können über GitHub geteilt werden</li>
+                </ul>
+
+                <blockquote>
+                    "Skills geben deinen Agenten Superkräfte. Das sind dokumentierte Best Practices, die Claude lernt und konsistent anwendet."
+                </blockquote>
+
+                <h2>Warum das wichtig ist</h2>
+                <p>
+                    Die Implikationen für die Softwareentwicklung sind enorm:
+                </p>
+
+                <ol>
+                    <li><strong>Wissen wird portabel:</strong> Einmal definierte Workflows funktionieren überall</li>
+                    <li><strong>Konsistenz:</strong> Der Agent macht keine "ich hab's vergessen"-Fehler mehr</li>
+                    <li><strong>Skalierung:</strong> Teams können ihre besten Praktiken als Skills kodifizieren</li>
+                    <li><strong>Spezialisierung:</strong> Domänenspezifische Skills für Rechtswesen, Medizin, Finanzen...</li>
+                </ol>
+
+                <h2>Die Zukunft: Eine Explosion neuer Möglichkeiten</h2>
+                <p>
+                    Wir stehen am Anfang einer rasanten Entwicklung. Die Einfachheit des Formats senkt die Einstiegshürde auf ein Minimum. Im Grunde sind es nur strukturierte Markdown-Dateien.
+                </p>
+
+                <p>
+                    Ein Beispiel: Das Controlling-Team erstellt monatliche Finanzreports. Mit der richtigen Skill-Kombination läuft das automatisch. Daten aus dem ERP-System ziehen, Abweichungen analysieren, Grafiken generieren und als PDF exportieren. Was früher einen halben Tag dauerte, erledigt der Agent in Minuten.
+                </p>
+
+                <hr style="border-color: #374151; margin: 2rem 0;">
+
+                <p><strong>Verwendete Tools:</strong></p>
+                <div style="margin: 1rem 0;">
+                    <a href="https://claude.ai/code" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        Claude Code
+                    </a>
+                </div>
+
+                <p>
+                    Arbeiten Sie an KI-gestützten Automatisierungen? <a href="../../index.html#contact">Lassen Sie uns sprechen</a>. Ich helfe bei der Entwicklung maßgeschneiderter Skills für Ihre Workflows.
+                </p>
+
+            </div>
+        </div>
+    </article>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script src="../../js/components.js"></script>
+    <script src="../../js/translations.js"></script>
+    <script src="../../js/main.js"></script>
+</body>
+</html>

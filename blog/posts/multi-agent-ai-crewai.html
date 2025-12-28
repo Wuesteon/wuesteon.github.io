@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="de" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Agent AI Systeme mit CrewAI | Nils Weiser</title>
+    <meta name="description" content="Wie man spezialisierte KI-Agenten orchestriert, die wie ein echtes Team zusammenarbeiten. Ein praktischer Leitfaden zu CrewAI mit realen Anwendungsfällen.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <style>
+        .agent-card {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(34, 197, 94, 0.05) 100%);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        .agent-card h4 {
+            color: #22d3ee;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .agent-card p {
+            color: #9ca3af;
+            font-size: 0.875rem;
+            margin: 0;
+        }
+        .workflow-diagram {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+        .pattern-box {
+            background: rgba(6, 182, 212, 0.05);
+            border-left: 3px solid #22d3ee;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .pattern-box h4 {
+            color: #22d3ee;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .use-case-card {
+            background: rgba(6, 182, 212, 0.05);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+        .use-case-card h4 {
+            color: #4ade80;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .use-case-card p {
+            color: #9ca3af;
+            font-size: 0.875rem;
+            margin: 0;
+        }
+        .tool-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #22d3ee;
+            margin: 0.25rem;
+        }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header -->
+    <section class="hero-bg pt-32 pb-12">
+        <div class="grid-pattern"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-3xl mx-auto">
+                <a href="../" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    Zurück zum Blog
+                </a>
+                <div class="flex items-center gap-3 mb-4 flex-wrap">
+                    <span class="blog-tag">CrewAI</span>
+                    <span class="blog-tag">AI Agents</span>
+                    <span class="blog-tag">Python</span>
+                    <span class="blog-date">15. November 2024</span>
+                </div>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+                    Multi-Agent AI Systeme mit CrewAI: Teams statt Einzelkämpfer
+                </h1>
+                <p class="text-xl text-gray-400">
+                    Wie man spezialisierte KI-Agenten orchestriert, die wie ein echtes Team zusammenarbeiten. Ein praktischer Leitfaden mit Code-Beispielen.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <article class="section-dark py-16">
+        <div class="container mx-auto px-6">
+            <div class="article-content">
+
+                <p>
+                    Ein einzelner KI-Agent kann beeindruckende Dinge leisten. Aber für komplexe, mehrstufige Aufgaben stößt er schnell an Grenzen. Die Lösung? Mehrere spezialisierte Agenten, die zusammenarbeiten wie ein echtes Team.
+                </p>
+
+                <p>
+                    <strong>CrewAI</strong> ist ein Python-Framework, das genau das ermöglicht: die Orchestrierung von KI-Agenten zu einer Crew, in der jeder Agent eine spezifische Rolle übernimmt.
+                </p>
+
+                <h2>Das Konzept: Denke wie ein Manager</h2>
+                <p>
+                    CrewAI basiert auf einer einfachen Idee: Anstatt einen Agenten zu bauen, der alles kann, stelle ein Team zusammen. Die Fragen, die du dir stellen solltest:
+                </p>
+
+                <ol>
+                    <li><strong>Was ist das Ziel?</strong> Was soll am Ende erreicht werden?</li>
+                    <li><strong>Welche Schritte sind nötig?</strong> Welche Teilaufgaben führen zum Ziel?</li>
+                    <li><strong>Wer kann das am besten?</strong> Welche Spezialisten brauchst du?</li>
+                </ol>
+
+                <p>
+                    Genau wie ein Manager, der ein Team zusammenstellt, definierst du Rollen, Verantwortlichkeiten und Arbeitsabläufe.
+                </p>
+
+                <h2>Die drei Kernkonzepte</h2>
+
+                <h3>1. Agents: Die Spezialisten</h3>
+                <p>
+                    Jeder Agent hat eine spezifische Rolle, ein Ziel und einen Hintergrund. Je präziser du diese definierst, desto besser die Ergebnisse.
+                </p>
+
+                <pre><code><span class="code-keyword">from</span> crewai <span class="code-keyword">import</span> Agent
+
+content_planner = Agent(
+    <span class="code-string">role</span>=<span class="code-string">"Content-Stratege"</span>,
+    <span class="code-string">goal</span>=<span class="code-string">"Recherchiere Themen und erstelle Artikelstrukturen"</span>,
+    <span class="code-string">backstory</span>=<span class="code-string">"""Du bist ein erfahrener Content-Stratege mit
+    10 Jahren Erfahrung im Tech-Journalismus. Du weißt,
+    wie man komplexe Themen strukturiert und
+    Leser fesselt."""</span>,
+    <span class="code-string">tools</span>=[search_tool, scrape_tool],
+    <span class="code-string">allow_delegation</span>=<span class="code-keyword">False</span>
+)</code></pre>
+
+                <div class="pattern-box">
+                    <h4>Best Practice: Spezifische Rollen</h4>
+                    <p style="color: #9ca3af; margin: 0;">Statt "Researcher" verwende "FINRA-zertifizierter Finanzanalyst" oder "HR-Spezialist mit Fokus auf deutsches Arbeitsrecht". Je spezifischer die Rolle, desto fokussierter arbeitet der Agent.</p>
+                </div>
+
+                <h3>2. Tasks: Die Aufgaben</h3>
+                <p>
+                    Tasks definieren, was getan werden soll. Jede Task hat eine Beschreibung, erwartete Ausgabe und einen zugewiesenen Agenten.
+                </p>
+
+                <pre><code><span class="code-keyword">from</span> crewai <span class="code-keyword">import</span> Task
+
+plan_task = Task(
+    <span class="code-string">description</span>=<span class="code-string">"""Recherchiere das Thema {topic} und erstelle
+    einen detaillierten Artikelplan mit:
+    - Hauptthesen
+    - Struktur mit Überschriften
+    - Wichtige Punkte pro Abschnitt"""</span>,
+    <span class="code-string">expected_output</span>=<span class="code-string">"Markdown-Dokument mit Artikelstruktur"</span>,
+    <span class="code-string">agent</span>=content_planner
+)</code></pre>
+
+                <h3>3. Crew: Das Team</h3>
+                <p>
+                    Die Crew bringt Agents und Tasks zusammen und definiert, wie sie zusammenarbeiten.
+                </p>
+
+                <pre><code><span class="code-keyword">from</span> crewai <span class="code-keyword">import</span> Crew, Process
+
+crew = Crew(
+    <span class="code-string">agents</span>=[planner, writer, editor],
+    <span class="code-string">tasks</span>=[plan_task, write_task, edit_task],
+    <span class="code-string">process</span>=Process.<span class="code-function">sequential</span>,
+    <span class="code-string">verbose</span>=<span class="code-keyword">True</span>
+)
+
+result = crew.<span class="code-function">kickoff</span>(inputs={<span class="code-string">"topic"</span>: <span class="code-string">"KI im Gesundheitswesen"</span>})</code></pre>
+
+                <h2>Praktisches Beispiel: Content-Erstellung</h2>
+                <p>
+                    Ein klassischer Anwendungsfall: automatisierte Blog-Artikel. Drei Agenten arbeiten zusammen:
+                </p>
+
+                <div class="use-case-grid">
+                    <div class="agent-card">
+                        <h4>Content-Stratege</h4>
+                        <p>Recherchiert das Thema, identifiziert Kernpunkte, erstellt die Artikelstruktur</p>
+                    </div>
+                    <div class="agent-card">
+                        <h4>Content-Writer</h4>
+                        <p>Schreibt den Artikel basierend auf dem Plan, achtet auf Stil und Lesbarkeit</p>
+                    </div>
+                    <div class="agent-card">
+                        <h4>Editor</h4>
+                        <p>Prüft auf Fehler, verbessert Formulierungen, stellt Brand-Konsistenz sicher</p>
+                    </div>
+                </div>
+
+                <p>
+                    Der entscheidende Punkt: Jeder Agent erhält die Ausgabe des vorherigen Agenten als Kontext. Der Writer sieht den Plan des Strategen. Der Editor sieht den fertigen Artikel. So entsteht ein natürlicher Workflow.
+                </p>
+
+                <h2>Sequentiell vs. Hierarchisch</h2>
+                <p>
+                    CrewAI unterstützt zwei Prozessarten:
+                </p>
+
+                <h3>Sequential Process</h3>
+                <p>
+                    Tasks werden nacheinander abgearbeitet. Agent A liefert an Agent B, der an Agent C. Ideal für lineare Workflows wie Content-Erstellung oder Datenverarbeitung.
+                </p>
+
+                <pre><code>crew = Crew(
+    <span class="code-string">process</span>=Process.<span class="code-function">sequential</span>,
+    ...
+)</code></pre>
+
+                <h3>Hierarchical Process</h3>
+                <p>
+                    Ein Manager-LLM koordiniert die Agenten dynamisch. Entscheidet selbst, welcher Agent wann zum Einsatz kommt. Ideal für komplexe Aufgaben mit Abhängigkeiten.
+                </p>
+
+                <pre><code><span class="code-keyword">from</span> langchain_openai <span class="code-keyword">import</span> ChatOpenAI
+
+crew = Crew(
+    <span class="code-string">process</span>=Process.<span class="code-function">hierarchical</span>,
+    <span class="code-string">manager_llm</span>=ChatOpenAI(model=<span class="code-string">"gpt-4-turbo"</span>),
+    ...
+)</code></pre>
+
+                <h2>Tools: Die Werkzeuge der Agenten</h2>
+                <p>
+                    Agenten werden mächtig durch ihre Tools. CrewAI bietet eingebaute Tools und erlaubt eigene:
+                </p>
+
+                <pre><code><span class="code-keyword">from</span> crewai_tools <span class="code-keyword">import</span> SerperDevTool, ScrapeWebsiteTool
+
+<span class="code-comment"># Eingebaute Tools</span>
+search_tool = SerperDevTool()  <span class="code-comment"># Web-Suche</span>
+scrape_tool = ScrapeWebsiteTool()  <span class="code-comment"># Website-Inhalte extrahieren</span>
+
+<span class="code-comment"># Custom Tool</span>
+<span class="code-keyword">from</span> crewai_tools <span class="code-keyword">import</span> BaseTool
+
+<span class="code-keyword">class</span> <span class="code-function">SentimentTool</span>(BaseTool):
+    name = <span class="code-string">"Sentiment Analyse"</span>
+    description = <span class="code-string">"Analysiert die Stimmung eines Textes"</span>
+
+    <span class="code-keyword">def</span> <span class="code-function">_run</span>(self, text: str) -> str:
+        <span class="code-comment"># Implementierung hier</span>
+        <span class="code-keyword">return</span> <span class="code-string">"positiv"</span></code></pre>
+
+                <div class="pattern-box">
+                    <h4>Tool-Design Prinzipien</h4>
+                    <p style="color: #9ca3af; margin: 0;">Tools sollten vielseitig (mehrere Szenarien abdecken), fehlertolerant (Fehler graceful behandeln) und effizient (Caching für wiederholte Aufrufe) sein.</p>
+                </div>
+
+                <h2>Reale Anwendungsfälle</h2>
+                <p>
+                    Multi-Agent-Systeme eignen sich besonders für Aufgaben, die verschiedene Perspektiven oder Expertise erfordern:
+                </p>
+
+                <div class="use-case-grid">
+                    <div class="use-case-card">
+                        <h4>Sales Automation</h4>
+                        <p>Lead-Recherche, Profilanalyse, personalisierte E-Mail-Kampagnen</p>
+                    </div>
+                    <div class="use-case-card">
+                        <h4>Financial Analysis</h4>
+                        <p>Marktdaten sammeln, Strategie entwickeln, Risiko bewerten</p>
+                    </div>
+                    <div class="use-case-card">
+                        <h4>Customer Support</h4>
+                        <p>Ticket-Analyse, Lösungsvorschlag, Qualitätskontrolle</p>
+                    </div>
+                    <div class="use-case-card">
+                        <h4>Event Planning</h4>
+                        <p>Venue-Koordination, Logistik, Marketing</p>
+                    </div>
+                </div>
+
+                <h2>Strukturierte Outputs mit Pydantic</h2>
+                <p>
+                    Für konsistente Ergebnisse kannst du das Output-Format mit Pydantic definieren:
+                </p>
+
+                <pre><code><span class="code-keyword">from</span> pydantic <span class="code-keyword">import</span> BaseModel
+
+<span class="code-keyword">class</span> <span class="code-function">ArticlePlan</span>(BaseModel):
+    title: str
+    summary: str
+    sections: list[str]
+    target_audience: str
+
+plan_task = Task(
+    <span class="code-string">description</span>=<span class="code-string">"Erstelle einen Artikelplan..."</span>,
+    <span class="code-string">output_json</span>=ArticlePlan,
+    <span class="code-string">output_file</span>=<span class="code-string">"./output/plan.json"</span>,
+    <span class="code-string">agent</span>=planner
+)</code></pre>
+
+                <h2>Key Learnings</h2>
+
+                <blockquote>
+                    "Ein gut zusammengestelltes Agent-Team übertrifft einen einzelnen 'Super-Agenten' bei komplexen Aufgaben deutlich."
+                </blockquote>
+
+                <h3>1. Spezifische Rollen definieren</h3>
+                <p>
+                    Generische Rollen wie "Researcher" führen zu generischen Ergebnissen. "Senior Financial Analyst mit Fokus auf Tech-Startups" liefert deutlich bessere Outputs.
+                </p>
+
+                <h3>2. Tasks klar abgrenzen</h3>
+                <p>
+                    Jede Task sollte ein klares Ziel und eine definierte Ausgabe haben. Überlappungen führen zu Duplikaten und Inkonsistenzen.
+                </p>
+
+                <h3>3. Tools gezielt zuweisen</h3>
+                <p>
+                    Nicht jeder Agent braucht alle Tools. Ein Editor braucht keine Web-Suche. Ein Researcher braucht kein File-Writing. Weniger ist oft mehr.
+                </p>
+
+                <h3>4. Iteration einplanen</h3>
+                <p>
+                    Multi-Agent-Systeme brauchen Tuning. Starte mit einem einfachen Setup und erweitere schrittweise basierend auf den Ergebnissen.
+                </p>
+
+                <h2>Fazit</h2>
+                <p>
+                    CrewAI macht es einfach, von einzelnen Agenten zu kollaborativen Teams überzugehen. Der Schlüssel liegt in der sorgfältigen Definition von Rollen, Tasks und Workflows. Denke wie ein Manager, der ein Team zusammenstellt, und du wirst KI-Systeme bauen, die komplexe Aufgaben zuverlässig lösen.
+                </p>
+
+                <hr style="border-color: #374151; margin: 2rem 0;">
+
+                <p><strong>Verwendete Tools:</strong></p>
+                <div style="margin: 1rem 0;">
+                    <a href="https://github.com/crewAIInc/crewAI" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        CrewAI
+                    </a>
+                    <a href="https://www.deeplearning.ai/" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        DeepLearning.AI
+                    </a>
+                </div>
+
+                <p>
+                    Planst du ein Multi-Agent-System? <a href="../../index.html#contact">Schreib mir</a>, ich helfe gerne bei Architektur und Implementierung.
+                </p>
+
+            </div>
+        </div>
+    </article>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script src="../../js/components.js"></script>
+    <script src="../../js/translations.js"></script>
+    <script src="../../js/main.js"></script>
+</body>
+</html>

@@ -1,460 +1,398 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" id="html-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nils Weiser - IT Consulting: KI & App Entwicklung</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-            background-color: #f3f4f6; /* Etwas helleres Grau für den gesamten Hintergrund */
-        }
-        .hero-bg {
-            background-color: #111827; /* Etwas dunklerer, edlerer Hero-Hintergrund */
-            position: relative; /* Benötigt für Canvas-Positionierung */
-            overflow: hidden; /* Um die Canvas-Animation einzudämmen */
-        }
-        #hero-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0; /* Hinter Hero-Inhalt */
-            opacity: 0.2; /* Subtiler Effekt */
-        }
-        .hero-content {
-            position: relative; /* Um über dem Canvas zu sein */
-            z-index: 1;
-        }
-        .section-title {
-            font-size: 2.25rem; /* 36px */
-            font-weight: 700;
-            margin-bottom: 1.5rem; /* 24px */
-            text-align: center;
-            color: #1f2937; /* Dunkleres Grau für Titel */
-        }
-        .card {
-            background-color: white;
-            border-radius: 0.75rem; /* 12px */
-            padding: 2rem; /* 32px */
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.04); /* Weicherer Schatten */
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* Verstärkter Schatten beim Hovern */
-        }
-        .btn {
-            display: inline-block;
-            padding: 0.85rem 1.75rem; /* Etwas grösseres Padding */
-            border-radius: 0.5rem; /* 8px */
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease; /* Sanfter Übergang für alle Eigenschaften */
-            letter-spacing: 0.5px;
-        }
-        .btn-primary {
-            background-color: #2563eb; /* Blau */
-            color: white;
-            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
-        }
-        .btn-primary:hover {
-            background-color: #1d4ed8; /* Dunkleres Blau */
-            transform: translateY(-2px);
-            box-shadow: 0 6px 10px rgba(29, 78, 216, 0.3);
-        }
-        .contact-form input, .contact-form textarea {
-            border-radius: 0.5rem; /* 8px */
-            border: 1px solid #d1d5db; /* Hellgrau */
-            padding: 0.85rem; /* Konsistentes Padding */
-            width: 100%;
-            margin-bottom: 1rem; /* 16px */
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .contact-form input:focus, .contact-form textarea:focus {
-            outline: none;
-            border-color: #2563eb; /* Blau */
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25); /* Weicherer Fokusring */
-        }
-        .hamburger-icon span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            margin: 5px auto;
-            background-color: white;
-            transition: all 0.3s ease-in-out;
-        }
-        .hamburger-icon.open span:nth-child(1) {
-            transform: translateY(8px) rotate(45deg);
-        }
-        .hamburger-icon.open span:nth-child(2) {
-            opacity: 0;
-        }
-        .hamburger-icon.open span:nth-child(3) {
-            transform: translateY(-8px) rotate(-45deg);
-        }
-        html {
-            scroll-padding-top: 80px; /* Höhe des Headers */
-        }
-        /* Verbesserter Nav-Link Hover-Effekt */
-        header nav a {
-            position: relative;
-            transition: color 0.3s ease;
-        }
-        header nav a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px; /* Bei Bedarf anpassen */
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #60a5fa; /* Hellblauer Akzent */
-            transition: width 0.3s ease;
-        }
-        header nav a:hover::after {
-            width: 70%; /* Oder 100% falls bevorzugt */
-        }
-        header nav a:hover {
-            color: #93c5fd; /* Helleres Blau beim Hovern */
-        }
-
-        /* Stil für Footer mit Alpen-Hintergrundbild */
-        .footer-alps-bg {
-            position: relative; 
-            background-image: linear-gradient(rgba(17, 24, 39, 0.7), rgba(17, 24, 39, 0.7)), url("https://alpenjournal.de/storage/2024/03/1200-grindelwald-schweiz.jpg"); /* BITTE ERSETZEN SIE DIESE URL DURCH IHR GEWÜNSCHTES BILD */
-            background-repeat: no-repeat;
-            background-position: center center; /* Zentriert das Bild */
-            background-size: cover; /* Stellt sicher, dass der Bereich abgedeckt ist, kann das Bild beschneiden */
-            color: white; /* Stellt sicher, dass der Text im Footer weiss ist für Kontrast */
-        }
-        .footer-alps-bg::before { /* Pseudo-Element für eine dunklere Überlagerung, falls das Bild zu hell ist und der linear-gradient nicht ausreicht */
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(17, 24, 39, 0.3); /* Zusätzliche dunkle Überlagerung, Deckkraft anpassen oder entfernen falls nicht benötigt */
-            z-index: 0; /* Unter dem Inhalt */
-        }
-        .footer-content-wrapper { /* Wrapper für den Inhalt, um ihn über die Überlagerung zu legen */
-            position: relative;
-            z-index: 1;
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="bg-gray-950 text-gray-100">
 
-    <header class="bg-gray-900 text-white shadow-lg fixed w-full z-50 top-0">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#home" class="text-2xl font-bold hover:text-blue-400 transition-colors">Nils Weiser</a>
-            
-            <button id="menu-toggle-button" class="md:hidden z-50 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-label="Menü öffnen/schließen">
-                <div class="hamburger-icon">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+    <div id="header-placeholder"></div>
+
+    <!-- Hero Section with Terminal -->
+    <section id="home" class="hero-bg min-h-[85vh] flex items-center pt-20">
+        <div class="grid-pattern"></div>
+        <div class="container mx-auto px-6 py-12 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+                <!-- Left: Text Content -->
+                <div class="space-y-8">
+                    <div class="status-indicator font-mono">
+                        <span class="status-dot"></span>
+                        <span data-i18n="hero.status">Verfügbar für neue Projekte</span>
+                    </div>
+
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white" data-i18n="hero.title">
+                        IT Consultant & AI Developer
+                    </h1>
+
+                    <p class="text-xl text-gray-400 max-w-xl" data-i18n="hero.subtitle">
+                        Spezialisiert auf KI-Agenten und moderne App-Entwicklung. Ich transformiere komplexe Probleme in elegante technische Lösungen. Schnelle Iteration, moderne Technologien, messbare Ergebnisse.
+                    </p>
+
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#contact" class="btn btn-primary">
+                            <span data-i18n="hero.cta">Projekt starten</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </a>
+                        <a href="#services" class="btn btn-secondary" data-i18n="hero.cta2">
+                            Services ansehen
+                        </a>
+                    </div>
+
+
                 </div>
-            </button>
 
-            <nav id="main-nav" class="hidden md:flex space-x-6 items-center"> 
-                <a href="#home" class="px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                <a href="#services" class="px-3 py-2 rounded-md text-sm font-medium">Dienstleistungen</a>
-                <a href="#about" class="px-3 py-2 rounded-md text-sm font-medium">Über mich</a>
-                <a href="#contact" class="px-3 py-2 rounded-md text-sm font-medium">Kontakt</a>
-            </nav>
+                <!-- Right: Terminal Window -->
+                <div class="terminal-window max-w-xl mx-auto lg:mx-0">
+                    <div class="terminal-header">
+                        <div class="terminal-dot red"></div>
+                        <div class="terminal-dot yellow"></div>
+                        <div class="terminal-dot green"></div>
+                        <div class="terminal-title">nils@weiser ~ /projects</div>
+                    </div>
+                    <div class="terminal-body font-mono text-sm space-y-4">
+                        <div>
+                            <span class="text-green-400">$</span>
+                            <span class="text-gray-300"> cat expertise.json</span>
+                        </div>
+                        <div class="code-block" id="terminal-code">
+                            <pre><code>{
+  <span class="code-property">"name"</span>: <span class="code-string">"Nils Weiser"</span>,
+  <span class="code-property">"role"</span>: <span class="code-string">"IT Consultant & Developer"</span>,
+  <span class="code-property">"expertise"</span>: [
+    <span class="code-string">"AI Agents"</span>,
+    <span class="code-string">"LLM Integration"</span>,
+    <span class="code-string">"Full-Stack Development"</span>,
+    <span class="code-string">"Cloud Architecture"</span>
+  ],
+  <span class="code-property">"available"</span>: <span class="code-keyword">true</span>,
+  <span class="code-property">"location"</span>: <span class="code-string">"Switzerland"</span>
+}</code></pre>
+                        </div>
+                        <div>
+                            <span class="text-green-400">$</span>
+                            <span class="text-gray-300" id="typing-command"> ./start_project.sh</span>
+                            <span class="cursor"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="mobile-menu" class="md:hidden hidden bg-gray-900"> 
-            <a href="#home" class="block text-white hover:bg-gray-700 px-4 py-3 text-sm font-medium">Home</a>
-            <a href="#services" class="block text-white hover:bg-gray-700 px-4 py-3 text-sm font-medium">Dienstleistungen</a>
-            <a href="#about" class="block text-white hover:bg-gray-700 px-4 py-3 text-sm font-medium">Über mich</a>
-            <a href="#contact" class="block text-white hover:bg-gray-700 px-4 py-3 text-sm font-medium">Kontakt</a>
-        </div>
-    </header>
+    </section>
 
-    <section id="home" class="hero-bg text-white pt-32 pb-20 md:pt-40 md:pb-28">
-        <canvas id="hero-canvas"></canvas> 
-        <div class="container mx-auto px-6 text-center hero-content">
-            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-                Evolution durch Technologie – <br class="hidden md:inline">
-                <span class="text-blue-400">Intelligente KI-Agenten</span> & <span class="text-blue-400">Zukunftsweisende Apps</span>
-            </h1>
-            <p class="text-lg md:text-xl mb-10 max-w-3xl mx-auto text-gray-300">
-                Ich transformiere Visionen in digitale Realität. Erleben Sie massgeschneiderte IT-Lösungen, die Ihr Unternehmen an die Spitze der Innovation katapultieren – von smarten KI-Systemen bis zu intuitiven Applikationen, die neue Horizonte eröffnen.
+    <!-- Clients Logo Slider -->
+    <section class="section-dark py-16 overflow-hidden">
+        <div class="container mx-auto px-6 mb-8">
+            <p class="text-center text-gray-500 text-sm font-mono uppercase tracking-wider" data-i18n="clients.title">
+                Vertrauen von führenden Unternehmen
             </p>
-            <a href="#contact" class="btn btn-primary text-lg">Innovationsgespräch starten</a>
         </div>
-    </section>
-
-    <section id="services" class="py-16 md:py-24 bg-white">
-        <div class="container mx-auto px-6">
-            <h2 class="section-title text-gray-800">Meine Kernkompetenzen</h2>
-            <div class="grid md:grid-cols-2 gap-10">
-                <div class="card">
-                    <svg class="w-16 h-16 text-blue-600 mb-6 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.627 48.627 0 0 1 12 20.904a48.627 48.627 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.57 50.57 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.902 59.902 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 1.052A54.964 54.964 0 0 0 12 8.443a54.964 54.964 0 0 0 7.007 1.052M12 12.75a2.25 2.25 0 1 0 0-4.5 2.25 2.25 0 0 0 0 4.5Z" />
-                    </svg>
-                    <h3 class="text-2xl font-semibold mb-4 text-center text-gray-700">Entwicklung Intelligenter KI-Agenten</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        Ich konzipiere und entwickle fortschrittliche KI-Agenten, die komplexe Aufgaben automatisieren, datengestützte Entscheidungen ermöglichen und Ihre Geschäftsprozesse revolutionieren.
-                        Von intelligenten Chatbots und virtuellen Assistenten bis zu autonomen Systemen, die auf modernsten KI-Modellen und Machine Learning Algorithmen basieren.
-                        Mein Fokus: Skalierbare Lösungen, die messbaren Mehrwert generieren und den Weg für zukünftige Entwicklungen ebnen.
-                    </p>
+        <div class="logo-slider">
+            <div class="logo-track">
+                <!-- First set of logos -->
+                <div class="logo-slide">
+                    <img src="logos/coop.png" alt="Coop" class="client-logo">
                 </div>
-                <div class="card">
-                     <svg class="w-16 h-16 text-blue-600 mb-6 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
-                    </svg>
-                    <h3 class="text-2xl font-semibold mb-4 text-center text-gray-700">Innovative App-Entwicklung</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        Von der Konzeption bis zum Launch: Ich biete End-to-End Dienstleistungen in der App-Entwicklung für mobile Plattformen (iOS & Android) und das Web.
-                        Der Schwerpunkt liegt auf exzellenter User Experience (UI/UX), robuster Architektur und agiler Entwicklung, um Anwendungen zu schaffen, die nicht nur heutige Anforderungen erfüllen, sondern auch für morgen gerüstet sind.
-                    </p>
+                <div class="logo-slide">
+                    <img src="logos/bih_charite.png" alt="BIH Charité" class="client-logo">
+                </div>
+                <div class="logo-slide">
+                    <img src="logos/misanto.png" alt="Misanto" class="client-logo">
+                </div>
+                <div class="logo-slide">
+                    <img src="logos/sorba.png" alt="Sorba" class="client-logo">
+                </div>
+                <div class="logo-slide">
+                    <img src="logos/primeo.svg" alt="Primeo Energie" class="client-logo">
+                </div>
+                <div class="logo-slide">
+                    <img src="logos/devsgroup.png" alt="DevsGroup" class="client-logo">
+                </div>
+                <div class="logo-slide">
+                    <img src="logos/codify.png" alt="Codify" class="client-logo">
+                </div>
+                <div class="logo-slide">
+                    <img src="logos/bit.svg" alt="BIT" class="client-logo">
+                </div>
+                <div class="logo-slide">
+                    <img src="logos/bmt.png" alt="BMT" class="client-logo">
+                </div>
+                <div class="logo-slide">
+                    <img src="logos/thimegost.png" alt="Thimegost" class="client-logo">
+                </div>
+                <div class="logo-slide">
+                    <img src="logos/woonig.png" alt="Woonig" class="client-logo">
+                </div>
+                <div class="logo-slide">
+                    <img src="logos/memoro.png" alt="Memoro" class="client-logo">
+                </div>
+                <!-- Duplicate set for seamless loop -->
+                <div class="logo-slide">
+                    <img src="logos/coop.png" alt="Coop" class="client-logo">
+                </div>
+                <div class="logo-slide">
+                    <img src="logos/bih_charite.png" alt="BIH Charité" class="client-logo">
+                </div>
+                <div class="logo-slide">
+                    <img src="logos/misanto.png" alt="Misanto" class="client-logo">
+                </div>
+                <div class="logo-slide">
+                    <img src="logos/sorba.png" alt="Sorba" class="client-logo">
+                </div>
+                <div class="logo-slide">
+                    <img src="logos/primeo.svg" alt="Primeo Energie" class="client-logo">
+                </div>
+                <div class="logo-slide">
+                    <img src="logos/devsgroup.png" alt="DevsGroup" class="client-logo">
+                </div>
+                <div class="logo-slide">
+                    <img src="logos/codify.webp" alt="Codify" class="client-logo">
+                </div>
+                <div class="logo-slide">
+                    <img src="logos/bit.svg" alt="BIT" class="client-logo">
+                </div>
+                <div class="logo-slide">
+                    <img src="logos/bmt.png" alt="BMT" class="client-logo">
+                </div>
+                <div class="logo-slide">
+                    <img src="logos/thimegost.png" alt="Thimegost" class="client-logo">
+                </div>
+                <div class="logo-slide">
+                    <img src="logos/woonig.png" alt="Woonig" class="client-logo">
+                </div>
+                <div class="logo-slide">
+                    <img src="logos/memoro.png" alt="Memoro" class="client-logo">
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="about" class="py-16 md:py-24 bg-gray-100">
+    <!-- Services Section -->
+    <section id="services" class="section-dark py-24">
         <div class="container mx-auto px-6">
-            <h2 class="section-title text-gray-800">Über Mich: Vision & Antrieb</h2>
+            <div class="text-center mb-16">
+                <p class="text-cyan-400 font-mono text-sm mb-4 uppercase tracking-wider">// <span data-i18n="services.kicker">Was ich anbiete</span></p>
+                <h2 class="section-title" data-i18n="services.title">Meine Kernkompetenzen</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto" data-i18n="services.subtitle">
+                    Spezialisiert auf zukunftsweisende Technologien, die Ihr Unternehmen voranbringen
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- AI Solutions Card -->
+                <div class="card fade-in-up">
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-cyan-500/20 to-green-500/20 flex items-center justify-center border border-cyan-500/30">
+                            <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-1" data-i18n="services.ai.title">KI-Lösungen</h3>
+                            <p class="text-cyan-400 text-sm font-mono">ai.orchestrate()</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-6" data-i18n="services.ai.description">
+                        Von intelligenten Agenten über automatisierte Workflows bis hin zu selbst gehosteten LLMs. Massgeschneiderte KI-Lösungen mit voller Datensouveränität – Ihre KI, Ihre Infrastruktur, Ihre Kontrolle.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tech-badge text-xs">Ollama</span>
+                        <span class="tech-badge text-xs">RAG</span>
+                        <span class="tech-badge text-xs">Hugging Face</span>
+                        <span class="tech-badge text-xs">CrewAI</span>
+                        <span class="tech-badge text-xs">LangChain</span>
+                        <span class="tech-badge text-xs">Speech to Text</span>
+                        <span class="tech-badge text-xs">Gemini</span>
+                        <span class="tech-badge text-xs">OpenAI</span>
+                        <span class="tech-badge text-xs">Document Processing</span>
+                    </div>
+                </div>
+
+                <!-- Full-Stack Development Card -->
+                <div class="card fade-in-up" style="transition-delay: 0.1s">
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center border border-purple-500/30">
+                            <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-1" data-i18n="services.fullstack.title">Full-Stack Entwicklung</h3>
+                            <p class="text-purple-400 text-sm font-mono">stack.build()</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-6" data-i18n="services.fullstack.description">
+                        End-to-End Webentwicklung von der Datenbank bis zum Frontend. Robuste APIs, skalierbare Architektur und moderne Tech-Stacks für produktionsreife Anwendungen.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tech-badge text-xs">Google Cloud Platform</span>
+                        <span class="tech-badge text-xs">Angular/React/SvelteKit</span>
+                        <span class="tech-badge text-xs">Nginx</span>
+                        <span class="tech-badge text-xs">Supabase</span>
+                        <span class="tech-badge text-xs">Node.js</span>
+                        <span class="tech-badge text-xs">Python</span>
+                        <span class="tech-badge text-xs">Go</span>
+                        <span class="tech-badge text-xs">TypeScript</span>
+                        <span class="tech-badge text-xs">PostgreSQL</span>
+                        <span class="tech-badge text-xs">NoSQL</span>
+                    </div>
+                </div>
+
+                <!-- Mobile Apps Card -->
+                <div class="card fade-in-up" style="transition-delay: 0.2s">
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500/20 to-red-500/20 flex items-center justify-center border border-orange-500/30">
+                            <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-1" data-i18n="services.mobile.title">Mobile Apps</h3>
+                            <p class="text-orange-400 text-sm font-mono">app.launch()</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-6" data-i18n="services.mobile.description">
+                        Cross-Plattform Mobile-Entwicklung für iOS und Android. Exzellente UX, native Performance und nahtlose Backend-Integration.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tech-badge text-xs">React Native</span>
+                        <span class="tech-badge text-xs">Ionic</span>
+                        <span class="tech-badge text-xs">iOS</span>
+                        <span class="tech-badge text-xs">Android</span>
+                        <span class="tech-badge text-xs">Expo</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section-darker py-24">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
+                <!-- Terminal About -->
+                <div class="terminal-window fade-in-up">
+                    <div class="terminal-header">
+                        <div class="terminal-dot red"></div>
+                        <div class="terminal-dot yellow"></div>
+                        <div class="terminal-dot green"></div>
+                        <div class="terminal-title">about.md</div>
+                    </div>
+                    <div class="terminal-body font-mono text-sm">
+                        <div class="space-y-3">
+                            <p class="text-gray-500"># <span data-i18n="about.terminal.title">Über Mich</span></p>
+                            <p class="text-gray-300" data-i18n="about.terminal.p1">
+                                Als IT-Consultant und Entwickler verbinde ich
+                                tiefgreifendes technisches Know-how mit der
+                                Vision, innovative Lösungen zu schaffen.
+                            </p>
+                            <p class="text-gray-500 mt-4">## <span data-i18n="about.terminal.focus">Fokus</span></p>
+                            <ul class="space-y-1 text-gray-300">
+                                <li><span class="text-green-400">-></span> <span data-i18n="about.terminal.item1">AI Systems & Automation</span></li>
+                                <li><span class="text-green-400">-></span> <span data-i18n="about.terminal.item2">Applied AI</span></li>
+                                <li><span class="text-green-400">-></span> <span data-i18n="about.terminal.item3">Full-Stack Development</span></li>
+                                <li><span class="text-green-400">-></span> <span data-i18n="about.terminal.item4">Cloud Architecture</span></li>
+                            </ul>
+                            <p class="text-gray-500 mt-4">## <span data-i18n="about.terminal.values">Werte</span></p>
+                            <p class="text-gray-300" data-i18n="about.terminal.values.text">
+                                Transparenz | Qualität | Innovation
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- About Text -->
+                <div class="space-y-6 fade-in-up" style="transition-delay: 0.1s">
+                    <p class="text-cyan-400 font-mono text-sm uppercase tracking-wider">// <span data-i18n="about.kicker">Wer ich bin</span></p>
+                    <h2 class="section-title" data-i18n="about.title">Vision & Antrieb</h2>
+                    <p class="text-gray-400 text-lg leading-relaxed" data-i18n="about.description1">
+                        Als Ihr IT-Consultant sehe ich meine Aufgabe darin, nicht nur technologische Lösungen zu liefern, sondern den Weg für das Kommende zu bereiten. Meine Arbeit ist getrieben von der Vision, durch KI und innovative Applikationen neue Möglichkeiten zu schaffen.
+                    </p>
+                    <p class="text-gray-500 leading-relaxed" data-i18n="about.description2">
+                        Transparenz, partnerschaftliche Zusammenarbeit und ein unerschütterlicher Qualitätsanspruch sind die Grundpfeiler meiner Arbeit, um gemeinsam Grosses zu erreichen.
+                    </p>
+                    <p class="text-gray-500 leading-relaxed" data-i18n="about.description3">
+                        Im Zeitalter der KI zählt Geschwindigkeit: Schnell iterieren, Ideen validieren und Ergebnisse liefern. Wer die neuen Technologien richtig einsetzt, erreicht in Wochen, was früher Monate dauerte.
+                    </p>
+
+                    <div class="pt-6">
+                        <a href="#contact" class="btn btn-primary">
+                            <span data-i18n="about.cta">Zusammenarbeiten</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section-dark py-24">
+        <div class="container mx-auto px-6">
             <div class="max-w-3xl mx-auto text-center">
-                <p class="text-lg text-gray-700 leading-relaxed mb-6">
-                    Als Ihr IT-Consultant und Entwickler sehe ich meine Aufgabe darin, nicht nur technologische Lösungen zu liefern, sondern den Weg für das Kommende zu bereiten. 
-                    Meine Arbeit ist getrieben von der Vision, durch KI und innovative Applikationen die Brücke zu neuen Möglichkeiten zu schlagen – ein beständiges Streben, das menschliche Potenzial zu erweitern und die Zukunft aktiv mitzugestalten.
-                    Ich verbinde tiefgreifendes technologisches Know-how mit dem Willen, Grenzen zu verschieben und Lösungen zu schaffen, die nicht nur funktionieren, sondern inspirieren und neue Perspektiven eröffnen.
+                <p class="text-cyan-400 font-mono text-sm mb-4 uppercase tracking-wider">// <span data-i18n="contact.kicker">Kontakt</span></p>
+                <h2 class="section-title" data-i18n="contact.title">Lassen Sie uns sprechen</h2>
+                <p class="text-gray-400 text-lg mb-12" data-i18n="contact.description">
+                    Bereit, Ihr nächstes Projekt zu diskutieren? Ich freue mich darauf, von Ihnen zu hören und gemeinsam innovative Wege zu gehen.
                 </p>
-                <p class="text-gray-600 leading-relaxed mb-4">
-                    Transparenz, partnerschaftliche Zusammenarbeit und ein unerschütterlicher Qualitätsanspruch sind die Grundpfeiler meiner Arbeit, um gemeinsam Grosses zu erreichen.
-                </p>
-        
-            </div>
-        </div>
-    </section>
 
-    <section id="contact" class="py-16 md:py-24 bg-white">
-        <div class="container mx-auto px-6">
-            <h2 class="section-title text-gray-800">Lassen Sie uns sprechen</h2>
-            <div class="max-w-xl mx-auto">
-                <p class="text-center text-gray-600 mb-10">
-                    Bereit, Ihr nächstes Projekt zu diskutieren oder haben Sie eine Frage? Ich freue mich darauf, von Ihnen zu hören und gemeinsam innovative Wege zu gehen, die Ihre Vision Wirklichkeit werden lassen.
-                </p>
-           
-                <div id="form-feedback" class="mt-6 text-center"></div>
-                 <div class="mt-12 text-center text-gray-600">
-                    <p class="font-semibold text-lg">Nils Weiser</p>
-                    <p>IT Consulting - KI & App Entwicklung</p>
-                    <p>E-Mail: <a href="mailto:kontakt@nilsweiser-consulting.ch" class="text-blue-600 hover:underline">nils.weiser@outlook.com</a></p>
+                <!-- Contact Terminal -->
+                <div class="terminal-window max-w-lg mx-auto mb-12 fade-in-up">
+                    <div class="terminal-header">
+                        <div class="terminal-dot red"></div>
+                        <div class="terminal-dot yellow"></div>
+                        <div class="terminal-dot green"></div>
+                        <div class="terminal-title">contact.sh</div>
+                    </div>
+                    <div class="terminal-body font-mono text-sm text-left">
+                        <div class="space-y-3">
+                            <div>
+                                <span class="text-green-400">$</span>
+                                <span class="text-gray-300"> echo $EMAIL</span>
+                            </div>
+                            <div class="text-cyan-400">
+                                <a href="mailto:nils.weiser.kn@gmail.com" class="hover:underline">nils.weiser.kn@gmail.com</a>
+                            </div>
+                            <div class="mt-4">
+                                <span class="text-green-400">$</span>
+                                <span class="text-gray-300"> echo $LOCATION</span>
+                            </div>
+                            <div class="text-cyan-400" data-i18n="contact.location">
+                                Schweiz
+                            </div>
+                            <div class="mt-4">
+                                <span class="text-green-400">$</span>
+                                <span class="text-gray-300"> ping Nils</span>
+                            </div>
+                            <div class="text-cyan-400">
+                               64 bytes from Nils: time=instant reply=guaranteed
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <a href="mailto:nils.weiser.kn@gmail.com" class="btn btn-primary text-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    <span data-i18n="contact.cta">E-Mail senden</span>
+                </a>
             </div>
         </div>
     </section>
 
-    <footer class="bg-gray-900 text-white py-10 footer-alps-bg"> 
-        <div class="container mx-auto px-6 text-center footer-content-wrapper"> 
-            <p>&copy; <span id="currentYear"></span> Nils Weiser - IT Consulting. Alle Rechte vorbehalten.</p>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
 
-    <script>
-        // JavaScript für das aktuelle Jahr im Footer
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-        // Mobile Menu Toggle
-        const menuToggleButton = document.getElementById('menu-toggle-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const hamburgerIcon = menuToggleButton.querySelector('.hamburger-icon');
-
-        menuToggleButton.addEventListener('click', function() {
-            mobileMenu.classList.toggle('hidden');
-            hamburgerIcon.classList.toggle('open');
-        });
-
-        const mobileNavLinks = mobileMenu.querySelectorAll('a');
-        mobileNavLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-                hamburgerIcon.classList.remove('open');
-            });
-        });
-        
-        document.addEventListener('click', function(event) {
-            const isClickInsideMenu = mobileMenu.contains(event.target);
-            const isClickOnToggleButton = menuToggleButton.contains(event.target);
-            if (!isClickInsideMenu && !isClickOnToggleButton && !mobileMenu.classList.contains('hidden')) {
-                mobileMenu.classList.add('hidden');
-                hamburgerIcon.classList.remove('open');
-            }
-        });
-
-        // Smooth scrolling
-        document.querySelectorAll('header a[href^="#"], a.btn[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    const headerOffset = document.querySelector('header').offsetHeight;
-                    const elementPosition = targetElement.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                    window.scrollTo({ top: offsetPosition, behavior: "smooth" });
-                }
-            });
-        });
-
-        // Hero Canvas Particle Animation
-        const canvas = document.getElementById('hero-canvas');
-        const ctx = canvas.getContext('2d');
-        let particlesArray;
-
-        function setupCanvas() {
-            if (!canvas) return;
-            // Sicherstellen, dass das Canvas-Element tatsächlich im DOM ist und eine Breite/Höhe hat
-            if (canvas.offsetWidth === 0 && canvas.offsetHeight === 0) {
-                 // Versuchen, die Grösse vom Elternelement zu bekommen, falls Canvas selbst noch keine Dimensionen hat
-                 if (canvas.parentElement && document.readyState === 'complete') { 
-                    canvas.width = canvas.parentElement.offsetWidth;
-                    canvas.height = canvas.parentElement.offsetHeight;
-                } else {
-                    // Fallback oder verzögern, wenn nicht bereit
-                    return;
-                }
-            } else {
-                canvas.width = canvas.offsetWidth;
-                canvas.height = canvas.offsetHeight;
-            }
-        }
-        
-        window.addEventListener('load', () => {
-            if (canvas) { 
-                setupCanvas();
-                // Nur initialisieren und animieren, wenn Canvas Dimensionen hat
-                if (canvas.width > 0 && canvas.height > 0) {
-                    initParticles();
-                    animateParticles();
-                }
-            }
-        });
-        window.addEventListener('resize', () => {
-             if (canvas) { 
-                setupCanvas();
-                // Nur neu initialisieren, wenn Canvas Dimensionen hat
-                if (canvas.width > 0 && canvas.height > 0) {
-                    initParticles(); 
-                } else {
-                    // Falls Canvas nach Resize keine Dimensionen hat (z.B. display:none), Partikelarray leeren
-                    if (particlesArray) particlesArray = [];
-                    if(ctx) ctx.clearRect(0,0, canvas.width, canvas.height); // Canvas leeren
-                }
-            }
-        });
-
-
-        class Particle {
-            constructor(x, y, directionX, directionY, size, color) {
-                this.x = x;
-                this.y = y;
-                this.directionX = directionX;
-                this.directionY = directionY;
-                this.size = size;
-                this.color = color;
-            }
-            draw() {
-                if(!ctx) return;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-                ctx.fillStyle = this.color;
-                ctx.fill();
-            }
-            update() {
-                if(!canvas) return; 
-                if (this.x > canvas.width || this.x < 0) {
-                    this.directionX = -this.directionX;
-                }
-                if (this.y > canvas.height || this.y < 0) {
-                    this.directionY = -this.directionY;
-                }
-                this.x += this.directionX;
-                this.y += this.directionY;
-                this.draw();
-            }
-        }
-
-        function initParticles() {
-            if(!canvas || !ctx ) return; 
-            particlesArray = [];
-            // Sicherstellen, dass Canvas Dimensionen hat, bevor Partikel berechnet werden
-            if (canvas.width === 0 || canvas.height === 0) return;
-
-            let numberOfParticles = (canvas.height * canvas.width) / 9000; 
-            if (numberOfParticles > 150) numberOfParticles = 150; 
-            // Sicherstellen, dass eine Mindestanzahl von Partikeln vorhanden ist, wenn Canvas gerendert wird
-            if (numberOfParticles < 30 && canvas.width > 0 && canvas.height > 0) numberOfParticles = 30; 
-
-            for (let i = 0; i < numberOfParticles; i++) {
-                let size = (Math.random() * 2) + 0.5; 
-                let x = (Math.random() * ((canvas.width - size * 2) - (size * 2)) + size * 2);
-                let y = (Math.random() * ((canvas.height - size * 2) - (size * 2)) + size * 2);
-                let directionX = (Math.random() * 0.4) - 0.2; 
-                let directionY = (Math.random() * 0.4) - 0.2;
-                let color = 'rgba(147, 197, 253, 0.6)'; 
-
-                particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
-            }
-        }
-
-        function animateParticles() {
-            // Sicherstellen, dass alles initialisiert ist und Partikel vorhanden sind
-            if(!canvas || !ctx || !particlesArray || particlesArray.length === 0) return; 
-            requestAnimationFrame(animateParticles);
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-            }
-            connectParticles();
-        }
-
-        function connectParticles() {
-            // Sicherstellen, dass alles initialisiert ist und Partikel vorhanden sind
-            if(!canvas || !ctx || !particlesArray || particlesArray.length === 0) return; 
-            let opacityValue = 1;
-            for (let a = 0; a < particlesArray.length; a++) {
-                for (let b = a; b < particlesArray.length; b++) {
-                    // Zusätzliche Prüfung, ob Partikelobjekte existieren
-                    if (!particlesArray[a] || !particlesArray[b]) continue; 
-                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
-                                 + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
-                    // Sicherstellen, dass Canvas Dimensionen hat, bevor die Verbindungsschwelle berechnet wird
-                    if (canvas.width === 0 || canvas.height === 0) continue;
-                    
-                    let connectionThreshold = (canvas.width/7) * (canvas.height/7);
-                    // Standard-Schwellenwert, falls Canvas sehr klein, aber gerendert ist, um Division durch Null zu vermeiden
-                    if (connectionThreshold === 0 && canvas.width > 0 && canvas.height > 0) { 
-                        connectionThreshold = 5000; 
-                    }
-
-                    if (distance < connectionThreshold) { 
-                        opacityValue = 1 - (distance/20000); 
-                        if (opacityValue < 0) opacityValue = 0; 
-                        if (opacityValue > 0.5) opacityValue = 0.5; 
-                        ctx.strokeStyle = 'rgba(147, 197, 253, ' + opacityValue + ')'; 
-                        ctx.lineWidth = 0.5; 
-                        ctx.beginPath();
-                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
-    </script>
+    <script src="js/components.js"></script>
+    <script src="js/translations.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
