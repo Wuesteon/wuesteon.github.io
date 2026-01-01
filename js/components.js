@@ -123,7 +123,12 @@ function detectActivePage() {
 // Check if we're on the homepage (index.html or /)
 function isHomePage() {
     const path = window.location.pathname;
-    return path.endsWith('/') || path.endsWith('/index.html') || path === '';
+    // Exclude any page in a subdirectory or legal pages
+    if (path.includes('/blog') || path.includes('/impressum') || path.includes('/datenschutz')) {
+        return false;
+    }
+    // True for root paths: /, /index.html, or empty string
+    return path === '/' || path === '' || path === '/index.html';
 }
 
 // Initialize components on DOM ready
