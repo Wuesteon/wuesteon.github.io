@@ -45,6 +45,9 @@
 
             // === TERMINAL SYSTEM MESSAGES ===
             terminal: {
+                hidden: {
+                    deadPanther: "Der Panther liegt still. Die Hoffnung erloschen."
+                },
                 system: {
                     title: "=== Der Panther ===",
                     availableCommands: "Verfuegbare Befehle:",
@@ -265,8 +268,7 @@
                     },
                     erwachen: {
                         direct: "Direkt zur Befreiung..."
-                    },
-                    deadPanther: "Der Panther liegt still. Die Hoffnung erloschen."
+                    }
                 }
             },
 
@@ -371,6 +373,9 @@
             },
 
             terminal: {
+                hidden: {
+                    deadPanther: "The panther lies still. Hope extinguished."
+                },
                 system: {
                     title: "=== The Panther ===",
                     availableCommands: "Available commands:",
@@ -591,8 +596,7 @@
                     },
                     erwachen: {
                         direct: "Straight to liberation..."
-                    },
-                    deadPanther: "The panther lies still. Hope extinguished."
+                    }
                 }
             },
 
@@ -695,6 +699,9 @@
             },
 
             terminal: {
+                hidden: {
+                    deadPanther: "La pantera yace inmovil. La esperanza extinguida."
+                },
                 system: {
                     title: "=== La Pantera ===",
                     availableCommands: "Comandos disponibles:",
@@ -915,8 +922,7 @@
                     },
                     erwachen: {
                         direct: "Directo a la liberacion..."
-                    },
-                    deadPanther: "La pantera yace inmovil. La esperanza extinguida."
+                    }
                 }
             },
 
@@ -1019,6 +1025,9 @@
             },
 
             terminal: {
+                hidden: {
+                    deadPanther: "La panthere gît immobile. L'espoir eteint."
+                },
                 system: {
                     title: "=== La Panthere ===",
                     availableCommands: "Commandes disponibles:",
@@ -1239,8 +1248,7 @@
                     },
                     erwachen: {
                         direct: "Directement a la liberation..."
-                    },
-                    deadPanther: "La panthere gît immobile. L'espoir eteint."
+                    }
                 }
             },
 
@@ -1343,6 +1351,9 @@
             },
 
             terminal: {
+                hidden: {
+                    deadPanther: "La pantera giace immobile. La speranza estinta."
+                },
                 system: {
                     title: "=== La Pantera ===",
                     availableCommands: "Comandi disponibili:",
@@ -1563,8 +1574,7 @@
                     },
                     erwachen: {
                         direct: "Diretto alla liberazione..."
-                    },
-                    deadPanther: "La pantera giace immobile. La speranza estinta."
+                    }
                 }
             },
 
@@ -1667,6 +1677,9 @@
             },
 
             terminal: {
+                hidden: {
+                    deadPanther: "A pantera jaz imóvel. A esperanca extinta."
+                },
                 system: {
                     title: "=== A Pantera ===",
                     availableCommands: "Comandos disponiveis:",
@@ -1887,8 +1900,7 @@
                     },
                     erwachen: {
                         direct: "Direto para a libertacao..."
-                    },
-                    deadPanther: "A pantera jaz imóvel. A esperanca extinta."
+                    }
                 }
             },
 
