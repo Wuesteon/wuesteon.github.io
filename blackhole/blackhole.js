@@ -298,7 +298,15 @@
             trackEvent('black-hole-completed', {
                 timestamp: new Date().toISOString()
             });
-            window.location.href = 'easter-egg/index.html';
+            // Calculate correct path to easter-egg based on current location
+            const path = window.location.pathname;
+            let basePath = '';
+            if (path.includes('/blog/posts/')) {
+                basePath = '../../';
+            } else if (path.includes('/blog/')) {
+                basePath = '../';
+            }
+            window.location.href = basePath + 'easter-egg/index.html';
         }, 1500);
     }
 

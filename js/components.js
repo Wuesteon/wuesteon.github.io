@@ -134,6 +134,40 @@ function isHomePage() {
     return path === '/' || path === '' || path === '/index.html';
 }
 
+// Get black hole overlay HTML
+function getBlackHoleOverlay() {
+    return `
+    <div id="black-hole-overlay" class="black-hole-overlay">
+        <canvas id="black-hole-canvas"></canvas>
+        <div class="singularity"></div>
+        <div class="accretion-disk"></div>
+        <div class="event-horizon"></div>
+    </div>`;
+}
+
+// Load black hole effect (CSS and JS)
+function loadBlackHoleEffect(basePath) {
+    // Check if already loaded
+    if (document.getElementById('black-hole-css')) return;
+
+    // Load CSS
+    const css = document.createElement('link');
+    css.id = 'black-hole-css';
+    css.rel = 'stylesheet';
+    css.href = basePath + 'blackhole/blackhole.css';
+    document.head.appendChild(css);
+
+    // Inject overlay HTML
+    const overlayDiv = document.createElement('div');
+    overlayDiv.innerHTML = getBlackHoleOverlay();
+    document.body.appendChild(overlayDiv.firstElementChild);
+
+    // Load JS
+    const script = document.createElement('script');
+    script.src = basePath + 'blackhole/blackhole.js';
+    document.body.appendChild(script);
+}
+
 // Initialize components on DOM ready
 document.addEventListener('DOMContentLoaded', function() {
     const basePath = detectBasePath();
@@ -159,4 +193,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set current year
     const yearEl = document.getElementById('currentYear');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    // Load black hole effect on all pages (except easter-egg)
+    if (!window.location.pathname.includes('/easter-egg')) {
+        loadBlackHoleEffect(basePath);
+    }
 });
