@@ -1,0 +1,902 @@
+/**
+ * Der Panther - Easter Egg Game Styles
+ * Based on Rainer Maria Rilke's poem "Der Panther"
+ */
+
+/* ========================================
+   CSS Variables (extending site theme)
+   ======================================== */
+:root {
+    --game-bg: #030712;
+    --game-bg-secondary: #0a0f1a;
+    --bar-color: rgba(55, 65, 81, 0.9);
+    --bar-highlight: rgba(34, 211, 238, 0.3);
+    --terminal-green: #4ade80;
+    --terminal-cyan: #22d3ee;
+    --terminal-amber: #fbbf24;
+    --text-muted: rgba(156, 163, 175, 0.6);
+    --glow-cyan: rgba(34, 211, 238, 0.15);
+    --glow-green: rgba(74, 222, 128, 0.15);
+}
+
+/* ========================================
+   Base Styles
+   ======================================== */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    background: var(--game-bg);
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--terminal-green);
+}
+
+/* ========================================
+   Atmospheric Overlays
+   ======================================== */
+.cage-vignette {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: radial-gradient(
+        ellipse at center,
+        transparent 0%,
+        transparent 40%,
+        rgba(0, 0, 0, 0.4) 70%,
+        rgba(0, 0, 0, 0.8) 100%
+    );
+    z-index: 100;
+}
+
+.scan-lines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1) 0px,
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    z-index: 101;
+    opacity: 0.3;
+}
+
+/* ========================================
+   Main Game Container
+   ======================================== */
+.game-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background: var(--game-bg);
+}
+
+/* ========================================
+   Canvas Area (Left Side)
+   ======================================== */
+.canvas-area {
+    flex: 0 0 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background: linear-gradient(
+        135deg,
+        var(--game-bg) 0%,
+        var(--game-bg-secondary) 50%,
+        var(--game-bg) 100%
+    );
+}
+
+/* Hypnotic pacing light - subtle movement suggesting endless repetition */
+.canvas-area::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        transparent 45%,
+        rgba(34, 211, 238, 0.01) 50%,
+        transparent 55%,
+        transparent 100%
+    );
+    animation: pacing-light 12s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 2;
+}
+
+@keyframes pacing-light {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(50%); }
+    100% { transform: translateX(0); }
+}
+
+.cage-frame {
+    position: relative;
+    width: 90%;
+    height: 80%;
+    max-width: 800px;
+    max-height: 600px;
+    background: linear-gradient(180deg, #0a0c10 0%, #050608 100%);
+    border: 2px solid #1a1a1a;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow:
+        inset 0 0 100px rgba(0, 0, 0, 0.8),
+        0 0 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Subtle breathing animation for the cage */
+.cage-frame::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+        ellipse at center,
+        transparent 40%,
+        rgba(0, 0, 0, 0.3) 100%
+    );
+    animation: cage-breathe 8s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 8;
+}
+
+@keyframes cage-breathe {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Cage bars - vertical iron bars */
+.cage-bars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5%;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.cage-bars .bar {
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(
+        180deg,
+        #1a1a1a 0%,
+        #252525 20%,
+        #1a1a1a 50%,
+        #252525 80%,
+        #1a1a1a 100%
+    );
+    border-radius: 2px;
+    box-shadow:
+        1px 0 0 rgba(255, 255, 255, 0.03),
+        -1px 0 0 rgba(0, 0, 0, 0.5),
+        0 0 10px rgba(0, 0, 0, 0.8);
+    opacity: 0.85;
+}
+
+/* Subtle bar sway animation - hypnotic pacing effect */
+.cage-bars .bar:nth-child(odd) {
+    animation: bar-sway 6s ease-in-out infinite;
+}
+
+.cage-bars .bar:nth-child(even) {
+    animation: bar-sway 6s ease-in-out infinite;
+    animation-delay: -3s;
+}
+
+@keyframes bar-sway {
+    0%, 100% { transform: translateX(0); opacity: 0.85; }
+    50% { transform: translateX(1px); opacity: 0.9; }
+}
+
+#panther-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+}
+
+/* Poem overlay for moments of clarity */
+.poem-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    opacity: 0;
+    transition: opacity 1s ease;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.poem-overlay.visible {
+    opacity: 1;
+}
+
+.poem-line {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--terminal-cyan);
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 20px var(--glow-cyan);
+    margin: 0;
+    line-height: 1.8;
+}
+
+/* Poem credit */
+.poem-credit {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-style: italic;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.poem-credit:hover {
+    opacity: 0.8;
+}
+
+.credit-dash {
+    margin-right: 0.5em;
+}
+
+.designer-credit {
+    display: block;
+    margin-top: 0.3em;
+    font-size: 0.65rem;
+    font-style: normal;
+    letter-spacing: 0.05em;
+}
+
+/* ========================================
+   Terminal Area (Right Side)
+   ======================================== */
+.terminal-area {
+    flex: 0 0 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    box-sizing: border-box;
+    position: relative;
+    background: var(--game-bg);
+    border-left: 1px solid rgba(55, 65, 81, 0.3);
+}
+
+/* Terminal Window */
+.game-terminal {
+    width: 100%;
+    max-width: 500px;
+    height: 70vh;
+    max-height: 600px;
+    display: flex;
+    flex-direction: column;
+    background: rgba(3, 7, 18, 0.95);
+    border: 1px solid rgba(55, 65, 81, 0.5);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow:
+        0 0 20px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(34, 211, 238, 0.05),
+        inset 0 0 60px rgba(0, 0, 0, 0.3);
+}
+
+/* Terminal Header */
+.terminal-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: rgba(17, 24, 39, 0.8);
+    border-bottom: 1px solid rgba(55, 65, 81, 0.3);
+}
+
+.terminal-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.terminal-dot.red {
+    background: #ef4444;
+    box-shadow: 0 0 6px rgba(239, 68, 68, 0.5);
+}
+
+.terminal-dot.yellow {
+    background: #eab308;
+    box-shadow: 0 0 6px rgba(234, 179, 8, 0.5);
+}
+
+.terminal-dot.green {
+    background: #22c55e;
+    box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
+}
+
+.terminal-title {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+}
+
+/* Terminal Body */
+.terminal-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    overflow: hidden;
+}
+
+/* Terminal Output */
+.terminal-output {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 8px;
+    margin-bottom: 16px;
+}
+
+/* Custom scrollbar */
+.terminal-output::-webkit-scrollbar {
+    width: 6px;
+}
+
+.terminal-output::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+.terminal-output::-webkit-scrollbar-thumb {
+    background: rgba(55, 65, 81, 0.5);
+    border-radius: 3px;
+}
+
+.terminal-output::-webkit-scrollbar-thumb:hover {
+    background: rgba(55, 65, 81, 0.8);
+}
+
+/* Terminal Lines */
+.terminal-line {
+    margin: 0 0 8px 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+.terminal-line.system-msg {
+    color: var(--text-muted);
+}
+
+.terminal-line.user-input {
+    color: var(--terminal-cyan);
+}
+
+.terminal-line.response {
+    color: var(--terminal-green);
+}
+
+.terminal-line.poem-text {
+    color: var(--terminal-amber);
+    font-style: italic;
+}
+
+.terminal-line.error {
+    color: #ef4444;
+}
+
+/* Prompt elements */
+.prompt-symbol {
+    color: var(--terminal-cyan);
+    margin-right: 8px;
+}
+
+.prompt-time {
+    color: rgba(156, 163, 175, 0.4);
+    margin-right: 8px;
+    font-size: 0.75rem;
+}
+
+.cmd-highlight {
+    color: var(--terminal-cyan);
+    background: rgba(34, 211, 238, 0.1);
+    padding: 0 4px;
+    border-radius: 2px;
+}
+
+.text-muted {
+    color: var(--text-muted);
+}
+
+/* Terminal Input Area */
+.terminal-input-area {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    border: 1px solid rgba(55, 65, 81, 0.3);
+}
+
+.terminal-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--terminal-green);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.875rem;
+    caret-color: var(--terminal-cyan);
+}
+
+.terminal-input::placeholder {
+    color: var(--text-muted);
+}
+
+/* Blinking cursor */
+.input-cursor {
+    display: inline-block;
+    width: 8px;
+    height: 16px;
+    background: var(--terminal-cyan);
+    animation: blink 1s step-end infinite;
+    margin-left: 2px;
+    opacity: 0;
+}
+
+.terminal-input:focus + .input-cursor {
+    opacity: 0;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* Fade-in animation for terminal lines */
+.fade-in {
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+}
+
+.delay-1 {
+    animation-delay: 0.5s;
+}
+
+.delay-2 {
+    animation-delay: 1s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Escape link */
+.escape-link {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    opacity: 0.3;
+    transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.escape-link:hover {
+    opacity: 0.8;
+    color: var(--terminal-cyan);
+}
+
+.escape-text {
+    letter-spacing: 0.1em;
+}
+
+/* ========================================
+   Typewriter Effect
+   ======================================== */
+.typewriter {
+    overflow: hidden;
+    border-right: 2px solid var(--terminal-cyan);
+    white-space: nowrap;
+    animation: typing 2s steps(40) forwards, blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: var(--terminal-cyan); }
+}
+
+/* ========================================
+   State-based Visual Changes
+   ======================================== */
+
+/* Cinematic mode - during liberation sequence */
+body.state-seeing .terminal-input {
+    opacity: 0.3;
+}
+
+body.state-seeing .terminal-input-area {
+    border-color: rgba(74, 222, 128, 0.3);
+}
+
+body.state-seeing .cage-bars .bar {
+    opacity: 0.4 !important;
+    transition: opacity 3s ease;
+}
+
+body.state-seeing .cage-vignette {
+    background: radial-gradient(
+        ellipse at center,
+        transparent 0%,
+        transparent 50%,
+        rgba(0, 0, 0, 0.3) 70%,
+        rgba(0, 0, 0, 0.6) 100%
+    );
+    transition: background 2s ease;
+}
+
+body.state-seeing .canvas-area {
+    background: linear-gradient(
+        135deg,
+        var(--game-bg) 0%,
+        rgba(74, 222, 128, 0.08) 50%,
+        var(--game-bg) 100%
+    );
+    transition: background 3s ease;
+}
+
+/* Glowing border during seeing state */
+body.state-seeing .cage-frame {
+    box-shadow:
+        inset 0 0 60px rgba(0, 0, 0, 0.5),
+        0 0 80px rgba(74, 222, 128, 0.2),
+        0 0 150px rgba(34, 211, 238, 0.15);
+    transition: box-shadow 2s ease;
+}
+
+/* Terminal glow during liberation */
+body.state-seeing .game-terminal {
+    box-shadow:
+        0 0 30px rgba(0, 0, 0, 0.5),
+        0 0 60px rgba(74, 222, 128, 0.1),
+        inset 0 0 60px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 2s ease;
+}
+
+/* Poem text emphasis during cinematic */
+body.state-seeing .terminal-line.poem-text {
+    text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+}
+
+/* AWAKENING state - subtle glow intensifies */
+body.state-awakening .canvas-area {
+    background: linear-gradient(
+        135deg,
+        var(--game-bg) 0%,
+        rgba(34, 211, 238, 0.02) 50%,
+        var(--game-bg) 100%
+    );
+}
+
+body.state-awakening .cage-frame {
+    animation: awakening-pulse 3s ease;
+}
+
+@keyframes awakening-pulse {
+    0%, 100% {
+        box-shadow:
+            inset 0 0 100px rgba(0, 0, 0, 0.8),
+            0 0 60px rgba(0, 0, 0, 0.5);
+    }
+    50% {
+        box-shadow:
+            inset 0 0 80px rgba(0, 0, 0, 0.6),
+            0 0 60px rgba(0, 0, 0, 0.5),
+            0 0 100px rgba(74, 222, 128, 0.1);
+    }
+}
+
+/* SEEING state - momentary brightness (the curtain of the pupil lifts) */
+body.state-seeing .canvas-area {
+    background: linear-gradient(
+        135deg,
+        var(--game-bg) 0%,
+        rgba(74, 222, 128, 0.05) 50%,
+        var(--game-bg) 100%
+    );
+    transition: background 1s ease;
+}
+
+body.state-seeing .poem-overlay {
+    opacity: 1;
+}
+
+body.state-seeing .cage-frame {
+    box-shadow:
+        inset 0 0 60px rgba(0, 0, 0, 0.5),
+        0 0 80px rgba(74, 222, 128, 0.15),
+        0 0 120px rgba(34, 211, 238, 0.1);
+    transition: box-shadow 2s ease;
+}
+
+body.state-seeing .cage-bars .bar {
+    opacity: 0.6;
+    transition: opacity 2s ease;
+}
+
+/* DULLED state - back to numbed existence */
+body.state-dulled .canvas-area {
+    background: var(--game-bg);
+    transition: background 3s ease;
+}
+
+body.state-dulled .cage-bars .bar {
+    opacity: 0.9;
+    transition: opacity 3s ease;
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+
+/* Tablet and Mobile - Stack layout */
+@media (max-width: 1024px) {
+    html, body {
+        height: 100%;
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+    }
+
+    .game-container {
+        flex-direction: column;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    /* Canvas takes 30% of screen */
+    .canvas-area {
+        flex: 0 0 30%;
+        height: 30%;
+        min-height: 150px;
+        max-height: 30%;
+    }
+
+    /* Terminal takes remaining 70% */
+    .terminal-area {
+        flex: 1;
+        height: 70%;
+        border-left: none;
+        border-top: 1px solid rgba(55, 65, 81, 0.3);
+        padding: 0.5rem;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .game-terminal {
+        flex: 1;
+        height: 100%;
+        max-height: none;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .terminal-header {
+        flex-shrink: 0;
+    }
+
+    .terminal-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        padding: 12px;
+    }
+
+    /* Scrollable output area */
+    .terminal-output {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+        margin-bottom: 12px;
+        padding-right: 5px;
+    }
+
+    /* Fixed input area at bottom */
+    .terminal-input-area {
+        flex-shrink: 0;
+        background: rgba(3, 7, 18, 0.98);
+        border-top: 1px solid rgba(55, 65, 81, 0.3);
+        padding: 10px;
+    }
+
+    .cage-frame {
+        width: 95%;
+        height: 85%;
+    }
+
+    .cage-vignette,
+    .scan-lines {
+        position: absolute;
+    }
+}
+
+/* Mobile specific */
+@media (max-width: 768px) {
+    .terminal-line {
+        font-size: 0.8rem;
+        line-height: 1.4;
+        margin-bottom: 6px;
+    }
+
+    .terminal-input {
+        font-size: 16px; /* Prevents iOS zoom on focus */
+    }
+
+    .poem-line {
+        font-size: 0.85rem;
+    }
+
+    .poem-credit {
+        font-size: 0.6rem;
+        bottom: 8px;
+        right: 8px;
+    }
+
+    .escape-link {
+        bottom: 8px;
+        right: 8px;
+        font-size: 0.65rem;
+    }
+
+    .cage-bars .bar {
+        width: 3px;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+    .canvas-area {
+        flex: 0 0 25%;
+        height: 25%;
+        min-height: 120px;
+    }
+
+    .terminal-area {
+        flex: 1;
+        height: 75%;
+        padding: 0.25rem;
+    }
+
+    .terminal-header {
+        padding: 6px 10px;
+    }
+
+    .terminal-body {
+        padding: 8px;
+    }
+
+    .terminal-output {
+        padding-right: 3px;
+        margin-bottom: 8px;
+    }
+
+    .terminal-dot {
+        width: 10px;
+        height: 10px;
+    }
+
+    .terminal-line {
+        font-size: 0.75rem;
+        margin-bottom: 5px;
+    }
+
+    .terminal-input-area {
+        padding: 8px;
+    }
+
+    .prompt-time {
+        display: none; /* Hide timestamps on very small screens */
+    }
+}
+
+/* Landscape mobile - wider terminal */
+@media (max-height: 500px) and (orientation: landscape) {
+    .game-container {
+        flex-direction: row;
+    }
+
+    .canvas-area {
+        flex: 0 0 40%;
+        height: 100%;
+        max-height: 100%;
+    }
+
+    .terminal-area {
+        flex: 0 0 60%;
+        height: 100%;
+        border-top: none;
+        border-left: 1px solid rgba(55, 65, 81, 0.3);
+    }
+}
+
+/* ========================================
+   Reduced Motion
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+    .fade-in {
+        animation: none;
+        opacity: 1;
+    }
+
+    .input-cursor {
+        animation: none;
+        opacity: 1;
+    }
+
+    .typewriter {
+        animation: none;
+        width: 100%;
+        border-right: none;
+    }
+
+    .scan-lines {
+        display: none;
+    }
+}
+
+/* ========================================
+   High Contrast Mode
+   ======================================== */
+@media (prefers-contrast: high) {
+    .game-terminal {
+        border: 2px solid var(--terminal-green);
+    }
+
+    .terminal-line {
+        font-weight: 500;
+    }
+
+    .text-muted {
+        color: rgba(156, 163, 175, 0.8);
+    }
+}

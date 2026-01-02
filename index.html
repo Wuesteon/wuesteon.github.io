@@ -6,6 +6,7 @@
     <title>Nils Weiser - IT Consulting: KI & App Entwicklung</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="blackhole/blackhole.css">
     <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
 </head>
 <body class="bg-gray-950 text-gray-100">
@@ -389,10 +390,19 @@
         </div>
     </section>
 
+    <!-- Black Hole Overlay -->
+    <div id="black-hole-overlay" class="black-hole-overlay">
+        <canvas id="black-hole-canvas"></canvas>
+        <div class="singularity"></div>
+        <div class="accretion-disk"></div>
+        <div class="event-horizon"></div>
+    </div>
+
     <div id="footer-placeholder"></div>
 
     <script src="js/components.js"></script>
     <script src="js/translations.js"></script>
     <script src="js/main.js"></script>
+    <script src="blackhole/blackhole.js"></script>
 </body>
 </html>

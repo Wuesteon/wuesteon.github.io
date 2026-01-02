@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>...</title>
+    <meta name="description" content="Sein Blick ist vom Voruebergehn der Staebe so mued geworden, dass er nichts mehr haelt.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Main site styles for consistency -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- Game-specific styles -->
+    <link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+    <!-- Atmospheric overlays -->
+    <div class="cage-vignette"></div>
+    <div class="scan-lines"></div>
+
+    <!-- Main container -->
+    <div class="game-container">
+        <!-- Left: Canvas Area (The Cage) -->
+        <div class="canvas-area">
+            <div class="cage-frame">
+                <!-- Vertical bars overlay -->
+                <div class="cage-bars">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+
+                <!-- Canvas for the panther animation -->
+                <canvas id="panther-canvas"></canvas>
+
+                <!-- Poem fragment overlay - appears in moments of clarity -->
+                <div class="poem-overlay" id="poem-overlay">
+                    <p class="poem-line"></p>
+                </div>
+            </div>
+
+            <!-- Subtle poem attribution -->
+            <div class="poem-credit">
+                <span class="credit-dash">--</span> R.M. Rilke, 1902<br>
+                <span class="designer-credit">designed by Nils Weiser</span>
+            </div>
+        </div>
+
+        <!-- Right: Terminal Interface -->
+        <div class="terminal-area">
+            <div class="terminal-window game-terminal">
+                <div class="terminal-header">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                    <div class="terminal-title">panther.exe</div>
+                </div>
+                <div class="terminal-body" id="terminal-body">
+                    <div class="terminal-output" id="terminal-output">
+                        <p class="terminal-line system-msg">
+                            <span class="prompt-time">[--:--:--]</span> System initialized...
+                        </p>
+                        <p class="terminal-line system-msg fade-in">
+                            <span class="prompt-time">[--:--:--]</span> <span class="text-muted">Sein Blick ist vom Voruebergehn der Staebe</span>
+                        </p>
+                        <p class="terminal-line system-msg fade-in">
+                            <span class="prompt-time">[--:--:--]</span> <span class="text-muted">so mued geworden, dass er nichts mehr haelt.</span>
+                        </p>
+                        <p class="terminal-line fade-in delay-1">
+                            <span class="prompt-symbol">></span> Type <span class="cmd-highlight">help</span> for commands
+                        </p>
+                    </div>
+                    <div class="terminal-input-area">
+                        <span class="prompt-symbol">></span>
+                        <input
+                            type="text"
+                            id="terminal-input"
+                            class="terminal-input"
+                            autocomplete="off"
+                            spellcheck="false"
+                            autofocus
+                        >
+                        <span class="input-cursor"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hidden exit link -->
+            <a href="../index.html" class="escape-link" title="Escape">
+                <span class="escape-text">[ ESC ]</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/panther-game.js"></script>
+    <script src="js/terminal.js"></script>
+    <script>
+        // Initialize game when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the panther canvas animation
+            if (window.PantherGame) {
+                PantherGame.init('panther-canvas');
+                PantherGame.start();
+            }
+
+            // Initialize terminal
+            if (window.initTerminal) {
+                initTerminal(window.PantherGame);
+            }
+        });
+    </script>
+</body>
+</html>
