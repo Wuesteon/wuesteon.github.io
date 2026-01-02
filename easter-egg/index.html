@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="../css/styles.css">
     <!-- Game-specific styles -->
     <link rel="stylesheet" href="css/game.css">
+
+    <!-- Umami Analytics -->
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
 </head>
 <body>
     <!-- Atmospheric overlays -->
@@ -68,6 +71,14 @@
                     <div class="terminal-dot yellow"></div>
                     <div class="terminal-dot green"></div>
                     <div class="terminal-title">panther.exe</div>
+                    <div class="lang-selector" id="lang-selector">
+                        <button class="lang-btn" data-lang="de">DE</button>
+                        <button class="lang-btn" data-lang="en">EN</button>
+                        <button class="lang-btn" data-lang="es">ES</button>
+                        <button class="lang-btn" data-lang="fr">FR</button>
+                        <button class="lang-btn" data-lang="it">IT</button>
+                        <button class="lang-btn" data-lang="pt">PT</button>
+                    </div>
                 </div>
                 <div class="terminal-body" id="terminal-body">
                     <div class="terminal-output" id="terminal-output">
@@ -107,11 +118,35 @@
     </div>
 
     <!-- Scripts -->
+    <script src="js/panther-translations.js"></script>
     <script src="js/panther-game.js"></script>
+    <script src="js/chains-liberation.js"></script>
     <script src="js/terminal.js"></script>
     <script>
         // Initialize game when DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize language selector
+            if (window.PantherI18n) {
+                const currentLang = PantherI18n.getLang();
+                const langBtns = document.querySelectorAll('.lang-btn');
+
+                // Set active button
+                langBtns.forEach(btn => {
+                    if (btn.dataset.lang === currentLang) {
+                        btn.classList.add('active');
+                    }
+
+                    btn.addEventListener('click', function() {
+                        const lang = this.dataset.lang;
+                        PantherI18n.setLang(lang);
+
+                        // Update active state
+                        langBtns.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                    });
+                });
+            }
+
             // Initialize the panther canvas animation
             if (window.PantherGame) {
                 PantherGame.init('panther-canvas');

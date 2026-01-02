@@ -9,6 +9,17 @@
     'use strict';
 
     // ========================================
+    // Translation Helper
+    // ========================================
+
+    function t(key) {
+        if (window.PantherI18n && window.PantherI18n.t) {
+            return window.PantherI18n.t(key);
+        }
+        return key;
+    }
+
+    // ========================================
     // Analytics Helper
     // ========================================
 
@@ -38,28 +49,6 @@
         cinematicPlaying: false   // Block input during cinematic
     };
 
-    // The Poem - Der Panther by Rainer Maria Rilke
-    const POEM = {
-        stanza1: [
-            "Sein Blick ist vom Voruebergehn der Staebe",
-            "so mued geworden, dass er nichts mehr haelt.",
-            "Ihm ist, als ob es tausend Staebe gaebe",
-            "und hinter tausend Staeben keine Welt."
-        ],
-        stanza2: [
-            "Der weiche Gang geschmeidig starker Schritte,",
-            "der sich im allerkleinsten Kreise dreht,",
-            "ist wie ein Tanz von Kraft um eine Mitte,",
-            "in der betaeubt ein grosser Wille steht."
-        ],
-        stanza3: [
-            "Nur manchmal schiebt der Vorhang der Pupille",
-            "sich lautlos auf -. Dann geht ein Bild hinein,",
-            "geht durch der Glieder angespannte Stille -",
-            "und hoert im Herzen auf zu sein."
-        ]
-    };
-
     // Terminal elements
     let terminalOutput = null;
     let terminalInput = null;
@@ -74,43 +63,45 @@
     const COMMANDS = {
         // Basic commands
         help: {
-            description: "Show available commands",
+            descriptionKey: "terminal.commands.help",
             handler: cmdHelp
         },
         look: {
-            description: "Look at the panther",
+            descriptionKey: "terminal.commands.look",
             handler: cmdLook
         },
         poem: {
-            description: "Read the poem",
+            descriptionKey: "terminal.commands.poem",
             handler: cmdPoem
         },
         speak: {
-            description: "Speak to the panther",
+            descriptionKey: "terminal.commands.speak",
             handler: cmdSpeak
         },
         open: {
-            description: "Try to open the cage",
+            descriptionKey: "terminal.commands.open",
             handler: cmdOpen
         },
         wake: {
-            description: "Try to wake the panther",
+            descriptionKey: "terminal.commands.wake",
             handler: cmdWake
         },
         free: {
-            description: "Attempt to free the panther",
+            descriptionKey: "terminal.commands.free",
             handler: cmdFree
         },
         status: {
-            description: "Check your progress",
+            descriptionKey: "terminal.commands.status",
             handler: cmdStatus
         },
         clear: {
-            description: "Clear the terminal",
+            descriptionKey: "terminal.commands.clear",
             handler: cmdClear
         },
 
         // Hidden/secret commands
+        erwachen: { hidden: true, handler: cmdErwachen },
+        ketten: { hidden: true, handler: cmdKetten },
         stabe: { hidden: true, handler: cmdStabe },
         wille: { hidden: true, handler: cmdWille },
         herz: { hidden: true, handler: cmdHerz },
@@ -155,6 +146,36 @@
 
         // Initial focus
         terminalInput.focus();
+
+        // Update initial messages with current language
+        updateInitialMessages();
+
+        // Listen for language changes
+        window.addEventListener('pantherLangChange', function() {
+            updateInitialMessages();
+        });
+    }
+
+    function updateInitialMessages() {
+        // Update the initial terminal output with translated text
+        const output = document.getElementById('terminal-output');
+        if (output) {
+            const poem = t('poem.stanza1');
+            output.innerHTML = `
+                <p class="terminal-line system-msg">
+                    <span class="prompt-time">[--:--:--]</span> ${t('terminal.system.initialized')}
+                </p>
+                <p class="terminal-line system-msg fade-in">
+                    <span class="prompt-time">[--:--:--]</span> <span class="text-muted">${poem[0]}</span>
+                </p>
+                <p class="terminal-line system-msg fade-in">
+                    <span class="prompt-time">[--:--:--]</span> <span class="text-muted">${poem[1]}</span>
+                </p>
+                <p class="terminal-line fade-in delay-1">
+                    <span class="prompt-symbol">></span> ${t('terminal.system.typeHelp')}
+                </p>
+            `;
+        }
     }
 
     function handleKeyDown(e) {
@@ -245,6 +266,13 @@
         terminalOutput.appendChild(line);
     }
 
+    function printLineHTML(html, className) {
+        const line = document.createElement('p');
+        line.className = 'terminal-line ' + (className || 'response');
+        line.innerHTML = html;
+        terminalOutput.appendChild(line);
+    }
+
     function printPoem(lines) {
         lines.forEach(function(line) {
             const p = document.createElement('p');
@@ -262,12 +290,7 @@
     }
 
     function printUnknown(input) {
-        const responses = [
-            "Der Panther versteht nicht. Oder vielleicht verstehst du nicht.",
-            "Unbekannter Befehl. Tippe 'help' fuer Hilfe.",
-            "Die Staebe schweigen.",
-            "Nichts geschieht."
-        ];
+        const responses = t('terminal.unknown');
         printLine(responses[Math.floor(Math.random() * responses.length)]);
     }
 
@@ -277,52 +300,30 @@
 
     function cmdHelp() {
         printEmpty();
-        printLine("=== Der Panther ===", 'system-msg');
+        printLine(t('terminal.system.title'), 'system-msg');
         printEmpty();
-        printLine("Verfuegbare Befehle:");
+        printLine(t('terminal.system.availableCommands'));
 
         Object.keys(COMMANDS).forEach(function(key) {
             const cmd = COMMANDS[key];
-            if (!cmd.hidden && cmd.description) {
-                printLine("  " + key + " - " + cmd.description, 'text-muted');
+            if (!cmd.hidden && cmd.descriptionKey) {
+                printLine("  " + key + " - " + t(cmd.descriptionKey), 'text-muted');
             }
         });
 
         printEmpty();
-        printLine("Es gibt auch verborgene Befehle...", 'text-muted');
+        printLine(t('terminal.system.hiddenHint'), 'text-muted');
     }
 
     function cmdLook() {
         GameState.hasLooked = true;
         GameState.awareness++;
 
-        const responses = {
-            weary: [
-                "Der Panther dreht sich in seinem engen Kreis.",
-                "Sein Blick gleitet an den Staeben vorbei,",
-                "ohne sie wirklich zu sehen.",
-                "Die Bewegung ist mechanisch, endlos."
-            ],
-            curious: [
-                "Der Panther haelt inne.",
-                "Fuer einen Moment scheint er dich zu bemerken.",
-                "Dann setzt er sein Kreisen fort."
-            ],
-            restless: [
-                "Etwas flackert in seinen Augen.",
-                "Der Gang wird unruhiger.",
-                "Sucht er nach etwas?"
-            ],
-            awakened: [
-                "Der Panther steht still.",
-                "Seine Augen sind offen, wach.",
-                "Zum ersten Mal scheint er wirklich zu sehen."
-            ]
-        };
+        const responses = t('terminal.responses.look');
+        const moodResponses = responses[GameState.pantherMood] || responses.weary;
 
         printEmpty();
-        const lines = responses[GameState.pantherMood] || responses.weary;
-        lines.forEach(function(line) { printLine(line); });
+        moodResponses.forEach(function(line) { printLine(line); });
 
         // Update canvas if available
         if (canvasAPI && GameState.awareness > 3) {
@@ -334,21 +335,21 @@
         printEmpty();
 
         if (GameState.poemRevealed === 0) {
-            printLine("Die erste Strophe offenbart sich...", 'system-msg');
+            printLine(t('terminal.responses.poem.stanza1Intro'), 'system-msg');
             printEmpty();
-            printPoem(POEM.stanza1);
+            printPoem(t('poem.stanza1'));
             GameState.poemRevealed = 1;
             GameState.awareness += 2;
         } else if (GameState.poemRevealed === 1) {
-            printLine("Die zweite Strophe...", 'system-msg');
+            printLine(t('terminal.responses.poem.stanza2Intro'), 'system-msg');
             printEmpty();
-            printPoem(POEM.stanza2);
+            printPoem(t('poem.stanza2'));
             GameState.poemRevealed = 2;
             GameState.connection++;
         } else if (GameState.poemRevealed === 2) {
-            printLine("Die letzte Strophe...", 'system-msg');
+            printLine(t('terminal.responses.poem.stanza3Intro'), 'system-msg');
             printEmpty();
-            printPoem(POEM.stanza3);
+            printPoem(t('poem.stanza3'));
             GameState.poemRevealed = 3;
             GameState.connection += 2;
 
@@ -361,7 +362,8 @@
             // Trigger awakening after reading full poem
             setTimeout(function() {
                 printEmpty();
-                printLine("Der Vorhang der Pupille schiebt sich lautlos auf...", 'poem-text');
+                printLine(t('terminal.responses.poem.awakening'), 'poem-text');
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
                 if (canvasAPI) {
                     canvasAPI.awakenPanther();
                     document.body.classList.add('state-seeing');
@@ -372,31 +374,30 @@
                 GameState.hasAwakened = true;
                 GameState.pantherMood = 'awakened';
                 GameState.seeingCount++;
+
+                // Track panther awakening
+                trackEvent('panther-awakened', {
+                    commandCount: GameState.commandCount,
+                    timestamp: new Date().toISOString()
+                });
             }, 2000);
         } else {
-            printLine("Das vollstaendige Gedicht:", 'system-msg');
+            printLine(t('terminal.responses.poem.fullPoem'), 'system-msg');
             printEmpty();
-            printPoem(POEM.stanza1);
+            printPoem(t('poem.stanza1'));
             printEmpty();
-            printPoem(POEM.stanza2);
+            printPoem(t('poem.stanza2'));
             printEmpty();
-            printPoem(POEM.stanza3);
+            printPoem(t('poem.stanza3'));
             printEmpty();
-            printLine("-- Rainer Maria Rilke, 1902", 'text-muted');
+            printLine("-- " + t('poem.author'), 'text-muted');
         }
     }
 
     function cmdSpeak() {
         GameState.hasSpoken = true;
 
-        const responses = [
-            "Du sprichst leise in die Dunkelheit.",
-            "Der Panther dreht nicht einmal den Kopf.",
-            "Deine Worte verhallen zwischen den Staeben.",
-            "",
-            "Vielleicht hoert er. Vielleicht nicht.",
-            "Die Sprache der Menschen bedeutet ihm nichts."
-        ];
+        const responses = t('terminal.responses.speak');
 
         printEmpty();
         responses.forEach(function(line) {
@@ -416,18 +417,15 @@
         printEmpty();
 
         if (GameState.commandCount < 10) {
-            printLine("Du greifst nach den Staeben.");
-            printLine("Sie sind kalt, unnachgiebig.");
-            printLine("Der Panther beachtet dich nicht.");
+            const responses = t('terminal.responses.open.first');
+            responses.forEach(function(line) { printLine(line); });
         } else if (!GameState.hasAwakened) {
-            printLine("Die Staebe lassen sich nicht bewegen.");
-            printLine("Aber... sind es wirklich die Staebe,");
-            printLine("die ihn gefangen halten?");
+            const responses = t('terminal.responses.open.second');
+            responses.forEach(function(line) { printLine(line); });
             GameState.connection++;
         } else {
-            printLine("Die Staebe sind nicht das Gefaengnis.");
-            printLine("Das Gefaengnis ist die Wahrnehmung.");
-            printLine("Die Mauern stehen im Inneren.");
+            const responses = t('terminal.responses.open.realized');
+            responses.forEach(function(line) { printLine(line); });
         }
     }
 
@@ -435,10 +433,11 @@
         printEmpty();
 
         if (GameState.pantherMood === 'awakened') {
-            printLine("Er ist bereits wach.");
-            printLine("Wacher als du vielleicht.");
+            const responses = t('terminal.responses.wake.notAwakened');
+            responses.forEach(function(line) { printLine(line); });
         } else if (GameState.poemRevealed >= 2) {
-            printLine("Etwas regt sich...");
+            const responses = t('terminal.responses.wake.partial');
+            printLine(responses[0]);
             GameState.pantherMood = 'curious';
             GameState.awareness += 2;
 
@@ -448,12 +447,11 @@
             }
 
             setTimeout(function() {
-                printLine("Die Augen des Panthers finden deinen Blick.", 'poem-text');
+                printLine(responses[1], 'poem-text');
             }, 1500);
         } else {
-            printLine("Er schlaeft nicht.");
-            printLine("Er ist nur... betaeubt.");
-            printLine("'In der betaeubt ein grosser Wille steht.'");
+            const responses = t('terminal.responses.wake.awakened');
+            responses.forEach(function(line) { printLine(line); });
             GameState.awareness++;
         }
     }
@@ -462,15 +460,15 @@
         printEmpty();
 
         if (GameState.isFreed) {
-            printLine("Die Freiheit liegt in dir. Sie war immer da.");
+            printLine(t('terminal.responses.free.understood'));
             return;
         }
 
         if (!GameState.hasAwakened) {
-            printLine("Du ruettelst an den Staeben.");
-            printLine("Nichts bewegt sich.");
+            const responses = t('terminal.responses.free.notReady');
+            responses.forEach(function(line) { printLine(line); });
             printEmpty();
-            printLine("Lies das Gedicht. Verstehe.", 'text-muted');
+            printLine(responses[2], 'text-muted');
             GameState.connection++;
         } else {
             // Disable input during cinematic sequence
@@ -499,20 +497,22 @@
         terminalInput.disabled = true;
         terminalInput.blur();
 
+        const cin = t('terminal.responses.cinematic');
+
         const sequence = [
             // Scene 1: Realization
             { delay: 0, action: function() {
-                printLine("...", 'system-msg');
+                printLine(cin.dots, 'system-msg');
             }},
             { delay: 1500, action: function() {
                 printEmpty();
-                printLine("Du siehst die Staebe.", 'poem-text');
+                printLine(cin.seeBars, 'poem-text');
             }},
             { delay: 2500, action: function() {
-                printLine("Du siehst den Panther.", 'poem-text');
+                printLine(cin.seePanther, 'poem-text');
             }},
             { delay: 3500, action: function() {
-                printLine("Du siehst... dich selbst.", 'poem-text');
+                printLine(cin.seeYourself, 'poem-text');
             }},
 
             // Scene 2: The turn
@@ -524,17 +524,17 @@
                 }
             }},
             { delay: 6000, action: function() {
-                printLine("Der Panther haelt inne.", 'response');
+                printLine(cin.pantherPauses, 'response');
             }},
             { delay: 7500, action: function() {
-                printLine("Er dreht sich um.", 'response');
+                printLine(cin.turnsAround, 'response');
             }},
             { delay: 9000, action: function() {
-                printLine("Langsam.", 'response');
+                printLine(cin.slowly, 'response');
             }},
             { delay: 10500, action: function() {
                 printEmpty();
-                printLine("Seine Augen finden deine.", 'poem-text');
+                printLine(cin.eyesMeet, 'poem-text');
                 if (canvasAPI) {
                     canvasAPI.awakenPanther();
                     document.body.classList.add('state-seeing');
@@ -547,17 +547,17 @@
                 printEmpty();
             }},
             { delay: 13500, action: function() {
-                printLine("Und du verstehst:", 'system-msg');
+                printLine(cin.understand, 'system-msg');
             }},
             { delay: 15000, action: function() {
                 printEmpty();
-                printLine("Die Staebe waren nie das Gefaengnis.", 'poem-text');
+                printLine(cin.barsNotPrison, 'poem-text');
             }},
             { delay: 17000, action: function() {
-                printLine("Das Gefaengnis war der Blick.", 'poem-text');
+                printLine(cin.prisonWasGaze, 'poem-text');
             }},
             { delay: 19000, action: function() {
-                printLine("Der muede, leere Blick.", 'poem-text');
+                printLine(cin.wearyEmptyGaze, 'poem-text');
             }},
 
             // Scene 4: The world beyond
@@ -569,14 +569,14 @@
                 }
             }},
             { delay: 22000, action: function() {
-                printLine("Hinter den Staeben...", 'response');
+                printLine(cin.behindBars, 'response');
             }},
             { delay: 23500, action: function() {
-                printLine("war immer eine Welt.", 'response');
+                printLine(cin.alwaysWorld, 'response');
             }},
             { delay: 25500, action: function() {
                 printEmpty();
-                printLine("Du musstest nur sehen.", 'poem-text');
+                printLine(cin.hadToSee, 'poem-text');
             }},
 
             // Scene 5: The message
@@ -590,14 +590,14 @@
             }},
             { delay: 29500, action: function() {
                 printEmpty();
-                printLine("Die Welt, die du suchst,", 'poem-text');
+                printLine(cin.worldYouSeek, 'poem-text');
             }},
             { delay: 31500, action: function() {
-                printLine("war nie hinter den Staeben.", 'poem-text');
+                printLine(cin.neverBehindBars, 'poem-text');
             }},
             { delay: 33500, action: function() {
                 printEmpty();
-                printLine("Sie war in dir.", 'poem-text');
+                printLine(cin.wasInYou, 'poem-text');
             }},
             { delay: 36000, action: function() {
                 printEmpty();
@@ -610,32 +610,46 @@
                 printEmpty();
             }},
             { delay: 39500, action: function() {
-                printLine("Das Bild verblasst.", 'text-muted');
+                printLine(cin.imageFades, 'text-muted');
             }},
             { delay: 41000, action: function() {
-                printLine("Der Panther kreist weiter.", 'text-muted');
+                printLine(cin.pantherCircles, 'text-muted');
             }},
             { delay: 43000, action: function() {
                 printEmpty();
-                printLine("Aber du hast gesehen.", 'poem-text');
+                printLine(cin.butYouSaw, 'poem-text');
             }},
 
             // Final
-            { delay: 57000, action: function() {
+            { delay: 47000, action: function() {
                 printEmpty();
                 printEmpty();
-                printLine("-- R.M. Rilke, Der Panther, 1902", 'text-muted');
-                printLine("designed by Nils Weiser", 'text-muted');
+                printLine("-- " + t('poem.author'), 'text-muted');
+                printLine(t('ui.credit'), 'text-muted');
                 document.body.classList.remove('state-seeing');
                 if (canvasAPI) {
                     canvasAPI.setMood(1);
                 }
             }},
             { delay: 50000, action: function() {
-                // Re-enable input
+                // Transition to the chains question
+                printEmpty();
+                printEmpty();
+                printLine(cin.dots, 'system-msg');
+            }},
+            { delay: 52000, action: function() {
+                printEmpty();
+                printLine(cin.questionRemains, 'poem-text');
+            }},
+            { delay: 55000, action: function() {
+                printEmpty();
+                printLine(cin.readyToAwaken, 'poem-text');
+            }},
+            { delay: 58000, action: function() {
+                printLineHTML(cin.typeAwaken, 'system-msg');
+                // Re-enable input so user can type the command
                 GameState.cinematicPlaying = false;
                 terminalInput.disabled = false;
-                terminalInput.focus();
             }}
         ];
 
@@ -650,21 +664,21 @@
 
     function cmdStatus() {
         printEmpty();
-        printLine("=== Status ===", 'system-msg');
-        printLine("Befehle eingegeben: " + GameState.commandCount, 'text-muted');
-        printLine("Gedicht-Strophen gelesen: " + GameState.poemRevealed + "/3", 'text-muted');
-        printLine("Verborgene Befehle gefunden: " + GameState.hiddenCommandsFound.length, 'text-muted');
-        printLine("Zustand des Panthers: " + GameState.pantherMood, 'text-muted');
+        printLine(t('terminal.system.statusTitle'), 'system-msg');
+        printLine(t('terminal.status.commandsEntered') + GameState.commandCount, 'text-muted');
+        printLine(t('terminal.status.poemStanzas') + GameState.poemRevealed + "/3", 'text-muted');
+        printLine(t('terminal.status.hiddenFound') + GameState.hiddenCommandsFound.length, 'text-muted');
+        printLine(t('terminal.status.pantherState') + t('terminal.moods.' + GameState.pantherMood), 'text-muted');
 
         if (GameState.isFreed) {
             printEmpty();
-            printLine("Du hast verstanden.", 'poem-text');
+            printLine(t('terminal.status.understood'), 'poem-text');
         }
     }
 
     function cmdClear() {
         terminalOutput.innerHTML = '';
-        printLine("Terminal geloescht.", 'system-msg');
+        printLine(t('terminal.system.cleared'), 'system-msg');
     }
 
     // ========================================
@@ -672,20 +686,22 @@
     // ========================================
 
     function cmdStabe() {
+        const responses = t('terminal.responses.hidden.stabe');
         printEmpty();
-        printLine("'Ihm ist, als ob es tausend Staebe gaebe'", 'poem-text');
-        printLine("'und hinter tausend Staeben keine Welt.'", 'poem-text');
+        printLine(responses[0], 'poem-text');
+        printLine(responses[1], 'poem-text');
         printEmpty();
-        printLine("Die Staebe sind ueberall und nirgends.", 'text-muted');
+        printLine(responses[2], 'text-muted');
         GameState.awareness++;
     }
 
     function cmdWille() {
+        const responses = t('terminal.responses.hidden.wille');
         printEmpty();
-        printLine("'...in der betaeubt ein grosser Wille steht.'", 'poem-text');
+        printLine(responses[0], 'poem-text');
         printEmpty();
-        printLine("Der Wille ist noch da.", 'text-muted');
-        printLine("Nur betaeubt. Nicht tot.");
+        printLine(responses[1], 'text-muted');
+        printLine(responses[2]);
         GameState.connection++;
 
         if (canvasAPI) {
@@ -694,41 +710,45 @@
     }
 
     function cmdHerz() {
+        const responses = t('terminal.responses.hidden.herz');
         printEmpty();
-        printLine("'...und hoert im Herzen auf zu sein.'", 'poem-text');
+        printLine(responses[0], 'poem-text');
         printEmpty();
-        printLine("Das Bild geht durch die angespannte Stille");
-        printLine("der Glieder - und endet im Herzen.");
-        printLine("Aber was bedeutet es, im Herzen aufzuhoeren?");
+        printLine(responses[1]);
+        printLine(responses[2]);
+        printLine(responses[3]);
         GameState.connection += 2;
     }
 
     function cmdJardin() {
+        const responses = t('terminal.responses.hidden.jardin');
         printEmpty();
-        printLine("Le Jardin des Plantes, Paris.", 'text-muted');
-        printLine("Dort sah Rilke den Panther.");
-        printLine("1902. Vor mehr als einem Jahrhundert.");
+        printLine(responses[0], 'text-muted');
+        printLine(responses[1]);
+        printLine(responses[2]);
         printEmpty();
-        printLine("Das Tier kreist noch immer.");
+        printLine(responses[3]);
     }
 
     function cmdRilke() {
+        const responses = t('terminal.responses.hidden.rilke');
         printEmpty();
-        printLine("Rainer Maria Rilke (1875-1926)", 'system-msg');
+        printLine(responses[0], 'system-msg');
         printEmpty();
-        printLine("Er lernte von Rodin, wirklich zu sehen.");
-        printLine("Nicht nur zu schauen - zu sehen.");
-        printLine("'Der Panther' war eines seiner 'Dinggedichte' -");
-        printLine("Gedichte, die das Wesen eines Dinges erfassen.");
+        printLine(responses[1]);
+        printLine(responses[2]);
+        printLine(responses[3]);
+        printLine(responses[4]);
     }
 
     function cmdTanz() {
+        const responses = t('terminal.responses.hidden.tanz');
         printEmpty();
-        printLine("'...ist wie ein Tanz von Kraft um eine Mitte'", 'poem-text');
+        printLine(responses[0], 'poem-text');
         printEmpty();
-        printLine("Selbst in der Gefangenschaft -");
-        printLine("die Kraft bleibt.");
-        printLine("Der Tanz geht weiter.");
+        printLine(responses[1]);
+        printLine(responses[2]);
+        printLine(responses[3]);
 
         if (canvasAPI) {
             // Briefly make movement more graceful
@@ -740,13 +760,14 @@
     }
 
     function cmdPupille() {
+        const responses = t('terminal.responses.hidden.pupille');
         printEmpty();
-        printLine("'Nur manchmal schiebt der Vorhang der Pupille", 'poem-text');
-        printLine("sich lautlos auf -.'", 'poem-text');
+        printLine(responses.notReady[0], 'poem-text');
+        printLine(responses.notReady[1], 'poem-text');
         printEmpty();
 
         if (GameState.poemRevealed >= 3 && canvasAPI) {
-            printLine("Die Augen oeffnen sich...", 'text-muted');
+            printLine(responses.ready[0], 'text-muted');
             canvasAPI.awakenPanther();
             document.body.classList.add('state-seeing');
             GameState.hasAwakened = true;
@@ -756,37 +777,40 @@
                 document.body.classList.remove('state-seeing');
             }, 8000);
         } else {
-            printLine("Der Vorhang bleibt geschlossen.", 'text-muted');
-            printLine("Noch nicht...");
+            printLine(responses.notReady[2], 'text-muted');
+            printLine(responses.notReady[3]);
         }
     }
 
     function cmdGedicht() {
+        const responses = t('terminal.responses.hidden.gedicht');
         printEmpty();
-        printLine("Ein Dinggedicht.", 'text-muted');
-        printLine("Das Ding spricht durch den Dichter.");
-        printLine("Nicht ueber das Ding - durch es.");
+        printLine(responses[0], 'text-muted');
+        printLine(responses[1]);
+        printLine(responses[2]);
         printEmpty();
-        printLine("Der Panther hat durch Rilke gesprochen.");
-        printLine("Jetzt spricht er durch diese Staebe.");
+        printLine(responses[3]);
+        printLine(responses[4]);
     }
 
     function cmdRodin() {
+        const responses = t('terminal.responses.hidden.rodin');
         printEmpty();
-        printLine("Auguste Rodin, der Bildhauer.", 'text-muted');
-        printLine("Rilke war sein Sekretaer in Paris.");
-        printLine("'Il faut travailler' - Man muss arbeiten.");
-        printLine("'Il faut regarder' - Man muss sehen.");
+        printLine(responses[0], 'text-muted');
+        printLine(responses[1]);
+        printLine(responses[2]);
+        printLine(responses[3]);
         printEmpty();
-        printLine("Rodin lehrte ihn, wirklich zu sehen.");
+        printLine(responses[4]);
     }
 
     function cmdNacht() {
+        const responses = t('terminal.responses.hidden.nacht');
         printEmpty();
-        printLine("In der Nacht wird der Kaefig kleiner.", 'text-muted');
-        printLine("Oder groesser - wer weiss.");
-        printLine("Die Dunkelheit hinter den Staeben");
-        printLine("ist dieselbe wie die davor.");
+        printLine(responses[0], 'text-muted');
+        printLine(responses[1]);
+        printLine(responses[2]);
+        printLine(responses[3]);
 
         if (canvasAPI) {
             canvasAPI.setMood(0.5);
@@ -794,16 +818,39 @@
     }
 
     function cmdSecrets() {
+        const responses = t('terminal.responses.hidden.secrets');
         printEmpty();
-        printLine("=== Verborgene Befehle ===", 'system-msg');
-        printLine("Gefunden: " + GameState.hiddenCommandsFound.join(", ") || "(keine)");
+        printLine(t('terminal.system.hiddenTitle'), 'system-msg');
+        printLine(t('terminal.status.hiddenFound').replace(': ', ': ') + (GameState.hiddenCommandsFound.join(", ") || "(keine)"));
         printEmpty();
 
         if (GameState.hiddenCommandsFound.length >= 5) {
-            printLine("Du suchst aufmerksam.", 'text-muted');
-            printLine("Das ist gut.");
-            printLine("Der Panther bemerkt es.");
+            printLine(responses[0], 'text-muted');
+            printLine(responses[1]);
+            printLine(responses[2]);
         }
+    }
+
+    // Awaken command - start the chains liberation experience
+    function cmdErwachen() {
+        printEmpty();
+        printLine(t('terminal.responses.cinematic.youAwaken'), 'poem-text');
+        setTimeout(function() {
+            if (window.ChainsLiberation && !window.ChainsLiberation.isActive()) {
+                window.ChainsLiberation.show();
+            }
+        }, 1000);
+    }
+
+    // Debug command - skip directly to chains liberation
+    function cmdKetten() {
+        printEmpty();
+        printLine(t('terminal.responses.erwachen.direct'), 'system-msg');
+        setTimeout(function() {
+            if (window.ChainsLiberation && !window.ChainsLiberation.isActive()) {
+                window.ChainsLiberation.show();
+            }
+        }, 500);
     }
 
     // ========================================

@@ -342,10 +342,39 @@ html, body {
 }
 
 .terminal-title {
-    margin-left: auto;
     font-size: 0.75rem;
     color: var(--text-muted);
     letter-spacing: 0.05em;
+}
+
+/* Language Selector */
+.lang-selector {
+    display: flex;
+    gap: 2px;
+    margin-left: auto;
+}
+
+.lang-btn {
+    background: transparent;
+    border: 1px solid rgba(55, 65, 81, 0.3);
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    padding: 2px 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 2px;
+}
+
+.lang-btn:hover {
+    border-color: var(--terminal-cyan);
+    color: var(--terminal-cyan);
+}
+
+.lang-btn.active {
+    background: rgba(34, 211, 238, 0.15);
+    border-color: var(--terminal-cyan);
+    color: var(--terminal-cyan);
 }
 
 /* Terminal Body */
@@ -722,6 +751,16 @@ body.state-dulled .cage-bars .bar {
         flex-shrink: 0;
     }
 
+    /* Compact language selector on mobile */
+    .lang-selector {
+        gap: 1px;
+    }
+
+    .lang-btn {
+        font-size: 0.5rem;
+        padding: 2px 3px;
+    }
+
     .terminal-body {
         flex: 1;
         display: flex;
@@ -898,5 +937,551 @@ body.state-dulled .cage-bars .bar {
 
     .text-muted {
         color: rgba(156, 163, 175, 0.8);
+    }
+}
+
+/* ========================================
+   Chains Liberation Experience
+   "Sprengst du die Ketten, deinerselbst?"
+   ======================================== */
+
+.chains-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    pointer-events: none;
+}
+
+.chains-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.chains-void {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #050508;
+    transition: background 1s ease;
+}
+
+.chains-void.warming {
+    background: #0a0808;
+}
+
+.chains-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+#chains-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.chains-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.chains-credit {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: rgba(100, 100, 120, 0.4);
+    z-index: 5;
+    letter-spacing: 0.5px;
+}
+
+/* Question Container */
+.chains-question-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+    padding: 20px;
+}
+
+.chains-question {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 2.5rem;
+    color: #7FDBFF;
+    letter-spacing: 0.15em;
+    line-height: 1.8;
+    text-align: center;
+    text-shadow: 0 0 30px rgba(0, 255, 255, 0.3),
+                 0 0 60px rgba(0, 255, 255, 0.1);
+    animation: questionFloat 4s ease-in-out infinite;
+    max-width: 90vw;
+}
+
+@keyframes questionFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+}
+
+/* Choices */
+.chains-choices {
+    display: flex;
+    gap: 80px;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.chains-choices.visible {
+    opacity: 1;
+}
+
+.chains-btn {
+    position: relative;
+    padding: 16px 48px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    border: 1px solid;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.chains-btn-ja {
+    color: #7FDBFF;
+    border-color: #7FDBFF;
+}
+
+.chains-btn-ja:hover {
+    border-width: 2px;
+    box-shadow: 0 0 20px rgba(127, 219, 255, 0.5),
+                0 0 40px rgba(127, 219, 255, 0.2);
+    color: #00FFFF;
+}
+
+.chains-btn-ja .btn-pulse {
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 4px;
+    background: #7FDBFF;
+    border-radius: 50%;
+    animation: btnPulse 2s ease-in-out infinite;
+}
+
+@keyframes btnPulse {
+    0%, 100% { opacity: 0.6; transform: translateY(-50%) scale(1); }
+    50% { opacity: 1; transform: translateY(-50%) scale(1.2); }
+}
+
+.chains-btn-nein {
+    color: #888888;
+    border-color: #666666;
+}
+
+.chains-btn-nein:hover {
+    color: #CC4400;
+    border-color: #CC4400;
+}
+
+.chains-btn-silent {
+    color: #888888;
+    border-color: #555555;
+}
+
+.chains-btn-silent:hover {
+    color: #aaaaaa;
+    border-color: #777777;
+}
+
+/* Sound Hint */
+.chains-sound-hint {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px;
+    background: rgba(10, 10, 15, 0.8);
+    border-radius: 4px;
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.sound-icon {
+    width: 20px;
+    height: 20px;
+    color: #666666;
+    animation: soundWave 2s ease-in-out infinite;
+}
+
+.sound-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes soundWave {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+.sound-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.875rem;
+    color: #888888;
+}
+
+/* Decline Text */
+.chains-decline-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.5rem;
+    color: #CC4400;
+    letter-spacing: 0.1em;
+    animation: fadeInOut 2s ease;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Ritual Container */
+.chains-ritual-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.chains-ritual-container.visible {
+    opacity: 1;
+}
+
+.chains-ritual-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 1.5rem;
+    color: #7FDBFF;
+    letter-spacing: 0.1em;
+    line-height: 2;
+    text-align: center;
+    text-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+}
+
+.chains-ritual-choices {
+    display: flex;
+    gap: 60px;
+}
+
+/* Threshold Container */
+.chains-threshold-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    text-align: center;
+}
+
+.chains-threshold-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 300;
+    font-size: 1.8rem;
+    color: #7FDBFF;
+    letter-spacing: 0.15em;
+    margin: 0;
+    text-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+.chains-threshold-text.threshold-emphasis {
+    font-size: 2.2rem;
+    color: #FFD700;
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+}
+
+.chains-threshold-action {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+/* Hold Button */
+.chains-btn-hold {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 2px solid #7FDBFF;
+    background: transparent;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.chains-btn-hold:hover {
+    border-color: #FFD700;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+}
+
+.chains-btn-hold.holding {
+    border-color: #FFD700;
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.5),
+                0 0 100px rgba(255, 215, 0, 0.2);
+}
+
+.hold-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(to top,
+        rgba(255, 215, 0, 0.4) 0%,
+        rgba(255, 255, 255, 0.1) 100%);
+    transition: width 0.1s linear;
+}
+
+.hold-text {
+    position: relative;
+    z-index: 1;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    color: #7FDBFF;
+}
+
+.chains-btn-hold.holding .hold-text {
+    color: #FFD700;
+}
+
+.hold-instruction {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #666666;
+    letter-spacing: 0.05em;
+}
+
+/* Aftermath */
+.chains-aftermath {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.chains-aftermath.visible {
+    opacity: 1;
+}
+
+.aftermath-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 2rem;
+    color: #FFD700;
+    letter-spacing: 0.15em;
+    text-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+}
+
+.aftermath-quote {
+    font-family: 'Inter', 'JetBrains Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 300;
+    font-style: italic;
+    color: #7FDBFF;
+    letter-spacing: 0.05em;
+    line-height: 1.8;
+    text-align: center;
+    text-shadow: 0 0 30px rgba(127, 219, 255, 0.3);
+}
+
+.aftermath-author {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    color: #FFD700;
+    letter-spacing: 0.1em;
+    margin-top: 20px;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.aftermath-credit {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.875rem;
+    color: #666666;
+    text-align: center;
+    line-height: 1.8;
+}
+
+.credit-small {
+    font-size: 0.75rem;
+    color: #555555;
+}
+
+/* Leave Button */
+.chains-btn-leave {
+    margin-top: 40px;
+    padding: 14px 40px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: #666666;
+    background: transparent;
+    border: 1px solid #444444;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.chains-btn-leave:hover {
+    color: #7FDBFF;
+    border-color: #7FDBFF;
+    box-shadow: 0 0 20px rgba(127, 219, 255, 0.2);
+}
+
+/* Weakness/Nein Screen */
+.chains-weakness {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.chains-weakness.visible {
+    opacity: 1;
+}
+
+.weakness-gif {
+    max-width: 400px;
+    width: 90%;
+    border-radius: 4px;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+}
+
+.weakness-leave {
+    margin-top: 20px;
+}
+
+/* Dead Panther State */
+body.panther-dead .cage-frame {
+    box-shadow:
+        inset 0 0 100px rgba(0, 0, 0, 0.9),
+        0 0 60px rgba(100, 0, 0, 0.3);
+}
+
+body.panther-dead .canvas-area {
+    background: linear-gradient(
+        135deg,
+        #030712 0%,
+        #0a0505 50%,
+        #030712 100%
+    );
+}
+
+body.panther-dead .cage-bars .bar {
+    opacity: 1;
+    background: linear-gradient(
+        180deg,
+        #1a1010 0%,
+        #201515 20%,
+        #1a1010 50%,
+        #201515 80%,
+        #1a1010 100%
+    );
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .chains-question {
+        font-size: 1.5rem;
+        letter-spacing: 0.1em;
+    }
+
+    .chains-choices {
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .chains-btn {
+        width: 100%;
+        padding: 16px 32px;
+    }
+
+    .chains-ritual-text {
+        font-size: 1.2rem;
+    }
+
+    .chains-ritual-choices {
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .chains-threshold-text {
+        font-size: 1.3rem;
+    }
+
+    .chains-threshold-text.threshold-emphasis {
+        font-size: 1.6rem;
+    }
+
+    .chains-btn-hold {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .chains-question {
+        animation: none;
+    }
+
+    .chains-btn-ja .btn-pulse {
+        animation: none;
+        opacity: 0.8;
+    }
+
+    .sound-icon {
+        animation: none;
     }
 }

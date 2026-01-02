@@ -349,6 +349,79 @@
         const cfg = CONFIG.panther;
         const circleRadius = Math.min(state.width, state.height) * cfg.circleRadius;
 
+        // Body dimensions
+        const bodyLength = Math.min(state.width, state.height) * cfg.bodyLength;
+        const headSize = Math.min(state.width, state.height) * cfg.headSize;
+        const legLength = Math.min(state.width, state.height) * cfg.legLength;
+        const tailLength = Math.min(state.width, state.height) * cfg.tailLength;
+
+        // Dead panther - lying at bottom
+        if (state.isDead) {
+            const deadX = state.centerX;
+            const deadY = state.height * 0.75; // At the bottom
+            const bodyHeight = Math.min(state.width, state.height) * cfg.bodyHeight;
+
+            ctx.save();
+            ctx.translate(deadX, deadY);
+            ctx.rotate(Math.PI / 2); // Lying on side
+
+            // Draw shadow (larger, like pooled)
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+            ctx.beginPath();
+            ctx.ellipse(0, bodyHeight * 1.5, bodyLength * 1.2, bodyHeight * 0.5, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Draw body (flattened)
+            ctx.fillStyle = CONFIG.colors.pantherBody;
+            ctx.beginPath();
+            ctx.ellipse(0, 0, bodyLength * 0.5, bodyHeight * 0.8, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Draw head (tilted)
+            ctx.fillStyle = CONFIG.colors.pantherBody;
+            ctx.beginPath();
+            ctx.ellipse(bodyLength * 0.4, -bodyHeight * 0.3, headSize, headSize * 0.7, -0.3, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Closed eyes (X marks)
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            const eyeX = bodyLength * 0.5;
+            const eyeY = -bodyHeight * 0.4;
+            // X for closed eye
+            ctx.beginPath();
+            ctx.moveTo(eyeX - 3, eyeY - 3);
+            ctx.lineTo(eyeX + 3, eyeY + 3);
+            ctx.moveTo(eyeX + 3, eyeY - 3);
+            ctx.lineTo(eyeX - 3, eyeY + 3);
+            ctx.stroke();
+
+            // Legs (limp)
+            ctx.strokeStyle = CONFIG.colors.pantherBody;
+            ctx.lineWidth = bodyHeight * 0.3;
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+            ctx.moveTo(-bodyLength * 0.2, bodyHeight * 0.5);
+            ctx.lineTo(-bodyLength * 0.3, bodyHeight * 1.2);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(bodyLength * 0.1, bodyHeight * 0.5);
+            ctx.lineTo(bodyLength * 0.15, bodyHeight * 1.1);
+            ctx.stroke();
+
+            // Tail (limp, curved down)
+            ctx.strokeStyle = CONFIG.colors.pantherBody;
+            ctx.lineWidth = bodyHeight * 0.3;
+            ctx.beginPath();
+            ctx.moveTo(-bodyLength * 0.4, 0);
+            ctx.quadraticCurveTo(-bodyLength * 0.7, bodyHeight, -bodyLength * 0.8, bodyHeight * 0.5);
+            ctx.stroke();
+
+            ctx.restore();
+            return;
+        }
+
+        // Normal panther animation
         // Calculate panther position on the circle
         const pantherX = state.centerX + Math.cos(state.angle) * circleRadius;
         const pantherY = state.centerY + Math.sin(state.angle) * circleRadius * 0.4 + state.height * 0.1;
@@ -359,12 +432,7 @@
         // Breathing effect
         const breathScale = 1 + Math.sin(state.breathPhase) * 0.02;
 
-        // Body dimensions
-        const bodyLength = Math.min(state.width, state.height) * cfg.bodyLength;
         const bodyHeight = Math.min(state.width, state.height) * cfg.bodyHeight * breathScale;
-        const headSize = Math.min(state.width, state.height) * cfg.headSize;
-        const legLength = Math.min(state.width, state.height) * cfg.legLength;
-        const tailLength = Math.min(state.width, state.height) * cfg.tailLength;
 
         ctx.save();
         ctx.translate(pantherX, pantherY);
@@ -746,6 +814,23 @@
         state.isShowingWorld = false;
         state.worldRevealLevel = 0;
         state.moodLevel = 1;
+        state.isDead = false;
+        return true;
+    }
+
+    /**
+     * Show the panther as dead - lying at the bottom
+     * Called when user chooses "Nein" - weakness
+     */
+    function showDead() {
+        state.isDead = true;
+        state.moodLevel = 0;
+        state.eyeOpenness = 0;
+        state.awakeningLevel = 0;
+
+        // Add CSS class for visual effect
+        document.body.classList.add('panther-dead');
+
         return true;
     }
 
@@ -762,7 +847,8 @@
         hideWorld: hideWorld,
         setMood: setMood,
         getState: getState,
-        reset: reset
+        reset: reset,
+        showDead: showDead
     };
 
 })();
