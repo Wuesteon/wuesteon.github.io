@@ -438,7 +438,7 @@
                 </ul>
 
                 <p>
-                    Konsens zwischen den Judges erhöht das Vertrauen in das Ergebnis. Bei Dissens analysieren wir den Fall tiefer.
+                    Konsens zwischen den Judges erhöht das Vertrauen in das Ergebnis. Bei abweichenden Urteilen analysieren wir den Fall tiefer.
                 </p>
 
                 <h2>Der Testprozess im Detail</h2>
@@ -451,7 +451,7 @@
                     <li><strong>Testfall-Erstellung:</strong> Fälle aus allen Rechtsgebieten (Arbeitsrecht, Mietrecht, Familienrecht, etc.)</li>
                     <li><strong>Identische Bedingungen:</strong> Exakt dieselben Prompts für jedes Modell</li>
                     <li><strong>Mehrfache Durchläufe:</strong> Konsistenz-Check pro Szenario</li>
-                    <li><strong>Parallele Bewertung:</strong> Alle drei Judges bewerten gleichzeitig</li>
+                    <li><strong>Parallele Bewertung:</strong> Zwei Judges bewerten gleichzeitig</li>
                 </ol>
 
                 <div class="test-case-box">
@@ -479,7 +479,7 @@
                 </blockquote>
 
                 <p>
-                    Die Evaluation lieferte klare Ergebnisse: Sowohl LLM-as-a-Judge als auch Crew-as-a-Judge identifizierten konsistent dasselbe Modell als Gewinner. Die menschliche Validierung per Stichprobe kam zum gleichen Schluss.
+                    Die Evaluation lieferte klare Ergebnisse: Sowohl LLM-as-a-Judge als auch Crew-as-a-Judge identifizierten konsistent dasselbe Modell als Gewinner. Die menschliche Validierung per Stichprobe kam zum selben Ergebnis.
                 </p>
 
                 <p>
@@ -487,8 +487,8 @@
                 </p>
 
                 <ul>
-                    <li><strong>"Bekanntestes" Modell ≠ bestes für unseren Anwendungsfall</strong> – Marketing-Versprechen und tatsächliche Performance sind zwei verschiedene Dinge</li>
-                    <li><strong>Trade-offs existieren:</strong> Manche Modelle sind schneller, andere präziser – wir haben für Qualität optimiert</li>
+                    <li><strong>Das bekannteste Modell ≠ bestes für unseren Anwendungsfall</strong> Marketing-Versprechen und tatsächliche Performance sind zwei verschiedene Dinge</li>
+                    <li><strong>Trade-offs existieren:</strong> Manche Modelle sind schneller, andere präziser. Wir haben für Qualität optimiert</li>
                     <li><strong>Konsistenz zählt:</strong> Modelle mit schwankender Qualität schieden aus</li>
                 </ul>
 
@@ -496,12 +496,7 @@
 
                 <div class="pattern-box">
                     <h4>Iteration ist alles</h4>
-                    <p style="color: #9ca3af; margin: 0;">Erste Bewertungskriterien waren zu vage. "Ist die Analyse gut?" funktioniert nicht. Jede Iteration machte die Evaluation schärfer.</p>
-                </div>
-
-                <div class="pattern-box">
-                    <h4>Crew-as-a-Judge fängt blinde Flecken auf</h4>
-                    <p style="color: #9ca3af; margin: 0;">Ein einzelner KI-Judge übersah systematisch bestimmte Aspekte. Multi-Agenten-Bewertung ist deutlich zuverlässiger.</p>
+                    <p style="color: #9ca3af; margin: 0;">Erste Bewertungskriterien waren zu vage. "Ist die Analyse gut?" funktioniert nicht. Jede Iteration machte die Evaluation genauer.</p>
                 </div>
 
                 <div class="pattern-box">
