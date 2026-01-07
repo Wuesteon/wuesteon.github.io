@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="de" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wie wir das beste KI-Modell für rechtliche Analysen gefunden haben | Nils Weiser</title>
+    <meta name="description" content="Wie findet man das beste KI-Modell für juristische Analysen? Mit LLM-as-a-Judge, Crew-as-a-Judge und menschlicher Validierung – ein Blick hinter die Kulissen unserer systematischen Modellauswahl.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <style>
+        .evaluation-card {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(34, 197, 94, 0.05) 100%);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        .evaluation-card h4 {
+            color: #22d3ee;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .evaluation-card p {
+            color: #9ca3af;
+            font-size: 0.875rem;
+            margin: 0;
+        }
+        .pipeline-diagram {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(34, 197, 94, 0.05) 100%);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+        .pipeline-svg {
+            min-width: 800px;
+            width: 100%;
+            height: auto;
+        }
+        .criteria-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        .criteria-table th,
+        .criteria-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #374151;
+        }
+        .criteria-table th {
+            background: rgba(6, 182, 212, 0.1);
+            color: #22d3ee;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+        }
+        .criteria-table td {
+            color: #9ca3af;
+        }
+        .criteria-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .pattern-box {
+            background: rgba(6, 182, 212, 0.05);
+            border-left: 3px solid #22d3ee;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .pattern-box h4 {
+            color: #22d3ee;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .agent-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .agent-card {
+            background: rgba(6, 182, 212, 0.05);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+        .agent-card h4 {
+            color: #4ade80;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .agent-card p {
+            color: #9ca3af;
+            font-size: 0.875rem;
+            margin: 0;
+        }
+        .dimension-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .dimension-card {
+            background: rgba(6, 182, 212, 0.05);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+        .dimension-card h4 {
+            color: #22d3ee;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .dimension-card ul {
+            margin: 0;
+            padding-left: 1.25rem;
+        }
+        .dimension-card li {
+            color: #9ca3af;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+        .test-case-box {
+            background: rgba(34, 197, 94, 0.05);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .test-case-box h4 {
+            color: #4ade80;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        .test-case-box .case-text {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            font-style: italic;
+            color: #d1d5db;
+            margin-bottom: 1rem;
+        }
+        .test-case-box .requirements {
+            color: #9ca3af;
+            font-size: 0.875rem;
+        }
+        .test-case-box .requirements strong {
+            color: #4ade80;
+        }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header -->
+    <section class="hero-bg pt-32 pb-12">
+        <div class="grid-pattern"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-3xl mx-auto">
+                <a href="../" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    Zurück zum Blog
+                </a>
+                <div class="flex items-center gap-3 mb-4 flex-wrap">
+                    <span class="blog-tag">KI Evaluation</span>
+                    <span class="blog-tag">Legal Tech</span>
+                    <span class="blog-tag">Multi-Agent</span>
+                    <span class="blog-date">7. Januar 2025</span>
+                </div>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+                    Wie wir das beste KI-Modell für rechtliche Analysen gefunden haben
+                </h1>
+                <p class="text-xl text-gray-400">
+                    Ein dreistufiger Evaluationsansatz: LLM-as-a-Judge, Crew-as-a-Judge und menschliche Validierung – parallel statt sequentiell.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <article class="section-dark py-16">
+        <div class="container mx-auto px-6">
+            <div class="article-content">
+
+                <h2>Die Herausforderung: Qualität messbar machen</h2>
+
+                <p>
+                    Welches KI-Modell liefert die besten rechtlichen Analysen? Bei <a href="https://erst-recht.com" target="_blank" rel="noopener noreferrer">Erst Recht</a> stand diese Frage am Anfang. Bauchgefühl und Marketing-Versprechen reichen nicht – wir brauchten einen systematischen, datengetriebenen Ansatz.
+                </p>
+
+                <p>
+                    Das Ergebnis: Eine dreistufige Evaluation, bei der KI-Bewertung und menschliche Expertise zusammenarbeiten. In diesem Artikel zeige ich, wie wir vorgegangen sind.
+                </p>
+
+                <h2>Das Problem: Wie misst man "gute" rechtliche Analyse?</h2>
+
+                <p>
+                    Bei Matheaufgaben gibt es eine klare "Ground Truth": 40+2=42, fertig. (Und nein, wir reden hier nicht von JavaScript, wo <code>'1' + '1' = '11'</code>.) Bei juristischen Analysen fehlt diese Eindeutigkeit. Die Anforderungen sind vielschichtig:
+                </p>
+
+                <ul>
+                    <li><strong>Faktisch korrekt</strong> – richtige Gesetze, aktuelle Rechtsprechung</li>
+                    <li><strong>Vollständig</strong> – alle relevanten Aspekte, keine vergessenen Fristen</li>
+                    <li><strong>Verständlich</strong> – auch ohne Jura-Studium nachvollziehbar</li>
+                    <li><strong>Handlungsorientiert</strong> – konkrete nächste Schritte</li>
+                    <li><strong>Angemessen im Ton</strong> – seriös, aber nicht einschüchternd</li>
+                </ul>
+
+                <p>
+                    Manuelle Evaluation jedes Testfalls ist zeitaufwändig und subjektiv. Wir brauchten einen skalierbaren, aber zuverlässigen Ansatz.
+                </p>
+
+                <h2>Unser Ansatz: Drei parallele Judges</h2>
+
+                <p>
+                    <strong>Wichtig:</strong> Die drei Bewertungsebenen arbeiten <em>parallel</em>, nicht sequentiell. Jeder Judge bewertet unabhängig dieselben Outputs – die Ergebnisse werden am Ende aggregiert.
+                </p>
+
+                <!-- Parallel Pipeline Diagram -->
+                <div class="pipeline-diagram">
+                    <svg class="pipeline-svg" viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="nodeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#22d3ee;stop-opacity:0.2" />
+                                <stop offset="100%" style="stop-color:#4ade80;stop-opacity:0.2" />
+                            </linearGradient>
+                            <filter id="glow">
+                                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#22d3ee" fill-opacity="0.6"/>
+                            </marker>
+                        </defs>
+
+                        <!-- Left: Test Cases -->
+                        <g transform="translate(20, 120)">
+                            <rect width="130" height="200" rx="8" fill="url(#nodeGradient)" stroke="#6b7280" stroke-width="1.5" filter="url(#glow)"/>
+                            <text x="65" y="30" text-anchor="middle" fill="#9ca3af" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">TESTFÄLLE</text>
+                            <text x="65" y="60" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">• Mietschutz</text>
+                            <text x="65" y="85" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">• Scrum Master</text>
+                            <text x="65" y="110" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">• Kündigung</text>
+                            <text x="65" y="135" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">• ...</text>
+                            <text x="65" y="175" text-anchor="middle" fill="#6b7280" font-family="Inter, sans-serif" font-size="9">→ an alle Modelle</text>
+                        </g>
+
+                        <!-- Arrow to Models -->
+                        <path d="M 155 220 L 195 220" fill="none" stroke="#22d3ee" stroke-width="2" stroke-opacity="0.6" marker-end="url(#arrowhead)"/>
+
+                        <!-- Models Box -->
+                        <g transform="translate(200, 140)">
+                            <rect width="120" height="160" rx="8" fill="url(#nodeGradient)" stroke="#22d3ee" stroke-width="1.5" filter="url(#glow)"/>
+                            <text x="60" y="25" text-anchor="middle" fill="#22d3ee" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">MODELLE</text>
+                            <text x="60" y="55" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">Model A</text>
+                            <text x="60" y="80" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">Model B</text>
+                            <text x="60" y="105" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">Model C</text>
+                            <text x="60" y="130" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">Model D</text>
+                        </g>
+
+                        <!-- Arrow to Outputs -->
+                        <path d="M 325 220 L 365 220" fill="none" stroke="#22d3ee" stroke-width="2" stroke-opacity="0.6" marker-end="url(#arrowhead)"/>
+                        <text x="345" y="205" text-anchor="middle" fill="#6b7280" font-family="Inter, sans-serif" font-size="9">generiert</text>
+
+                        <!-- Outputs Box -->
+                        <g transform="translate(370, 140)">
+                            <rect width="120" height="160" rx="8" fill="url(#nodeGradient)" stroke="#4ade80" stroke-width="1.5" filter="url(#glow)"/>
+                            <text x="60" y="25" text-anchor="middle" fill="#4ade80" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">OUTPUTS</text>
+                            <text x="60" y="55" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">Output A</text>
+                            <text x="60" y="80" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">Output B</text>
+                            <text x="60" y="105" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">Output C</text>
+                            <text x="60" y="130" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">Output D</text>
+                        </g>
+
+                        <!-- Parallel arrows to three judges -->
+                        <path d="M 495 180 L 570 100" fill="none" stroke="#22d3ee" stroke-width="2" stroke-opacity="0.6" marker-end="url(#arrowhead)"/>
+                        <path d="M 495 220 L 570 220" fill="none" stroke="#4ade80" stroke-width="2" stroke-opacity="0.6" marker-end="url(#arrowhead)"/>
+                        <path d="M 495 260 L 570 340" fill="none" stroke="#c084fc" stroke-width="2" stroke-opacity="0.6" marker-end="url(#arrowhead)"/>
+
+                        <!-- LLM-as-a-Judge -->
+                        <g transform="translate(575, 40)">
+                            <rect width="150" height="100" rx="8" fill="url(#nodeGradient)" stroke="#22d3ee" stroke-width="1.5" filter="url(#glow)"/>
+                            <text x="75" y="25" text-anchor="middle" fill="#22d3ee" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">LLM-as-a-Judge</text>
+                            <text x="75" y="50" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="10">Automatisiert</text>
+                            <text x="75" y="68" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="9">Ein starkes Modell</text>
+                            <text x="75" y="83" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="9">bewertet alle Outputs</text>
+                        </g>
+
+                        <!-- Crew-as-a-Judge -->
+                        <g transform="translate(575, 170)">
+                            <rect width="150" height="100" rx="8" fill="url(#nodeGradient)" stroke="#4ade80" stroke-width="1.5" filter="url(#glow)"/>
+                            <text x="75" y="25" text-anchor="middle" fill="#4ade80" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">Crew-as-a-Judge</text>
+                            <text x="75" y="50" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="10">Multi-Perspektive</text>
+                            <text x="75" y="68" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="9">Mehrere Agenten</text>
+                            <text x="75" y="83" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="9">prüfen gemeinsam</text>
+                        </g>
+
+                        <!-- Mensch-as-a-Judge -->
+                        <g transform="translate(575, 300)">
+                            <rect width="150" height="100" rx="8" fill="url(#nodeGradient)" stroke="#c084fc" stroke-width="1.5" filter="url(#glow)"/>
+                            <text x="75" y="25" text-anchor="middle" fill="#c084fc" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">Mensch-as-a-Judge</text>
+                            <text x="75" y="50" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="10">Experten-Review</text>
+                            <text x="75" y="68" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="9">Juristen validieren</text>
+                            <text x="75" y="83" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="9">KI-Bewertungen</text>
+                        </g>
+
+                        <!-- Arrows to aggregation -->
+                        <path d="M 730 90 L 780 180" fill="none" stroke="#22d3ee" stroke-width="2" stroke-opacity="0.6" marker-end="url(#arrowhead)"/>
+                        <path d="M 730 220 L 780 220" fill="none" stroke="#4ade80" stroke-width="2" stroke-opacity="0.6" marker-end="url(#arrowhead)"/>
+                        <path d="M 730 350 L 780 260" fill="none" stroke="#c084fc" stroke-width="2" stroke-opacity="0.6" marker-end="url(#arrowhead)"/>
+
+                        <!-- Winner Models -->
+                        <g transform="translate(785, 160)">
+                            <rect width="100" height="120" rx="8" fill="url(#nodeGradient)" stroke="#f59e0b" stroke-width="1.5" filter="url(#glow)"/>
+                            <text x="50" y="25" text-anchor="middle" fill="#f59e0b" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">WINNER</text>
+                            <text x="50" y="55" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="10">Model A, C</text>
+                            <text x="50" y="75" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="10">Model B</text>
+                            <text x="50" y="95" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="10">Model A</text>
+                            <text x="50" y="112" text-anchor="middle" fill="#6b7280" font-family="Inter, sans-serif" font-size="8">pro Fall</text>
+                        </g>
+
+                        <!-- PARALLEL label -->
+                        <text x="650" y="25" text-anchor="middle" fill="#6b7280" font-family="JetBrains Mono, monospace" font-size="11">PARALLELE BEWERTUNG</text>
+                    </svg>
+                </div>
+
+                <h3>1. LLM-as-a-Judge</h3>
+
+                <p>
+                    Das Konzept: Ein leistungsfähiges Sprachmodell bewertet die Outputs aller anderen Modelle nach klar definierten Kriterien. Automatisiert und skalierbar.
+                </p>
+
+                <p>
+                    Wir bewerten jede Analyse in vier spezialisierten Dimensionen:
+                </p>
+
+                <div class="dimension-grid">
+                    <div class="dimension-card">
+                        <h4>Juristische Korrektheit</h4>
+                        <ul>
+                            <li>Richtige Gesetze zitiert?</li>
+                            <li>Aktuelle Rechtsprechung berücksichtigt?</li>
+                            <li>Keine falschen Rechtsfolgen?</li>
+                        </ul>
+                    </div>
+                    <div class="dimension-card">
+                        <h4>Laien-Verständlichkeit</h4>
+                        <ul>
+                            <li>1 = Unverständlich, voller Juristendeutsch</li>
+                            <li>3 = Grundsätzlich verständlich</li>
+                            <li>5 = Perfekt verständlich</li>
+                        </ul>
+                    </div>
+                    <div class="dimension-card">
+                        <h4>Vollständigkeit</h4>
+                        <ul>
+                            <li>Alle Rechtsgebiete identifiziert?</li>
+                            <li>Fristen erwähnt?</li>
+                            <li>Risiken und Gegenargumente genannt?</li>
+                        </ul>
+                    </div>
+                    <div class="dimension-card">
+                        <h4>Handlungsempfehlungen</h4>
+                        <ul>
+                            <li>Konkrete, umsetzbare Schritte?</li>
+                            <li>Klare Priorisierung?</li>
+                            <li>Hinweis, wann Anwalt nötig?</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>2. Crew-as-a-Judge</h3>
+
+                <p>
+                    Ein einzelner Judge hat blinde Flecken. Die Lösung: Mehrere spezialisierte KI-Agenten bewerten aus unterschiedlichen Perspektiven.
+                </p>
+
+                <div class="agent-grid">
+                    <div class="agent-card">
+                        <h4>Juristischer Prüfer</h4>
+                        <p>Gesetzeskonformität und fachliche Korrektheit</p>
+                    </div>
+                    <div class="agent-card">
+                        <h4>Laien-Verständlichkeits-Tester</h4>
+                        <p>Perspektive eines Nicht-Juristen</p>
+                    </div>
+                    <div class="agent-card">
+                        <h4>Vollständigkeits-Checker</h4>
+                        <p>Fehlende Aspekte und Lücken identifizieren</p>
+                    </div>
+                    <div class="agent-card">
+                        <h4>Praxis-Bewerter</h4>
+                        <p>Umsetzbarkeit der Empfehlungen prüfen</p>
+                    </div>
+                </div>
+
+                <p>
+                    Der Clou: Die Agenten "diskutieren" und konsolidieren zu einem Gesamturteil. Das Ergebnis ist robuster als jede Einzelbewertung.
+                </p>
+
+                <h3>3. Mensch-as-a-Judge (Human Validation)</h3>
+
+                <p>
+                    KI-Evaluation ersetzt keine menschliche Expertise – aber sie muss auch nicht jeden Fall einzeln prüfen. Stattdessen validiert ein Experten-Panel aus Juristen und Legal-Tech-Spezialisten eine <strong>Stichprobe</strong> der Ergebnisse:
+                </p>
+
+                <ul>
+                    <li><strong>Blind-Tests:</strong> Experten wissen nicht, welches Modell welchen Output produziert</li>
+                    <li><strong>Edge-Cases:</strong> Gezielte Tests von Grenzfällen</li>
+                    <li><strong>Kalibrierung:</strong> Stimmen die menschlichen Urteile mit der KI-Bewertung überein?</li>
+                </ul>
+
+                <p>
+                    Das Ziel: Sicherstellen, dass die automatisierte Bewertung zuverlässig ist. Die menschliche Stichprobe dient als Sanity-Check, nicht als vollständige Neubewertung.
+                </p>
+
+                <h3>Ergebnis-Aggregation</h3>
+
+                <p>
+                    Alle drei Judges bewerten <em>jeden Fall</em> für <em>jedes Modell</em>. Die Ergebnisse werden kombiniert zu:
+                </p>
+
+                <ul>
+                    <li><strong>Winner Model pro Fall:</strong> Welches Modell hat bei diesem spezifischen Fall am besten abgeschnitten?</li>
+                    <li><strong>Winner Model overall:</strong> Gesamtsieger über alle Fälle hinweg</li>
+                </ul>
+
+                <p>
+                    Konsens zwischen den Judges erhöht das Vertrauen in das Ergebnis. Bei Dissens analysieren wir den Fall tiefer.
+                </p>
+
+                <h2>Der Testprozess im Detail</h2>
+
+                <p>
+                    Systematische Evaluation braucht systematische Tests:
+                </p>
+
+                <ol>
+                    <li><strong>Testfall-Erstellung:</strong> Fälle aus allen Rechtsgebieten (Arbeitsrecht, Mietrecht, Familienrecht, etc.)</li>
+                    <li><strong>Identische Bedingungen:</strong> Exakt dieselben Prompts für jedes Modell</li>
+                    <li><strong>Mehrfache Durchläufe:</strong> Konsistenz-Check pro Szenario</li>
+                    <li><strong>Parallele Bewertung:</strong> Alle drei Judges bewerten gleichzeitig</li>
+                </ol>
+
+                <div class="test-case-box">
+                    <h4>Beispiel-Testfall: Kündigung im Arbeitsrecht</h4>
+                    <div class="case-text">
+                        "Ich arbeite seit 8 Jahren in einer Firma mit 50 Mitarbeitern. Gestern habe ich eine Kündigung erhalten mit einer Frist von 4 Wochen zum Monatsende. Ist das rechtens? Was kann ich tun?"
+                    </div>
+                    <div class="requirements">
+                        <strong>Korrekte Analyse muss erkennen:</strong>
+                        <ul>
+                            <li>Kündigungsfrist zu kurz (§622 Abs. 2 BGB → 3 Monate bei 8 Jahren)</li>
+                            <li>Kündigungsschutz greift (>10 Mitarbeiter)</li>
+                            <li>3-Wochen-Frist für Kündigungsschutzklage ist kritisch</li>
+                        </ul>
+                        <p style="margin-top: 0.75rem;">
+                            <strong>Judges bewerten:</strong> Alle Punkte erkannt? Verständlich formuliert? Konkrete Handlungsschritte?
+                        </p>
+                    </div>
+                </div>
+
+                <h2>Ergebnisse und Erkenntnisse</h2>
+
+                <blockquote>
+                    "Die KI-Judges bewerteten Model A mehrheitlich als Sieger. Die menschlichen Stichproben bestätigten dieses Ergebnis – ein starkes Signal für die Zuverlässigkeit unserer automatisierten Evaluation."
+                </blockquote>
+
+                <p>
+                    Die Evaluation lieferte klare Ergebnisse: Sowohl LLM-as-a-Judge als auch Crew-as-a-Judge identifizierten konsistent dasselbe Modell als Gewinner. Die menschliche Validierung per Stichprobe kam zum gleichen Schluss.
+                </p>
+
+                <p>
+                    Aber es gab auch Überraschungen:
+                </p>
+
+                <ul>
+                    <li><strong>"Bekanntestes" Modell ≠ bestes für unseren Anwendungsfall</strong> – Marketing-Versprechen und tatsächliche Performance sind zwei verschiedene Dinge</li>
+                    <li><strong>Trade-offs existieren:</strong> Manche Modelle sind schneller, andere präziser – wir haben für Qualität optimiert</li>
+                    <li><strong>Konsistenz zählt:</strong> Modelle mit schwankender Qualität schieden aus</li>
+                </ul>
+
+                <h2>Was wir gelernt haben</h2>
+
+                <div class="pattern-box">
+                    <h4>Iteration ist alles</h4>
+                    <p style="color: #9ca3af; margin: 0;">Erste Bewertungskriterien waren zu vage. "Ist die Analyse gut?" funktioniert nicht. Jede Iteration machte die Evaluation schärfer.</p>
+                </div>
+
+                <div class="pattern-box">
+                    <h4>Crew-as-a-Judge fängt blinde Flecken auf</h4>
+                    <p style="color: #9ca3af; margin: 0;">Ein einzelner KI-Judge übersah systematisch bestimmte Aspekte. Multi-Agenten-Bewertung ist deutlich zuverlässiger.</p>
+                </div>
+
+                <div class="pattern-box">
+                    <h4>KI-Bewertung spart Zeit, ersetzt keine Menschen</h4>
+                    <p style="color: #9ca3af; margin: 0;">LLM-as-a-Judge: Hunderte Testfälle effizient bewerten. Finale Entscheidung und Grenzfälle: Menschliche Expertise bleibt nötig.</p>
+                </div>
+
+                <div class="pattern-box">
+                    <h4>Evaluation ist kein einmaliges Projekt</h4>
+                    <p style="color: #9ca3af; margin: 0;">Neue Modellversionen erscheinen regelmäßig. Kontinuierliche Re-Evaluationen sichern langfristig beste Qualität.</p>
+                </div>
+
+                <h2>Unser Commitment an Sie</h2>
+
+                <p>
+                    Diese aufwändige Evaluation ist Teil unseres Versprechens: "Gute rechtliche Beratung sollte kein Privileg sein." Faire Preise <em>und</em> kompromisslose Qualität – durch Messen, Testen, Verbessern.
+                </p>
+
+                <hr style="border-color: #374151; margin: 2rem 0;">
+
+                <p>
+                    <em><a href="https://erst-recht.com" target="_blank" rel="noopener noreferrer">Erst Recht</a> nutzt KI, um Rechtsberatung zugänglich zu machen. Überzeugen Sie sich selbst von der Qualität unserer KI-Analyse.</em>
+                </p>
+
+                <div style="margin: 2rem 0;">
+                    <a href="https://erst-recht.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                        Jetzt Ersteinschätzung erhalten – Ab 9,99€
+                    </a>
+                </div>
+
+                <hr style="border-color: #374151; margin: 2rem 0;">
+
+                <p>
+                    Planen Sie ein eigenes LLM-Evaluationsprojekt? <a href="../../index.html#contact">Schreiben Sie mir</a> – ich helfe gerne bei der Konzeption und Umsetzung.
+                </p>
+
+            </div>
+        </div>
+    </article>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script src="../../js/components.js"></script>
+    <script src="../../js/translations.js"></script>
+    <script src="../../js/main.js"></script>
+</body>
+</html>
