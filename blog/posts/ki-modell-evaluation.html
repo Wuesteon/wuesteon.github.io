@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wie wir das beste KI-Modell für rechtliche Analysen gefunden haben | Nils Weiser</title>
-    <meta name="description" content="Wie findet man das beste KI-Modell für juristische Analysen? Mit LLM-as-a-Judge, Crew-as-a-Judge und menschlicher Validierung – ein Blick hinter die Kulissen unserer systematischen Modellauswahl.">
+    <meta name="description" content="Wie findet man das beste KI-Modell für juristische Analysen? Mit LLM-as-a-Judge, Crew-as-a-Judge und menschlicher Validierung. Ein Blick hinter die Kulissen unserer systematischen Modellauswahl.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../../css/styles.css">
     <style>
@@ -181,7 +181,7 @@
                     Wie wir das beste KI-Modell für rechtliche Analysen gefunden haben
                 </h1>
                 <p class="text-xl text-gray-400">
-                    Ein dreistufiger Evaluationsansatz: LLM-as-a-Judge, Crew-as-a-Judge und menschliche Validierung – parallel statt sequentiell.
+                    Ein dreistufiger Evaluationsansatz: LLM-as-a-Judge, Crew-as-a-Judge und menschliche Validierung. Parallel statt sequentiell.
                 </p>
             </div>
         </div>
@@ -195,7 +195,7 @@
                 <h2>Die Herausforderung: Qualität messbar machen</h2>
 
                 <p>
-                    Welches KI-Modell liefert die besten rechtlichen Analysen? Bei <a href="https://erst-recht.com" target="_blank" rel="noopener noreferrer">Erst Recht</a> stand diese Frage am Anfang. Bauchgefühl und Marketing-Versprechen reichen nicht – wir brauchten einen systematischen, datengetriebenen Ansatz.
+                    Welches KI-Modell liefert die besten rechtlichen Analysen? Bei <a href="https://erst-recht.com" target="_blank" rel="noopener noreferrer">Erst Recht</a> stand diese Frage am Anfang. Bauchgefühl und Marketing-Versprechen reichen nicht. Wir brauchten einen systematischen, datengetriebenen Ansatz.
                 </p>
 
                 <p>
@@ -209,11 +209,10 @@
                 </p>
 
                 <ul>
-                    <li><strong>Faktisch korrekt</strong> – richtige Gesetze, aktuelle Rechtsprechung</li>
-                    <li><strong>Vollständig</strong> – alle relevanten Aspekte, keine vergessenen Fristen</li>
-                    <li><strong>Verständlich</strong> – auch ohne Jura-Studium nachvollziehbar</li>
-                    <li><strong>Handlungsorientiert</strong> – konkrete nächste Schritte</li>
-                    <li><strong>Angemessen im Ton</strong> – seriös, aber nicht einschüchternd</li>
+                    <li><strong>Faktisch korrekt:</strong> Richtige Gesetze, aktuelle Rechtsprechung</li>
+                    <li><strong>Vollständig:</strong> Alle relevanten Aspekte, keine vergessenen Fristen</li>
+                    <li><strong>Verständlich:</strong> Auch ohne Jura-Studium nachvollziehbar</li>
+                    <li><strong>Handlungsorientiert:</strong> Konkrete nächste Schritte</li>
                 </ul>
 
                 <p>
@@ -228,7 +227,7 @@
 
                 <!-- Parallel Pipeline Diagram -->
                 <div class="pipeline-diagram">
-                    <svg class="pipeline-svg" viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="pipeline-svg" viewBox="0 0 1030 500" xmlns="http://www.w3.org/2000/svg">
                         <defs>
                             <linearGradient id="nodeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="0%" style="stop-color:#22d3ee;stop-opacity:0.2" />
@@ -313,7 +312,7 @@
                             <text x="75" y="25" text-anchor="middle" fill="#c084fc" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">Mensch-as-a-Judge</text>
                             <text x="75" y="50" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="10">Experten-Review</text>
                             <text x="75" y="68" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="9">Juristen validieren</text>
-                            <text x="75" y="83" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="9">KI-Bewertungen</text>
+                            <text x="75" y="83" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="9">Stichproben</text>
                         </g>
 
                         <!-- Arrows to aggregation -->
@@ -327,8 +326,19 @@
                             <text x="50" y="25" text-anchor="middle" fill="#f59e0b" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">WINNER</text>
                             <text x="50" y="55" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="10">Model A, C</text>
                             <text x="50" y="75" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="10">Model B</text>
-                            <text x="50" y="95" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="10">Model A</text>
+                            <text x="50" y="95" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="10">Model A, D</text>
                             <text x="50" y="112" text-anchor="middle" fill="#6b7280" font-family="Inter, sans-serif" font-size="8">pro Fall</text>
+                        </g>
+
+                        <!-- Arrow to Final Winner -->
+                        <path d="M 890 220 L 930 220" fill="none" stroke="#f59e0b" stroke-width="2" stroke-opacity="0.8" marker-end="url(#arrowhead)"/>
+
+                        <!-- Final Winner -->
+                        <g transform="translate(935, 185)">
+                            <rect width="80" height="70" rx="8" fill="url(#nodeGradient)" stroke="#22c55e" stroke-width="2" filter="url(#glow)"/>
+                            <text x="40" y="25" text-anchor="middle" fill="#22c55e" font-family="JetBrains Mono, monospace" font-size="9" font-weight="600">OVERALL</text>
+                            <text x="40" y="45" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="12" font-weight="600">Model A</text>
+                            <text x="40" y="60" text-anchor="middle" fill="#6b7280" font-family="Inter, sans-serif" font-size="8">Gesamt</text>
                         </g>
 
                         <!-- PARALLEL label -->
@@ -413,7 +423,7 @@
                 <h3>3. Mensch-as-a-Judge (Human Validation)</h3>
 
                 <p>
-                    KI-Evaluation ersetzt keine menschliche Expertise – aber sie muss auch nicht jeden Fall einzeln prüfen. Stattdessen validiert ein Experten-Panel aus Juristen und Legal-Tech-Spezialisten eine <strong>Stichprobe</strong> der Ergebnisse:
+                    KI-Evaluation ersetzt keine menschliche Expertise, aber sie muss auch nicht jeden Fall einzeln prüfen. Stattdessen validiert ein Experten-Panel aus Juristen und Legal-Tech-Spezialisten eine <strong>Stichprobe</strong> der Ergebnisse:
                 </p>
 
                 <ul>
@@ -455,6 +465,7 @@
                 </ol>
 
                 <div class="test-case-box">
+                    <h4>(Vereinfachte Darstellung!)</h4>
                     <h4>Beispiel-Testfall: Kündigung im Arbeitsrecht</h4>
                     <div class="case-text">
                         "Ich arbeite seit 8 Jahren in einer Firma mit 50 Mitarbeitern. Gestern habe ich eine Kündigung erhalten mit einer Frist von 4 Wochen zum Monatsende. Ist das rechtens? Was kann ich tun?"
@@ -475,7 +486,7 @@
                 <h2>Ergebnisse und Erkenntnisse</h2>
 
                 <blockquote>
-                    "Die KI-Judges bewerteten Model A mehrheitlich als Sieger. Die menschlichen Stichproben bestätigten dieses Ergebnis – ein starkes Signal für die Zuverlässigkeit unserer automatisierten Evaluation."
+                    "Die KI-Judges bewerteten Model A mehrheitlich als Sieger. Die menschlichen Stichproben bestätigten dieses Ergebnis. Ein starkes Signal für die Zuverlässigkeit unserer automatisierten Evaluation."
                 </blockquote>
 
                 <p>
@@ -483,13 +494,13 @@
                 </p>
 
                 <p>
-                    Aber es gab auch Überraschungen:
+                    Wichtige Erkenntnisse aus der Evaluation:
                 </p>
 
                 <ul>
-                    <li><strong>Das bekannteste Modell ≠ bestes für unseren Anwendungsfall</strong> Marketing-Versprechen und tatsächliche Performance sind zwei verschiedene Dinge</li>
-                    <li><strong>Trade-offs existieren:</strong> Manche Modelle sind schneller, andere präziser. Wir haben für Qualität optimiert</li>
-                    <li><strong>Konsistenz zählt:</strong> Modelle mit schwankender Qualität schieden aus</li>
+                    <li><strong>Eigene Ansätze lohnen sich:</strong> Unsere spezialisierten Methoden übertrafen generische Lösungen (ChatGPT, Gemini)</li>
+                    <li><strong>Trade-offs existieren:</strong> Manche Ansätze sind schneller, andere präziser. Wir haben für Qualität optimiert</li>
+                    <li><strong>Konsistenz zählt:</strong> Ansätze mit schwankender Qualität schieden aus</li>
                 </ul>
 
                 <h2>Was wir gelernt haben</h2>
@@ -512,7 +523,7 @@
                 <h2>Unser Commitment an Sie</h2>
 
                 <p>
-                    Diese aufwändige Evaluation ist Teil unseres Versprechens: "Gute rechtliche Beratung sollte kein Privileg sein." Faire Preise <em>und</em> kompromisslose Qualität – durch Messen, Testen, Verbessern.
+                    Diese aufwändige Evaluation ist Teil unseres Versprechens: "Gute rechtliche Beratung sollte kein Privileg sein." Faire Preise <em>und</em> kompromisslose Qualität durch Messen, Testen, Verbessern.
                 </p>
 
                 <hr style="border-color: #374151; margin: 2rem 0;">
@@ -523,14 +534,14 @@
 
                 <div style="margin: 2rem 0;">
                     <a href="https://erst-recht.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-                        Jetzt Ersteinschätzung erhalten – Ab 9,99€
+                        Jetzt Ersteinschätzung erhalten (Ab 9,99€)
                     </a>
                 </div>
 
                 <hr style="border-color: #374151; margin: 2rem 0;">
 
                 <p>
-                    Planen Sie ein eigenes LLM-Evaluationsprojekt? <a href="../../index.html#contact">Schreiben Sie mir</a> – ich helfe gerne bei der Konzeption und Umsetzung.
+                    Planen Sie ein eigenes LLM-Evaluationsprojekt? <a href="../../index.html#contact">Schreiben Sie mir</a>. Ich helfe gerne bei der Konzeption und Umsetzung.
                 </p>
 
             </div>
