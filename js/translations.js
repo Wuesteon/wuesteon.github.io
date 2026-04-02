@@ -110,13 +110,39 @@ const translations = {
     }
 };
 
-// Language switching
-let currentLang = localStorage.getItem('lang') || 'de';
+// Language switching - detect from URL for blog pages, otherwise from localStorage
+let currentLang = (function() {
+    const path = window.location.pathname;
+    if (path.includes('/blog/en/') || path.includes('/posts/en/')) return 'en';
+    return localStorage.getItem('lang') || 'de';
+})();
 
 function setLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('lang', lang);
     document.getElementById('html-root').setAttribute('lang', lang);
+
+    // Redirect between DE/EN blog pages
+    const path = window.location.pathname;
+    if (path.includes('/blog/')) {
+        // Blog post pages: /blog/posts/de/ <-> /blog/posts/en/
+        if (path.includes('/posts/de/') && lang === 'en') {
+            window.location.href = path.replace('/posts/de/', '/posts/en/');
+            return;
+        } else if (path.includes('/posts/en/') && lang === 'de') {
+            window.location.href = path.replace('/posts/en/', '/posts/de/');
+            return;
+        }
+        // Blog index: /blog/ <-> /blog/en/
+        const isEnglishIndex = path.includes('/blog/en/');
+        if (lang === 'en' && !isEnglishIndex && !path.includes('/posts/')) {
+            window.location.href = path.replace('/blog/', '/blog/en/');
+            return;
+        } else if (lang === 'de' && isEnglishIndex) {
+            window.location.href = path.replace('/blog/en/', '/blog/');
+            return;
+        }
+    }
 
     // Update page title based on current page
     const isHomePage = window.location.pathname === '/' || window.location.pathname.endsWith('index.html') && !window.location.pathname.includes('/blog/');

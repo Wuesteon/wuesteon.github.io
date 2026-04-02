@@ -9,6 +9,8 @@ function getHeader(basePath = '', activePage = '', useAnchorLinks = false) {
     const servicesLink = useAnchorLinks ? '#services' : `${basePath}index.html#services`;
     const aboutLink = useAnchorLinks ? '#about' : `${basePath}index.html#about`;
     const contactLink = useAnchorLinks ? '#contact' : `${basePath}index.html#contact`;
+    const isEnglishBlog = window.location.pathname.includes('/blog/en/') || window.location.pathname.includes('/posts/en/');
+    const blogLink = isEnglishBlog ? `${basePath}blog/en/` : `${basePath}blog/`;
 
     return `
     <header class="fixed w-full z-50 top-0">
@@ -33,7 +35,7 @@ function getHeader(basePath = '', activePage = '', useAnchorLinks = false) {
                 <a href="${servicesLink}" class="text-sm font-medium text-gray-300" data-i18n="nav.services">Services</a>
                 <a href="${aboutLink}" class="text-sm font-medium text-gray-300" data-i18n="nav.about">Über mich</a>
                 <a href="${contactLink}" class="text-sm font-medium text-gray-300" data-i18n="nav.contact">Kontakt</a>
-                <a href="${basePath}blog/" class="text-sm font-medium ${blogClass}" data-i18n="nav.blog">Blog</a>
+                <a href="${blogLink}" class="text-sm font-medium ${blogClass}" data-i18n="nav.blog">Blog</a>
                 <button id="lang-toggle" class="lang-toggle ml-4" aria-label="Toggle language">
                     <span id="lang-de" class="active">DE</span>
                     <span class="text-gray-600">|</span>
@@ -46,7 +48,7 @@ function getHeader(basePath = '', activePage = '', useAnchorLinks = false) {
             <a href="${servicesLink}" class="block text-gray-300 hover:text-cyan-400 hover:bg-gray-800/50 px-6 py-4 text-sm font-medium" data-i18n="nav.services">Services</a>
             <a href="${aboutLink}" class="block text-gray-300 hover:text-cyan-400 hover:bg-gray-800/50 px-6 py-4 text-sm font-medium" data-i18n="nav.about">Über mich</a>
             <a href="${contactLink}" class="block text-gray-300 hover:text-cyan-400 hover:bg-gray-800/50 px-6 py-4 text-sm font-medium" data-i18n="nav.contact">Kontakt</a>
-            <a href="${basePath}blog/" class="block ${blogClassMobile} hover:bg-gray-800/50 px-6 py-4 text-sm font-medium" data-i18n="nav.blog">Blog</a>
+            <a href="${blogLink}" class="block ${blogClassMobile} hover:bg-gray-800/50 px-6 py-4 text-sm font-medium" data-i18n="nav.blog">Blog</a>
             <button id="lang-toggle-mobile" class="lang-toggle mx-6 my-4" aria-label="Toggle language">
                 <span class="lang-de-indicator active">DE</span>
                 <span class="text-gray-600">|</span>
@@ -111,7 +113,8 @@ function getBackToTopButton() {
 // Auto-detect basePath from current URL
 function detectBasePath() {
     const path = window.location.pathname;
-    if (path.includes('/blog/posts/')) return '../../';
+    if (path.includes('/blog/posts/de/') || path.includes('/blog/posts/en/')) return '../../../';
+    if (path.includes('/blog/en/')) return '../../';
     if (path.includes('/blog/')) return '../';
     return '';
 }

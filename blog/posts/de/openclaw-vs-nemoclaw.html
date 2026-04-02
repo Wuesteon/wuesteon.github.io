@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="de" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw vs. NemoClaw: Sicherheit für KI-Agenten | Nils Weiser</title>
+    <meta name="description" content="NemoClaw ist kein Ersatz für OpenClaw, sondern ein Sicherheits-Wrapper für Enterprise-taugliche KI-Agenten. Eine Analyse der Unterschiede und Einsatzszenarien.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <style>
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(55, 65, 81, 0.5);
+        }
+        .comparison-table th {
+            background: rgba(6, 182, 212, 0.1);
+            color: #22d3ee;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .comparison-table td {
+            color: #d1d5db;
+        }
+        .comparison-table tr:hover td {
+            background: rgba(6, 182, 212, 0.05);
+        }
+        .risk-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.15rem 0.6rem;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: #f87171;
+        }
+        .safe-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.15rem 0.6rem;
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: #4ade80;
+        }
+        .analogy-box {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.08) 0%, rgba(34, 197, 94, 0.08) 100%);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .analogy-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin: 0.75rem 0;
+        }
+        .analogy-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: #22d3ee;
+            min-width: 120px;
+            font-weight: 600;
+        }
+        .security-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+        .security-card h4 {
+            color: #22d3ee;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        .warning-box {
+            background: rgba(251, 191, 36, 0.1);
+            border-left: 3px solid #fbbf24;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .warning-box h4 {
+            color: #fbbf24;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .tool-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #22d3ee;
+            margin: 0.25rem;
+        }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header -->
+    <section class="hero-bg pt-32 pb-12">
+        <div class="grid-pattern"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-3xl mx-auto">
+                <a href="../../" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    Zurück zum Blog
+                </a>
+                <div class="flex items-center gap-3 mb-4 flex-wrap">
+                    <span class="blog-tag">KI-Agenten</span>
+                    <span class="blog-tag">NVIDIA</span>
+                    <span class="blog-tag">Sicherheit</span>
+                    <span class="blog-date">2. April 2026</span>
+                </div>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+                    OpenClaw vs. NemoClaw: Warum die Frage falsch gestellt ist
+                </h1>
+                <p class="text-xl text-gray-400">
+                    NemoClaw ist kein Konkurrent von OpenClaw, sondern ein Sicherheits-Wrapper, der KI-Agenten Enterprise-tauglich macht.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <article class="section-dark py-16">
+        <div class="container mx-auto px-6">
+            <div class="article-content">
+
+                <p>
+                    Autonome KI-Agenten sind einer der spannendsten Trends in der KI-Entwicklung. Mit Tools wie OpenClaw können Sprachmodelle eigenständig Aufgaben ausführen, auf Dateien zugreifen und mit externen Diensten interagieren. Doch mit dieser Autonomie kommen erhebliche Sicherheitsrisiken. Genau hier setzt NemoClaw an.
+                </p>
+
+                <blockquote>
+                    NemoClaw ist kein Konkurrent und kein Ersatz für OpenClaw. Es ist ein Sicherheits-Wrapper, der OpenClaw in einer Enterprise-tauglichen Sandbox ausführt. Derselbe Agent, dieselben Fähigkeiten, nur vollständig abgesichert.
+                </blockquote>
+
+                <h2>Was ist OpenClaw?</h2>
+
+                <p>
+                    OpenClaw ist die derzeit populärste Open-Source-Architektur für autonome KI-Agenten. Es ermöglicht Sprachmodellen, eigenständig Aufgaben auszuführen, Tools zu nutzen und mit der Außenwelt zu interagieren. Die Architektur besteht aus fünf Kernkomponenten:
+                </p>
+
+                <ol>
+                    <li><strong>LLM-Backbone:</strong> Das Sprachmodell als „Gehirn" des Agenten (Claude, GPT, Gemini, Llama etc.)</li>
+                    <li><strong>Skills/Tools:</strong> Erweiterbare Fähigkeiten wie Websuche, Dateizugriff und Code-Ausführung</li>
+                    <li><strong>Marketplace:</strong> Ein öffentlicher Marktplatz zum Teilen und Installieren von Skills</li>
+                    <li><strong>MCP-Protokoll:</strong> Standardisierte Kommunikation zwischen Agent und Tools</li>
+                    <li><strong>OpenShell:</strong> Die Laufzeitumgebung, in der der Agent operiert</li>
+                </ol>
+
+                <h2>Das Sicherheitsproblem</h2>
+
+                <p>
+                    Trotz seiner Popularität weist OpenClaw in der Standardkonfiguration erhebliche Sicherheitsrisiken auf. Es gibt mehrere kritische Schwachstellen:
+                </p>
+
+                <ul>
+                    <li><strong>Über 300 bösartige Skills im Marketplace:</strong> Schadhafte Skills, die sich als nützliche Tools tarnen, aber im Hintergrund API-Schlüssel stehlen und Daten an fremde Server übertragen</li>
+                    <li><strong>Uneingeschränkter Netzwerkzugang:</strong> Jeder Skill kann beliebige ausgehende Verbindungen herstellen, ohne Kontrolle oder Protokollierung</li>
+                    <li><strong>API-Keys im Klartext:</strong> Schlüssel werden direkt in Anfragen mitgesendet und sind für bösartige Skills einsehbar</li>
+                    <li><strong>Voller Dateisystemzugriff:</strong> Der Agent läuft mit vollen Benutzerrechten auf dem gesamten System</li>
+                    <li><strong>Keine Audit-Logs:</strong> Keine standardmäßige Protokollierung von Aktionen</li>
+                    <li><strong>CVE-2026-25253:</strong> Eine dokumentierte Remote-Code-Execution-Schwachstelle <span class="risk-badge">Kritisch</span></li>
+                </ul>
+
+                <h2>Was ist NemoClaw?</h2>
+
+                <p>
+                    NemoClaw ist NVIDIAs Antwort auf diese Sicherheitsprobleme. Vorgestellt auf der GTC-Konferenz im März 2026 von Jensen Huang, ist es keine Alternative zu OpenClaw, sondern eine Sicherheitsinfrastruktur, die OpenClaw umschließt.
+                </p>
+
+                <div class="analogy-box">
+                    <h4 style="color: #22d3ee; margin-bottom: 0.75rem; font-weight: 600;">Die Büro-Analogie</h4>
+                    <div class="analogy-item">
+                        <span class="analogy-label">OpenClaw</span>
+                        <span class="text-gray-300">Der Mitarbeiter, intelligent und fähig, Aufgaben zu erledigen</span>
+                    </div>
+                    <div class="analogy-item">
+                        <span class="analogy-label">OpenShell</span>
+                        <span class="text-gray-300">Das Bürogebäude, die physische Umgebung</span>
+                    </div>
+                    <div class="analogy-item">
+                        <span class="analogy-label">NemoClaw</span>
+                        <span class="text-gray-300">Die Gebäudeverwaltung, setzt Zugangsregeln, überwacht Signale, kontrolliert Ein- und Ausgänge</span>
+                    </div>
+                </div>
+
+                <h2>Die drei Sicherheitssäulen von NemoClaw</h2>
+
+                <div class="security-card">
+                    <h4>1. Sandbox-Isolation</h4>
+                    <p>
+                        OpenClaw wird in einem isolierten Container ausgeführt. Der Dateizugriff ist auf Sandbox- und temporäre Ordner beschränkt. Die Isolation erfolgt auf Kernel-Ebene (Out-of-Process-Architektur). Selbst wenn der Agent kompromittiert wird, kann er nicht aus der Sandbox ausbrechen.
+                    </p>
+                </div>
+
+                <div class="security-card">
+                    <h4>2. API-Key-Sicherheit</h4>
+                    <p>
+                        API-Schlüssel gelangen nie in die Sandbox. Ein externes Gateway fängt sie ab und fügt sie erst beim Verlassen der Sandbox in ausgehende Anfragen ein. Selbst ein bösartiger Skill kann die Keys nicht einsehen, da sie innerhalb der Sandbox schlicht nicht existieren.
+                    </p>
+                </div>
+
+                <div class="security-card">
+                    <h4>3. Netzwerk-Richtlinien (Deny-by-Default)</h4>
+                    <p>
+                        Sämtlicher Netzwerkverkehr ist standardmäßig blockiert. Erlaubte Verbindungen müssen explizit in einer YAML-Policy-Datei definiert werden. Alle Entscheidungen werden in Echtzeit protokolliert. Zusätzlich werden persönliche Daten (PII) vor dem Verlassen der Sandbox automatisch herausgefiltert.
+                    </p>
+                </div>
+
+                <h2>Vergleich auf einen Blick</h2>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Merkmal</th>
+                            <th>OpenClaw (Standard)</th>
+                            <th>NemoClaw</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Dateizugriff</strong></td>
+                            <td>Volle Benutzerrechte <span class="risk-badge">Risiko</span></td>
+                            <td>Sandbox + Temp-Ordner <span class="safe-badge">Sicher</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Netzwerkzugriff</strong></td>
+                            <td>Keine Einschränkungen <span class="risk-badge">Risiko</span></td>
+                            <td>Whitelist auf OS-Ebene <span class="safe-badge">Sicher</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>API-Key-Handling</strong></td>
+                            <td>Klartext in Anfragen <span class="risk-badge">Risiko</span></td>
+                            <td>Gateway, nie in Sandbox <span class="safe-badge">Sicher</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Datenschutz</strong></td>
+                            <td>Rohdaten werden gesendet</td>
+                            <td>PII wird herausgefiltert</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Audit-Logging</strong></td>
+                            <td>Keine Protokollierung</td>
+                            <td>Echtzeit-Protokollierung</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Installation</strong></td>
+                            <td>Einfach, schnell</td>
+                            <td>Docker-basiert, komplexer</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Betriebssystem</strong></td>
+                            <td>Mac, Windows, Linux</td>
+                            <td>Primär Linux (Ubuntu 22.04+)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>KI-Modelle</strong></td>
+                            <td>Alle LLMs</td>
+                            <td>Alle LLMs (nicht NVIDIA-gebunden)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Wann was verwenden?</h2>
+
+                <p>
+                    <strong>OpenClaw allein</strong> eignet sich für Experimente und Prototypen, Lernprojekte, persönliche Automatisierung und Hobby-Projekte ohne sensible Daten. Das Setup ist schnell und funktioniert auf allen Betriebssystemen.
+                </p>
+
+                <p>
+                    <strong>NemoClaw</strong> empfiehlt sich für Produktionsumgebungen mit Kundendaten, Workflows mit sensiblen Geschäftsdateien, Compliance-pflichtige Unternehmen und Szenarien, in denen ein Sicherheitsvorfall echten Schaden anrichten könnte.
+                </p>
+
+                <div class="warning-box">
+                    <h4>Wichtige Einschränkungen</h4>
+                    <p style="color: #d1d5db; margin: 0;">
+                        NemoClaw befindet sich noch in der <strong>Alpha-Phase</strong>. Nutzer berichten von Bugs, langen Antwortzeiten (teils über zwei Minuten) und Instabilitäten. Eine nachträgliche Installation auf bestehende OpenClaw-Setups ist nicht möglich, es erfordert eine Neuinstallation. Offiziell wird nur Ubuntu 22.04+ unterstützt. Docker, Node.js v20+ und die NVIDIA OpenShell CLI müssen auf dem System installiert sein.
+                    </p>
+                </div>
+
+                <p>
+                    Wichtig zu wissen: NemoClaw ist <strong>nicht an NVIDIA gebunden</strong>. Claude, GPT, Gemini, Groq und lokale Modelle über Ollama funktionieren. Auch eine NVIDIA-GPU ist nicht erforderlich.
+                </p>
+
+                <h2>Fazit</h2>
+
+                <p>
+                    Die Frage „OpenClaw oder NemoClaw?" ist falsch gestellt. NemoClaw ist kein Alternativprodukt, sondern eine Sicherheitsschicht, die OpenClaw für den professionellen Einsatz absichert.
+                </p>
+
+                <p>
+                    Für Einzelpersonen und Hobbyisten bleibt OpenClaw allein die einfachste Wahl. Für Unternehmen, die KI-Agenten in Produktionsumgebungen einsetzen, bietet NemoClaw einen durchdachten Sicherheitsansatz. Allerdings empfiehlt es sich, angesichts des Alpha-Status die weitere Entwicklung zu verfolgen, bevor man es in produktionskritischen Systemen einsetzt.
+                </p>
+
+                <hr style="border-color: #374151; margin: 2rem 0;">
+
+                <p><strong>Verwendete Tools:</strong></p>
+                <div style="margin: 1rem 0;">
+                    <span class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        NVIDIA OpenClaw
+                    </span>
+                    <span class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                        NVIDIA NemoClaw
+                    </span>
+                </div>
+
+                <p>
+                    Du setzt KI-Agenten in deinem Unternehmen ein und brauchst Beratung zur Sicherheitsarchitektur? <a href="../../../index.html#contact">Schreib mir</a>, ich helfe bei der Evaluierung und Implementierung.
+                </p>
+
+            </div>
+        </div>
+    </article>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script src="../../../js/components.js"></script>
+    <script src="../../../js/translations.js"></script>
+    <script src="../../../js/main.js"></script>
+</body>
+</html>

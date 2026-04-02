@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="de" id="html-root">
+<html lang="en" id="html-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Browser-Automatisierung mit Playwright MCP | Nils Weiser</title>
-    <meta name="description" content="Wie Playwright MCP die Browser-Automatisierung mit Claude Code revolutioniert. Ein praktischer Leitfaden mit Einrichtung und Anwendungsbeispielen.">
+    <title>Browser Automation with Playwright MCP | Nils Weiser</title>
+    <meta name="description" content="How Playwright MCP revolutionizes browser automation with Claude Code. A practical guide with setup instructions and usage examples.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/styles.css">
     <style>
         .command-box {
             background: #0d1117;
@@ -90,23 +90,23 @@
         <div class="grid-pattern"></div>
         <div class="container mx-auto px-6 relative z-10">
             <div class="max-w-3xl mx-auto">
-                <a href="../" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
+                <a href="../../en/" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
-                    Zurück zum Blog
+                    Back to Blog
                 </a>
                 <div class="flex items-center gap-3 mb-4 flex-wrap">
                     <span class="blog-tag">Playwright</span>
                     <span class="blog-tag">MCP</span>
                     <span class="blog-tag">Claude Code</span>
-                    <span class="blog-date">3. Oktober 2025</span>
+                    <span class="blog-date">October 3, 2025</span>
                 </div>
                 <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                    Browser-Automatisierung mit Playwright MCP und Claude Code
+                    Browser Automation with Playwright MCP and Claude Code
                 </h1>
                 <p class="text-xl text-gray-400">
-                    Wie du Claude Code beibringst, einen echten Browser zu steuern. Für Web-Scraping, Testing und Automatisierung.
+                    How to teach Claude Code to control a real browser. For web scraping, testing, and automation.
                 </p>
             </div>
         </div>
@@ -118,12 +118,12 @@
             <div class="article-content">
 
                 <p>
-                    Das <strong>Model Context Protocol (MCP)</strong> erweitert die Fähigkeiten von Claude Code um externe Tools. Eine der mächtigsten Erweiterungen: <strong>Playwright MCP</strong>, das Claude einen echten Browser steuern lässt.
+                    The <strong>Model Context Protocol (MCP)</strong> extends Claude Code's capabilities with external tools. One of the most powerful extensions: <strong>Playwright MCP</strong>, which lets Claude control a real browser.
                 </p>
 
-                <h2>Einrichtung in einer Minute</h2>
+                <h2>Setup in One Minute</h2>
                 <p>
-                    Die Installation ist denkbar einfach. Ein einziger Befehl vor dem Start von Claude:
+                    The installation is remarkably simple. A single command before starting Claude:
                 </p>
 
                 <div class="command-box">
@@ -132,16 +132,16 @@
                 </div>
 
                 <p>
-                    Das war's. Die Konfiguration wird in <code>~/.claude.json</code> gespeichert und bleibt für zukünftige Sessions erhalten.
+                    That's it. The configuration is stored in <code>~/.claude.json</code> and persists for future sessions.
                 </p>
 
-                <h2>Wie es funktioniert</h2>
+                <h2>How It Works</h2>
                 <p>
-                    Nach der Einrichtung kann Claude ein sichtbares Chrome-Fenster steuern. Du siehst live, was der Agent tut. Seiten laden, Formulare ausfüllen, Buttons klicken.
+                    After setup, Claude can control a visible Chrome window. You see in real time what the agent is doing. Loading pages, filling out forms, clicking buttons.
                 </p>
 
                 <p>
-                    Ein praktischer Tipp: Erwähne explizit "Playwright MCP" in deinen Anfragen. So wählt Claude das richtige Tool und versucht nicht, normale Bash-Befehle zu verwenden.
+                    A practical tip: Explicitly mention "Playwright MCP" in your requests. This way Claude selects the right tool and doesn't try to use regular Bash commands.
                 </p>
 
                 <div class="benefit-card">
@@ -150,41 +150,41 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
                         </svg>
                     </div>
-                    <h4 class="text-white font-semibold mb-2">Authentifizierung leicht gemacht</h4>
+                    <h4 class="text-white font-semibold mb-2">Authentication Made Easy</h4>
                     <p class="text-gray-400 text-sm">
-                        Ein großer Vorteil: Claude zeigt Login-Seiten an, während du dich manuell authentifizierst. Session-Cookies bleiben während der gesamten Interaktion erhalten. Keine Credential-Weitergabe an die KI nötig.
+                        A major advantage: Claude displays login pages while you authenticate manually. Session cookies are preserved throughout the entire interaction. No need to pass credentials to the AI.
                     </p>
                 </div>
 
-                <h2>Verfügbare Browser-Tools</h2>
+                <h2>Available Browser Tools</h2>
                 <p>
-                    Playwright MCP stellt 25 Browser-Funktionen bereit. Du musst dir die Namen nicht merken. Claude wählt automatisch die passende Funktion für deine Aufgabe:
+                    Playwright MCP provides 25 browser functions. You don't need to memorize the names. Claude automatically selects the right function for your task:
                 </p>
 
                 <div class="tools-grid">
                     <div class="tool-item">
                         <div class="tool-name">browser_navigate</div>
-                        <div class="tool-desc">URLs öffnen</div>
+                        <div class="tool-desc">Open URLs</div>
                     </div>
                     <div class="tool-item">
                         <div class="tool-name">browser_click</div>
-                        <div class="tool-desc">Elemente anklicken</div>
+                        <div class="tool-desc">Click elements</div>
                     </div>
                     <div class="tool-item">
                         <div class="tool-name">browser_type</div>
-                        <div class="tool-desc">Text eingeben</div>
+                        <div class="tool-desc">Enter text</div>
                     </div>
                     <div class="tool-item">
                         <div class="tool-name">browser_screenshot</div>
-                        <div class="tool-desc">Screenshots erstellen</div>
+                        <div class="tool-desc">Take screenshots</div>
                     </div>
                     <div class="tool-item">
                         <div class="tool-name">browser_snapshot</div>
-                        <div class="tool-desc">DOM-Struktur erfassen</div>
+                        <div class="tool-desc">Capture DOM structure</div>
                     </div>
                     <div class="tool-item">
                         <div class="tool-name">browser_tabs</div>
-                        <div class="tool-desc">Tabs verwalten</div>
+                        <div class="tool-desc">Manage tabs</div>
                     </div>
                     <div class="tool-item">
                         <div class="tool-name">browser_drag</div>
@@ -192,84 +192,84 @@
                     </div>
                     <div class="tool-item">
                         <div class="tool-name">browser_hover</div>
-                        <div class="tool-desc">Hover-Effekte</div>
+                        <div class="tool-desc">Hover effects</div>
                     </div>
                     <div class="tool-item">
                         <div class="tool-name">browser_select_option</div>
-                        <div class="tool-desc">Dropdowns bedienen</div>
+                        <div class="tool-desc">Operate dropdowns</div>
                     </div>
                     <div class="tool-item">
                         <div class="tool-name">browser_file_upload</div>
-                        <div class="tool-desc">Dateien hochladen</div>
+                        <div class="tool-desc">Upload files</div>
                     </div>
                     <div class="tool-item">
                         <div class="tool-name">browser_pdf_save</div>
-                        <div class="tool-desc">PDFs generieren</div>
+                        <div class="tool-desc">Generate PDFs</div>
                     </div>
                     <div class="tool-item">
                         <div class="tool-name">browser_network</div>
-                        <div class="tool-desc">Netzwerk überwachen</div>
+                        <div class="tool-desc">Monitor network</div>
                     </div>
                 </div>
 
-                <h2>Praktische Anwendungsfälle</h2>
+                <h2>Practical Use Cases</h2>
 
-                <h3>1. Web Scraping mit JavaScript-Rendering</h3>
+                <h3>1. Web Scraping with JavaScript Rendering</h3>
                 <p>
-                    Viele moderne Websites rendern Inhalte erst mit JavaScript. Playwright wartet automatisch auf das vollständige Rendering, bevor Daten extrahiert werden.
+                    Many modern websites only render content with JavaScript. Playwright automatically waits for complete rendering before extracting data.
                 </p>
 
-                <pre><code><span class="code-comment"># Prompt an Claude:</span>
-<span class="code-string">"Öffne mit Playwright MCP die Seite example.com/products
-und extrahiere alle Produktnamen und Preise als JSON."</span></code></pre>
+                <pre><code><span class="code-comment"># Prompt for Claude:</span>
+<span class="code-string">"Use Playwright MCP to open the page example.com/products
+and extract all product names and prices as JSON."</span></code></pre>
 
-                <h3>2. Automatisierte Tests</h3>
+                <h3>2. Automated Testing</h3>
                 <p>
-                    Claude kann End-to-End-Tests durchführen und sogar Playwright-Testskripte generieren, die Sie später in Ihre CI/CD-Pipeline integrieren können.
+                    Claude can perform end-to-end tests and even generate Playwright test scripts that you can later integrate into your CI/CD pipeline.
                 </p>
 
-                <h3>3. Formular-Automatisierung</h3>
+                <h3>3. Form Automation</h3>
                 <p>
-                    Wiederkehrende Formulareingaben? Claude füllt sie aus, während Sie die finalen Werte validieren.
+                    Repetitive form entries? Claude fills them out while you validate the final values.
                 </p>
 
-                <h3>4. Screenshot-Dokumentation</h3>
+                <h3>4. Screenshot Documentation</h3>
                 <p>
-                    Automatische Screenshots von Websites für Dokumentation oder Monitoring – mit Annotationen, falls gewünscht.
+                    Automatic screenshots of websites for documentation or monitoring, with annotations if desired.
                 </p>
 
                 <h2>Best Practices</h2>
 
                 <ol>
                     <li>
-                        <strong>Explizite Tool-Nennung:</strong> Sag "mit Playwright MCP", damit Claude das richtige Tool wählt
+                        <strong>Explicit tool naming:</strong> Say "with Playwright MCP" so Claude selects the right tool
                     </li>
                     <li>
-                        <strong>Schrittweise Anweisungen:</strong> Bei komplexen Workflows die Aufgaben aufteilen
+                        <strong>Step-by-step instructions:</strong> Break down tasks for complex workflows
                     </li>
                     <li>
-                        <strong>Snapshots statt Screenshots:</strong> <code>browser_snapshot</code> liefert strukturierte Daten, die Claude besser verarbeiten kann
+                        <strong>Snapshots over screenshots:</strong> <code>browser_snapshot</code> provides structured data that Claude can process more effectively
                     </li>
                     <li>
-                        <strong>Authentifizierung beobachten:</strong> Bei Login-Seiten kannst du manuell eingreifen
+                        <strong>Monitor authentication:</strong> You can intervene manually on login pages
                     </li>
                 </ol>
 
-                <h2>Sicherheitshinweise</h2>
+                <h2>Security Considerations</h2>
                 <p>
-                    Da Claude einen echten Browser steuert, gelten einige Vorsichtsmaßnahmen:
+                    Since Claude controls a real browser, some precautions apply:
                 </p>
 
                 <ul>
-                    <li>Arbeiten Sie nicht mit sensiblen Produktionsdaten ohne Prüfung</li>
-                    <li>Verwenden Sie Test-Accounts für Automatisierungsexperimente</li>
-                    <li>Beobachten Sie die Browser-Aktionen – Sie sehen alles live</li>
-                    <li>Sensible Credentials nie direkt an Claude weitergeben</li>
+                    <li>Do not work with sensitive production data without review</li>
+                    <li>Use test accounts for automation experiments</li>
+                    <li>Watch the browser actions - you can see everything live</li>
+                    <li>Never pass sensitive credentials directly to Claude</li>
                 </ul>
 
                 <hr style="border-color: #374151; margin: 2rem 0;">
 
-                <p><strong>Verwendete Tools:</strong></p>
+                <p><strong>Tools used:</strong></p>
                 <div style="margin: 1rem 0;">
                     <a href="https://playwright.dev" target="_blank" rel="noopener noreferrer" class="tool-badge">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
@@ -282,7 +282,7 @@ und extrahiere alle Produktnamen und Preise als JSON."</span></code></pre>
                 </div>
 
                 <p>
-                    Willst du Browser-Automatisierung in deine Workflows integrieren? <a href="../../index.html#contact">Schreib mir</a>. Ich helfe bei der Einrichtung und Entwicklung maßgeschneiderter Lösungen.
+                    Want to integrate browser automation into your workflows? <a href="../../../index.html#contact">Get in touch</a>. I help with setup and development of tailored solutions.
                 </p>
 
             </div>
@@ -292,8 +292,8 @@ und extrahiere alle Produktnamen und Preise als JSON."</span></code></pre>
     <div id="footer-placeholder"></div>
     <div id="back-to-top-placeholder"></div>
 
-    <script src="../../js/components.js"></script>
-    <script src="../../js/translations.js"></script>
-    <script src="../../js/main.js"></script>
+    <script src="../../../js/components.js"></script>
+    <script src="../../../js/translations.js"></script>
+    <script src="../../../js/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent Workflows with the Superpowers Framework | Nils Weiser</title>
+    <meta name="description" content="How the Superpowers framework teaches AI agents reusable skills and enables multi-stage development workflows.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <style>
+        .workflow-diagram {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(34, 197, 94, 0.05) 100%);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        .phase-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        .phase-number {
+            background: linear-gradient(135deg, #22d3ee 0%, #4ade80 100%);
+            color: #0f172a;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+        .phase-title {
+            color: #22d3ee;
+            font-weight: 600;
+        }
+        .insight-box {
+            background: rgba(251, 191, 36, 0.1);
+            border-left: 3px solid #fbbf24;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .insight-box h4 {
+            color: #fbbf24;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .tool-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #22d3ee;
+            margin: 0.25rem;
+        }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header -->
+    <section class="hero-bg pt-32 pb-12">
+        <div class="grid-pattern"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-3xl mx-auto">
+                <a href="../../en/" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    Back to Blog
+                </a>
+                <div class="flex items-center gap-3 mb-4 flex-wrap">
+                    <span class="blog-tag">AI Agents</span>
+                    <span class="blog-tag">Workflows</span>
+                    <span class="blog-tag">Automation</span>
+                    <span class="blog-date">December 12, 2025</span>
+                </div>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+                    Superpowers: How AI Agents Learn to Work Like Real Teams
+                </h1>
+                <p class="text-xl text-gray-400">
+                    A framework that teaches Claude Code reusable skills and orchestrates multi-stage development workflows.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <article class="section-dark py-16">
+        <div class="container mx-auto px-6">
+            <div class="article-content">
+
+                <p>
+                    What if an AI coding agent didn't just write code, but worked like an experienced developer? With documented best practices, consistent workflows, and the ability to learn from past projects?
+                </p>
+
+                <p>
+                    The <strong><a href="https://github.com/obra/superpowers" target="_blank" rel="noopener noreferrer">Superpowers framework</a></strong> makes exactly that possible. A system that teaches AI agents reusable skills.
+                </p>
+
+                <h2>The Core Idea</h2>
+
+                <blockquote>
+                    "Skills give your agents superpowers. They are documented best practices that Claude learns and applies consistently."
+                </blockquote>
+
+                <p>
+                    What makes it special: there is a skill for creating new skills (<code>writing-skills</code>). When you find a solution you want to reuse, you can turn it into a new skill.
+                </p>
+
+                <h2>The Workflow</h2>
+
+                <div class="workflow-diagram">
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-number">PHASE 1</span>
+                            <span class="phase-title">Brainstorming</span>
+                        </div>
+                        <p class="text-gray-400 text-sm">
+                            Claude analyzes the task, asks questions, and refines the idea through Socratic dialogue. No code changes -- just thinking and validating with the user.
+                        </p>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-number">PHASE 2</span>
+                            <span class="phase-title">Git Worktree & Plan</span>
+                        </div>
+                        <p class="text-gray-400 text-sm">
+                            Claude creates an isolated git worktree on a new branch, runs the project setup, and creates a detailed implementation plan with 2-5 minute tasks.
+                        </p>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-number">PHASE 3</span>
+                            <span class="phase-title">Subagent Development</span>
+                        </div>
+                        <p class="text-gray-400 text-sm">
+                            Fresh subagents work through each task. Each goes through a two-stage review: first spec compliance, then code quality.
+                        </p>
+                        <p class="text-gray-500 text-xs mt-2 italic">
+                            Alternatively: <code class="text-cyan-400/70">executing-plans</code> for batch execution with human checkpoints.
+                        </p>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-number">PHASE 4</span>
+                            <span class="phase-title">Branch Finishing</span>
+                        </div>
+                        <p class="text-gray-400 text-sm">
+                            Verify tests, present options (Merge/PR/Keep/Discard), clean up worktree.
+                        </p>
+                    </div>
+                </div>
+
+                <h2>Subagents and Code Review</h2>
+                <p>
+                    One of the most powerful features: Claude can dispatch subagents that work autonomously while the main agent maintains the overview. Once complete, the changes are reviewed.
+                </p>
+
+                <p>
+                    The model offers choices:
+                </p>
+
+                <ul>
+                    <li><strong>Supervised Mode:</strong> You observe every step</li>
+                    <li><strong>Autonomous Mode:</strong> Subagent works independently, you review the result</li>
+                    <li><strong>Hybrid:</strong> A mix depending on task complexity</li>
+                </ul>
+
+                <h2>Test-Driven Development</h2>
+
+                <div class="insight-box">
+                    <h4>RED-GREEN-REFACTOR</h4>
+                    <p class="text-gray-300 text-sm">
+                        Superpowers consistently follows TDD: write a test, failing, write code, success, commit. No test, no commit.
+                    </p>
+                </div>
+
+                <p>
+                    The <code>test-driven-development</code> skill is not a recommendation but a workflow requirement. That is what sets Superpowers apart from other frameworks.
+                </p>
+
+                <h2>Skill Creation</h2>
+                <p>
+                    What makes the framework special: it includes a skill for creating new skills (<code>writing-skills</code>). When you solve a problem and want to reuse the solution, you can generate a new skill from it directly.
+                </p>
+
+                <p>
+                    Skills are simple Markdown files with YAML frontmatter. They can contain instructions, examples, checklists, and even scripts -- everything Claude needs to execute a task consistently.
+                </p>
+
+                <h2>Community Sharing</h2>
+                <p>
+                    Superpowers is not just a local system. Skills can be shared via GitHub, enabling collaborative development:
+                </p>
+
+                <pre><code><span class="code-comment"># Register marketplace</span>
+/plugin marketplace add obra/superpowers-marketplace
+
+<span class="code-comment"># Install plugin</span>
+/plugin install superpowers@superpowers-marketplace</code></pre>
+
+                <p>
+                    Imagine: a performance optimization expert shares their skills. Anyone who installs them gets instant access to their best practices. Without having to go through the learning curve themselves.
+                </p>
+
+                <h2>Why This Matters</h2>
+                <p>
+                    Superpowers shows where AI agent development is heading:
+                </p>
+
+                <ol>
+                    <li><strong>Knowledge gets codified:</strong> Best practices are no longer just in people's heads, but in portable skills</li>
+                    <li><strong>Teams scale differently:</strong> Junior developers with good skills work like seniors</li>
+                    <li><strong>Consistency is guaranteed:</strong> No more "I did it differently" moments</li>
+                    <li><strong>Learning is accelerated:</strong> Make a mistake once, create a skill, never repeat it</li>
+                </ol>
+
+                <hr style="border-color: #374151; margin: 2rem 0;">
+
+                <p><strong>Tools used:</strong></p>
+                <div style="margin: 1rem 0;">
+                    <a href="https://claude.ai/code" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        Claude Code
+                    </a>
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        GitHub
+                    </a>
+                </div>
+
+                <p>
+                    Interested in AI-powered development workflows for your team? <a href="../../../index.html#contact">Get in touch</a>. I help with implementing tailored solutions.
+                </p>
+
+            </div>
+        </div>
+    </article>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script src="../../../js/components.js"></script>
+    <script src="../../../js/translations.js"></script>
+    <script src="../../../js/main.js"></script>
+</body>
+</html>

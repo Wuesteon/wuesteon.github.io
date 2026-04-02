@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code Skills: The Revolution of AI Automation | Nils Weiser</title>
+    <meta name="description" content="Claude Code Skills enable teaching AI agents reusable capabilities. A look at the future of AI-powered development.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <style>
+        .skill-card {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(34, 197, 94, 0.05) 100%);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .skill-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .skill-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(6, 182, 212, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .comparison-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        @media (max-width: 768px) {
+            .comparison-box {
+                grid-template-columns: 1fr;
+            }
+        }
+        .comparison-item {
+            background: rgba(6, 182, 212, 0.05);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+        .comparison-item h4 {
+            color: #22d3ee;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+        .tool-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #22d3ee;
+            margin: 0.25rem;
+        }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header -->
+    <section class="hero-bg pt-32 pb-12">
+        <div class="grid-pattern"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-3xl mx-auto">
+                <a href="../../en/" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    Back to Blog
+                </a>
+                <div class="flex items-center gap-3 mb-4 flex-wrap">
+                    <span class="blog-tag">Claude Code</span>
+                    <span class="blog-tag">AI Agents</span>
+                    <span class="blog-tag">Automation</span>
+                    <span class="blog-date">December 2, 2025</span>
+                </div>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+                    Claude Code Skills: The MCP Killer?
+                </h1>
+                <p class="text-xl text-gray-400">
+                    How Skills are changing the way we work with AI coding assistants. And why MCP is already losing relevance for me.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <article class="section-dark py-16">
+        <div class="container mx-auto px-6">
+            <div class="article-content">
+
+                <p>
+                    Anthropic has introduced <strong>Claude Code Skills</strong>, a new system that fundamentally changes how we interact with AI agents. Skills are reusable capabilities that Claude learns and applies consistently. Like a developer who has internalized best practices.
+                </p>
+
+                <h2>What Are Skills?</h2>
+                <p>
+                    Skills are Markdown files with metadata and optional executable scripts. Once created, Claude loads them automatically when they match the task at hand.
+                </p>
+
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">
+                            <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                        <span class="text-white font-semibold">The key advantage</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        Skills are token-efficient: each Skill only requires a few dozen extra tokens in the context. The full details are only loaded when they are actually needed. This makes Skills scalable. You can define hundreds without overloading the context.
+                    </p>
+                </div>
+
+                <h2>Skills vs. MCP: A Paradigm Shift</h2>
+                <p>
+                    The Model Context Protocol (MCP) has received a lot of attention. But Skills solve the problem more elegantly:
+                </p>
+
+                <div class="comparison-box">
+                    <div class="comparison-item">
+                        <h4>MCP</h4>
+                        <ul class="text-gray-400 text-sm space-y-2">
+                            <li>• Complex protocol specifications</li>
+                            <li>• Can consume tens of thousands of tokens</li>
+                            <li>• Requires server implementation</li>
+                            <li>• Steep learning curve</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>Skills</h4>
+                        <ul class="text-gray-400 text-sm space-y-2">
+                            <li>• Simple Markdown files</li>
+                            <li>• Minimal token overhead</li>
+                            <li>• No server required</li>
+                            <li>• Created in minutes</li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <h2>Practical Example: PDF Processing</h2>
+                <p>
+                    A concrete example demonstrates the elegance of the system: the <code>pdf</code> Skill from the official <a href="https://github.com/anthropics/skills" target="_blank" rel="noopener noreferrer">Anthropic Skills collection</a> provides a comprehensive toolkit for PDF manipulation. From text extraction to filling out forms.
+                </p>
+
+                <pre><code><span class="code-comment"># pdf/SKILL.md</span>
+<span class="code-keyword">---</span>
+<span class="code-function">name</span>: pdf
+<span class="code-function">description</span>: Comprehensive PDF manipulation toolkit
+<span class="code-function">tools</span>:
+  - pypdf, pdfplumber, reportlab
+  - pdftotext, qpdf, pdftk
+<span class="code-keyword">---</span>
+
+<span class="code-comment">## Core Features</span>
+- Extract text & tables (pdfplumber)
+- Create and merge PDFs (reportlab)
+- Detect and fill out forms
+- OCR for scanned documents
+
+<span class="code-comment">## Form Workflow</span>
+1. Check for fillable fields
+2. Extract field metadata as JSON
+3. Fill fields programmatically
+4. Generate completed PDF</code></pre>
+
+                <p>
+                    What makes this special: the Skill contains Python scripts for various workflows. For fillable PDFs, fields are automatically detected. For non-fillable forms, there is an annotation-based approach with visual validation.
+                </p>
+
+                <p>
+                    The same thing with MCP? Then I would need my own server, would have to define tool schemas, implement error handling, and host the whole thing somewhere. The Skill is a Markdown file with a few Python scripts. Done.
+                </p>
+
+                <h2>The Superpowers Library</h2>
+                <p>
+                    The developer community is already sharing ready-made Skills on GitHub. Jesse Vincent's <a href="https://github.com/obra/superpowers" target="_blank" rel="noopener noreferrer">"Superpowers" library</a> is a good example, battle-tested Skills for everyday development:
+                </p>
+
+                <ul>
+                    <li><strong>Self-improving Skills:</strong> A Skill that creates new Skills</li>
+                    <li><strong>Git worktrees for parallel work:</strong> Claude works on multiple features simultaneously</li>
+                    <li><strong>Automatic code reviews:</strong> Sub-agents review code according to best practices</li>
+                    <li><strong>Community sharing:</strong> Skills can be shared via GitHub</li>
+                </ul>
+
+                <blockquote>
+                    "Skills give your agents superpowers. They are documented best practices that Claude learns and applies consistently."
+                </blockquote>
+
+                <h2>Why This Matters</h2>
+                <p>
+                    The implications for software development are enormous:
+                </p>
+
+                <ol>
+                    <li><strong>Knowledge becomes portable:</strong> Once-defined workflows work everywhere</li>
+                    <li><strong>Consistency:</strong> The agent no longer makes "I forgot" mistakes</li>
+                    <li><strong>Scaling:</strong> Teams can codify their best practices as Skills</li>
+                    <li><strong>Specialization:</strong> Domain-specific Skills for law, medicine, finance...</li>
+                </ol>
+
+                <h2>The Future: An Explosion of New Possibilities</h2>
+                <p>
+                    We are at the beginning of a rapid evolution. The simplicity of the format lowers the barrier to entry to a minimum. Essentially, they are just structured Markdown files.
+                </p>
+
+                <p>
+                    An example: the controlling team creates monthly financial reports. With the right Skill combination, this runs automatically. Pull data from the ERP system, analyze deviations, generate charts, and export as PDF. What used to take half a day, the agent handles in minutes.
+                </p>
+
+                <hr style="border-color: #374151; margin: 2rem 0;">
+
+                <p><strong>Tools used:</strong></p>
+                <div style="margin: 1rem 0;">
+                    <a href="https://claude.ai/code" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        Claude Code
+                    </a>
+                </div>
+
+                <p>
+                    Working on AI-powered automations? <a href="../../../index.html#contact">Let's talk</a>. I help develop custom Skills for your workflows.
+                </p>
+
+            </div>
+        </div>
+    </article>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script src="../../../js/components.js"></script>
+    <script src="../../../js/translations.js"></script>
+    <script src="../../../js/main.js"></script>
+</body>
+</html>

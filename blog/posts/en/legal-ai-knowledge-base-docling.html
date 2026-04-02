@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="de" id="html-root">
+<html lang="en" id="html-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Legal AI Knowledge Base mit Docling | Nils Weiser</title>
-    <meta name="description" content="Wie wir 1000+ juristische PDF-Dokumente mit Docling in eine durchsuchbare Wissensbasis für unsere KI-gestützte Rechtsberatungsplattform verwandelt haben.">
+    <title>Legal AI Knowledge Base with Docling | Nils Weiser</title>
+    <meta name="description" content="How we transformed 1000+ legal PDF documents with Docling into a searchable knowledge base for our AI-powered legal advisory platform.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/styles.css">
     <style>
         /* Pipeline diagram styles */
         .pipeline-diagram {
@@ -97,23 +97,23 @@
         <div class="grid-pattern"></div>
         <div class="container mx-auto px-6 relative z-10">
             <div class="max-w-3xl mx-auto">
-                <a href="../" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
+                <a href="../../en/" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
-                    Zurück zum Blog
+                    Back to Blog
                 </a>
                 <div class="flex items-center gap-3 mb-4 flex-wrap">
                     <span class="blog-tag">Docling</span>
                     <span class="blog-tag">RAG</span>
                     <span class="blog-tag">Legal AI</span>
-                    <span class="blog-date">30. Dezember 2025</span>
+                    <span class="blog-date">December 30, 2025</span>
                 </div>
                 <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                   Vom PDF-Chaos zur präzisen Rechts-KI: Wie wir 1000+ Dokumente mit Docling strukturiert haben
+                   From PDF Chaos to Precise Legal AI: How We Structured 1000+ Documents with Docling
                 </h1>
                 <p class="text-xl text-gray-400">
-                    Wie wir juristische Studienmaterialien mit Docling in eine durchsuchbare Wissensbasis für unsere KI-gestützte Rechtsberatungsplattform verwandelt haben.
+                    How we transformed legal study materials with Docling into a searchable knowledge base for our AI-powered legal advisory platform.
                 </p>
             </div>
         </div>
@@ -125,66 +125,66 @@
             <div class="article-content">
 
                 <p>
-                    Bei <a href="https://erst-recht.com" target="_blank" rel="noopener noreferrer">Erst Recht</a> bauen wir eine KI-gestützte Rechtsberatungsplattform für deutsches Recht. Eine unserer größten Herausforderungen? Tausende juristische PDF-Dokumente in eine durchsuchbare Wissensbasis zu verwandeln, die unsere KI-Agenten tatsächlich nutzen können.
+                    At <a href="https://erst-recht.com" target="_blank" rel="noopener noreferrer">Erst Recht</a>, we are building an AI-powered legal advisory platform for German law. One of our biggest challenges? Turning thousands of legal PDF documents into a searchable knowledge base that our AI agents can actually use.
                 </p>
 
                 <p>
-                    Die Lösung: <strong>Docling</strong>, ein Open-Source-Toolkit zur Dokumentenverarbeitung von IBM Research.
+                    The solution: <strong>Docling</strong>, an open-source document processing toolkit from IBM Research.
                 </p>
 
-                <h2>Die Herausforderung</h2>
+                <h2>The Challenge</h2>
                 <p>
-                    Wir hatten Zugang zu umfassenden juristischen Fachmaterialien, die alles vom Arbeitsrecht bis zum Erbrecht abdecken. Diese PDFs enthielten:
+                    We had access to comprehensive legal study materials covering everything from labor law to inheritance law. These PDFs contained:
                 </p>
                 <ul>
-                    <li><strong>Komplexe juristische Inhalte</strong> mit verschiedenen Dokumenttypen</li>
-                    <li><strong>Unterschiedliche Strukturen</strong> je nach Rechtsgebiet</li>
-                    <li><strong>22 verschiedene Rechtsgebiete</strong>, jedes mit eigenen Anforderungen</li>
+                    <li><strong>Complex legal content</strong> with various document types</li>
+                    <li><strong>Different structures</strong> depending on the area of law</li>
+                    <li><strong>22 different areas of law</strong>, each with its own requirements</li>
                 </ul>
 
                 <p>
-                    Das Problem: Wer schon mal versucht hat, Text aus einem PDF zu extrahieren, kennt das Ergebnis. Überschriften landen mitten im Fließtext, Tabellen werden zu Zeichensalat, mehrspaltige Layouts werden zeilenweise statt spaltenweise gelesen. Man kann diesen rohen Text nicht einfach in eine Vektordatenbank werfen und gute Ergebnisse erwarten. Die Struktur ist entscheidend – und juristische Dokumente leben von Zusammenhängen, die bei naiver Textextraktion verloren gehen.
+                    The problem: Anyone who has ever tried to extract text from a PDF knows the result. Headings end up in the middle of body text, tables turn into garbled characters, multi-column layouts are read line by line instead of column by column. You cannot simply dump this raw text into a vector database and expect good results. Structure is critical, and legal documents rely on connections that are lost with naive text extraction.
                 </p>
 
-                <h2>Warum nicht einfach OCR verwenden?</h2>
+                <h2>Why Not Just Use OCR?</h2>
                 <p>
-                    Unser erster Instinkt war, traditionelle OCR (Optical Character Recognition) zu verwenden. Aber wir erkannten schnell, dass OCR das falsche Problem löst:
+                    Our first instinct was to use traditional OCR (Optical Character Recognition). But we quickly realized that OCR solves the wrong problem:
                 </p>
 
                 <table class="comparison-table">
                     <thead>
                         <tr>
-                            <th>Traditionelle OCR</th>
+                            <th>Traditional OCR</th>
                             <th>Docling</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Konvertiert Bilder → Text</td>
-                            <td>Konvertiert Dokumente → strukturierte Daten</td>
+                            <td>Converts images → text</td>
+                            <td>Converts documents → structured data</td>
                         </tr>
                         <tr>
-                            <td>Verliert Dokumentstruktur</td>
-                            <td>Erhält Überschriften, Listen, Hierarchie</td>
+                            <td>Loses document structure</td>
+                            <td>Preserves headings, lists, hierarchy</td>
                         </tr>
                         <tr>
-                            <td>Behandelt jede Seite als flachen Text</td>
-                            <td>Versteht Lesereihenfolge</td>
+                            <td>Treats every page as flat text</td>
+                            <td>Understands reading order</td>
                         </tr>
                         <tr>
-                            <td>Tabellen werden zu wirrem Text</td>
-                            <td>Tabellen bleiben als Tabellen</td>
+                            <td>Tables become garbled text</td>
+                            <td>Tables remain as tables</td>
                         </tr>
                     </tbody>
                 </table>
 
                 <p>
-                    Docling ist nicht "nur bessere OCR", sondern eine Document-Understanding-Pipeline. Es gibt sauberes Markdown mit der logischen Struktur des Dokuments aus.
+                    Docling is not "just better OCR" but a document understanding pipeline. It outputs clean Markdown with the logical structure of the document.
                 </p>
 
-                <h2>Unsere Pipeline</h2>
+                <h2>Our Pipeline</h2>
                 <p>
-                    So verarbeiten wir ein juristisches PDF:
+                    Here is how we process a legal PDF:
                 </p>
 
                 <!-- Pipeline Diagram -->
@@ -222,8 +222,8 @@
                         <g transform="translate(20, 50)">
                             <rect width="110" height="100" rx="8" fill="url(#nodeGradient)" stroke="#22d3ee" stroke-width="1.5"/>
                             <text x="55" y="45" text-anchor="middle" fill="#22d3ee" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600">PDF</text>
-                            <text x="55" y="65" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="10">Juristische</text>
-                            <text x="55" y="80" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="10">Dokumente</text>
+                            <text x="55" y="65" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="10">Legal</text>
+                            <text x="55" y="80" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="10">Documents</text>
                         </g>
 
                         <!-- Node 2: Docling -->
@@ -231,14 +231,14 @@
                             <rect width="110" height="100" rx="8" fill="url(#nodeGradient)" stroke="#4ade80" stroke-width="1.5" filter="url(#glow)"/>
                             <text x="55" y="45" text-anchor="middle" fill="#4ade80" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600">Docling</text>
                             <text x="55" y="65" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="10">IBM Research</text>
-                            <text x="55" y="80" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="10">Konvertierung</text>
+                            <text x="55" y="80" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="10">Conversion</text>
                         </g>
 
                         <!-- Node 3: Markdown -->
                         <g transform="translate(320, 50)">
                             <rect width="110" height="100" rx="8" fill="url(#nodeGradient)" stroke="#22d3ee" stroke-width="1.5"/>
                             <text x="55" y="45" text-anchor="middle" fill="#22d3ee" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600">Markdown</text>
-                            <text x="55" y="65" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="10">Strukturierter</text>
+                            <text x="55" y="65" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="10">Structured</text>
                             <text x="55" y="80" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="10">Output</text>
                         </g>
 
@@ -246,16 +246,16 @@
                         <g transform="translate(470, 50)">
                             <rect width="110" height="100" rx="8" fill="url(#nodeGradient)" stroke="#c084fc" stroke-width="1.5"/>
                             <text x="55" y="45" text-anchor="middle" fill="#c084fc" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600">Processing</text>
-                            <text x="55" y="65" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="10">Domänen-</text>
-                            <text x="55" y="80" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="10">logik</text>
+                            <text x="55" y="65" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="10">Domain</text>
+                            <text x="55" y="80" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="10">Logic</text>
                         </g>
 
                         <!-- Node 5: Vector DB -->
                         <g transform="translate(620, 50)">
                             <rect width="110" height="100" rx="8" fill="url(#nodeGradient)" stroke="#fbbf24" stroke-width="1.5"/>
                             <text x="55" y="45" text-anchor="middle" fill="#fbbf24" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600">Vector DB</text>
-                            <text x="55" y="65" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="10">Semantische</text>
-                            <text x="55" y="80" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="10">Suche</text>
+                            <text x="55" y="65" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="10">Semantic</text>
+                            <text x="55" y="80" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="10">Search</text>
                         </g>
 
                         <!-- Step labels -->
@@ -267,14 +267,14 @@
                     </svg>
                 </div>
 
-                <h3>Schritt 1: Klassifikation</h3>
+                <h3>Step 1: Classification</h3>
                 <p>
-                    Vor der Verarbeitung klassifizieren wir jedes Dokument nach Typ und Rechtsgebiet.
+                    Before processing, we classify each document by type and area of law.
                 </p>
 
-                <h3>Schritt 2: Docling-Konvertierung</h3>
+                <h3>Step 2: Docling Conversion</h3>
                 <p>
-                    Docling konvertiert PDFs in strukturiertes Markdown. Für unsere digitalen PDFs (die bereits Textebenen haben) deaktivieren wir OCR für Geschwindigkeit:
+                    Docling converts PDFs into structured Markdown. For our digital PDFs (which already have text layers), we disable OCR for speed:
                 </p>
 
                 <pre><code><span class="code-keyword">from</span> docling.document_converter <span class="code-keyword">import</span> DocumentConverter
@@ -284,7 +284,7 @@ result = converter.<span class="code-function">convert</span>(<span class="code-
 markdown = result.document.<span class="code-function">export_to_markdown</span>()</code></pre>
 
                 <p>
-                    Der Output erhält Überschriften, Listen und Struktur:
+                    The output preserves headings, lists, and structure:
                 </p>
 
                 <pre><code><span class="code-comment">## Anspruchsgrundlagen</span>
@@ -297,86 +297,86 @@ markdown = result.document.<span class="code-function">export_to_markdown</span>
 - Deliktsrecht
 - Bereicherungsrecht</code></pre>
 
-                <h3>Schritt 3: Intelligente Aufbereitung</h3>
+                <h3>Step 3: Intelligent Processing</h3>
                 <p>
-                    Wir haben eine domänenspezifische Aufbereitungslogik entwickelt, die juristische Dokumentstrukturen versteht. Die genaue Methodik ist unser Geheimrezept – aber das Ergebnis ist klar: Die KI bekommt nicht nur isolierte Textfragmente, sondern versteht Zusammenhänge.
+                    We developed domain-specific processing logic that understands legal document structures. The exact methodology is our secret sauce, but the result is clear: the AI does not just receive isolated text fragments but understands connections.
                 </p>
                 <p>
-                    Der entscheidende Punkt: Kontext macht den Unterschied zwischen "ich habe etwas gefunden" und "ich habe die Antwort verstanden".
+                    The key point: Context makes the difference between "I found something" and "I understood the answer."
                 </p>
 
-                <h3>Schritt 4: Embeddings & Vektorspeicherung</h3>
+                <h3>Step 4: Embeddings & Vector Storage</h3>
                 <p>
-                    Wir generieren Embeddings mit einem LLM-Embedding-Modell und speichern alles in einer Vektordatenbank, was gefilterte Suche ermöglicht:
+                    We generate embeddings with an LLM embedding model and store everything in a vector database, which enables filtered search:
                 </p>
                 <ul>
-                    <li>Nur in bestimmten Rechtsgebieten suchen</li>
-                    <li>Nach Dokumenttyp und Relevanz filtern</li>
-                    <li>Zusammengehörige Inhalte intelligent abrufen</li>
+                    <li>Search only within specific areas of law</li>
+                    <li>Filter by document type and relevance</li>
+                    <li>Intelligently retrieve related content</li>
                 </ul>
 
-                <h2>Die Ergebnisse</h2>
+                <h2>The Results</h2>
                 <p>
-                    Wir haben <strong>22 Rechtsgebiete</strong> und über 1.000 PDF-Dokumente verarbeitet. Aber die Zahlen sind nicht das Entscheidende. Der Unterschied in der Antwortqualität ist es.
+                    We processed <strong>22 areas of law</strong> and over 1,000 PDF documents. But the numbers are not the decisive factor. The difference in response quality is.
                 </p>
 
                 <p>
-                    <strong>Vorher:</strong> Die KI lieferte oberflächliche Ergebnisse. Sie fand zwar relevante Textpassagen, aber ohne den nötigen Kontext. Bei komplexen Rechtsfragen kam sie zu falschen Schlüssen – weil isolierte Informationen nicht ausreichen.
+                    <strong>Before:</strong> The AI delivered superficial results. It found relevant text passages, but without the necessary context. For complex legal questions, it drew incorrect conclusions because isolated information is not enough.
                 </p>
 
                 <p>
-                    <strong>Nachher:</strong> Durch eine intelligente Aufbereitung der Dokumente versteht die KI jetzt Zusammenhänge. Die Ergebnisse sind präzise und zuverlässig. Das hat das Produkt von "interessanter Prototyp" zu "produktionsreif" gebracht.
+                    <strong>After:</strong> Through intelligent document processing, the AI now understands connections. The results are precise and reliable. This moved the product from "interesting prototype" to "production-ready."
                 </p>
 
                 <p>
-                    Konkret kann das System jetzt:
+                    Specifically, the system can now:
                 </p>
                 <ol>
-                    <li><strong>Relevante Präzedenzfälle finden</strong> – auch bei komplexen Fragestellungen</li>
-                    <li><strong>Vollständige Antworten liefern</strong> – mit dem nötigen Kontext für fundierte Entscheidungen</li>
-                    <li><strong>Gezielt nach Rechtsgebiet suchen</strong> – für maximale Relevanz</li>
+                    <li><strong>Find relevant precedents</strong> even for complex questions</li>
+                    <li><strong>Deliver complete answers</strong> with the necessary context for informed decisions</li>
+                    <li><strong>Search by area of law</strong> for maximum relevance</li>
                 </ol>
 
                 <h2>Key Learnings</h2>
 
                 <blockquote>
-                    "Docling ermöglicht es, die volle Struktur von Dokumenten zu erhalten. Das hat unsere RAG-Qualität grundlegend verbessert."
+                    "Docling makes it possible to preserve the full structure of documents. This fundamentally improved our RAG quality."
                 </blockquote>
 
-                <h3>1. Struktur > Roher Text</h3>
+                <h3>1. Structure > Raw Text</h3>
                 <p>
-                    Die Beibehaltung der Dokumentstruktur hat unser RAG-System deutlich genauer gemacht. Überschriften werden zu natürlichen Chunk-Grenzen. Listen bleiben als Listen.
+                    Preserving document structure made our RAG system significantly more accurate. Headings become natural chunk boundaries. Lists remain as lists.
                 </p>
 
-                <h3>2. Kontext schlägt Keyword-Matching</h3>
+                <h3>2. Context Beats Keyword Matching</h3>
                 <p>
-                    Ein Treffer allein bringt nichts. Erst der Kontext macht ihn nützlich. Unsere Aufbereitung stellt sicher, dass die KI nicht nur findet, sondern auch versteht.
+                    A match alone is useless. Only context makes it valuable. Our processing ensures that the AI does not just find, but also understands.
                 </p>
 
-                <h3>3. OCR überspringen wenn möglich</h3>
+                <h3>3. Skip OCR When Possible</h3>
                 <p>
-                    Unsere PDFs hatten Textebenen. Das Deaktivieren von OCR machte die Verarbeitung 10x schneller ohne Qualitätsverlust.
+                    Our PDFs had text layers. Disabling OCR made processing 10x faster with no loss in quality.
                 </p>
 
-                <h3>4. Domänenspezifische Nachbearbeitung</h3>
+                <h3>4. Domain-Specific Post-Processing</h3>
                 <p>
-                    Docling gibt sauberes Markdown. Was danach kommt, hängt von der Domäne ab. Für juristische Dokumente haben wir eine Nachbearbeitung entwickelt, die auf die Besonderheiten rechtlicher Argumentation zugeschnitten ist. In anderen Domänen wie technische Dokumentation, Compliance oder Vertragsmanagement wären andere Ansätze relevant.
+                    Docling produces clean Markdown. What comes next depends on the domain. For legal documents, we developed post-processing tailored to the specifics of legal argumentation. In other domains such as technical documentation, compliance, or contract management, different approaches would be relevant.
                 </p>
 
-                <h2>Was kommt als Nächstes</h2>
+                <h2>What Comes Next</h2>
                 <p>
-                    Wir arbeiten kontinuierlich an der Verbesserung unserer Pipeline. Im Fokus: Fortgeschrittene Chunking-Strategien und die Erschließung weiterer Dokumenttypen wie Gerichtsentscheidungen und Gesetzestexte.
-                </p>
-
-                <hr style="border-color: #374151; margin: 2rem 0;">
-
-                <p>
-                    <em><a href="https://erst-recht.com" target="_blank" rel="noopener noreferrer">Erst Recht</a> nutzt KI, um Rechtsberatung zugänglich zu machen. Unser Multi-Agent-System analysiert Ihre rechtliche Situation und gibt umsetzbare Empfehlungen.</em>
+                    We are continuously working on improving our pipeline. Our focus: advanced chunking strategies and opening up additional document types such as court decisions and statutory texts.
                 </p>
 
                 <hr style="border-color: #374151; margin: 2rem 0;">
 
-                <p><strong>Verwendete Tools:</strong></p>
+                <p>
+                    <em><a href="https://erst-recht.com" target="_blank" rel="noopener noreferrer">Erst Recht</a> uses AI to make legal advice accessible. Our multi-agent system analyzes your legal situation and provides actionable recommendations.</em>
+                </p>
+
+                <hr style="border-color: #374151; margin: 2rem 0;">
+
+                <p><strong>Tools Used:</strong></p>
                 <div style="margin: 1rem 0;">
                     <a href="https://github.com/docling-project/docling" target="_blank" rel="noopener noreferrer" class="tool-badge">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
@@ -385,7 +385,7 @@ markdown = result.document.<span class="code-function">export_to_markdown</span>
                 </div>
 
                 <p>
-                    Arbeiten Sie an einem ähnlichen Problem? Große Dokumentenbestände für RAG aufbereiten? <a href="../../index.html#contact">Schreiben Sie mir</a>, ich helfe gerne bei der Architektur oder Implementierung.
+                    Working on a similar problem? Preparing large document collections for RAG? <a href="../../../index.html#contact">Get in touch</a>, I am happy to help with architecture or implementation.
                 </p>
 
             </div>
@@ -395,8 +395,8 @@ markdown = result.document.<span class="code-function">export_to_markdown</span>
     <div id="footer-placeholder"></div>
     <div id="back-to-top-placeholder"></div>
 
-    <script src="../../js/components.js"></script>
-    <script src="../../js/translations.js"></script>
-    <script src="../../js/main.js"></script>
+    <script src="../../../js/components.js"></script>
+    <script src="../../../js/translations.js"></script>
+    <script src="../../../js/main.js"></script>
 </body>
 </html>

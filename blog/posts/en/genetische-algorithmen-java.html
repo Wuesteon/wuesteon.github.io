@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="de" id="html-root">
+<html lang="en" id="html-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Genetische Algorithmen verstehen | Nils Weiser</title>
-    <meta name="description" content="Evolution als Algorithmus: Wie genetische Algorithmen Optimierungsprobleme lösen. Eine praktische Einführung mit Java-Implementierung.">
+    <title>Understanding Genetic Algorithms | Nils Weiser</title>
+    <meta name="description" content="Evolution as an algorithm: How genetic algorithms solve optimization problems. A practical introduction with Java implementation.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/styles.css">
     <style>
         .evolution-diagram {
             background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(34, 197, 94, 0.05) 100%);
@@ -139,23 +139,23 @@
         <div class="grid-pattern"></div>
         <div class="container mx-auto px-6 relative z-10">
             <div class="max-w-3xl mx-auto">
-                <a href="../" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
+                <a href="../../en/" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
-                    Zurück zum Blog
+                    Back to Blog
                 </a>
                 <div class="flex items-center gap-3 mb-4 flex-wrap">
-                    <span class="blog-tag">Algorithmen</span>
+                    <span class="blog-tag">Algorithms</span>
                     <span class="blog-tag">Java</span>
-                    <span class="blog-tag">Optimierung</span>
-                    <span class="blog-date">1. Dezember 2024</span>
+                    <span class="blog-tag">Optimization</span>
+                    <span class="blog-date">December 1, 2024</span>
                 </div>
                 <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                    Genetische Algorithmen: Survival of the Bittest
+                    Genetic Algorithms: Survival of the Bittest
                 </h1>
                 <p class="text-xl text-gray-400">
-                    Wie die Natur komplexe Probleme löst und wie wir das in Code umsetzen. Eine praktische Einführung mit Java.
+                    How nature solves complex problems and how we translate that into code. A practical introduction with Java.
                 </p>
             </div>
         </div>
@@ -167,54 +167,54 @@
             <div class="article-content">
 
                 <p>
-                    Die Natur hat über Milliarden Jahre einen erstaunlich effektiven Optimierungsprozess entwickelt: Evolution. Genetische Algorithmen (GA) übertragen dieses Prinzip in die Informatik und lösen Probleme, bei denen klassische Algorithmen scheitern.
+                    Over billions of years, nature has developed a remarkably effective optimization process: evolution. Genetic algorithms (GA) transfer this principle into computer science and solve problems where classical algorithms fail.
                 </p>
 
-                <h2>Das Grundprinzip</h2>
+                <h2>The Basic Principle</h2>
                 <p>
-                    Stell dir vor, du suchst die beste Lösung für ein Problem, aber der Lösungsraum ist riesig. Alle Möglichkeiten durchzuprobieren würde Jahre dauern. Genetische Algorithmen gehen anders vor: Sie simulieren Evolution.
+                    Imagine you are searching for the best solution to a problem, but the solution space is enormous. Trying all possibilities would take years. Genetic algorithms take a different approach: they simulate evolution.
                 </p>
 
                 <div class="step-grid">
                     <div class="step-card">
                         <div class="step-number">1</div>
                         <div class="step-label">Population</div>
-                        <div class="step-desc">Zufällige Startlösungen</div>
+                        <div class="step-desc">Random initial solutions</div>
                     </div>
                     <div class="step-card">
                         <div class="step-number">2</div>
                         <div class="step-label">Fitness</div>
-                        <div class="step-desc">Bewertung jeder Lösung</div>
+                        <div class="step-desc">Evaluation of each solution</div>
                     </div>
                     <div class="step-card">
                         <div class="step-number">3</div>
-                        <div class="step-label">Selektion</div>
-                        <div class="step-desc">Die Besten überleben</div>
+                        <div class="step-label">Selection</div>
+                        <div class="step-desc">The best survive</div>
                     </div>
                     <div class="step-card">
                         <div class="step-number">4</div>
                         <div class="step-label">Crossover</div>
-                        <div class="step-desc">Kombination von Eltern</div>
+                        <div class="step-desc">Combining parents</div>
                     </div>
                     <div class="step-card">
                         <div class="step-number">5</div>
                         <div class="step-label">Mutation</div>
-                        <div class="step-desc">Zufällige Variation</div>
+                        <div class="step-desc">Random variation</div>
                     </div>
                     <div class="step-card">
                         <div class="step-number">6</div>
                         <div class="step-label">Repeat</div>
-                        <div class="step-desc">Bis Ziel erreicht</div>
+                        <div class="step-desc">Until goal is reached</div>
                     </div>
                 </div>
 
-                <h2>Ein konkretes Beispiel</h2>
+                <h2>A Concrete Example</h2>
                 <p>
-                    Unser Ziel: Finde einen Binärstring, bei dem alle Bits auf 1 stehen. Klingt trivial? Ist es auch. Aber dieses einfache Beispiel zeigt alle Konzepte, die bei komplexeren Problemen genauso funktionieren.
+                    Our goal: Find a binary string where all bits are set to 1. Sounds trivial? It is. But this simple example demonstrates all the concepts that work the same way for more complex problems.
                 </p>
 
                 <p>
-                    <strong>Das Individuum:</strong> Ein Array von 5 Bits, zufällig mit 0 oder 1 initialisiert.
+                    <strong>The Individual:</strong> An array of 5 bits, randomly initialized with 0 or 1.
                 </p>
 
                 <div class="gene-visualization">
@@ -227,29 +227,29 @@
                 </div>
 
                 <p>
-                    <strong>Die Fitness:</strong> Anzahl der Einsen. Maximum ist 5, dann haben wir die perfekte Lösung.
+                    <strong>The Fitness:</strong> Number of ones. Maximum is 5, then we have the perfect solution.
                 </p>
 
-                <h2>Die Implementierung in Java</h2>
+                <h2>The Implementation in Java</h2>
 
-                <h3>Das Individuum</h3>
+                <h3>The Individual</h3>
                 <p>
-                    Jedes Individuum repräsentiert eine mögliche Lösung:
+                    Each individual represents a possible solution:
                 </p>
 
                 <pre><code><span class="code-keyword">public class</span> <span class="code-function">Individual</span> {
     <span class="code-keyword">private int</span>[] genes = <span class="code-keyword">new int</span>[5];
     <span class="code-keyword">private int</span> fitness = 0;
 
-    <span class="code-comment">// Zufällige Initialisierung</span>
+    <span class="code-comment">// Random initialization</span>
     <span class="code-keyword">public</span> <span class="code-function">Individual</span>() {
         Random rn = <span class="code-keyword">new</span> Random();
         <span class="code-keyword">for</span> (<span class="code-keyword">int</span> i = 0; i < genes.length; i++) {
-            genes[i] = rn.<span class="code-function">nextInt</span>(2); <span class="code-comment">// 0 oder 1</span>
+            genes[i] = rn.<span class="code-function">nextInt</span>(2); <span class="code-comment">// 0 or 1</span>
         }
     }
 
-    <span class="code-comment">// Fitness = Anzahl der Einsen</span>
+    <span class="code-comment">// Fitness = number of ones</span>
     <span class="code-keyword">public void</span> <span class="code-function">calcFitness</span>() {
         fitness = 0;
         <span class="code-keyword">for</span> (<span class="code-keyword">int</span> gene : genes) {
@@ -258,14 +258,14 @@
     }
 }</code></pre>
 
-                <h3>Die Population</h3>
+                <h3>The Population</h3>
                 <p>
-                    Eine Population verwaltet mehrere Individuen:
+                    A population manages multiple individuals:
                 </p>
 
                 <pre><code><span class="code-keyword">public class</span> <span class="code-function">Population</span> {
     <span class="code-keyword">private</span> Individual[] individuals = <span class="code-keyword">new</span> Individual[10];
-    <span class="code-keyword">private int</span> fittest = 0; <span class="code-comment">// Beste Fitness der Population</span>
+    <span class="code-keyword">private int</span> fittest = 0; <span class="code-comment">// Best fitness of the population</span>
 
     <span class="code-keyword">public</span> Individual <span class="code-function">getFittest</span>() {
         <span class="code-keyword">int</span> maxFit = Integer.MIN_VALUE;
@@ -281,14 +281,14 @@
     }
 
     <span class="code-keyword">public</span> Individual <span class="code-function">getSecondFittest</span>() {
-        <span class="code-comment">// Ähnlich, aber zweitbestes</span>
+        <span class="code-comment">// Similar, but second best</span>
         ...
     }
 }</code></pre>
 
-                <h3>Selektion</h3>
+                <h3>Selection</h3>
                 <p>
-                    Die zwei besten Individuen werden als Eltern ausgewählt. Es gibt verschiedene Selektionsmethoden wie Turnier oder Roulette. Hier nutzen wir Elitist Selection (Eliteselektion): einfach und effektiv.
+                    The two best individuals are selected as parents. There are various selection methods like tournament or roulette. Here we use elitist selection: simple and effective.
                 </p>
 
                 <pre><code><span class="code-keyword">public void</span> <span class="code-function">selection</span>() {
@@ -298,12 +298,12 @@
 
                 <h3>Crossover</h3>
                 <p>
-                    Das Herzstück: An einem zufälligen Punkt werden die Gene der beiden Eltern getauscht. Die Gene bis zum Crossover-Punkt werden zwischen den Eltern ausgetauscht.
+                    The core mechanism: At a random point, the genes of both parents are swapped. The genes up to the crossover point are exchanged between the parents.
                 </p>
 
                 <div class="crossover-example">
                     <div class="crossover-row">
-                        <span class="crossover-label">Elternteil 1:</span>
+                        <span class="crossover-label">Parent 1:</span>
                         <div class="gene-visualization" style="margin: 0;">
                             <div class="gene-bit gene-bit-1">1</div>
                             <div class="gene-bit gene-bit-0">0</div>
@@ -313,7 +313,7 @@
                         </div>
                     </div>
                     <div class="crossover-row">
-                        <span class="crossover-label">Elternteil 2:</span>
+                        <span class="crossover-label">Parent 2:</span>
                         <div class="gene-visualization" style="margin: 0;">
                             <div class="gene-bit gene-bit-0">0</div>
                             <div class="gene-bit gene-bit-1">1</div>
@@ -323,10 +323,10 @@
                         </div>
                     </div>
                     <div style="text-align: center; margin: 1rem 0;">
-                        <span style="color: #fbbf24; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;">Crossover-Punkt: Position 2</span>
+                        <span style="color: #fbbf24; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;">Crossover point: Position 2</span>
                     </div>
                     <div class="crossover-row">
-                        <span class="crossover-label">Kind 1:</span>
+                        <span class="crossover-label">Child 1:</span>
                         <div class="gene-visualization" style="margin: 0;">
                             <div class="gene-bit gene-bit-0">0</div>
                             <div class="gene-bit gene-bit-1">1</div>
@@ -350,40 +350,40 @@
 
                 <h3>Mutation</h3>
                 <p>
-                    Mutation verhindert, dass der Algorithmus in lokalen Optima stecken bleibt. Ein zufälliges Bit wird geflippt.
+                    Mutation prevents the algorithm from getting stuck in local optima. A random bit is flipped.
                 </p>
 
                 <pre><code><span class="code-keyword">public void</span> <span class="code-function">mutation</span>() {
     Random rn = <span class="code-keyword">new</span> Random();
 
-    <span class="code-comment">// 10% Wahrscheinlichkeit für Mutation</span>
+    <span class="code-comment">// 10% probability of mutation</span>
     <span class="code-keyword">if</span> (rn.<span class="code-function">nextDouble</span>() < 0.1) {
         <span class="code-keyword">int</span> mutationPoint = rn.<span class="code-function">nextInt</span>(fittest.genes.length);
 
-        <span class="code-comment">// Bit flippen: 0 → 1 oder 1 → 0</span>
+        <span class="code-comment">// Flip bit: 0 → 1 or 1 → 0</span>
         fittest.genes[mutationPoint] = 1 - fittest.genes[mutationPoint];
     }
 }</code></pre>
 
-                <h3>Der Algorithmus</h3>
+                <h3>The Algorithm</h3>
                 <p>
-                    Alles zusammen: Iteriere bis die perfekte Lösung gefunden ist.
+                    Putting it all together: Iterate until the perfect solution is found.
                 </p>
 
                 <pre><code><span class="code-keyword">public static void</span> <span class="code-function">main</span>(String[] args) {
     GeneticAlgorithm ga = <span class="code-keyword">new</span> GeneticAlgorithm();
 
-    <span class="code-comment">// 1. Initialisiere Population</span>
+    <span class="code-comment">// 1. Initialize population</span>
     ga.population.<span class="code-function">initializePopulation</span>(10);
     ga.population.<span class="code-function">calculateFitness</span>();
 
     <span class="code-keyword">int</span> generation = 0;
 
-    <span class="code-comment">// 2. Evolutionsschleife</span>
+    <span class="code-comment">// 2. Evolution loop</span>
     <span class="code-keyword">while</span> (ga.population.fittest < 5) {
         generation++;
 
-        <span class="code-comment">// Selektion</span>
+        <span class="code-comment">// Selection</span>
         ga.<span class="code-function">selection</span>();
 
         <span class="code-comment">// Crossover</span>
@@ -392,103 +392,103 @@
         <span class="code-comment">// Mutation</span>
         ga.<span class="code-function">mutation</span>();
 
-        <span class="code-comment">// Ersetze schwächstes Individuum</span>
+        <span class="code-comment">// Replace weakest individual</span>
         ga.<span class="code-function">addFittestOffspring</span>();
 
-        <span class="code-comment">// Neu berechnen</span>
+        <span class="code-comment">// Recalculate</span>
         ga.population.<span class="code-function">calculateFitness</span>();
 
         System.out.<span class="code-function">println</span>(<span class="code-string">"Generation: "</span> + generation +
             <span class="code-string">" Fitness: "</span> + ga.population.fittest);
     }
 
-    System.out.<span class="code-function">println</span>(<span class="code-string">"Lösung gefunden in Generation "</span> + generation);
+    System.out.<span class="code-function">println</span>(<span class="code-string">"Solution found in generation "</span> + generation);
 }</code></pre>
 
-                <h2>Typischer Output</h2>
+                <h2>Typical Output</h2>
 
                 <pre><code>Generation: 1  Fitness: 3
 Generation: 2  Fitness: 3
 Generation: 3  Fitness: 4
 Generation: 4  Fitness: 4
 Generation: 5  Fitness: 5
-Lösung gefunden in Generation 5
-Gene: [1, 1, 1, 1, 1]</code></pre>
+Solution found in generation 5
+Genes: [1, 1, 1, 1, 1]</code></pre>
 
                 <p>
-                    Mit nur 5 Generationen und 10 Individuen findet der Algorithmus die perfekte Lösung. Bei komplexeren Problemen dauert es länger, aber das Prinzip bleibt identisch.
+                    With only 5 generations and 10 individuals, the algorithm finds the perfect solution. For more complex problems it takes longer, but the principle remains identical.
                 </p>
 
-                <h2>Reale Anwendungsfälle</h2>
+                <h2>Real-World Use Cases</h2>
                 <p>
-                    Dieses einfache Beispiel lässt sich auf komplexe Probleme übertragen:
+                    This simple example can be applied to complex problems:
                 </p>
 
                 <div class="concept-card">
                     <h4>Traveling Salesman Problem</h4>
-                    <p>Gene = Reihenfolge der Städte. Fitness = Gesamtstrecke (minimieren). Crossover = Abschnitte von Routen kombinieren.</p>
+                    <p>Genes = order of cities. Fitness = total distance (minimize). Crossover = combining route segments.</p>
                 </div>
 
                 <div class="concept-card">
                     <h4>Neural Network Training</h4>
-                    <p>Gene = Gewichte des Netzwerks. Fitness = Vorhersagegenauigkeit. Evolution findet optimale Gewichte ohne Backpropagation.</p>
+                    <p>Genes = network weights. Fitness = prediction accuracy. Evolution finds optimal weights without backpropagation.</p>
                 </div>
 
                 <div class="concept-card">
                     <h4>Feature Selection</h4>
-                    <p>Gene = welche Features nutzen (0/1). Fitness = Modellperformance. Findet die wichtigsten Features automatisch.</p>
+                    <p>Genes = which features to use (0/1). Fitness = model performance. Automatically finds the most important features.</p>
                 </div>
 
                 <div class="concept-card">
                     <h4>Scheduling</h4>
-                    <p>Gene = Zuordnung von Aufgaben zu Zeitslots. Fitness = Deadline-Einhaltung, Ressourcenauslastung.</p>
+                    <p>Genes = assignment of tasks to time slots. Fitness = deadline compliance, resource utilization.</p>
                 </div>
 
                 <h2>Key Learnings</h2>
 
                 <blockquote>
-                    "Genetische Algorithmen finden keine garantiert optimale Lösung, aber oft eine sehr gute in akzeptabler Zeit."
+                    "Genetic algorithms do not guarantee an optimal solution, but they often find a very good one in acceptable time."
                 </blockquote>
 
-                <h3>1. Encoding ist entscheidend</h3>
+                <h3>1. Encoding is crucial</h3>
                 <p>
-                    Wie du das Problem als Gene darstellst, bestimmt den Erfolg. Binär ist einfach, aber Permutationen, Floats oder komplexe Strukturen sind oft besser geeignet.
+                    How you represent the problem as genes determines success. Binary is simple, but permutations, floats, or complex structures are often more suitable.
                 </p>
 
-                <h3>2. Balance zwischen Exploration und Exploitation</h3>
+                <h3>2. Balance between exploration and exploitation</h3>
                 <p>
-                    Zu viel Mutation = chaotische Suche. Zu wenig = vorzeitige Konvergenz. Die richtige Mutationsrate ist problemspezifisch.
+                    Too much mutation = chaotic search. Too little = premature convergence. The right mutation rate is problem-specific.
                 </p>
 
-                <h3>3. Fitness-Funktion ist der Schlüssel</h3>
+                <h3>3. The fitness function is key</h3>
                 <p>
-                    Eine schlechte Fitness-Funktion führt zu schlechten Lösungen. Investiere Zeit in eine präzise Bewertungsfunktion.
+                    A poor fitness function leads to poor solutions. Invest time in a precise evaluation function.
                 </p>
 
-                <h3>4. Diversity erhalten</h3>
+                <h3>4. Maintain diversity</h3>
                 <p>
-                    Wenn alle Individuen ähnlich werden, stagniert die Evolution. Techniken wie Crowding oder Niching helfen.
+                    When all individuals become similar, evolution stagnates. Techniques like crowding or niching help.
                 </p>
 
-                <h2>Fazit</h2>
+                <h2>Conclusion</h2>
                 <p>
-                    Genetische Algorithmen sind ein mächtiges Werkzeug für Optimierungsprobleme, bei denen der Lösungsraum zu groß für erschöpfende Suche ist. Die Implementierung ist überraschend einfach: Population, Fitness, Selektion, Crossover, Mutation. Die Kunst liegt im richtigen Encoding und der passenden Fitness-Funktion.
+                    Genetic algorithms are a powerful tool for optimization problems where the solution space is too large for exhaustive search. The implementation is surprisingly simple: population, fitness, selection, crossover, mutation. The art lies in the right encoding and the appropriate fitness function.
                 </p>
 
                 <p>
-                    Das Schöne: Du musst nicht verstehen, wie die optimale Lösung aussieht. Du musst nur bewerten können, wie gut eine Lösung ist. Den Rest erledigt die Evolution.
+                    The beauty of it: You don't need to understand what the optimal solution looks like. You only need to be able to evaluate how good a solution is. Evolution takes care of the rest.
                 </p>
 
                 <hr style="border-color: #374151; margin: 2rem 0;">
 
-                <p><strong>Verwendete Technologien:</strong></p>
+                <p><strong>Technologies used:</strong></p>
                 <div style="margin: 1rem 0;">
                     <span class="tool-badge">Java</span>
                     <span class="tool-badge">Evolutionary Computation</span>
                 </div>
 
                 <p>
-                    Interesse an Optimierungsalgorithmen oder KI-gestützten Lösungen? <a href="../../index.html#contact">Schreib mir</a>, ich freue mich auf den Austausch.
+                    Interested in optimization algorithms or AI-powered solutions? <a href="../../../index.html#contact">Get in touch</a>, I look forward to the conversation.
                 </p>
 
             </div>
@@ -498,8 +498,8 @@ Gene: [1, 1, 1, 1, 1]</code></pre>
     <div id="footer-placeholder"></div>
     <div id="back-to-top-placeholder"></div>
 
-    <script src="../../js/components.js"></script>
-    <script src="../../js/translations.js"></script>
-    <script src="../../js/main.js"></script>
+    <script src="../../../js/components.js"></script>
+    <script src="../../../js/translations.js"></script>
+    <script src="../../../js/main.js"></script>
 </body>
 </html>
