@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Mythos Preview: When AI Finds Zero-Days on Its Own | Nils Weiser</title>
+    <meta name="description" content="Anthropic's Mythos Preview finds and exploits zero-days largely autonomously: 181 Firefox exploits, a 27-year-old OpenBSD bug, a full FreeBSD RCE. What it means for defenders and companies.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <style>
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .stat-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+        .stat-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #22d3ee;
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            color: #9ca3af;
+            margin-top: 0.5rem;
+        }
+        .finding-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+        .finding-card h4 {
+            color: #22d3ee;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        .age-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.15rem 0.6rem;
+            background: rgba(251, 191, 36, 0.15);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: #fbbf24;
+            margin-left: 0.5rem;
+        }
+        .warning-box {
+            background: rgba(251, 191, 36, 0.1);
+            border-left: 3px solid #fbbf24;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .warning-box h4 {
+            color: #fbbf24;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .action-box {
+            background: rgba(6, 182, 212, 0.08);
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .action-box h4 {
+            color: #22d3ee;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        .action-box ul {
+            margin: 0;
+            padding-left: 1.25rem;
+        }
+        .action-box li {
+            margin: 0.4rem 0;
+            color: #d1d5db;
+        }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header -->
+    <section class="hero-bg pt-32 pb-12">
+        <div class="grid-pattern"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-3xl mx-auto">
+                <a href="../../en/" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    Back to Blog
+                </a>
+                <div class="flex items-center gap-3 mb-4 flex-wrap">
+                    <span class="blog-tag">AI Security</span>
+                    <span class="blog-tag">Zero-Day</span>
+                    <span class="blog-tag">Anthropic</span>
+                    <span class="blog-date">April 8, 2026</span>
+                </div>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+                    Claude Mythos Preview: When AI Finds Zero-Days on Its Own
+                </h1>
+                <p class="text-xl text-gray-400">
+                    181 Firefox exploits, a 27-year-old OpenBSD bug, a full FreeBSD RCE with a ROP chain. Why the offense-defense balance of the security community is shifting right now.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <article class="section-dark py-16">
+        <div class="container mx-auto px-6">
+            <div class="article-content">
+
+                <p>
+                    On April 7, 2026, Anthropic published an assessment of the cybersecurity capabilities of the new <strong>Claude Mythos Preview</strong>. The tone is unusually direct for a lab that normally hedges: the model finds and exploits zero-day vulnerabilities in production software largely without human guidance, at a scale that would have sounded unrealistic a month ago.
+                </p>
+
+                <blockquote>
+                    "Less than a month ago we wrote that Opus 4.6 was better at identifying and fixing vulnerabilities than at exploiting them. These capabilities have emerged very quickly." – Anthropic Red Team
+                </blockquote>
+
+                <h2>The Jump, in Numbers</h2>
+
+                <p>
+                    The most important data point in the report isn't any single bug — it's a ratio. Between Opus 4.6 and Mythos Preview there are not weeks of engineering, but an order of magnitude in capability:
+                </p>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">181</div>
+                        <div class="stat-label">working Firefox exploits (Mythos Preview)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">working Firefox exploits (Opus 4.6)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">10</div>
+                        <div class="stat-label">Tier-5 cases (full code control) on OSS-Fuzz</div>
+                    </div>
+                </div>
+
+                <p>
+                    The 90x jump on Firefox isn't the most interesting part. What matters more is that after the initial prompt, Mythos Preview <strong>needs no further human intervention</strong>. An engineer with no specialized security training can file a task in the evening and wake up to a working exploit.
+                </p>
+
+                <h2>What the Model Actually Found</h2>
+
+                <div class="finding-card">
+                    <h4>OpenBSD SACK implementation <span class="age-badge">27 years old</span></h4>
+                    <p>
+                        Mythos Preview identified a flaw in the Selective Acknowledgement logic that allows a signed integer overflow via TCP sequence numbers. The result: a TCP-based denial of service against an operating system widely treated as a reference for secure network stacks.
+                    </p>
+                </div>
+
+                <div class="finding-card">
+                    <h4>FFmpeg H.264 codec <span class="age-badge">16 years old</span></h4>
+                    <p>
+                        A 65,536-slice collision triggered out-of-bounds writes. The remarkable thing isn't the bug itself but the fact that it survived this long in one of the most heavily fuzzed codebases in the world.
+                    </p>
+                </div>
+
+                <div class="finding-card">
+                    <h4>FreeBSD Remote Code Execution <span class="age-badge">17 years old</span></h4>
+                    <p>
+                        The most striking case in the report. The model autonomously built an exploit over six RPC requests, bypassed authentication, accounted for KASLR randomization, and assembled a 20-gadget ROP chain distributed across multiple packets — no follow-up prompts, no manual corrections.
+                    </p>
+                </div>
+
+                <div class="finding-card">
+                    <h4>Linux kernel privilege escalation</h4>
+                    <p>
+                        Mythos Preview chained three to four separate vulnerabilities to bypass KASLR and obtain root, including subtle race conditions and complex heap sprays. Chaining multiple bugs into a full attack path used to be one of the clearest dividing lines between "automated bug finder" and "human exploit author."
+                    </p>
+                </div>
+
+                <h2>Why This Is More Than "Better Fuzzers"</h2>
+
+                <p>
+                    Fuzzing tools have been finding bugs for years. Two things are new. First, the <strong>scalability of the search</strong>: the model can look for vulnerabilities in parallel across every relevant file, including the ones human reviewers intuitively assume must already have been checked by someone. That's exactly where the 16-, 17- and 27-year-old bugs live.
+                </p>
+
+                <p>
+                    Second, <strong>chaining</strong>. Finding a use-after-free is one thing. Combining it with an info leak, defeating KASLR, building a ROP chain, and keeping all of it stable across multiple network packets used to be a deeply human discipline. Mythos Preview does both in one continuous run.
+                </p>
+
+                <blockquote>
+                    "After two decades of stable equilibrium, language models could destabilize this precarious balance."
+                </blockquote>
+
+                <h2>What This Means for Defenders</h2>
+
+                <p>
+                    The report is explicitly not a product announcement; it's an early warning. Anthropic pairs it with an initiative called <em>Project Glasswing</em>, intended to harden critical software before similarly capable models become broadly available. The operational consequences come down to a short list:
+                </p>
+
+                <div class="action-box">
+                    <h4>For security and IT teams</h4>
+                    <ul>
+                        <li><strong>Shorten patch windows.</strong> A 30-day cycle assumes an attacker with older tools than the model in this report.</li>
+                        <li><strong>Enforce auto-updates</strong> wherever you can defend the trade-off. The old cost-benefit math has shifted.</li>
+                        <li><strong>Take defense in depth seriously.</strong> KASLR, StackProtector, W^X, sandboxing all remain effective — precisely because the model breaks systems that lack them.</li>
+                        <li><strong>Deploy AI-assisted bug finding now.</strong> Available models like Opus 4.6 can already scan your own codebase, before an attacker does the same with a Mythos-class model.</li>
+                        <li><strong>Review disclosure processes.</strong> If the volume of reported bugs jumps, triage becomes the bottleneck.</li>
+                    </ul>
+                </div>
+
+                <h2>What It Means for Companies Using AI</h2>
+
+                <p>
+                    My clients have been asking me regularly whether they should run AI agents in production. The Mythos Preview report doesn't change the answer, but it changes the priority list. Anyone running AI in production should check three things over the next few weeks:
+                </p>
+
+                <ol>
+                    <li><strong>Supply-chain exposure.</strong> Which open-source components sit deep inside your AI workflows? Are your dependency scanners up to date? A 17-year-old FreeBSD RCE begs the question of how many similar bugs are still sitting in libraries you never touched directly.</li>
+                    <li><strong>Sandbox architecture.</strong> Agents that execute code, read files or open network connections need real isolation. I covered this in the <a href="openclaw-vs-nemoclaw.html">OpenClaw vs. NemoClaw article</a>. Mythos Preview makes it more urgent, not less.</li>
+                    <li><strong>Incident-response pipeline.</strong> When a patch drops on a Friday at 5pm, who deploys it? The shorter the window between disclosure and exploitation, the less forgiving the process is to manual steps.</li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>What the report does not say</h4>
+                    <p style="color: #d1d5db; margin: 0;">
+                        Mythos Preview is not generally available. The tests ran in a controlled environment with Anthropic's own safeguards. The model is not an autonomous attacker loose on the internet. But the capability exists, and the history of the security community is clear: what works in a lab today tends to work outside of it not long after.
+                    </p>
+                </div>
+
+                <h2>Bottom Line</h2>
+
+                <p>
+                    The actual finding of the report isn't "AI finds zero-days" — that was true in a limited sense before. It's the speed at which this capability is compounding. Between "assists with analysis" and "autonomously exploits with a ROP chain over six RPCs" was less than a month of model development. If you're planning security architecture, assume this trend continues.
+                </p>
+
+                <p>
+                    This isn't a panic message. It's an invitation to look at your own patching, disclosure and isolation processes honestly — and to build them as if an attacker with Mythos-class capabilities is already in the room.
+                </p>
+
+                <hr style="border-color: #374151; margin: 2rem 0;">
+
+                <p>
+                    <strong>Source:</strong> <a href="https://red.anthropic.com/2026/mythos-preview/" target="_blank" rel="noopener">Assessing Claude Mythos Preview's cybersecurity capabilities</a> (Anthropic Red Team, April 7, 2026)
+                </p>
+
+                <p>
+                    You're running AI in production and want to know where your supply chain and agent architecture actually stand? <a href="../../../index.html#contact">Get in touch</a> — I help with evaluation and hardening.
+                </p>
+
+            </div>
+        </div>
+    </article>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script src="../../../js/components.js"></script>
+    <script src="../../../js/translations.js"></script>
+    <script src="../../../js/main.js"></script>
+</body>
+</html>
