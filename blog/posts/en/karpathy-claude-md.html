@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A CLAUDE.md With 25,000 Stars: Karpathy's Coding Rules for AI Agents | Nils Weiser</title>
+    <meta name="description" content="How a single Markdown file distilling Andrej Karpathy's observations about LLM failure modes became the most-starred repository in the Claude Code ecosystem – and what holds up in practice.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <style>
+        .principle-card {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(34, 197, 94, 0.05) 100%);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .principle-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .principle-number {
+            width: 32px;
+            height: 32px;
+            background: rgba(6, 182, 212, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            color: #22d3ee;
+            font-weight: 600;
+        }
+        .comparison-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        @media (max-width: 768px) {
+            .comparison-box {
+                grid-template-columns: 1fr;
+            }
+        }
+        .comparison-item {
+            background: rgba(6, 182, 212, 0.05);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+        .comparison-item h4 {
+            color: #22d3ee;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+        .tool-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #22d3ee;
+            margin: 0.25rem;
+        }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header -->
+    <section class="hero-bg pt-32 pb-12">
+        <div class="grid-pattern"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-3xl mx-auto">
+                <a href="../../en/" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    Back to Blog
+                </a>
+                <div class="flex items-center gap-3 mb-4 flex-wrap">
+                    <span class="blog-tag">Claude Code</span>
+                    <span class="blog-tag">Prompt Engineering</span>
+                    <span class="blog-tag">CLAUDE.md</span>
+                    <span class="blog-date">Apr 14, 2026</span>
+                </div>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+                    A CLAUDE.md With 25,000 Stars
+                </h1>
+                <p class="text-xl text-gray-400">
+                    How a single Markdown file built from Andrej Karpathy's observations became the most-starred repo in the Claude Code ecosystem – and what actually holds up in practice.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <article class="section-dark py-16">
+        <div class="container mx-auto px-6">
+            <div class="article-content">
+
+                <p>
+                    A GitHub repo that contains nothing but a single <code>CLAUDE.md</code> file currently sits at over 25,000 stars. No framework, no CLI, no Python package. Just text. The project <a href="https://github.com/forrestchang/andrej-karpathy-skills" target="_blank" rel="noopener noreferrer">andrej-karpathy-skills</a> distills Andrej Karpathy's public observations on recurring LLM failure modes into four behavioral rules for Claude Code.
+                </p>
+
+                <p>
+                    That a Markdown file of all things gets this level of attention is no accident. It's a signal about where the real work with AI coding assistants is happening right now: not in whether the model can write code, but in how you shape its behavior so the code is actually usable.
+                </p>
+
+                <h2>Karpathy's Diagnosis</h2>
+                <p>
+                    The file picks up three observations Karpathy has made in his posts on LLM coding:
+                </p>
+
+                <blockquote>
+                    "The models make wrong assumptions on your behalf and just run along with them without checking. They don't manage their confusion, don't seek clarifications, don't surface inconsistencies, don't present tradeoffs, don't push back when they should."
+                </blockquote>
+
+                <blockquote>
+                    "They really like to overcomplicate code and APIs, bloat abstractions, don't clean up dead code... implement a bloated construction over 1000 lines when 100 would do."
+                </blockquote>
+
+                <blockquote>
+                    "They still sometimes change/remove comments and code they don't sufficiently understand as side effects, even if orthogonal to the task."
+                </blockquote>
+
+                <p>
+                    Anyone using AI assistants in production recognizes these patterns. The interesting claim the repo makes: if the mistakes are predictable, you can prevent them with the right instructions.
+                </p>
+
+                <h2>The Four Principles</h2>
+
+                <div class="principle-card">
+                    <div class="principle-header">
+                        <div class="principle-number">1</div>
+                        <span class="text-white font-semibold">Think Before Coding</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        Make assumptions explicit. When something is ambiguous, name multiple interpretations instead of silently picking one. Push back if a simpler path exists. Stop and ask when unclear. The antidote to silent misinterpretation.
+                    </p>
+                </div>
+
+                <div class="principle-card">
+                    <div class="principle-header">
+                        <div class="principle-number">2</div>
+                        <span class="text-white font-semibold">Simplicity First</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        Only the code that solves the problem. No features that weren't asked for. No abstractions for single-use code. No "flexibility" on speculation. No error handling for impossible cases. If 200 lines could be 50, rewrite it.
+                    </p>
+                </div>
+
+                <div class="principle-card">
+                    <div class="principle-header">
+                        <div class="principle-number">3</div>
+                        <span class="text-white font-semibold">Surgical Changes</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        Touch only what you must. Match the existing style even if you'd do it differently. No "cleanup" at the edges of the task. Every changed line must trace back to the user's request.
+                    </p>
+                </div>
+
+                <div class="principle-card">
+                    <div class="principle-header">
+                        <div class="principle-number">4</div>
+                        <span class="text-white font-semibold">Goal-Driven Execution</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        Success criteria before code. "Fix the bug" becomes "write a test that reproduces it, then make it pass". Strong criteria let the model iterate on its own. Weak criteria ("make it work") force constant back-and-forth.
+                    </p>
+                </div>
+
+                <h2>What the File Actually Solves – and What It Doesn't</h2>
+
+                <p>
+                    The principles address real, recurring failure modes. Rule 3 alone saves significant time in practice: once you've watched an agent fix a typo and "improve" half the file's formatting in passing, you understand why surgical precision needs to be a principle.
+                </p>
+
+                <p>
+                    At the same time, a <code>CLAUDE.md</code> is not a cure-all. The rules are generic. They know nothing about your architecture, your tests, your deployment pipeline. For more complex tasks – PDF processing, browser automation, domain-specific workflows – four abstract principles aren't enough. That's where the more structured <a href="claude-code-skills.html">Claude Code Skills</a> come in, loaded on demand with concrete tools and scripts.
+                </p>
+
+                <h2>CLAUDE.md vs. Skills: When to Use Which</h2>
+
+                <div class="comparison-box">
+                    <div class="comparison-item">
+                        <h4>CLAUDE.md</h4>
+                        <ul class="text-gray-400 text-sm space-y-2">
+                            <li>• Always in context</li>
+                            <li>• General behavior</li>
+                            <li>• Project-wide</li>
+                            <li>• Best for style, discipline, do's and don'ts</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>Skills</h4>
+                        <ul class="text-gray-400 text-sm space-y-2">
+                            <li>• Loaded on demand</li>
+                            <li>• Concrete workflows</li>
+                            <li>• Task-specific</li>
+                            <li>• Best for tools, scripts, specific domains</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p>
+                    The two mechanisms aren't mutually exclusive. The opposite: a lean <code>CLAUDE.md</code> with behavioral rules plus a set of Skills for the actual tooling is the setup that has been working most reliably in my projects. The file keeps the agent from overstepping. The Skills give it the concrete capabilities it needs for each task.
+                </p>
+
+                <h2>Why 25,000 Stars</h2>
+
+                <p>
+                    The success of this repo tells a story bigger than the file itself. Developers are shifting focus. "Use AI to write code" was the phase of the last two years. "Shape the AI's behavior so the code is actually good" is the phase we're entering now.
+                </p>
+
+                <p>
+                    The tool for that turns out to be surprisingly plain: text. A clear instruction, a well-formulated principle, an explicit success test often do more than the next framework. The best tools in the Claude Code ecosystem right now aren't software. They're well-crafted instructions.
+                </p>
+
+                <p>
+                    If you work with AI agents in production, don't treat <code>CLAUDE.md</code> as optional docs. Treat it as part of the architecture. What goes into it co-decides what ends up in the repository.
+                </p>
+
+                <hr style="border-color: #374151; margin: 2rem 0;">
+
+                <p><strong>Tools used:</strong></p>
+                <div style="margin: 1rem 0;">
+                    <a href="https://claude.ai/code" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        Claude Code
+                    </a>
+                    <a href="https://github.com/forrestchang/andrej-karpathy-skills" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        GitHub Repo
+                    </a>
+                </div>
+
+                <p>
+                    Working on AI-assisted development workflows and wondering how to get your agents' behavior reliably under control? <a href="../../../index.html#contact">Let's talk</a>. I help build CLAUDE.md and Skill setups that actually work in real projects.
+                </p>
+
+            </div>
+        </div>
+    </article>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script src="../../../js/components.js"></script>
+    <script src="../../../js/translations.js"></script>
+    <script src="../../../js/main.js"></script>
+</body>
+</html>
