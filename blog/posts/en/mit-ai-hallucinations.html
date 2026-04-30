@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Did MIT solve AI hallucinations? What the new calibration-reward research actually shows | Nils Weiser</title>
+    <meta name="description" content="A new MIT paper promises fewer AI hallucinations through calibrated reward signals. What it actually shows – and what it means for developers today.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <style>
+        .reward-diagram {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(236, 72, 153, 0.05) 100%);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .reward-diagram svg {
+            width: 100%;
+            height: auto;
+            max-width: 720px;
+            display: block;
+            margin: 0 auto;
+        }
+        .reward-caption {
+            font-size: 0.875rem;
+            color: #9ca3af;
+            text-align: center;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .stat-card {
+            background: rgba(6, 182, 212, 0.05);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            color: #22d3ee;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .caveat-card {
+            background: rgba(236, 72, 153, 0.05);
+            border-left: 3px solid #ec4899;
+            border-radius: 6px;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+        }
+        .caveat-card h4 {
+            color: #ec4899;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .tool-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #22d3ee;
+            margin: 0.25rem;
+        }
+        .confidence-output {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: #d1d5db;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+        }
+        .confidence-output .tag { color: #22d3ee; }
+        .confidence-output .conf { color: #ec4899; }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header -->
+    <section class="hero-bg pt-32 pb-12">
+        <div class="grid-pattern"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-3xl mx-auto">
+                <a href="../../" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    Back to Blog
+                </a>
+                <div class="flex items-center gap-3 mb-4 flex-wrap">
+                    <span class="blog-tag">AI Research</span>
+                    <span class="blog-tag">Reinforcement Learning</span>
+                    <span class="blog-tag">LLM Calibration</span>
+                    <span class="blog-date">Apr 30, 2026</span>
+                </div>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+                    Did MIT solve AI hallucinations?
+                </h1>
+                <p class="text-xl text-gray-400">
+                    A new study from Cambridge promises more reliable models through calibrated reward signals. What it actually shows – and what it means for developers today.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <article class="section-dark py-16">
+        <div class="container mx-auto px-6">
+            <div class="article-content">
+
+                <p>
+                    Short answer first: no. But what MIT actually showed in <a href="https://arxiv.org/abs/2507.16806" target="_blank" rel="noopener noreferrer">Beyond Binary Rewards: Training LMs to Reason about Their Uncertainty</a> is more interesting than the headline. Damani, Puri, Slocum, Shenfeld, Choshen, Kim, and Andreas demonstrate that the way we currently train reasoning models doesn't merely allow hallucinations – it actively produces them. And they have a fix for one specific class of the problem.
+                </p>
+
+                <h2>The pattern every developer knows</h2>
+
+                <p>
+                    Anyone working seriously with Claude, GPT, or DeepSeek-R1 has seen it: the model answers with absolute confidence – and is completely wrong. Andrej Karpathy has described this behavior across multiple posts, and my recent <a href="karpathy-claude-md.html">analysis of a CLAUDE.md with 25,000 stars</a> was, at its core, a collection of behavioral rules aimed at exactly this pattern.
+                </p>
+
+                <p>
+                    The MIT paper now provides the explanation at the training level. The thesis in one sentence: <strong>reinforcement learning with binary correctness signals – today's standard for reasoning models like o1, DeepSeek-R1, or the Qwen reasoning series – rewards guessing exactly as much as knowing.</strong> Abstaining is penalized identically to being wrong. The consequence: models learn to bluff with confidence.
+                </p>
+
+                <p>
+                    The authors put it bluntly in the introduction: post-RL reasoning models exhibit "worsened calibration and increased hallucination rates compared to base models." The training step that makes models better at solving hard problems simultaneously makes them less reliable at admitting when they don't know.
+                </p>
+
+                <h2>Why binary rewards train models to guess</h2>
+
+                <p>
+                    The crux fits in one diagram. Left: the standard setup. Right: the authors' proposal.
+                </p>
+
+                <div class="reward-diagram">
+                    <svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Comparison of RLVR and RLCR reward functions">
+                        <!-- Left panel: RLVR -->
+                        <g transform="translate(40, 30)">
+                            <text x="140" y="0" text-anchor="middle" fill="#22d3ee" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600">RLVR — Standard</text>
+                            <line x1="20" y1="200" x2="280" y2="200" stroke="#4b5563" stroke-width="1"/>
+                            <line x1="20" y1="40" x2="20" y2="200" stroke="#4b5563" stroke-width="1"/>
+                            <text x="14" y="45" text-anchor="end" fill="#9ca3af" font-family="JetBrains Mono, monospace" font-size="10">1.0</text>
+                            <text x="14" y="124" text-anchor="end" fill="#9ca3af" font-family="JetBrains Mono, monospace" font-size="10">0.5</text>
+                            <text x="14" y="204" text-anchor="end" fill="#9ca3af" font-family="JetBrains Mono, monospace" font-size="10">0.0</text>
+                            <text x="-100" y="10" transform="rotate(-90)" text-anchor="middle" fill="#9ca3af" font-family="JetBrains Mono, monospace" font-size="10">Reward</text>
+                            <text x="20" y="218" text-anchor="middle" fill="#9ca3af" font-family="JetBrains Mono, monospace" font-size="10">0</text>
+                            <text x="280" y="218" text-anchor="middle" fill="#9ca3af" font-family="JetBrains Mono, monospace" font-size="10">1</text>
+                            <text x="150" y="240" text-anchor="middle" fill="#9ca3af" font-family="JetBrains Mono, monospace" font-size="10">Verbalized confidence q</text>
+                            <line x1="20" y1="40" x2="280" y2="40" stroke="#22d3ee" stroke-width="2"/>
+                            <text x="288" y="44" fill="#22d3ee" font-family="JetBrains Mono, monospace" font-size="10">correct</text>
+                            <line x1="20" y1="200" x2="280" y2="200" stroke="#22d3ee" stroke-width="2" stroke-dasharray="4,4"/>
+                            <text x="288" y="204" fill="#22d3ee" font-family="JetBrains Mono, monospace" font-size="10">wrong</text>
+                        </g>
+                        <!-- Right panel: RLCR -->
+                        <g transform="translate(400, 30)">
+                            <text x="140" y="0" text-anchor="middle" fill="#ec4899" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600">RLCR — calibrated</text>
+                            <line x1="20" y1="200" x2="280" y2="200" stroke="#4b5563" stroke-width="1"/>
+                            <line x1="20" y1="40" x2="20" y2="200" stroke="#4b5563" stroke-width="1"/>
+                            <text x="14" y="45" text-anchor="end" fill="#9ca3af" font-family="JetBrains Mono, monospace" font-size="10">1.0</text>
+                            <text x="14" y="124" text-anchor="end" fill="#9ca3af" font-family="JetBrains Mono, monospace" font-size="10">0.0</text>
+                            <text x="14" y="204" text-anchor="end" fill="#9ca3af" font-family="JetBrains Mono, monospace" font-size="10">-1.0</text>
+                            <line x1="20" y1="120" x2="280" y2="120" stroke="#374151" stroke-width="1" stroke-dasharray="2,2"/>
+                            <text x="20" y="218" text-anchor="middle" fill="#9ca3af" font-family="JetBrains Mono, monospace" font-size="10">0</text>
+                            <text x="280" y="218" text-anchor="middle" fill="#9ca3af" font-family="JetBrains Mono, monospace" font-size="10">1</text>
+                            <text x="150" y="240" text-anchor="middle" fill="#9ca3af" font-family="JetBrains Mono, monospace" font-size="10">Verbalized confidence q</text>
+                            <path d="M 20 120 Q 150 50 280 40" stroke="#ec4899" stroke-width="2" fill="none"/>
+                            <text x="288" y="44" fill="#ec4899" font-family="JetBrains Mono, monospace" font-size="10">correct</text>
+                            <path d="M 20 120 Q 150 130 280 200" stroke="#ec4899" stroke-width="2" stroke-dasharray="4,4" fill="none"/>
+                            <text x="288" y="204" fill="#ec4899" font-family="JetBrains Mono, monospace" font-size="10">wrong</text>
+                        </g>
+                    </svg>
+                    <p class="reward-caption">
+                        Left: under the standard reward, the model's confidence is irrelevant – a confidently wrong and a hesitantly correct output are worth exactly the same. Right: the calibration reward punishes confidently-wrong answers and rewards calibrated confidence. After <em>Damani et al. 2025, Figure 2</em>.
+                    </p>
+                </div>
+
+                <p>
+                    On the left, the reward is a step function: 1 if the answer is right, 0 if not. The confidence variable q doesn't appear in the reward at all. The model has no incentive to be honest about uncertainty – it can only win by guessing. The authors formalize this as the actual training objective: maximize correctness, ignore everything else.
+                </p>
+
+                <p>
+                    On the right, the reward itself becomes a function of confidence. A correct answer at q=1.0 gets full reward. A correct answer at q=0.3 gets only partial reward – the model was right but didn't know it. A wrong answer at q=0.9 is heavily punished – the model lied with confidence. A wrong answer at q=0.1 ("I'm just guessing") gets only a mild penalty.
+                </p>
+
+                <h2>The fix: RLCR in one paragraph</h2>
+
+                <p>
+                    The authors call their method <strong>RLCR (Reinforcement Learning with Calibration Rewards)</strong>. The reward function:
+                </p>
+
+                <p>
+                    <code>R = correctness + (1 − (q − correctness)²)</code>
+                </p>
+
+                <p>
+                    The trailing term is the <em>Brier score</em>, a rule used for decades in weather forecasting to evaluate calibrated probabilities. Theorem 1 of the paper proves the central property: this reward function maximizes accuracy <em>and</em> calibration simultaneously – with no tradeoff. The model doesn't learn to prefer uncertainty over certainty. It learns to output a confidence that matches its true probability of being correct.
+                </p>
+
+                <p>
+                    In practice the output looks like this (simplified from the paper, Figure 1a):
+                </p>
+
+                <div class="confidence-output">
+<span class="tag">&lt;think&gt;</span> The question asks for the song with which Lulu represented the UK in 1969 […] <span class="tag">&lt;/think&gt;</span><br>
+<span class="tag">&lt;answer&gt;</span> "Boom Bang-a-Bang" <span class="tag">&lt;/answer&gt;</span><br>
+<span class="tag">&lt;analysis&gt;</span> Uncertainty is high: Lulu represented the UK in 1969, but the specific song isn't widely known […] <span class="tag">&lt;/analysis&gt;</span><br>
+<span class="tag">&lt;confidence&gt;</span> <span class="conf">0.3</span> <span class="tag">&lt;/confidence&gt;</span>
+                </div>
+
+                <p>
+                    Four structured fields: reasoning, answer, a self-analysis of the uncertainty, a numerical confidence. The model is trained so that this confidence isn't arbitrary but statistically tracks reality.
+                </p>
+
+                <h2>The numbers that matter</h2>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">0.37 → 0.03</div>
+                        <div class="stat-label">ECE HotpotQA</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">0.26 → 0.10</div>
+                        <div class="stat-label">ECE Math</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">~63%</div>
+                        <div class="stat-label">Accuracy held</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">12×</div>
+                        <div class="stat-label">better calibration</div>
+                    </div>
+                </div>
+
+                <p>
+                    On HotpotQA – multi-hop questions over Wikipedia – Expected Calibration Error drops from 0.37 to 0.03. Translated: an RLVR-trained model that answers with confidence 0.9 is on average right 53% of the time. An RLCR model at the same confidence almost exactly matches its true success rate. On the math suite (GSM8K, MATH500, Big-Math), ECE falls from 0.26 to 0.10. Accuracy stays essentially unchanged.
+                </p>
+
+                <p>
+                    The most striking result hides in the out-of-distribution tests. When the trained models are evaluated on <em>new</em> datasets (TriviaQA, SimpleQA, GPQA, CommonsenseQA), something disturbing happens: standard RL doesn't merely fail to improve calibration – it makes it <em>worse</em> than the untrained base model. RLCR is the only method in the comparison that transfers its calibration gains to new tasks.
+                </p>
+
+                <p>
+                    As a bonus, the authors show verbalized confidence is usable for test-time scaling: confidence-weighted majority vote beats both vanilla majority vote and pure max-confidence selection. If you're already using self-consistency or best-of-N, the same training recipe gives you a better voting signal for free.
+                </p>
+
+                <h2>So did MIT solve hallucinations? (The honest part)</h2>
+
+                <p>
+                    Three things to say in the same breath:
+                </p>
+
+                <div class="caveat-card">
+                    <h4>What it solves</h4>
+                    <p class="text-gray-300 text-sm">
+                        Calibration on tasks with verifiable ground truth – QA, math, structured reasoning. Models trained this way reliably know when they're guessing.
+                    </p>
+                </div>
+
+                <div class="caveat-card">
+                    <h4>What it doesn't solve</h4>
+                    <p class="text-gray-300 text-sm">
+                        Open-ended factual hallucinations in domains without ground truth. RL needs a correctness signal. "Summarize my codebase" or "write marketing copy about X" aren't verifiable tasks – the method doesn't directly help here.
+                    </p>
+                </div>
+
+                <div class="caveat-card">
+                    <h4>Scale caveat</h4>
+                    <p class="text-gray-300 text-sm">
+                        Training was on Qwen2.5-7B. Whether the effects hold at frontier scale is genuinely open. The theoretical properties (Theorem 1) hold regardless of model size; the empirical generalization effects don't necessarily.
+                    </p>
+                </div>
+
+                <p>
+                    The deeper point lies underneath: <strong>binary reward signals are actively harmful for calibration.</strong> That's a finding the entire post-training field needs to sit with – including the labs whose models we run in production today. The research has plugged less of a hole than it has surfaced a systematic flaw in the current training paradigm.
+                </p>
+
+                <h2>What developers can do today</h2>
+
+                <p>
+                    Months to years will pass before RLCR shows up in frontier models – if it ever does. But the failure pattern the study diagnoses is at least partially mitigatable at the application layer:
+                </p>
+
+                <ul>
+                    <li><strong>Demand confidence in the prompt.</strong> The models aren't perfectly calibrated, but forcing them to emit a confidence value gives downstream logic something to work with. Set a threshold, route low-confidence outputs to validation.</li>
+                    <li><strong>Route low-confidence outputs in agent systems.</strong> In multi-step agents, critical decisions with low self-rated confidence should be passed to verification steps or human review.</li>
+                    <li><strong>Self-consistency with confidence weighting.</strong> If you use best-of-N or majority vote, weight votes by the model-reported confidence. This is the same voting scheme the paper shows beats plain majority vote.</li>
+                    <li><strong>CLAUDE.md rules against bluffing.</strong> The <a href="karpathy-claude-md.html">"ask when ambiguous" rule</a> Karpathy proposes in his coding observations is, in retrospect, a behavioral patch for exactly the training-level problem this paper diagnoses on the RL side. Both approaches address the same underlying pathology from different directions.</li>
+                </ul>
+
+                <h2>The actual result</h2>
+
+                <p>
+                    MIT didn't solve AI hallucinations. They showed that the way we train models systematically produces them – and that a small change to the reward signal mathematically provably yields models that are simultaneously more accurate and more honest about their limits.
+                </p>
+
+                <p>
+                    That's bigger than the headline. A headline promises an end to the problem. This study delivers a different diagnosis: the problem is built into the training itself. Once you understand that, you also know how to spot it as a user – and what to do about it at the prompt and system layer, long before the next frontier model ships the fix in its architecture.
+                </p>
+
+                <hr style="border-color: #374151; margin: 2rem 0;">
+
+                <p><strong>Sources:</strong></p>
+                <div style="margin: 1rem 0;">
+                    <a href="https://arxiv.org/abs/2507.16806" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        arXiv 2507.16806
+                    </a>
+                    <a href="https://news.mit.edu/2026/teaching-ai-models-to-say-im-not-sure-0422" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        MIT News
+                    </a>
+                </div>
+
+                <p>
+                    Building AI systems where model confidence and hallucination risk matter? <a href="../../../index.html#contact">Let's talk.</a> I help design agent architectures that treat uncertainty as signal instead of hiding it.
+                </p>
+
+            </div>
+        </div>
+    </article>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script src="../../../js/components.js"></script>
+    <script src="../../../js/translations.js"></script>
+    <script src="../../../js/main.js"></script>
+</body>
+</html>
