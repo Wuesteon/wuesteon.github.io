@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="de" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anthropics 33-Seiten-Blueprint für Claude Skills</title>
+    <meta name="description" content="Anthropic hat einen 33-seitigen Leitfaden zum Bau von Claude Skills veröffentlicht. Was darin steht, wie Progressive Disclosure funktioniert und warum Skills mehr sind als bessere Prompts.">
+    <link rel="canonical" href="https://waiser.dev/blog/posts/de/anthropic-skills-guide.html">
+    <link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/anthropic-skills-guide.html">
+    <link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/anthropic-skills-guide.html">
+    <link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/anthropic-skills-guide.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Anthropics 33-Seiten-Blueprint für Claude Skills">
+    <meta property="og:description" content="Anthropic hat einen 33-seitigen Leitfaden zum Bau von Claude Skills veröffentlicht. Was darin steht, wie Progressive Disclosure funktioniert und warum Skills mehr sind als bessere Prompts.">
+    <meta property="og:url" content="https://waiser.dev/blog/posts/de/anthropic-skills-guide.html">
+    <meta property="og:image" content="https://waiser.dev/og-default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Anthropics 33-Seiten-Blueprint für Claude Skills">
+    <meta name="twitter:description" content="Anthropic hat einen 33-seitigen Leitfaden zum Bau von Claude Skills veröffentlicht. Was darin steht, wie Progressive Disclosure funktioniert und warum Skills mehr sind als bessere Prompts.">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Anthropics 33-Seiten-Blueprint für Claude Skills",
+  "description": "Anthropic hat einen 33-seitigen Leitfaden zum Bau von Claude Skills veröffentlicht. Was darin steht, wie Progressive Disclosure funktioniert und warum Skills mehr sind als bessere Prompts.",
+  "datePublished": "2026-05-15",
+  "author": {
+    "@type": "Person",
+    "name": "Nils Weiser",
+    "url": "https://waiser.dev/"
+  },
+  "image": "https://waiser.dev/og-default.png",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://waiser.dev/blog/posts/de/anthropic-skills-guide.html"
+  },
+  "inLanguage": "de"
+}
+    </script>
+
+    <!-- TODO: replace with prebuilt static tailwind.css before scaling traffic; see CLAUDE.md -->
+    <script defer src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <style>
+        .principle-card {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(34, 197, 94, 0.05) 100%);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .principle-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .principle-number {
+            width: 32px;
+            height: 32px;
+            background: rgba(6, 182, 212, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            color: #22d3ee;
+            font-weight: 600;
+        }
+        .comparison-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        @media (max-width: 768px) {
+            .comparison-box {
+                grid-template-columns: 1fr;
+            }
+        }
+        .comparison-item {
+            background: rgba(6, 182, 212, 0.05);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+        .comparison-item h4 {
+            color: #22d3ee;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+        .tool-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #22d3ee;
+            margin: 0.25rem;
+        }
+        pre.code-block {
+            background: #0b1220;
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: #d1d5db;
+            margin: 1.25rem 0;
+        }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header -->
+    <section class="hero-bg pt-32 pb-12">
+        <div class="grid-pattern"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-3xl mx-auto">
+                <a href="../../" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    Zurück zum Blog
+                </a>
+                <div class="flex items-center gap-3 mb-4 flex-wrap">
+                    <span class="blog-tag">Claude</span>
+                    <span class="blog-tag">Skills</span>
+                    <span class="blog-tag">Anthropic</span>
+                    <span class="blog-date">15. Mai 2026</span>
+                </div>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+                    Anthropics 33-Seiten-Blueprint für Claude Skills
+                </h1>
+                <p class="text-xl text-gray-400">
+                    Ein offizieller Leitfaden, der zeigt, wie man Claude beibringt, wie man arbeitet – ohne eine einzige Zeile Code. Was wirklich drinsteht, und warum Skills das Konzept "Prompt Engineering" leise ablösen.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <article class="section-dark py-16">
+        <div class="container mx-auto px-6">
+            <div class="article-content">
+
+                <p>
+                    Anthropic hat einen 33-seitigen Leitfaden mit dem Titel <em>"The Complete Guide to Building Skills for Claude"</em> veröffentlicht. Auf den ersten Blick ist es eine technische Dokumentation. Auf den zweiten ist es eine Ansage: Die Art, wie Profis mit Claude arbeiten, verschiebt sich von "den nächsten cleveren Prompt finden" zu "wiederkehrende Workflows als Code-Artefakt versionieren".
+                </p>
+
+                <p>
+                    Skills sind kein neues Modell. Sie sind ein Ordner. Genauer: ein Ordner mit einer einzigen Pflichtdatei – <code>SKILL.md</code> – und einem kurzen YAML-Header, der Claude sagt, <em>wann</em> dieser Skill aktiviert werden soll. Das war es im Kern. Und genau diese Schlichtheit ist der Punkt.
+                </p>
+
+                <h2>Was ein Skill ist – minimal beschrieben</h2>
+
+                <p>Ein Skill ist ein Verzeichnis mit folgender Struktur:</p>
+
+                <pre class="code-block">your-skill-name/
+├── SKILL.md          # Pflichtdatei: Markdown mit YAML-Frontmatter
+├── scripts/          # Optional: ausführbare Skripte
+├── references/       # Optional: Zusatz-Dokumentation
+└── assets/           # Optional: Templates, Fonts, Icons</pre>
+
+                <p>
+                    Die <code>SKILL.md</code> beginnt mit einem YAML-Block, der zwei Pflichtfelder hat: <code>name</code> und <code>description</code>. Die <code>description</code> ist das wichtigste Feld im gesamten Skill, weil sie entscheidet, ob Claude den Skill überhaupt lädt.
+                </p>
+
+                <pre class="code-block">---
+name: legal-contract-review
+description: Prüft deutsche Wirtschaftsverträge auf typische
+  Risikoklauseln. Nutze bei "Vertragsprüfung",
+  "Risiko-Check", "AGB analysieren" oder beim Upload
+  von .pdf/.docx-Verträgen.
+---</pre>
+
+                <h2>Der Trick heißt Progressive Disclosure</h2>
+
+                <p>
+                    Das eigentlich Clevere am Skill-System ist nicht das Format, sondern wie Claude die Inhalte lädt. Anthropic nennt das <em>Progressive Disclosure</em> – drei Ebenen, von denen nur die jeweils nötige geladen wird:
+                </p>
+
+                <div class="principle-card">
+                    <div class="principle-header">
+                        <div class="principle-number">1</div>
+                        <span class="text-white font-semibold">YAML-Frontmatter</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        Immer im System-Prompt. Wenige Zeilen pro Skill. Genug, damit Claude entscheiden kann, ob der Skill relevant ist – ohne den Rest zu laden.
+                    </p>
+                </div>
+
+                <div class="principle-card">
+                    <div class="principle-header">
+                        <div class="principle-number">2</div>
+                        <span class="text-white font-semibold">SKILL.md-Body</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        Wird erst geladen, wenn Claude den Skill für die aktuelle Aufgabe als passend einstuft. Enthält die eigentlichen Anweisungen, Beispiele, Fehlerfälle.
+                    </p>
+                </div>
+
+                <div class="principle-card">
+                    <div class="principle-header">
+                        <div class="principle-number">3</div>
+                        <span class="text-white font-semibold">Verlinkte Dateien</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        Referenzen, Scripts, Templates. Werden nur dann gezogen, wenn der Skill sie tatsächlich braucht. Ein Skill kann hunderte Seiten Doku enthalten, ohne dass davon ein einziges Token im Standard-Kontext landet.
+                    </p>
+                </div>
+
+                <p>
+                    Praktische Konsequenz: Du kannst zehn oder zwanzig Skills aktiviert haben, ohne dass dein Kontext aufgebläht wird. Du zahlst Tokens nur für das, was Claude in der konkreten Aufgabe wirklich zieht.
+                </p>
+
+                <h2>Skills sind nicht MCP. Und das ist die wichtigste Unterscheidung im Guide</h2>
+
+                <p>
+                    Anthropic nutzt ein Küchen-Bild, das die Trennung gut transportiert:
+                </p>
+
+                <div class="comparison-box">
+                    <div class="comparison-item">
+                        <h4>MCP</h4>
+                        <ul class="text-gray-400 text-sm space-y-2">
+                            <li>• Stellt die Werkzeuge bereit</li>
+                            <li>• Verbindet Claude mit Services (Linear, Notion, Stripe…)</li>
+                            <li>• Liefert Echtzeitdaten und API-Zugriff</li>
+                            <li>• Antwortet auf: <em>Was kann Claude?</em></li>
+                        </ul>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>Skill</h4>
+                        <ul class="text-gray-400 text-sm space-y-2">
+                            <li>• Liefert das Rezept</li>
+                            <li>• Beschreibt den Workflow Schritt für Schritt</li>
+                            <li>• Embeddet Domänen-Wissen und Best Practices</li>
+                            <li>• Antwortet auf: <em>Wie soll Claude es tun?</em></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p>
+                    MCP ohne Skills heißt: Der User hat Zugriff auf 30 Werkzeuge und weiß bei jedem zweiten Prompt nicht, in welcher Reihenfolge er sie kombinieren soll. MCP <em>mit</em> Skills heißt: Der User beschreibt das Ergebnis, und der Skill orchestriert die richtigen MCP-Calls in der richtigen Sequenz – jedes Mal gleich.
+                </p>
+
+                <h2>Drei Kategorien, in die fast alles fällt</h2>
+
+                <p>
+                    Der Guide gliedert produktive Skill-Anwendungen in drei Klassen, die sich in der Praxis tatsächlich gut bewähren:
+                </p>
+
+                <ol>
+                    <li>
+                        <strong>Document &amp; Asset Creation.</strong> Skills, die konsistente Outputs nach festen Standards produzieren – Präsentationen im Corporate Design, Code in einem Style-Guide, technische Reports nach Template. Beispiel im Guide: das <code>frontend-design</code>-Skill, das Claudes Design-Output spürbar hebt.
+                    </li>
+                    <li>
+                        <strong>Workflow-Automation.</strong> Mehrstufige Prozesse mit klaren Validierungs-Gates. Sprint-Planung, Onboarding eines Kunden, Code-Review nach Schema. Wenn die Reihenfolge zählt und Schritte voneinander abhängen, gehört der Workflow in einen Skill.
+                    </li>
+                    <li>
+                        <strong>MCP-Enhancement.</strong> Skills, die als Wissensschicht über einer bestehenden MCP-Integration liegen. Sentry hat das öffentlich vorgemacht: Ein <code>sentry-code-review</code>-Skill, der die Tools des Sentry-MCP-Servers in der richtigen Sequenz aufruft, um Bugs aus Production-Daten automatisch in Pull Requests zu fixen.
+                    </li>
+                </ol>
+
+                <h2>Die description ist der wichtigste Satz im gesamten Skill</h2>
+
+                <p>
+                    Anthropic widmet dem <code>description</code>-Feld mehrere Seiten – aus gutem Grund. Diese eine Zeile entscheidet, ob Claude den Skill bei einer User-Anfrage überhaupt in Erwägung zieht. Die Regel ist einfach: <strong>Was tut der Skill</strong> + <strong>wann soll er ausgelöst werden</strong>.
+                </p>
+
+                <div class="comparison-box">
+                    <div class="comparison-item">
+                        <h4>Schlecht</h4>
+                        <pre class="code-block" style="margin: 0;">description: Hilft mit Projekten.</pre>
+                        <p class="text-gray-400 text-sm mt-2">Zu generisch. Keine Trigger. Claude weiß nicht, wann.</p>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>Gut</h4>
+                        <pre class="code-block" style="margin: 0;">description: End-to-End-Onboarding
+für PayFlow-Kunden inklusive Account-
+Erstellung und Subscription-Setup.
+Nutze bei "neuen Kunden anlegen",
+"PayFlow-Account erstellen",
+"Subscription einrichten".</pre>
+                        <p class="text-gray-400 text-sm mt-2">Konkret. Outcome-orientiert. Echte Trigger-Phrasen.</p>
+                    </div>
+                </div>
+
+                <h2>Was im Skill-Body wirklich zählt</h2>
+
+                <p>
+                    Der Guide hat dafür eine erfrischend pragmatische Linie: Sei konkret, sei prüfbar, lass Code prüfen, was sich automatisieren lässt.
+                </p>
+
+                <p>
+                    Statt zu schreiben "Validiere die Eingaben sorgfältig" – ein Satz, den jedes Modell anders interpretiert – lieber: "Rufe <code>python scripts/validate.py --input {filename}</code> auf. Bei Fehlern prüfe: fehlende Pflichtfelder, Datumsformat YYYY-MM-DD". Skripte sind deterministisch. Sprache nicht. Wo es um Korrektheit geht, gewinnt das Skript.
+                </p>
+
+                <p>
+                    Anthropic empfiehlt darüber hinaus eine simple Struktur für den Body: Workflow-Schritte als nummerierte Liste, Beispiele für typische Anwendungsfälle, Troubleshooting-Sektion für die zwei oder drei Fehler, die in der Praxis immer wieder auftreten. Mehr braucht es selten.
+                </p>
+
+                <h2>Testen, ohne Test-Framework</h2>
+
+                <p>
+                    Der Guide schlägt drei Test-Ebenen vor – alle ohne aufwendige Infrastruktur machbar:
+                </p>
+
+                <ol>
+                    <li><strong>Trigger-Tests.</strong> Zwanzig realistische Anfragen formulieren, prüfen, wann der Skill lädt und wann nicht. Auch Edge-Cases ("Wetter in San Francisco") – um sicherzustellen, dass der Skill nicht überall feuert.</li>
+                    <li><strong>Funktionale Tests.</strong> Workflow ausführen, Output prüfen. Werden die Tickets erstellt? Stimmen die Properties? Schlagen API-Calls fehl?</li>
+                    <li><strong>Vorher/Nachher-Vergleich.</strong> Gleiche Aufgabe mit und ohne Skill. Wie viele Nachfragen? Wie viele Tokens? Wie viele Retries? Genau hier wird der Wert sichtbar.</li>
+                </ol>
+
+                <p>
+                    Anthropic stellt für diesen Prozess einen <code>skill-creator</code>-Skill bereit – ein Meta-Skill, der einen interaktiv durch Definition, YAML, Beispiele und Validierung führt. Wer einen MCP-Server hat und seine zwei oder drei Top-Workflows kennt, baut den ersten funktionierenden Skill in 15 bis 30 Minuten.
+                </p>
+
+                <h2>Was Skills in der Praxis verändern</h2>
+
+                <p>
+                    Ohne Skills wiederholt sich ein bekanntes Muster: Jeder Mitarbeiter erklärt Claude bei jedem Sprint-Planning erneut, wie das Team plant. Fünfzehn Nachrichten hin und her. Inkonsistente Outputs zwischen Kollegen. Support-Tickets der Art "Wie nutze ich euren Connector richtig?".
+                </p>
+
+                <p>
+                    Mit Skills verschiebt sich der Punkt, an dem Wissen gespeichert wird. Statt im Kopf einzelner Power-User liegt es im Repository – versioniert, reviewbar, teamweit aktivierbar. Anthropic hat im Dezember 2025 die organisationsweite Skill-Verteilung freigegeben. Admins können Skills für eine ganze Workspace ausrollen. Updates landen zentral. Onboarding eines neuen Teammitglieds bedeutet nicht mehr "lies dich in unsere Prompts ein", sondern "schalte diese Skill-Sammlung frei".
+                </p>
+
+                <h2>Wo Skills aufhören – und wo CLAUDE.md weiterläuft</h2>
+
+                <p>
+                    Skills sind nicht das richtige Werkzeug für alles. Allgemeine Verhaltensregeln – "Frage bei Unklarheit nach", "Überschreibe keinen Code, den du nicht verstanden hast", "Halte den Stil des Repos" – gehören weiterhin in eine <a href="karpathy-claude-md.html">CLAUDE.md</a>, weil sie für jede Aufgabe gelten sollen, nicht nur für spezifische Workflows.
+                </p>
+
+                <p>
+                    Die saubere Aufteilung in Projekten, die ich gerade betreue: <strong>CLAUDE.md</strong> für Disziplin und Stil. <strong>Skills</strong> für konkrete, wiederkehrende Workflows. <strong>MCP</strong> für Tool-Zugriff. Drei Schichten, die sich nicht überlappen, aber zusammen das ergeben, was Anthropic im Guide "encoded workflows" nennt.
+                </p>
+
+                <h2>Was das größere Bild ist</h2>
+
+                <p>
+                    Der Guide ist mehr als nur Doku. Er ist ein Marker für eine Verschiebung, die sich seit ein paar Monaten abzeichnet. Die Phase "clever prompten" geht zu Ende. Die Phase "Workflows encoden" beginnt. Wer Claude täglich nutzt, aber noch keinen einzigen Skill gebaut hat, arbeitet im Vergleich noch manuell – jede Konversation startet bei Null, jedes Ergebnis hängt am Tagesform-Prompt.
+                </p>
+
+                <p>
+                    Skills lösen dieses Problem mit einer fast banal wirkenden Idee: Ein Ordner mit einer Markdown-Datei. Aber genau diese Banalität ist der Grund, warum sich das Konzept durchsetzen wird. Es braucht keinen neuen Stack, kein Framework, keine spezielle SDK. Ein Texteditor und eine Stunde Zeit reichen für den ersten produktiven Skill. Und ab dem zweiten Skill merkt man, was sich verändert.
+                </p>
+
+                <hr style="border-color: #374151; margin: 2rem 0;">
+
+                <p><strong>Verwendete Quellen:</strong></p>
+                <div style="margin: 1rem 0;">
+                    <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        Anthropic Engineering Blog
+                    </a>
+                    <a href="https://github.com/anthropics/skills" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        anthropics/skills
+                    </a>
+                    <a href="https://agentskills.io/home" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        agentskills.io
+                    </a>
+                </div>
+
+                <p>
+                    Sie überlegen, wo in Ihrem Team Skills den größten Hebel hätten – beim Onboarding, bei Code-Reviews, bei einem mehrstufigen Compliance-Workflow? <a href="../../../index.html#contact">Lassen Sie uns sprechen</a>. Ich helfe beim Aufbau von Skill-Bibliotheken, die in realen Projekten funktionieren und nicht nur in der Demo.
+                </p>
+
+            </div>
+        </div>
+    </article>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script defer src="../../../js/components.js"></script>
+    <script defer src="../../../js/translations.js"></script>
+    <script defer src="../../../js/main.js"></script>
+</body>
+</html>
