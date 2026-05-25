@@ -78,6 +78,8 @@
         canvas.height = window.innerHeight;
         centerX = canvas.width / 2;
         centerY = canvas.height / 2;
+        // Clear particles on resize to prevent unbounded accumulation when animate() refills
+        if (isActive) particles = [];
     }
 
     // Track event with Umami
@@ -176,9 +178,11 @@
         const overlay = document.getElementById('black-hole-overlay');
 
         // Get all major page elements to consume
-        const elementsToConsume = document.querySelectorAll(
-            'section, header, footer, .card, .terminal-window, .btn, h1, h2, h3, p, img, .logo-slide'
-        );
+        const isBlogPost = window.location.pathname.includes('/blog/posts/');
+        const selector = isBlogPost
+            ? 'section, header, footer, .card, .terminal-window, .btn, h1, h2, h3, .logo-slide'
+            : 'section, header, footer, .card, .terminal-window, .btn, h1, h2, h3, p, img, .logo-slide';
+        const elementsToConsume = document.querySelectorAll(selector);
 
         // Calculate center of screen
         const screenCenterX = window.innerWidth / 2;
@@ -293,20 +297,17 @@
             cancelAnimationFrame(animationId);
         }
 
+        // Clean up resize listener and particles to prevent leaks before navigation
+        window.removeEventListener('resize', resizeCanvas);
+        isActive = false;
+        particles = [];
+
         // Track completion and redirect to easter egg page
         setTimeout(() => {
             trackEvent('black-hole-completed', {
                 timestamp: new Date().toISOString()
             });
-            // Calculate correct path to easter-egg based on current location
-            const path = window.location.pathname;
-            let basePath = '';
-            if (path.includes('/blog/posts/')) {
-                basePath = '../../';
-            } else if (path.includes('/blog/')) {
-                basePath = '../';
-            }
-            window.location.href = basePath + 'easter-egg/index.html';
+            window.location.href = '/easter-egg/index.html';
         }, 1500);
     }
 

@@ -77,6 +77,7 @@ function initMobileMenu() {
     if (!menuToggleButton || !mobileMenu) return;
 
     const hamburgerIcon = menuToggleButton.querySelector('.hamburger-icon');
+    if (!hamburgerIcon) return;
 
     menuToggleButton.addEventListener('click', function() {
         mobileMenu.classList.toggle('hidden');

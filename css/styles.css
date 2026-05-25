@@ -1,3 +1,4 @@
+/* === Fonts === */
 /* Self-hosted fonts */
 @font-face {
     font-family: 'Inter';
@@ -49,6 +50,7 @@
     font-display: swap;
 }
 
+/* === Tokens & Base === */
 :root {
     --terminal-green: #4ade80;
     --terminal-cyan: #22d3ee;
@@ -69,6 +71,7 @@ body {
     font-family: 'JetBrains Mono', monospace;
 }
 
+/* === Terminal Window === */
 /* Terminal Window Styles */
 .terminal-window {
     background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
@@ -140,6 +143,7 @@ body {
     51%, 100% { opacity: 0; }
 }
 
+/* === Effects & Glows === */
 /* Glowing text effect */
 .glow-text {
     text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
@@ -157,6 +161,7 @@ body {
     background-clip: text;
 }
 
+/* === Hero & Layout === */
 /* Hero background */
 .hero-bg {
     background: linear-gradient(180deg, #030712 0%, #0f172a 50%, #030712 100%);
@@ -209,6 +214,7 @@ body {
 .code-number { color: #fbbf24; }
 .code-property { color: #22d3ee; }
 
+/* === Cards & Buttons === */
 /* Card styles */
 .card {
     background: linear-gradient(180deg, rgba(30, 30, 30, 0.8) 0%, rgba(15, 15, 15, 0.9) 100%);
@@ -296,6 +302,7 @@ body {
     color: #f9fafb;
 }
 
+/* === Header & Navigation === */
 /* Header styles */
 header {
     background: rgba(3, 7, 18, 0.8);
@@ -434,6 +441,7 @@ html {
     scroll-padding-top: 80px;
 }
 
+/* === Animations & Counters === */
 /* Scroll animations */
 .fade-in-up {
     opacity: 0;
@@ -457,6 +465,7 @@ html {
     background-clip: text;
 }
 
+/* === Blog Cards & Article === */
 /* Blog specific styles */
 .blog-card {
     background: linear-gradient(180deg, rgba(30, 30, 30, 0.8) 0%, rgba(15, 15, 15, 0.9) 100%);
@@ -654,6 +663,7 @@ html {
     color: #030712;
 }
 
+/* === Logo Slider & Social === */
 /* Logo Slider */
 .logo-slider {
     position: relative;

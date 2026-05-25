@@ -124,13 +124,21 @@ function setLanguage(lang) {
 
     // Redirect between DE/EN blog pages
     const path = window.location.pathname;
+    const slugMap = {
+        deToEn: { 'mit-ai-halluzinationen.html': 'mit-ai-hallucinations.html' },
+        enToDe: { 'mit-ai-hallucinations.html': 'mit-ai-halluzinationen.html' }
+    };
     if (path.includes('/blog/')) {
         // Blog post pages: /blog/posts/de/ <-> /blog/posts/en/
         if (path.includes('/posts/de/') && lang === 'en') {
-            window.location.href = path.replace('/posts/de/', '/posts/en/');
+            const file = path.split('/').pop();
+            const mapped = slugMap.deToEn[file] || file;
+            window.location.href = path.replace('/posts/de/', '/posts/en/').replace(/[^/]+$/, mapped);
             return;
         } else if (path.includes('/posts/en/') && lang === 'de') {
-            window.location.href = path.replace('/posts/en/', '/posts/de/');
+            const file = path.split('/').pop();
+            const mapped = slugMap.enToDe[file] || file;
+            window.location.href = path.replace('/posts/en/', '/posts/de/').replace(/[^/]+$/, mapped);
             return;
         }
         // Blog index: /blog/ <-> /blog/en/
@@ -145,16 +153,22 @@ function setLanguage(lang) {
     }
 
     // Update page title based on current page
-    const isHomePage = window.location.pathname === '/' || window.location.pathname.endsWith('index.html') && !window.location.pathname.includes('/blog/');
-    const isBlogPage = window.location.pathname.includes('/blog/');
+    const currentPath = window.location.pathname;
+    const isHomePage = (currentPath === '/' || currentPath === '' || currentPath === '/index.html');
+    const isBlogPage = currentPath.includes('/blog/');
 
     if (isHomePage) {
         document.title = lang === 'de'
             ? 'Nils Weiser - IT Consulting: KI & App Entwicklung'
             : 'Nils Weiser - IT Consulting: AI & App Development';
     } else if (isBlogPage) {
-        const baseTitle = document.querySelector('[data-page-title]')?.dataset.pageTitle || 'Blog';
-        document.title = `${baseTitle} | Nils Weiser`;
+        // Only overwrite the title if the page explicitly opts in via [data-page-title].
+        // Blog posts already render a localized <title> per file, so leaving it untouched
+        // preserves the correct DE/EN title set by the HTML.
+        const titleEl = document.querySelector('[data-page-title]');
+        if (titleEl) {
+            document.title = `${titleEl.dataset.pageTitle} | Nils Weiser`;
+        }
     }
 
     document.querySelectorAll('[data-i18n]').forEach(element => {

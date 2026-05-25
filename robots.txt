@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /easter-egg/
+Disallow: /blackhole/
+
+Sitemap: https://waiser.dev/sitemap.xml
