@@ -18,6 +18,9 @@ Thumbs.db
 # Playwright MCP screenshots
 .playwright-mcp/
 
+# Tailwind standalone CLI binary (~46 MB; re-download via tailwind/build.sh header)
+tailwind/tailwindcss
+
 CLAUDE.md
 
 /blog/linkedin_posts

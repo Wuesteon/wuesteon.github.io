@@ -32,8 +32,13 @@
 }
     </script>
 
+    <!-- Preload above-the-fold fonts (longest critical-path chain per Lighthouse) -->
+    <link rel="preload" href="fonts/Inter-Regular.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="fonts/Inter-Bold.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="fonts/JetBrainsMono-Regular.ttf" as="font" type="font/ttf" crossorigin>
+
     <!-- TODO: replace with prebuilt static tailwind.css before scaling traffic; see CLAUDE.md -->
-    <script defer src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/tailwind.css">
     <link rel="stylesheet" href="css/styles.css">
     <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
 </head>
@@ -41,6 +46,7 @@
 
     <div id="header-placeholder"></div>
 
+    <main id="main">
     <!-- Hero Section with Terminal -->
     <section id="home" class="hero-bg min-h-[85vh] flex items-center pt-20">
         <div class="grid-pattern"></div>
@@ -118,7 +124,7 @@
     <!-- Clients Logo Slider -->
     <section class="section-dark py-16 overflow-hidden">
         <div class="container mx-auto px-6 mb-8">
-            <p class="text-center text-gray-500 text-sm font-mono uppercase tracking-wider" data-i18n="clients.title">
+            <p class="text-center text-gray-400 text-sm font-mono uppercase tracking-wider" data-i18n="clients.title">
                 Vertrauen von führenden Unternehmen
             </p>
         </div>
@@ -126,77 +132,77 @@
             <div class="logo-track">
                 <!-- First set of logos -->
                 <div class="logo-slide">
-                    <img src="logos/coop.png" alt="Coop" class="client-logo" width="190" height="65" loading="eager" decoding="async">
+                    <img src="logos/coop.webp" alt="Coop" class="client-logo" width="190" height="65" loading="eager" decoding="async">
                 </div>
                 <div class="logo-slide">
-                    <img src="logos/bih_charite.png" alt="BIH Charité" class="client-logo" width="148" height="65" loading="eager" decoding="async">
+                    <img src="logos/bih_charite.webp" alt="BIH Charité" class="client-logo" width="148" height="65" loading="eager" decoding="async">
                 </div>
                 <div class="logo-slide">
-                    <img src="logos/misanto.png" alt="Misanto" class="client-logo" width="108" height="65" loading="eager" decoding="async">
+                    <img src="logos/misanto.webp" alt="Misanto" class="client-logo" width="108" height="65" loading="eager" decoding="async">
                 </div>
                 <div class="logo-slide">
-                    <img src="logos/sorba.png" alt="Sorba" class="client-logo" width="190" height="39" loading="eager" decoding="async">
+                    <img src="logos/sorba.webp" alt="Sorba" class="client-logo" width="190" height="39" loading="eager" decoding="async">
                 </div>
                 <div class="logo-slide">
                     <img src="logos/primeo.svg" alt="Primeo Energie" class="client-logo" width="141" height="65" loading="eager" decoding="async">
                 </div>
                 <div class="logo-slide">
-                    <img src="logos/devsgroup.png" alt="DevsGroup" class="client-logo" width="124" height="65" loading="eager" decoding="async">
+                    <img src="logos/devsgroup.webp" alt="DevsGroup" class="client-logo" width="124" height="65" loading="eager" decoding="async">
                 </div>
                 <div class="logo-slide">
-                    <img src="logos/codify.png" alt="Codify" class="client-logo" width="116" height="65" loading="eager" decoding="async">
+                    <img src="logos/codify.webp" alt="Codify" class="client-logo" width="116" height="65" loading="eager" decoding="async">
                 </div>
                 <div class="logo-slide">
                     <img src="logos/bit.svg" alt="BIT" class="client-logo" width="190" height="49" loading="eager" decoding="async">
                 </div>
                 <div class="logo-slide">
-                    <img src="logos/bmt.png" alt="BMT" class="client-logo" width="65" height="65" loading="eager" decoding="async">
+                    <img src="logos/bmt.webp" alt="BMT" class="client-logo" width="65" height="65" loading="eager" decoding="async">
                 </div>
                 <div class="logo-slide">
-                    <img src="logos/thimegost.png" alt="Thimegost" class="client-logo" width="116" height="65" loading="eager" decoding="async">
+                    <img src="logos/thimegost.webp" alt="Thimegost" class="client-logo" width="116" height="65" loading="eager" decoding="async">
                 </div>
                 <div class="logo-slide">
-                    <img src="logos/woonig.png" alt="Woonig" class="client-logo" width="190" height="60" loading="eager" decoding="async">
+                    <img src="logos/woonig.webp" alt="Woonig" class="client-logo" width="190" height="60" loading="eager" decoding="async">
                 </div>
                 <div class="logo-slide">
-                    <img src="logos/memoro.png" alt="Memoro" class="client-logo" width="190" height="41" loading="eager" decoding="async">
+                    <img src="logos/memoro.webp" alt="Memoro" class="client-logo" width="190" height="41" loading="eager" decoding="async">
                 </div>
                 <!-- Duplicate set for seamless loop -->
                 <div class="logo-slide" aria-hidden="true">
-                    <img src="logos/coop.png" alt="" class="client-logo" width="190" height="65" loading="lazy" decoding="async">
+                    <img src="logos/coop.webp" alt="" class="client-logo" width="190" height="65" loading="lazy" decoding="async">
                 </div>
                 <div class="logo-slide" aria-hidden="true">
-                    <img src="logos/bih_charite.png" alt="" class="client-logo" width="148" height="65" loading="lazy" decoding="async">
+                    <img src="logos/bih_charite.webp" alt="" class="client-logo" width="148" height="65" loading="lazy" decoding="async">
                 </div>
                 <div class="logo-slide" aria-hidden="true">
-                    <img src="logos/misanto.png" alt="" class="client-logo" width="108" height="65" loading="lazy" decoding="async">
+                    <img src="logos/misanto.webp" alt="" class="client-logo" width="108" height="65" loading="lazy" decoding="async">
                 </div>
                 <div class="logo-slide" aria-hidden="true">
-                    <img src="logos/sorba.png" alt="" class="client-logo" width="190" height="39" loading="lazy" decoding="async">
+                    <img src="logos/sorba.webp" alt="" class="client-logo" width="190" height="39" loading="lazy" decoding="async">
                 </div>
                 <div class="logo-slide" aria-hidden="true">
                     <img src="logos/primeo.svg" alt="" class="client-logo" width="141" height="65" loading="lazy" decoding="async">
                 </div>
                 <div class="logo-slide" aria-hidden="true">
-                    <img src="logos/devsgroup.png" alt="" class="client-logo" width="124" height="65" loading="lazy" decoding="async">
+                    <img src="logos/devsgroup.webp" alt="" class="client-logo" width="124" height="65" loading="lazy" decoding="async">
                 </div>
                 <div class="logo-slide" aria-hidden="true">
-                    <img src="logos/codify.png" alt="" class="client-logo" width="116" height="65" loading="lazy" decoding="async">
+                    <img src="logos/codify.webp" alt="" class="client-logo" width="116" height="65" loading="lazy" decoding="async">
                 </div>
                 <div class="logo-slide" aria-hidden="true">
                     <img src="logos/bit.svg" alt="" class="client-logo" width="190" height="49" loading="lazy" decoding="async">
                 </div>
                 <div class="logo-slide" aria-hidden="true">
-                    <img src="logos/bmt.png" alt="" class="client-logo" width="65" height="65" loading="lazy" decoding="async">
+                    <img src="logos/bmt.webp" alt="" class="client-logo" width="65" height="65" loading="lazy" decoding="async">
                 </div>
                 <div class="logo-slide" aria-hidden="true">
-                    <img src="logos/thimegost.png" alt="" class="client-logo" width="116" height="65" loading="lazy" decoding="async">
+                    <img src="logos/thimegost.webp" alt="" class="client-logo" width="116" height="65" loading="lazy" decoding="async">
                 </div>
                 <div class="logo-slide" aria-hidden="true">
-                    <img src="logos/woonig.png" alt="" class="client-logo" width="190" height="60" loading="lazy" decoding="async">
+                    <img src="logos/woonig.webp" alt="" class="client-logo" width="190" height="60" loading="lazy" decoding="async">
                 </div>
                 <div class="logo-slide" aria-hidden="true">
-                    <img src="logos/memoro.png" alt="" class="client-logo" width="190" height="41" loading="lazy" decoding="async">
+                    <img src="logos/memoro.webp" alt="" class="client-logo" width="190" height="41" loading="lazy" decoding="async">
                 </div>
             </div>
         </div>
@@ -417,6 +423,7 @@
             </div>
         </div>
     </section>
+    </main>
 
     <div id="footer-placeholder"></div>
     <div id="back-to-top-placeholder"></div>

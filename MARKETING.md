@@ -31,6 +31,22 @@ Marketing data, analytics, SEO assets, and growth tracking for the personal port
 - **Courses:** `courses/`
 - **Skills:** `skills/` (showcase of published Claude skills)
 
+## Performance
+
+Lighthouse-driven optimization pass (mobile, May 2026). Baseline mobile score 71,
+LCP 10.5 s — bottlenecks were oversized client logos and a render-blocking Tailwind
+runtime. Fixes:
+
+- **Client logos → WebP** at display resolution (2× retina). The logo slider dropped
+  from ~1.2 MB to ~52 KB (e.g. `bmt.png` 256 KB → `bmt.webp` ~5 KB). Originals kept
+  as `.png` masters in `logos/` (unreferenced).
+- **Tailwind Play CDN → prebuilt `css/tailwind.css`** (124 KB render-blocking JS
+  runtime → 16 KB static, minified CSS). Build tooling in `tailwind/` (see CLAUDE.md).
+- **Font preloading** for the three above-the-fold fonts in `index.html` (longest
+  critical-path chain at ~690 ms).
+- **A11y/best-practice:** raised the clients-strip label contrast (`text-gray-500`
+  → `text-gray-400`) and wrapped homepage content in a `<main>` landmark.
+
 ## Social / Channels
 
 - _Add LinkedIn, Twitter/X, GitHub profile links here_
