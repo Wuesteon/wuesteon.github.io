@@ -74,6 +74,14 @@ runtime. Fixes:
   runtime → 16 KB static, minified CSS). Build tooling in `tailwind/` (see CLAUDE.md).
 - **Font preloading** for the three above-the-fold fonts in `index.html` (longest
   critical-path chain at ~690 ms).
+- **Fonts → WOFF2** (May 2026, 2nd pass). Mobile Lighthouse showed LCP 5.2 s with a
+  ~2,290 ms render delay; the uncompressed `.ttf` fonts (~400 KB Inter, ~270 KB
+  JetBrains Mono each) dominated the critical path. Converted all 7 weights to
+  `.woff2` (~66% smaller) and corrected the preload set to the actually-critical
+  fonts (Inter-Regular/Bold + JetBrainsMono-SemiBold). `.ttf` kept as fallback.
+  Note: the client-logo "oversize" Lighthouse warning was investigated and left
+  as-is — the logos are already at correct 2× retina resolution; resizing down
+  would blur them on retina screens for a ~14 KB non-saving.
 - **A11y/best-practice:** raised the clients-strip label contrast (`text-gray-500`
   → `text-gray-400`) and wrapped homepage content in a `<main>` landmark.
 

@@ -55,10 +55,10 @@
 }
     </script>
 
-    <!-- Preload above-the-fold fonts (longest critical-path chain per Lighthouse) -->
-    <link rel="preload" href="fonts/Inter-Regular.ttf" as="font" type="font/ttf" crossorigin>
-    <link rel="preload" href="fonts/Inter-Bold.ttf" as="font" type="font/ttf" crossorigin>
-    <link rel="preload" href="fonts/JetBrainsMono-Regular.ttf" as="font" type="font/ttf" crossorigin>
+    <!-- Preload above-the-fold fonts (woff2; covers hero text + terminal code block) -->
+    <link rel="preload" href="fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/JetBrainsMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
 
     <!-- TODO: replace with prebuilt static tailwind.css before scaling traffic; see CLAUDE.md -->
     <link rel="stylesheet" href="css/tailwind.css">
