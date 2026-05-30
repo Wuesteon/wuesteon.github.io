@@ -111,6 +111,20 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/playwright-mcp-browser-automatisierung.html"/>
   </url>
   <url>
+    <loc>https://waiser.dev/blog/posts/en/ambient-ai-the-next-ai-generation.html</loc>
+    <lastmod>2026-05-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/ambient-ai-die-naechste-ki-generation.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/ambient-ai-the-next-ai-generation.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/ambient-ai-die-naechste-ki-generation.html"/>
+  </url>
+  <url>
+    <loc>https://waiser.dev/blog/posts/en/anthropic-skills-guide.html</loc>
+    <lastmod>2026-05-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/anthropic-skills-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/anthropic-skills-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/anthropic-skills-guide.html"/>
+  </url>
+  <url>
     <loc>https://waiser.dev/blog/posts/en/claude-code-skills.html</loc>
     <lastmod>2026-05-09</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/claude-code-skills.html"/>

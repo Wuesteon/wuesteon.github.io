@@ -6,8 +6,7 @@
     <title>Nils Weiser - IT Consulting: KI & App Entwicklung</title>
     <meta name="description" content="Nils Weiser - IT Consultant & Developer aus dem Bodenseeraum. KI-Strategien, Web-Apps, technische Beratung. Vom Konzept bis zur Auslieferung.">
     <link rel="canonical" href="https://waiser.dev/">
-    <link rel="alternate" hreflang="de" href="https://waiser.dev/">
-    <link rel="alternate" hreflang="en" href="https://waiser.dev/">
+    <!-- Single bilingual URL (DE/EN via in-page toggle): only x-default, no per-language alternates -->
     <link rel="alternate" hreflang="x-default" href="https://waiser.dev/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Nils Weiser - IT Consulting: KI & App Entwicklung">
@@ -20,15 +19,39 @@
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Nils Weiser",
-  "url": "https://waiser.dev/",
-  "description": "Nils Weiser — IT Consultant & Developer aus dem Bodenseeraum. KI-Strategien, Web-Apps, technische Beratung. Vom Konzept bis zur Auslieferung.",
-  "author": {
-    "@type": "Person",
-    "name": "Nils Weiser",
-    "url": "https://waiser.dev/"
-  }
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://waiser.dev/#person",
+      "name": "Nils Weiser",
+      "url": "https://waiser.dev/",
+      "image": "https://waiser.dev/og-default.png",
+      "jobTitle": "IT Consultant & Developer",
+      "description": "IT Consultant & Developer aus dem Bodenseeraum. KI-Strategien, Web-Apps, technische Beratung. Vom Konzept bis zur Auslieferung.",
+      "knowsAbout": [
+        "Artificial Intelligence",
+        "AI Strategy",
+        "App Development",
+        "Web Development",
+        "IT Consulting"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "Bodenseeraum",
+        "addressCountry": "DE"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://waiser.dev/#website",
+      "name": "Nils Weiser",
+      "url": "https://waiser.dev/",
+      "description": "Nils Weiser — IT Consultant & Developer aus dem Bodenseeraum. KI-Strategien, Web-Apps, technische Beratung. Vom Konzept bis zur Auslieferung.",
+      "inLanguage": ["de", "en"],
+      "publisher": { "@id": "https://waiser.dev/#person" },
+      "author": { "@id": "https://waiser.dev/#person" }
+    }
+  ]
 }
     </script>
 
