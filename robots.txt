@@ -4,3 +4,7 @@ Disallow: /easter-egg/
 Disallow: /blackhole/
 
 Sitemap: https://waiser.dev/sitemap.xml
+
+# AI assistant content guide (llms.txt convention)
+# Curated index: https://waiser.dev/llms.txt
+# Full content: https://waiser.dev/llms-full.txt

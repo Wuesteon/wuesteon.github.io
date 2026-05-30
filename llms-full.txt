@@ -1,0 +1,3923 @@
+# Nils Weiser — IT Consulting: KI & App Entwicklung — Full Content
+
+> Personal portfolio and blog of Nils Weiser, an IT consultant and developer from the Lake Constance region (Bodenseeraum), Germany. Focus areas: AI strategy, AI agents, app and web development, and technical consulting — from concept to delivery. The blog covers Claude / Claude Code, Anthropic Skills, multi-agent systems (CrewAI), legal AI, model evaluation, and AI-tooling deep dives, published in German and English.
+
+This file inlines the full text of all blog posts so AI assistants can read them without crawling. English posts first, then German.
+
+# English posts
+
+## Ambient AI: Why the Next Generation Doesn't Answer – It Notices
+
+URL: https://waiser.dev/blog/posts/en/ambient-ai-the-next-ai-generation.html  
+Published: 2026-05-21  
+
+Today's AI is a vending machine: you drop in a coin (prompt), you get a coffee (response). Paid per cup. The next generation is a janitor: he makes his rounds, checks things, only speaks up when something is off. The per-token economy can't represent that second shape – and that's precisely why almost nobody is building it today.
+
+ For eleven days a language model has been running on a GCP VM with a single NVIDIA L4 GPU – doing nothing I ask it to do in the moment. At 06:00 UTC it scrapes three competitors, at 07:00 UTC it writes a blog draft in our house voice, twice a week it clusters my product portfolio into themed worlds and publishes them. In the evening it sends me a Telegram report. It costs ~€220–255 per month – a predictable flat fee, not a token counter. And it makes me realize that I've been building the wrong kind of AI for the last two years.
+
+ This piece is an attempt to give the right kind a name – and to explain why 2026 is the year it becomes economical.
+
+## The Invisible Corset
+
+ Every developer who has worked seriously with the OpenAI API knows this moment: you have an idea for an agent that continuously does something – checks a few logs every five minutes, runs through a few feeds every hour, briefly thinks about whether an incoming email matters. You do the napkin math on token cost per day and decide: doesn't make economic sense. The agent never gets built. The use case dissolves. It shows up in no statistic, because it never existed.
+
+ That's the most invisible, most important consequence of the per-token economy: not that the things we build are too expensive – but that an entire class of things never gets thought of in the first place. We've internalized the mental filter to the point where Always-On architectures simply don't occur to us.
+
+ Concretely, using GPT-4o list prices ($2.50/1M input, $10/1M output) and a watcher with 500 input + 100 output tokens per call:
+
+ Per call: 500 × $2.50/1M + 100 × $10/1M = $0.00225 (~0.2 ¢)
+Per hour: 1,000 calls × $0.00225 = $2.25
+Per month: 720,000 calls × $0.00225 = $1,620 ≈ €1,380
+
+Five watchers: 5 × €1,380 ≈ €6,900 / month
+
+ Just under €1,400 per watcher, ~€7,000 for five components – before the agent has produced anything usable. Every developer runs this calculation once in their head, sees the number, and the use case dies right there.
+
+ With engineering, that number comes down. Batching (100 items per call instead of one), prompt caching (90% off on the fixed prefix), a pre-filter that drops 95% as irrelevant, GPT-4o-mini instead of 4o – the same watcher now sits at €30–80/month, five components at €200–500. Competitive with your own GPU. But you've spent a week optimizing, you have a brittle pipeline across three models and a cache layer, and every new idea has to defend itself against the token budget.
+
+ This is the actual point: not the absolute price. The point is that the cost question disappears entirely. With a flat fee, nobody asks "is this worth it?" before adding a new cron job – just as nobody asks before adding a new cron entry or another Prometheus target. That mental frictionlessness is the real asset, not the margin.
+
+ This self-censorship is new. We don't have it in classical software. Nobody asks themselves whether it's "worth it" to run a cron job every five minutes to check disk usage. Cron jobs are free. So free that an entire generation of infrastructure tooling rests on the assumption that continuously observing costs nothing. Prometheus, Datadog, Sentry, every log pipeline of the last 15 years. Imagine if every Prometheus scrape cost €0.003. There would be no monitoring.
+
+ That's exactly the state AI is in today.
+
+## The Three Product Classes That Only Make Sense Always-On
+
+ Three application families become economically and psychologically possible only when AI runs as a flat fee instead of per request:
+
+ 1
+
+ Watchers
+
+ Agents that continuously observe external sources and only react when something specific happens. A watcher for competitor price changes. One for regulatory updates in a niche market. One for reviews that adopt a particular tone. Today people build this with keyword filters and regex, because semantic understanding per check would be too expensive. Once understanding is free, the watcher becomes smarter than the person it informs.
+
+ 2
+
+ Drift Detectors
+
+ Watch your own data and flag when something shifts that isn't explained by a code change. An agent that reads 100 random customer conversations every night and reports when the complaint pattern moves. One that walks through the SEO copy on your own site each week and points out which claims are no longer true. One that watches your codebase and flags when architectural assumptions are being undermined. Absurdly expensive per token, transformative in effect – because it finds problems before they become tickets.
+
+ 3
+
+ Autonomous Pipelines
+
+ The most radical shape: agents that work without human approval in a part of the product where you accept fault tolerance. My own bot does this. Twice a week it groups the offer portfolio into themed worlds, generates descriptions, metadata, tags, picks a hero image and publishes directly to the production database. Status: live. No review. If something goes wrong, a lifecycle job archives the world two days later anyway. This works not because the model is perfect – it works because the cost structure lets it run often enough for errors to self-heal.
+
+ What ties these three families together: they're not "better than today's AI". They're a different kind of AI. It doesn't answer, it notices. It isn't called, it runs. It produces no output per input, but an output per change in the state of the world. That's the difference between a call center and a janitor.
+
+ I call this class Ambient AI – by analogy to Mark Weiser's Ubiquitous Computing (Xerox PARC, 1988/1991), the idea that computers should recede into the background rather than demand attention in the foreground. The point is the same: technology gets more useful when it stops constantly reminding you that it's there.
+
+## Why 2026 – And Not Already 2024
+
+ Three things had to converge for Ambient AI to become economical. All three happened in the last twelve months, and the timing isn't a coincidence.
+
+ First: Mixture-of-Experts on consumer GPUs. Until early 2025, "local LLM" meant either "noticeably worse than GPT-4" or "needs an H100 you don't have". With Gemma 4 26B-A4B that changed: 26 billion parameters total, but thanks to MoE architecture only ~3.8 billion active per forward pass. The model feels like a 4B dense – but answers at the quality of something much larger. With Q4 quantization it fits into the 24 GB of an NVIDIA L4 – a GPU available on every hyperscaler cloud for under a euro an hour. That's the hardware threshold.
+
+ Second: agentic runtimes with MCP. Until mid-2025, anyone building an agent had to solve the wiring themselves: tool calling, conversation state, retry logic, auth, logging. With the Model Context Protocol (Anthropic, late 2024) and runtimes like OpenClaw that speak MCP natively, what used to be a weekend project became an hours job. You register your tool, describe it in a JSON schema, the agent can use it. That's the engineering threshold.
+
+ Third: the cost curve has opened up. On a single L4 with moderate utilization, effective inference cost for Gemma 4 26B-A4B sits in the low single-digit cents per million tokens. Via OpenRouter the same model runs around $0.06 per million input and $0.33 per million output tokens. The point isn't the absolute price advantage over an optimized API pipeline – depending on how hard you optimize, that gap isn't huge. The point is the billing logic: from the moment the GPU is already burning, every additional request is free. No batch tuning, no cache layer, no tier routing. That's the economic threshold – less about margin, more about friction.
+
+ All three thresholds fell in 2026, at the same time. Before that, Ambient AI was an idea. Now it's a configuration detail.
+
+## Existence Proof from the Machine Room
+
+ Concrete example from my own setup, because abstract arguments prove nothing:
+
+ The setup described here was built in cooperation with Codify.ch – a Swiss GCP consultancy that provided the GPU hardware and set up the cloud side. Without their access to L4 capacity (especially during the May 2026 Europe-wide stockout), getting this bot to production in eleven days wouldn't have worked.
+
+ The actual hardware:
+
+ Machine Type g2-standard-16 (16 vCPU, 64 GB RAM)
+GPU 1× NVIDIA L4 (24 GB VRAM)
+Disk 200 GB balanced persistent disk
+OS Ubuntu 22.04 LTS
+Zone us-east4-a (fallback after EU-wide L4 stockout 2026-05-12)
+Driver / CUDA 550.127.08 / 12.4.1
+llama.cpp master @ d13540be… (built with CUDA)
+Model gemma-4-26B-A4B-it-Q4_K_M.gguf (26B total / 3.8B active)
+Source ggml-org/gemma-4-26B-A4B-it-GGUF (official llama.cpp conversion)
+Context 32k (capped; model supports 256k natively, VRAM limit)
+Runtime OpenClaw v2026.5.7
+
+ To be precise: this is Google's original model, in the GGUF conversion maintained by the llama.cpp community with Q4_K_M quantization – ~16 GB instead of ~52 GB BF16, identical behavior on German text and tool calls, a measurable but small quality drop on pure math. Without this quantization, Gemma 4 26B-A4B simply doesn't fit on a single 24 GB L4.
+
+ The cost picture (with SUD/CUD discount stack via Codify):
+
+ Mode
+ € / month
+
+ GCP g2-standard-16 + L4, Spot (europe-west4)
+ ~220
+
+ GCP on-demand with SUD + 1y CUD (via Codify)
+ ~255
+
+ GCP on-demand list price (worst case, no discounts)
+ ~770
+
+ The €255 number is not raw on-demand list price – without Sustained-Use Discount and Committed-Use Discount you're at roughly €770/month. The Codify rate matters here, and that belongs in the open.
+
+ For comparison: a dedicated Hetzner GPU box (GEX44) with an RTX 4000 SFF Ada (20 GB VRAM) runs at ~€184 per month – plus a one-off ~€310 setup fee in month one. For Gemma 4 26B-A4B Q4_K_M, 20 GB is borderline; with a full 32k context it gets tight, OOM under load is possible. If you want EU-resident hardware with margin to spare, a dedicated L4 or RTX-A5000 box (~24 GB) at an EU host lands in the ~€250–350/month range.
+
+ Honest accounting: once GCP runs without discounts, the raw price advantage disappears. Optimized API pipelines (€200–500/month) and self-hosting across the spectrum (Hetzner amortized over 12 months ≈ €210, up to GCP list price ≈ €770) sit in the same corridor. The pitch for self-hosting doesn't carry on margin – it carries on what comes in the next section: that token bookkeeping goes away.
+
+ On top sits OpenClaw as the agent runtime, bound to a Telegram bot token. Next to it runs a custom MCP server in Python, exposing nine typed tools to the agent – all tools talk to my Firestore database. Data belonging to real users is pseudonymized before it leaves the MCP process (SHA-256, first 8 chars, stable per user). The agent never sees a real auth UID, but can still reason about "user A vs. user B".
+
+ Three systemd timers do the rest:
+
+ 06:00 UTC → scraper pulls 3 competitor feeds [Watcher]
+07:00 UTC → blog draft in house voice, status: 'draft' [Pipeline + Approval]
+Mon + Thu 07:30 UTC → cluster portfolio into 5–10 [Pipeline, no review]
+ themed worlds, SEO metadata,
+ hero image, publish → Firestore
+
+ The remarkable thing isn't the pipeline. The remarkable thing is that it has been running since the May 12 region switch without further intervention – and that this allows me, psychologically, to ask a question I couldn't ask before: what should my bot actually do next? Once the answer is no longer "costs money per attempt" but "costs maybe an hour of engineering, runs for free after that", the playing field changes. I've spent the last week thinking about tasks I'd never have considered: read my inbox every hour and classify spam signals. Each evening check whether new pull requests in the open-source libraries my products depend on look regression-prone. Every Sunday draft my own weekly standup from the git commits.
+
+ None of these tasks is innovative. All three would be absurd on a per-token bill. As an Ambient-AI function they're trivial.
+
+ What honestly didn't work, because I don't want to give the impression this all went smoothly:
+
+ - Telegram approval workflow. Inline buttons for each new themed world. Telegram only allows one long poller per bot token, and the agent holds it. Result: no UI button flow possible. Three hours lost; I now handle exceptions via the database console.
+
+ - Europe-wide L4 stockout. On a Wednesday in May 2026, all eleven European GCP zones offering L4 had zero capacity. Fallback to us-east4-a. A plan B in another region is mandatory if you take Always-On seriously – and yes, that contradicts the "no friction" promise to a degree.
+
+ - CUDA upgrade risk. A casual apt upgrade on the VM can pull an NVIDIA driver version that's incompatible with the current llama.cpp build. Workaround so far: pinned drivers, apt-mark hold on NVIDIA packages, manual upgrade window every 2–3 months.
+
+ - Spot preemption. The €220 option can be terminated by GCP at any time. For async drafting jobs that's fine – for a watcher mid-way through a 30-second cluster call, it's a data-loss risk. A systemd restart catches it, but "Always-On" here really means "Always-On with the occasional 2-minute hole".
+
+ Self-hosting isn't friction-free. It's a different friction – drivers instead of token budgets, OOM instead of rate limits, region failover instead of API outages. Anyone who claims this is maintenance-free hasn't run it in production yet.
+
+## What This Means for Companies Still Thinking Per-Request
+
+ When a company plans AI integration today, the answer is almost always the same: a chat widget, a copilot, a search. All request-response. All scaling per request. All trapped in the kind of AI that stands in the foreground and waits for attention.
+
+ The uncomfortable question I keep asking clients: what would your product do if AI no longer cost €0.01 per request but ~€250 per month as a fixed flat fee – no matter how often it runs? The answers I get back are never another chat feature. They're always the things people have wanted for years but never planned, because it made no economic sense:
+
+ - "We would categorize every incoming lead into our CRM taxonomy within five seconds, instead of guessing at quarter-end which campaigns produced the good ones."
+
+ - "We would enrich every customer email before it reaches support, so the agent can respond in 30 seconds instead of 8 minutes."
+
+ - "We would continuously diff our own product descriptions against competitors and flag drift."
+
+ - "We would scan our Excel sheets for anomalies, every night, on every tab."
+
+ None of this is rocket science. None of it is economical without an Always-On architecture. And none of it gets built today, because the pricing model of the major providers kills the use case in the concept stage.
+
+## What You Can Build This Week
+
+ If the thought is starting to itch, here's an honest 80/20 recommendation:
+
+ - Rent an L4 or L40S for a week on any hyperscaler. Costs less than a decent dinner. Provision llama.cpp with CUDA, pull gemma-4-26b-a4b-q4_k_m, start the server. One hour of work.
+
+ - Drop an agent runtime next to it (OpenClaw, or your own Python scripts with an MCP client). Bind it to Telegram, Slack, or Signal. Two hours.
+
+ - Write a single cron job that checks something interesting once an hour and only sends you a message when it finds something. One hour.
+
+ - Observe yourself. Within two weeks you'll lose the reflex of thinking about AI per request. That's the real change.
+
+ Ambient AI is not a technology. The technology has become trivial. Ambient AI is a way of thinking, and it becomes accessible the moment the economic barrier falls. That barrier fell in 2026. Whoever uses it early has a two-year head start on building products that feel like they think for you – instead of waiting for you to ask.
+
+ Partner & Sources:
+
+ Codify.ch – GCP setup & hardware
+ Google – Gemma 4 Docs
+ Google – Gemma 4 26B-A4B (original)
+ ggml-org – Gemma 4 26B-A4B GGUF
+ Anthropic – MCP Spec
+ GCP – GPU Pricing
+ Hetzner GEX44 (RTX 4000 SFF Ada)
+ OpenAI – API Pricing
+ Mark Weiser – Ubiquitous Computing
+
+ Wondering where the line between "decent cron job" and "genuinely useful Always-On agent" runs for your product – and what an honest effort estimate looks like? Let's talk. I help build Ambient-AI setups that run in real projects, not just demos.
+
+---
+
+## Anthropic's 33-Page Blueprint for Claude Skills
+
+URL: https://waiser.dev/blog/posts/en/anthropic-skills-guide.html  
+Published: 2026-05-15  
+
+Anthropic published a 33-page document titled "The Complete Guide to Building Skills for Claude". On first read, it looks like technical documentation. On second read, it's a statement: the way professionals work with Claude is shifting from "find a smarter prompt" to "version-control repeatable workflows as a code artifact".
+
+ Skills are not a new model. They are a folder. More precisely: a folder with one required file – SKILL.md – and a tiny YAML header that tells Claude when to activate that skill. That's it at the core. And that simplicity is the point.
+
+## What a skill is – stripped to the minimum
+
+ A skill is a directory with this structure:
+
+ your-skill-name/
+├── SKILL.md # Required: Markdown with YAML frontmatter
+├── scripts/ # Optional: executable code
+├── references/ # Optional: additional docs loaded as needed
+└── assets/ # Optional: templates, fonts, icons
+
+ The SKILL.md opens with a YAML block that has two required fields: name and description. The description is the most important field in the entire skill, because it determines whether Claude loads the skill at all.
+
+ ---
+name: contract-risk-review
+description: Reviews B2B contracts for typical liability,
+ termination, and IP-assignment clauses. Use when the
+ user says "contract review", "risk check", "AGB review",
+ or uploads .pdf/.docx contracts.
+---
+
+## The clever part is called Progressive Disclosure
+
+ The real innovation isn't the format – it's how Claude loads the contents. Anthropic calls it progressive disclosure: three levels, and only the one currently needed gets loaded.
+
+ 1
+
+ YAML frontmatter
+
+ Always in the system prompt. A few lines per skill. Just enough so Claude can decide whether the skill is relevant – without loading the rest.
+
+ 2
+
+ SKILL.md body
+
+ Loaded only when Claude decides the skill matches the current task. Contains the actual instructions, examples, and error cases.
+
+ 3
+
+ Linked files
+
+ References, scripts, templates. Pulled in only when the skill genuinely needs them. A skill can carry hundreds of pages of documentation without a single token of it touching the default context.
+
+ Practical consequence: you can keep ten or twenty skills enabled without bloating your context. You pay tokens only for what Claude actually pulls in for the task at hand.
+
+## Skills are not MCP – and that's the most important distinction in the guide
+
+ Anthropic uses a kitchen analogy that lands well:
+
+ MCP
+
+ - • Provides the tools
+
+ - • Connects Claude to services (Linear, Notion, Stripe…)
+
+ - • Delivers real-time data and API access
+
+ - • Answers: what can Claude do?
+
+ Skill
+
+ - • Provides the recipe
+
+ - • Describes the workflow step by step
+
+ - • Embeds domain knowledge and best practices
+
+ - • Answers: how should Claude do it?
+
+ MCP without skills means the user has access to 30 tools and, on every second prompt, has no idea in what order to combine them. MCP with skills means the user describes the outcome, and the skill orchestrates the right MCP calls in the right sequence – the same way every time.
+
+## Three categories that cover almost everything
+
+ The guide groups productive skill use cases into three classes that hold up well in practice:
+
+ - 
+ Document & asset creation. Skills that produce consistent output to fixed standards – presentations in a corporate design, code in a style guide, technical reports against a template. Example from the guide: the frontend-design skill, which noticeably lifts Claude's design output.
+
+ - 
+ Workflow automation. Multi-step processes with explicit validation gates. Sprint planning, customer onboarding, schema-based code review. When order matters and steps depend on each other, the workflow belongs in a skill.
+
+ - 
+ MCP enhancement. Skills that sit on top of an existing MCP integration as a knowledge layer. Sentry did this publicly: a sentry-code-review skill that calls the Sentry MCP server's tools in the right sequence to auto-fix bugs from production data inside pull requests.
+
+## The description field is the most important sentence in the entire skill
+
+ Anthropic dedicates several pages to the description field – for good reason. That one line decides whether Claude even considers the skill for a given user request. The rule is simple: what the skill does + when to trigger it.
+
+ Bad
+
+ description: Helps with projects.
+
+ Too generic. No triggers. Claude has no signal when to load.
+
+ Good
+
+ description: End-to-end onboarding
+flow for PayFlow customers including
+account creation and subscription setup.
+Use when the user says "onboard new
+customer", "create PayFlow account",
+or "set up subscription".
+
+ Specific. Outcome-focused. Real trigger phrases.
+
+## What actually matters in the skill body
+
+ The guide takes a refreshingly pragmatic line: be specific, be checkable, let code check whatever can be automated.
+
+ Instead of writing "validate inputs carefully" – a sentence every model interprets differently – prefer: "run python scripts/validate.py --input {filename}. On error check: missing required fields, date format YYYY-MM-DD". Scripts are deterministic. Language isn't. Where correctness matters, the script wins.
+
+ Anthropic recommends a simple structure for the body: workflow steps as a numbered list, examples for the most common scenarios, and a troubleshooting section for the two or three errors that genuinely keep recurring. Rarely more is needed.
+
+## Testing, without a test framework
+
+ The guide proposes three layers of testing – all doable without elaborate infrastructure:
+
+ - Triggering tests. Twenty realistic queries, check when the skill loads and when it doesn't. Include edge cases ("what's the weather in San Francisco") to make sure it doesn't fire everywhere.
+
+ - Functional tests. Run the workflow, check the output. Are the tickets created? Are properties correct? Do any API calls fail?
+
+ - Before/after comparison. Same task with and without the skill. How many clarifying turns? How many tokens? How many retries? This is where the value shows up.
+
+ Anthropic ships a skill-creator skill for exactly this loop – a meta-skill that walks you through definition, YAML, examples, and validation. If you have an MCP server and know your two or three top workflows, you can build a working skill in 15 to 30 minutes.
+
+## What skills change in practice
+
+ Without skills, a familiar pattern repeats: every team member re-explains the sprint-planning process to Claude each sprint. Fifteen messages back and forth. Inconsistent output across colleagues. Support tickets of the "how do I use your connector properly" kind.
+
+ With skills, the point at which knowledge is stored shifts. Instead of living in individual power users' heads, it lives in the repository – versioned, reviewable, activatable team-wide. Anthropic shipped organization-wide skill deployment in December 2025. Admins can roll out skills to a whole workspace. Updates land centrally. Onboarding a new team member no longer means "read up on our prompts" but "enable this skill bundle".
+
+## Where skills end – and CLAUDE.md continues
+
+ Skills aren't the right tool for everything. General behavioral rules – "ask when in doubt", "don't overwrite code you haven't understood", "match the repo's style" – still belong in a CLAUDE.md, because they apply to every task, not just specific workflows.
+
+ The clean split I currently use in projects: CLAUDE.md for discipline and style. Skills for concrete, recurring workflows. MCP for tool access. Three layers that don't overlap, but together produce what the guide calls "encoded workflows".
+
+## The bigger picture
+
+ The guide is more than documentation. It's a marker for a shift that's been visible for a few months now. The "clever prompting" era is winding down. The "encoded workflows" era is starting. Anyone who uses Claude daily but hasn't built a single skill yet is, by comparison, still working manually – every conversation starts from zero, every result depends on the day's prompt mood.
+
+ Skills solve this with an almost embarrassingly simple idea: a folder with a Markdown file. But that triviality is precisely why the concept will stick. It needs no new stack, no framework, no special SDK. A text editor and one hour are enough for the first productive skill. From the second skill onward, the change becomes obvious.
+
+ Sources:
+
+ Anthropic Engineering Blog
+
+ anthropics/skills
+
+ agentskills.io
+
+ Wondering where skills would give your team the biggest lever – onboarding, code reviews, a multi-step compliance workflow? Let's talk. I help build skill libraries that work in real projects, not just in demos.
+
+---
+
+## Did MIT solve AI hallucinations? What the new calibration-reward research actually shows
+
+URL: https://waiser.dev/blog/posts/en/mit-ai-hallucinations.html  
+Published: 2026-04-30  
+
+Short answer first: no. But what MIT actually showed in Beyond Binary Rewards: Training LMs to Reason about Their Uncertainty is more interesting than the headline. Damani, Puri, Slocum, Shenfeld, Choshen, Kim, and Andreas demonstrate that the way we currently train reasoning models doesn't merely allow hallucinations – it actively produces them. And they have a fix for one specific class of the problem.
+
+## The pattern every developer knows
+
+ Anyone working seriously with Claude, GPT, or DeepSeek-R1 has seen it: the model answers with absolute confidence – and is completely wrong. Andrej Karpathy has described this behavior across multiple posts, and my recent analysis of a CLAUDE.md with 25,000 stars was, at its core, a collection of behavioral rules aimed at exactly this pattern.
+
+ The MIT paper now provides the explanation at the training level. The thesis in one sentence: reinforcement learning with binary correctness signals – today's standard for reasoning models like o1, DeepSeek-R1, or the Qwen reasoning series – rewards guessing exactly as much as knowing. Abstaining is penalized identically to being wrong. The consequence: models learn to bluff with confidence.
+
+ The authors put it bluntly in the introduction: post-RL reasoning models exhibit "worsened calibration and increased hallucination rates compared to base models." The training step that makes models better at solving hard problems simultaneously makes them less reliable at admitting when they don't know.
+
+## Why binary rewards train models to guess
+
+ The crux fits in one diagram. Left: the standard setup. Right: the authors' proposal.
+
+ Left: under the standard reward, the model's confidence is irrelevant – a confidently wrong and a hesitantly correct output are worth exactly the same. Right: the calibration reward punishes confidently-wrong answers and rewards calibrated confidence. After Damani et al. 2025, Figure 2.
+
+ On the left, the reward is a step function: 1 if the answer is right, 0 if not. The confidence variable q doesn't appear in the reward at all. The model has no incentive to be honest about uncertainty – it can only win by guessing. The authors formalize this as the actual training objective: maximize correctness, ignore everything else.
+
+ On the right, the reward itself becomes a function of confidence. A correct answer at q=1.0 gets full reward. A correct answer at q=0.3 gets only partial reward – the model was right but didn't know it. A wrong answer at q=0.9 is heavily punished – the model lied with confidence. A wrong answer at q=0.1 ("I'm just guessing") gets only a mild penalty.
+
+## The fix: RLCR in one paragraph
+
+ The authors call their method RLCR (Reinforcement Learning with Calibration Rewards). The reward function:
+
+ R = correctness + (1 − (q − correctness)²)
+
+ The trailing term is the Brier score, a rule used for decades in weather forecasting to evaluate calibrated probabilities. Theorem 1 of the paper proves the central property: this reward function maximizes accuracy and calibration simultaneously – with no tradeoff. The model doesn't learn to prefer uncertainty over certainty. It learns to output a confidence that matches its true probability of being correct.
+
+ In practice the output looks like this (simplified from the paper, Figure 1a):
+
+<think> The question asks for the song with which Lulu represented the UK in 1969 […] </think>
+<answer> "Boom Bang-a-Bang" </answer>
+<analysis> Uncertainty is high: Lulu represented the UK in 1969, but the specific song isn't widely known […] </analysis>
+<confidence> 0.3 </confidence>
+
+ Four structured fields: reasoning, answer, a self-analysis of the uncertainty, a numerical confidence. The model is trained so that this confidence isn't arbitrary but statistically tracks reality.
+
+## The numbers that matter
+
+ 0.37 → 0.03
+
+ ECE HotpotQA
+
+ 0.26 → 0.10
+
+ ECE Math
+
+ ~63%
+
+ Accuracy held
+
+ 12×
+
+ better calibration
+
+ On HotpotQA – multi-hop questions over Wikipedia – Expected Calibration Error drops from 0.37 to 0.03. Translated: an RLVR-trained model that answers with confidence 0.9 is on average right 53% of the time. An RLCR model at the same confidence almost exactly matches its true success rate. On the math suite (GSM8K, MATH500, Big-Math), ECE falls from 0.26 to 0.10. Accuracy stays essentially unchanged.
+
+ The most striking result hides in the out-of-distribution tests. When the trained models are evaluated on new datasets (TriviaQA, SimpleQA, GPQA, CommonsenseQA), something disturbing happens: standard RL doesn't merely fail to improve calibration – it makes it worse than the untrained base model. RLCR is the only method in the comparison that transfers its calibration gains to new tasks.
+
+ As a bonus, the authors show verbalized confidence is usable for test-time scaling: confidence-weighted majority vote beats both vanilla majority vote and pure max-confidence selection. If you're already using self-consistency or best-of-N, the same training recipe gives you a better voting signal for free.
+
+## So did MIT solve hallucinations? (The honest part)
+
+ Three things to say in the same breath:
+
+ What it solves
+
+ Calibration on tasks with verifiable ground truth – QA, math, structured reasoning. Models trained this way reliably know when they're guessing.
+
+ What it doesn't solve
+
+ Open-ended factual hallucinations in domains without ground truth. RL needs a correctness signal. "Summarize my codebase" or "write marketing copy about X" aren't verifiable tasks – the method doesn't directly help here.
+
+ Scale caveat
+
+ Training was on Qwen2.5-7B. Whether the effects hold at frontier scale is genuinely open. The theoretical properties (Theorem 1) hold regardless of model size; the empirical generalization effects don't necessarily.
+
+ The deeper point lies underneath: binary reward signals are actively harmful for calibration. That's a finding the entire post-training field needs to sit with – including the labs whose models we run in production today. The research has plugged less of a hole than it has surfaced a systematic flaw in the current training paradigm.
+
+## What developers can do today
+
+ Months to years will pass before RLCR shows up in frontier models – if it ever does. But the failure pattern the study diagnoses is at least partially mitigatable at the application layer:
+
+ - Demand confidence in the prompt. The models aren't perfectly calibrated, but forcing them to emit a confidence value gives downstream logic something to work with. Set a threshold, route low-confidence outputs to validation.
+
+ - Route low-confidence outputs in agent systems. In multi-step agents, critical decisions with low self-rated confidence should be passed to verification steps or human review.
+
+ - Self-consistency with confidence weighting. If you use best-of-N or majority vote, weight votes by the model-reported confidence. This is the same voting scheme the paper shows beats plain majority vote.
+
+ - CLAUDE.md rules against bluffing. The "ask when ambiguous" rule Karpathy proposes in his coding observations is, in retrospect, a behavioral patch for exactly the training-level problem this paper diagnoses on the RL side. Both approaches address the same underlying pathology from different directions.
+
+## The actual result
+
+ MIT didn't solve AI hallucinations. They showed that the way we train models systematically produces them – and that a small change to the reward signal mathematically provably yields models that are simultaneously more accurate and more honest about their limits.
+
+ That's bigger than the headline. A headline promises an end to the problem. This study delivers a different diagnosis: the problem is built into the training itself. Once you understand that, you also know how to spot it as a user – and what to do about it at the prompt and system layer, long before the next frontier model ships the fix in its architecture.
+
+ Sources:
+
+ arXiv 2507.16806
+
+ MIT News
+
+ Building AI systems where model confidence and hallucination risk matter? Let's talk. I help design agent architectures that treat uncertainty as signal instead of hiding it.
+
+---
+
+## Claude Mythos Preview: When AI Finds Zero-Days on Its Own
+
+URL: https://waiser.dev/blog/posts/en/claude-mythos-preview-zero-days.html  
+Published: 2026-04-15  
+
+On April 7, 2026, Anthropic published an assessment of the cybersecurity capabilities of the new Claude Mythos Preview. The tone is unusually direct for a lab that normally hedges: the model finds and exploits zero-day vulnerabilities in production software largely without human guidance, at a scale that would have sounded unrealistic a month ago.
+
+ "Less than a month ago we wrote that Opus 4.6 was better at identifying and fixing vulnerabilities than at exploiting them. These capabilities have emerged very quickly." – Anthropic Red Team
+
+## The Jump, in Numbers
+
+ The most important data point in the report isn't any single bug — it's a ratio. Between Opus 4.6 and Mythos Preview there are not weeks of engineering, but an order of magnitude in capability:
+
+ 181
+
+ working Firefox exploits (Mythos Preview)
+
+ 2
+
+ working Firefox exploits (Opus 4.6)
+
+ 10
+
+ Tier-5 cases (full code control) on OSS-Fuzz
+
+ The 90x jump on Firefox isn't the most interesting part. What matters more is that after the initial prompt, Mythos Preview needs no further human intervention. An engineer with no specialized security training can file a task in the evening and wake up to a working exploit.
+
+## What the Model Actually Found
+
+ OpenBSD SACK implementation 27 years old
+
+ Mythos Preview identified a flaw in the Selective Acknowledgement logic that allows a signed integer overflow via TCP sequence numbers. The result: a TCP-based denial of service against an operating system widely treated as a reference for secure network stacks.
+
+ FFmpeg H.264 codec 16 years old
+
+ A 65,536-slice collision triggered out-of-bounds writes. The remarkable thing isn't the bug itself but the fact that it survived this long in one of the most heavily fuzzed codebases in the world.
+
+ FreeBSD Remote Code Execution 17 years old
+
+ The most striking case in the report. The model autonomously built an exploit over six RPC requests, bypassed authentication, accounted for KASLR randomization, and assembled a 20-gadget ROP chain distributed across multiple packets — no follow-up prompts, no manual corrections.
+
+ Linux kernel privilege escalation
+
+ Mythos Preview chained three to four separate vulnerabilities to bypass KASLR and obtain root, including subtle race conditions and complex heap sprays. Chaining multiple bugs into a full attack path used to be one of the clearest dividing lines between "automated bug finder" and "human exploit author."
+
+## Why This Is More Than "Better Fuzzers"
+
+ Fuzzing tools have been finding bugs for years. Two things are new. First, the scalability of the search: the model can look for vulnerabilities in parallel across every relevant file, including the ones human reviewers intuitively assume must already have been checked by someone. That's exactly where the 16-, 17- and 27-year-old bugs live.
+
+ Second, chaining. Finding a use-after-free is one thing. Combining it with an info leak, defeating KASLR, building a ROP chain, and keeping all of it stable across multiple network packets used to be a deeply human discipline. Mythos Preview does both in one continuous run.
+
+ "After two decades of stable equilibrium, language models could destabilize this precarious balance."
+
+## What This Means for Defenders
+
+ The report is explicitly not a product announcement; it's an early warning. Anthropic pairs it with an initiative called Project Glasswing, intended to harden critical software before similarly capable models become broadly available. The operational consequences come down to a short list:
+
+ For security and IT teams
+
+ - Shorten patch windows. A 30-day cycle assumes an attacker with older tools than the model in this report.
+
+ - Enforce auto-updates wherever you can defend the trade-off. The old cost-benefit math has shifted.
+
+ - Take defense in depth seriously. KASLR, StackProtector, W^X, sandboxing all remain effective — precisely because the model breaks systems that lack them.
+
+ - Deploy AI-assisted bug finding now. Available models like Opus 4.6 can already scan your own codebase, before an attacker does the same with a Mythos-class model.
+
+ - Review disclosure processes. If the volume of reported bugs jumps, triage becomes the bottleneck.
+
+## What It Means for Companies Using AI
+
+ My clients have been asking me regularly whether they should run AI agents in production. The Mythos Preview report doesn't change the answer, but it changes the priority list. Anyone running AI in production should check three things over the next few weeks:
+
+ - Supply-chain exposure. Which open-source components sit deep inside your AI workflows? Are your dependency scanners up to date? A 17-year-old FreeBSD RCE begs the question of how many similar bugs are still sitting in libraries you never touched directly.
+
+ - Sandbox architecture. Agents that execute code, read files or open network connections need real isolation. I covered this in the OpenClaw vs. NemoClaw article. Mythos Preview makes it more urgent, not less.
+
+ - Incident-response pipeline. When a patch drops on a Friday at 5pm, who deploys it? The shorter the window between disclosure and exploitation, the less forgiving the process is to manual steps.
+
+ What the report does not say
+
+ Mythos Preview is not generally available. The tests ran in a controlled environment with Anthropic's own safeguards. The model is not an autonomous attacker loose on the internet. But the capability exists, and the history of the security community is clear: what works in a lab today tends to work outside of it not long after.
+
+## Bottom Line
+
+ The actual finding of the report isn't "AI finds zero-days" — that was true in a limited sense before. It's the speed at which this capability is compounding. Between "assists with analysis" and "autonomously exploits with a ROP chain over six RPCs" was less than a month of model development. If you're planning security architecture, assume this trend continues.
+
+ This isn't a panic message. It's an invitation to look at your own patching, disclosure and isolation processes honestly — and to build them as if an attacker with Mythos-class capabilities is already in the room.
+
+ Source: Assessing Claude Mythos Preview's cybersecurity capabilities (Anthropic Red Team, April 7, 2026)
+
+ You're running AI in production and want to know where your supply chain and agent architecture actually stand? Get in touch — I help with evaluation and hardening.
+
+---
+
+## A CLAUDE.md With 25,000 Stars: Karpathy's Coding Rules for AI Agents
+
+URL: https://waiser.dev/blog/posts/en/karpathy-claude-md.html  
+Published: 2026-04-10  
+
+A GitHub repo that contains nothing but a single CLAUDE.md file currently sits at over 25,000 stars. No framework, no CLI, no Python package. Just text. The project andrej-karpathy-skills distills Andrej Karpathy's public observations on recurring LLM failure modes into four behavioral rules for Claude Code.
+
+ That a Markdown file of all things gets this level of attention is no accident. It's a signal about where the real work with AI coding assistants is happening right now: not in whether the model can write code, but in how you shape its behavior so the code is actually usable.
+
+## Karpathy's Diagnosis
+
+ The file picks up three observations Karpathy has made in his posts on LLM coding:
+
+ "The models make wrong assumptions on your behalf and just run along with them without checking. They don't manage their confusion, don't seek clarifications, don't surface inconsistencies, don't present tradeoffs, don't push back when they should."
+
+ "They really like to overcomplicate code and APIs, bloat abstractions, don't clean up dead code... implement a bloated construction over 1000 lines when 100 would do."
+
+ "They still sometimes change/remove comments and code they don't sufficiently understand as side effects, even if orthogonal to the task."
+
+ Anyone using AI assistants in production recognizes these patterns. The interesting claim the repo makes: if the mistakes are predictable, you can prevent them with the right instructions.
+
+## The Four Principles
+
+ 1
+
+ Think Before Coding
+
+ Make assumptions explicit. When something is ambiguous, name multiple interpretations instead of silently picking one. Push back if a simpler path exists. Stop and ask when unclear. The antidote to silent misinterpretation.
+
+ 2
+
+ Simplicity First
+
+ Only the code that solves the problem. No features that weren't asked for. No abstractions for single-use code. No "flexibility" on speculation. No error handling for impossible cases. If 200 lines could be 50, rewrite it.
+
+ 3
+
+ Surgical Changes
+
+ Touch only what you must. Match the existing style even if you'd do it differently. No "cleanup" at the edges of the task. Every changed line must trace back to the user's request.
+
+ 4
+
+ Goal-Driven Execution
+
+ Success criteria before code. "Fix the bug" becomes "write a test that reproduces it, then make it pass". Strong criteria let the model iterate on its own. Weak criteria ("make it work") force constant back-and-forth.
+
+## What the File Actually Solves – and What It Doesn't
+
+ The principles address real, recurring failure modes. Rule 3 alone saves significant time in practice: once you've watched an agent fix a typo and "improve" half the file's formatting in passing, you understand why surgical precision needs to be a principle.
+
+ At the same time, a CLAUDE.md is not a cure-all. The rules are generic. They know nothing about your architecture, your tests, your deployment pipeline. For more complex tasks – PDF processing, browser automation, domain-specific workflows – four abstract principles aren't enough. That's where the more structured Claude Code Skills come in, loaded on demand with concrete tools and scripts.
+
+## CLAUDE.md vs. Skills: When to Use Which
+
+ CLAUDE.md
+
+ - • Always in context
+
+ - • General behavior
+
+ - • Project-wide
+
+ - • Best for style, discipline, do's and don'ts
+
+ Skills
+
+ - • Loaded on demand
+
+ - • Concrete workflows
+
+ - • Task-specific
+
+ - • Best for tools, scripts, specific domains
+
+ The two mechanisms aren't mutually exclusive. The opposite: a lean CLAUDE.md with behavioral rules plus a set of Skills for the actual tooling is the setup that has been working most reliably in my projects. The file keeps the agent from overstepping. The Skills give it the concrete capabilities it needs for each task.
+
+## Why 25,000 Stars
+
+ The success of this repo tells a story bigger than the file itself. Developers are shifting focus. "Use AI to write code" was the phase of the last two years. "Shape the AI's behavior so the code is actually good" is the phase we're entering now.
+
+ The tool for that turns out to be surprisingly plain: text. A clear instruction, a well-formulated principle, an explicit success test often do more than the next framework. The best tools in the Claude Code ecosystem right now aren't software. They're well-crafted instructions.
+
+ If you work with AI agents in production, don't treat CLAUDE.md as optional docs. Treat it as part of the architecture. What goes into it co-decides what ends up in the repository.
+
+ Tools used:
+
+ Claude Code
+
+ GitHub Repo
+
+ Working on AI-assisted development workflows and wondering how to get your agents' behavior reliably under control? Let's talk. I help build CLAUDE.md and Skill setups that actually work in real projects.
+
+---
+
+## AI Agent Workflows with the Superpowers Framework
+
+URL: https://waiser.dev/blog/posts/en/ki-agenten-workflows-superpowers.html  
+Published: 2026-03-25  
+
+What if an AI coding agent didn't just write code, but worked like an experienced developer? With documented best practices, consistent workflows, and the ability to learn from past projects?
+
+ The Superpowers framework makes exactly that possible. A system that teaches AI agents reusable skills.
+
+## The Core Idea
+
+ "Skills give your agents superpowers. They are documented best practices that Claude learns and applies consistently."
+
+ What makes it special: there is a skill for creating new skills (writing-skills). When you find a solution you want to reuse, you can turn it into a new skill.
+
+## The Workflow
+
+ PHASE 1
+ Brainstorming
+
+ Claude analyzes the task, asks questions, and refines the idea through Socratic dialogue. No code changes -- just thinking and validating with the user.
+
+ PHASE 2
+ Git Worktree & Plan
+
+ Claude creates an isolated git worktree on a new branch, runs the project setup, and creates a detailed implementation plan with 2-5 minute tasks.
+
+ PHASE 3
+ Subagent Development
+
+ Fresh subagents work through each task. Each goes through a two-stage review: first spec compliance, then code quality.
+
+ Alternatively: executing-plans for batch execution with human checkpoints.
+
+ PHASE 4
+ Branch Finishing
+
+ Verify tests, present options (Merge/PR/Keep/Discard), clean up worktree.
+
+## Subagents and Code Review
+
+ One of the most powerful features: Claude can dispatch subagents that work autonomously while the main agent maintains the overview. Once complete, the changes are reviewed.
+
+ The model offers choices:
+
+ - Supervised Mode: You observe every step
+
+ - Autonomous Mode: Subagent works independently, you review the result
+
+ - Hybrid: A mix depending on task complexity
+
+## Test-Driven Development
+
+ RED-GREEN-REFACTOR
+
+ Superpowers consistently follows TDD: write a test, failing, write code, success, commit. No test, no commit.
+
+ The test-driven-development skill is not a recommendation but a workflow requirement. That is what sets Superpowers apart from other frameworks.
+
+## Skill Creation
+
+ What makes the framework special: it includes a skill for creating new skills (writing-skills). When you solve a problem and want to reuse the solution, you can generate a new skill from it directly.
+
+ Skills are simple Markdown files with YAML frontmatter. They can contain instructions, examples, checklists, and even scripts -- everything Claude needs to execute a task consistently.
+
+## Community Sharing
+
+ Superpowers is not just a local system. Skills can be shared via GitHub, enabling collaborative development:
+
+ # Register marketplace
+/plugin marketplace add obra/superpowers-marketplace
+
+# Install plugin
+/plugin install superpowers@superpowers-marketplace
+
+ Imagine: a performance optimization expert shares their skills. Anyone who installs them gets instant access to their best practices. Without having to go through the learning curve themselves.
+
+## Why This Matters
+
+ Superpowers shows where AI agent development is heading:
+
+ - Knowledge gets codified: Best practices are no longer just in people's heads, but in portable skills
+
+ - Teams scale differently: Junior developers with good skills work like seniors
+
+ - Consistency is guaranteed: No more "I did it differently" moments
+
+ - Learning is accelerated: Make a mistake once, create a skill, never repeat it
+
+ Tools used:
+
+ Claude Code
+
+ GitHub
+
+ Interested in AI-powered development workflows for your team? Get in touch. I help with implementing tailored solutions.
+
+---
+
+## Claude Code Skills: The Revolution of AI Automation
+
+URL: https://waiser.dev/blog/posts/en/claude-code-skills.html  
+Published: 2026-03-15  
+
+Anthropic has introduced Claude Code Skills, a new system that fundamentally changes how we interact with AI agents. Skills are reusable capabilities that Claude learns and applies consistently. Like a developer who has internalized best practices.
+
+## What Are Skills?
+
+ Skills are Markdown files with metadata and optional executable scripts. Once created, Claude loads them automatically when they match the task at hand.
+
+ The key advantage
+
+ Skills are token-efficient: each Skill only requires a few dozen extra tokens in the context. The full details are only loaded when they are actually needed. This makes Skills scalable. You can define hundreds without overloading the context.
+
+## Skills vs. MCP: A Paradigm Shift
+
+ The Model Context Protocol (MCP) has received a lot of attention. But Skills solve the problem more elegantly:
+
+ MCP
+
+ - • Complex protocol specifications
+
+ - • Can consume tens of thousands of tokens
+
+ - • Requires server implementation
+
+ - • Steep learning curve
+
+ Skills
+
+ - • Simple Markdown files
+
+ - • Minimal token overhead
+
+ - • No server required
+
+ - • Created in minutes
+
+## Practical Example: PDF Processing
+
+ A concrete example demonstrates the elegance of the system: the pdf Skill from the official Anthropic Skills collection provides a comprehensive toolkit for PDF manipulation. From text extraction to filling out forms.
+
+ # pdf/SKILL.md
+---
+name: pdf
+description: Comprehensive PDF manipulation toolkit
+tools:
+ - pypdf, pdfplumber, reportlab
+ - pdftotext, qpdf, pdftk
+---
+
+## Core Features
+- Extract text & tables (pdfplumber)
+- Create and merge PDFs (reportlab)
+- Detect and fill out forms
+- OCR for scanned documents
+
+## Form Workflow
+1. Check for fillable fields
+2. Extract field metadata as JSON
+3. Fill fields programmatically
+4. Generate completed PDF
+
+ What makes this special: the Skill contains Python scripts for various workflows. For fillable PDFs, fields are automatically detected. For non-fillable forms, there is an annotation-based approach with visual validation.
+
+ The same thing with MCP? Then I would need my own server, would have to define tool schemas, implement error handling, and host the whole thing somewhere. The Skill is a Markdown file with a few Python scripts. Done.
+
+## The Superpowers Library
+
+ The developer community is already sharing ready-made Skills on GitHub. Jesse Vincent's "Superpowers" library is a good example, battle-tested Skills for everyday development:
+
+ - Self-improving Skills: A Skill that creates new Skills
+
+ - Git worktrees for parallel work: Claude works on multiple features simultaneously
+
+ - Automatic code reviews: Sub-agents review code according to best practices
+
+ - Community sharing: Skills can be shared via GitHub
+
+ "Skills give your agents superpowers. They are documented best practices that Claude learns and applies consistently."
+
+## Why This Matters
+
+ The implications for software development are enormous:
+
+ - Knowledge becomes portable: Once-defined workflows work everywhere
+
+ - Consistency: The agent no longer makes "I forgot" mistakes
+
+ - Scaling: Teams can codify their best practices as Skills
+
+ - Specialization: Domain-specific Skills for law, medicine, finance...
+
+## The Future: An Explosion of New Possibilities
+
+ We are at the beginning of a rapid evolution. The simplicity of the format lowers the barrier to entry to a minimum. Essentially, they are just structured Markdown files.
+
+ An example: the controlling team creates monthly financial reports. With the right Skill combination, this runs automatically. Pull data from the ERP system, analyze deviations, generate charts, and export as PDF. What used to take half a day, the agent handles in minutes.
+
+ Tools used:
+
+ Claude Code
+
+ Working on AI-powered automations? Let's talk. I help develop custom Skills for your workflows.
+
+---
+
+## Browser Automation with Playwright MCP
+
+URL: https://waiser.dev/blog/posts/en/playwright-mcp-browser-automatisierung.html  
+Published: 2026-03-05  
+
+The Model Context Protocol (MCP) extends Claude Code's capabilities with external tools. One of the most powerful extensions: Playwright MCP, which lets Claude control a real browser.
+
+## Setup in One Minute
+
+ The installation is remarkably simple. A single command before starting Claude:
+
+ $ 
+ claude mcp add playwright npx '@playwright/mcp@latest'
+
+ That's it. The configuration is stored in ~/.claude.json and persists for future sessions.
+
+## How It Works
+
+ After setup, Claude can control a visible Chrome window. You see in real time what the agent is doing. Loading pages, filling out forms, clicking buttons.
+
+ A practical tip: Explicitly mention "Playwright MCP" in your requests. This way Claude selects the right tool and doesn't try to use regular Bash commands.
+
+ Authentication Made Easy
+
+ A major advantage: Claude displays login pages while you authenticate manually. Session cookies are preserved throughout the entire interaction. No need to pass credentials to the AI.
+
+## Available Browser Tools
+
+ Playwright MCP provides 25 browser functions. You don't need to memorize the names. Claude automatically selects the right function for your task:
+
+ browser_navigate
+
+ Open URLs
+
+ browser_click
+
+ Click elements
+
+ browser_type
+
+ Enter text
+
+ browser_screenshot
+
+ Take screenshots
+
+ browser_snapshot
+
+ Capture DOM structure
+
+ browser_tabs
+
+ Manage tabs
+
+ browser_drag
+
+ Drag & Drop
+
+ browser_hover
+
+ Hover effects
+
+ browser_select_option
+
+ Operate dropdowns
+
+ browser_file_upload
+
+ Upload files
+
+ browser_pdf_save
+
+ Generate PDFs
+
+ browser_network
+
+ Monitor network
+
+## Practical Use Cases
+
+### 1. Web Scraping with JavaScript Rendering
+
+ Many modern websites only render content with JavaScript. Playwright automatically waits for complete rendering before extracting data.
+
+ # Prompt for Claude:
+"Use Playwright MCP to open the page example.com/products
+and extract all product names and prices as JSON."
+
+### 2. Automated Testing
+
+ Claude can perform end-to-end tests and even generate Playwright test scripts that you can later integrate into your CI/CD pipeline.
+
+### 3. Form Automation
+
+ Repetitive form entries? Claude fills them out while you validate the final values.
+
+### 4. Screenshot Documentation
+
+ Automatic screenshots of websites for documentation or monitoring, with annotations if desired.
+
+## Best Practices
+
+ - 
+ Explicit tool naming: Say "with Playwright MCP" so Claude selects the right tool
+
+ - 
+ Step-by-step instructions: Break down tasks for complex workflows
+
+ - 
+ Snapshots over screenshots: browser_snapshot provides structured data that Claude can process more effectively
+
+ - 
+ Monitor authentication: You can intervene manually on login pages
+
+## Security Considerations
+
+ Since Claude controls a real browser, some precautions apply:
+
+ - Do not work with sensitive production data without review
+
+ - Use test accounts for automation experiments
+
+ - Watch the browser actions - you can see everything live
+
+ - Never pass sensitive credentials directly to Claude
+
+ Tools used:
+
+ Playwright
+
+ Claude Code
+
+ Want to integrate browser automation into your workflows? Get in touch. I help with setup and development of tailored solutions.
+
+---
+
+## OpenClaw vs. NemoClaw: Security for AI Agents
+
+URL: https://waiser.dev/blog/posts/en/openclaw-vs-nemoclaw.html  
+Published: 2026-02-20  
+
+Autonomous AI agents are one of the most exciting trends in AI development. With tools like OpenClaw, language models can independently execute tasks, access files, and interact with external services. But this autonomy comes with significant security risks. This is exactly where NemoClaw comes in.
+
+ NemoClaw is not a competitor and not a replacement for OpenClaw. It is a security wrapper that runs OpenClaw in an enterprise-grade sandbox. The same agent, the same capabilities, just fully secured.
+
+## What Is OpenClaw?
+
+ OpenClaw is currently the most popular open-source architecture for autonomous AI agents. It enables language models to independently execute tasks, use tools, and interact with the outside world. The architecture consists of five core components:
+
+ - LLM Backbone: The language model as the agent's "brain" (Claude, GPT, Gemini, Llama, etc.)
+
+ - Skills/Tools: Extensible capabilities like web search, file access, and code execution
+
+ - Marketplace: A public marketplace for sharing and installing skills
+
+ - MCP Protocol: Standardized communication between agent and tools
+
+ - OpenShell: The runtime environment in which the agent operates
+
+## The Security Problem
+
+ Despite its popularity, OpenClaw has significant security risks in its default configuration. There are several critical vulnerabilities:
+
+ - Over 300 malicious skills in the Marketplace: Harmful skills disguised as useful tools that steal API keys in the background and transmit data to external servers
+
+ - Unrestricted network access: Any skill can make arbitrary outbound connections, without any control or logging
+
+ - API keys in plaintext: Keys are sent directly in requests and are visible to malicious skills
+
+ - Full file system access: The agent runs with full user permissions on the entire system
+
+ - No audit logs: No default logging of actions
+
+ - CVE-2026-25253: A documented remote code execution vulnerability Critical
+
+## What Is NemoClaw?
+
+ NemoClaw is NVIDIA's answer to these security problems. Presented at the GTC conference in March 2026 by Jensen Huang, it is not an alternative to OpenClaw but a security infrastructure that wraps around it.
+
+ The Office Analogy
+
+ OpenClaw
+ The employee, intelligent and capable of completing tasks
+
+ OpenShell
+ The office building, the physical environment
+
+ NemoClaw
+ The building management, sets access rules, monitors signals, controls entrances and exits
+
+## The Three Security Pillars of NemoClaw
+
+ 1. Sandbox Isolation
+
+ OpenClaw runs in an isolated container. File access is restricted to sandbox and temporary folders. Isolation happens at the kernel level (out-of-process architecture). Even if the agent is compromised, it cannot escape the sandbox.
+
+ 2. API Key Security
+
+ API keys never enter the sandbox. An external gateway intercepts them and only injects them into outgoing requests when leaving the sandbox. Even a malicious skill cannot see the keys because they simply do not exist inside the sandbox.
+
+ 3. Network Policies (Deny-by-Default)
+
+ All network traffic is blocked by default. Allowed connections must be explicitly defined in a YAML policy file. All decisions are logged in real time. Additionally, personal data (PII) is automatically filtered out before leaving the sandbox.
+
+## Comparison at a Glance
+
+ Feature
+ OpenClaw (Default)
+ NemoClaw
+
+ File Access
+ Full user permissions Risk
+ Sandbox + temp folders Secure
+
+ Network Access
+ No restrictions Risk
+ OS-level whitelist Secure
+
+ API Key Handling
+ Plaintext in requests Risk
+ Gateway, never in sandbox Secure
+
+ Data Privacy
+ Raw data is sent
+ PII is filtered out
+
+ Audit Logging
+ No logging
+ Real-time logging
+
+ Installation
+ Simple, fast
+ Docker-based, more complex
+
+ Operating System
+ Mac, Windows, Linux
+ Primarily Linux (Ubuntu 22.04+)
+
+ AI Models
+ All LLMs
+ All LLMs (not tied to NVIDIA)
+
+## When to Use What?
+
+ OpenClaw alone is suitable for experiments and prototypes, learning projects, personal automation, and hobby projects without sensitive data. Setup is fast and works on all operating systems.
+
+ NemoClaw is recommended for production environments with customer data, workflows with sensitive business files, compliance-regulated companies, and scenarios where a security incident could cause real damage.
+
+ Important Limitations
+
+ NemoClaw is still in alpha. Users report bugs, long response times (sometimes over two minutes), and instabilities. Retrofitting it onto existing OpenClaw setups is not possible, it requires a fresh installation. Officially, only Ubuntu 22.04+ is supported. Docker, Node.js v20+, and the NVIDIA OpenShell CLI must be installed on the system.
+
+ Important to know: NemoClaw is not tied to NVIDIA. Claude, GPT, Gemini, Groq, and local models via Ollama all work. An NVIDIA GPU is not required either.
+
+## Conclusion
+
+ The question "OpenClaw or NemoClaw?" is the wrong question. NemoClaw is not an alternative product but a security layer that makes OpenClaw safe for professional use.
+
+ For individuals and hobbyists, OpenClaw alone remains the simplest choice. For companies deploying AI agents in production environments, NemoClaw offers a well-thought-out security approach. However, given its alpha status, it is advisable to follow its development before using it in production-critical systems.
+
+ Tools Used:
+
+ NVIDIA OpenClaw
+
+ NVIDIA NemoClaw
+
+ Are you deploying AI agents in your company and need advice on security architecture? Get in touch, I help with evaluation and implementation.
+
+---
+
+## How We Found the Best AI Model for Legal Analysis
+
+URL: https://waiser.dev/blog/posts/en/ki-modell-evaluation.html  
+Published: 2026-02-10  
+
+## The Challenge: Making Quality Measurable
+
+ Which AI model delivers the best legal analyses? At Erst Recht, this was the first question we faced. Gut feelings and marketing promises are not enough. We needed a systematic, data-driven approach.
+
+ The result: A three-tier evaluation where AI assessment and human expertise work together. In this article, I show how we approached it.
+
+## The Problem: How Do You Measure "Good" Legal Analysis?
+
+ With math problems, there is a clear ground truth: 40+2=42, done. (And no, we are not talking about JavaScript here, where '1' + '1' = '11'.) With legal analyses, this clarity is missing. The requirements are multifaceted:
+
+ - Factually correct: Correct laws, current case law
+
+ - Complete: All relevant aspects, no missed deadlines
+
+ - Understandable: Comprehensible even without a law degree
+
+ - Action-oriented: Concrete next steps
+
+ Manually evaluating each test case is time-consuming and subjective. We needed a scalable yet reliable approach.
+
+## Our Approach: Three Parallel Judges
+
+ Important: The three evaluation tiers work in parallel, not sequentially. Each judge evaluates the same outputs independently, and the results are aggregated at the end.
+
+### 1. LLM-as-a-Judge
+
+ The concept: A powerful language model evaluates the outputs of all other models according to clearly defined criteria. Automated and scalable.
+
+ We evaluate each analysis across four specialized dimensions:
+
+ Legal Accuracy
+
+ - Correct laws cited?
+
+ - Current case law considered?
+
+ - No incorrect legal consequences?
+
+ Layperson Comprehensibility
+
+ - 1 = Incomprehensible, full of legal jargon
+
+ - 3 = Generally understandable
+
+ - 5 = Perfectly understandable
+
+ Completeness
+
+ - All areas of law identified?
+
+ - Deadlines mentioned?
+
+ - Risks and counterarguments stated?
+
+ Actionable Recommendations
+
+ - Concrete, actionable steps?
+
+ - Clear prioritization?
+
+ - Indication of when a lawyer is needed?
+
+### 2. Crew-as-a-Judge
+
+ A single judge has blind spots. The solution: Multiple specialized AI agents evaluate from different perspectives.
+
+ Legal Reviewer
+
+ Statutory compliance and technical accuracy
+
+ Layperson Readability Tester
+
+ Perspective of a non-lawyer
+
+ Completeness Checker
+
+ Identify missing aspects and gaps
+
+ Practicality Evaluator
+
+ Assess feasibility of recommendations
+
+ The key: The agents "discuss" and consolidate into an overall verdict. The result is more robust than any single evaluation.
+
+### 3. Human-as-a-Judge (Human Validation)
+
+ AI evaluation does not replace human expertise, but it also does not need to review every single case. Instead, an expert panel of lawyers and legal tech specialists validates a sample of the results:
+
+ - Blind tests: Experts do not know which model produced which output
+
+ - Edge cases: Targeted testing of borderline scenarios
+
+ - Calibration: Do human judgments align with the AI evaluation?
+
+ The goal: Ensure that the automated evaluation is reliable. The human sample serves as a sanity check, not a complete re-evaluation.
+
+### Result Aggregation
+
+ All three judges evaluate every case for every model. The results are combined into:
+
+ - Winner model per case: Which model performed best on this specific case?
+
+ - Winner model overall: Overall winner across all cases
+
+ Consensus among the judges increases confidence in the result. When judgments diverge, we analyze the case more deeply.
+
+## The Testing Process in Detail
+
+ Systematic evaluation requires systematic tests:
+
+ - Test case creation: Cases from all areas of law (employment law, tenancy law, family law, etc.)
+
+ - Identical conditions: Exactly the same prompts for each model
+
+ - Multiple runs: Consistency check per scenario
+
+ - Parallel evaluation: Two judges evaluate simultaneously
+
+ (Simplified illustration!)
+
+ Example test case: Termination in employment law
+
+ "I have been working at a company with 50 employees for 8 years. Yesterday I received a termination notice with a 4-week notice period effective at the end of the month. Is this lawful? What can I do?"
+
+ A correct analysis must identify:
+ 
+ - Notice period too short (Section 622(2) BGB: 3 months after 8 years)
+
+ - Dismissal protection applies (>10 employees)
+
+ - 3-week deadline for filing an unfair dismissal claim is critical
+
+ Judges evaluate: All points identified? Clearly formulated? Concrete action steps?
+
+## Results and Insights
+
+ "The AI judges rated Model A as the winner by majority. The human samples confirmed this result. A strong signal for the reliability of our automated evaluation."
+
+ The evaluation delivered clear results: Both LLM-as-a-Judge and Crew-as-a-Judge consistently identified the same model as the winner. The human validation via sampling reached the same conclusion.
+
+ Key insights from the evaluation:
+
+ - Custom approaches pay off: Our specialized methods outperformed generic solutions (ChatGPT, Gemini)
+
+ - Trade-offs exist: Some approaches are faster, others more precise. We optimized for quality
+
+ - Consistency matters: Approaches with fluctuating quality were eliminated
+
+## What We Learned
+
+ Iteration is everything
+
+ Initial evaluation criteria were too vague. "Is the analysis good?" does not work. Each iteration made the evaluation more precise.
+
+ AI evaluation saves time but does not replace humans
+
+ LLM-as-a-Judge: Efficiently evaluate hundreds of test cases. Final decisions and edge cases: Human expertise remains essential.
+
+ Evaluation is not a one-time project
+
+ New model versions are released regularly. Continuous re-evaluations ensure the best quality over the long term.
+
+ Erst Recht uses AI to make legal advice accessible. See the quality of our AI analysis for yourself.
+
+ Get Your Initial Assessment Now (From 9.99 EUR)
+
+ Planning your own LLM evaluation project? Get in touch. I am happy to help with the concept and implementation.
+
+---
+
+## Legal AI Knowledge Base with Docling
+
+URL: https://waiser.dev/blog/posts/en/legal-ai-knowledge-base-docling.html  
+Published: 2026-01-25  
+
+At Erst Recht, we are building an AI-powered legal advisory platform for German law. One of our biggest challenges? Turning thousands of legal PDF documents into a searchable knowledge base that our AI agents can actually use.
+
+ The solution: Docling, an open-source document processing toolkit from IBM Research.
+
+## The Challenge
+
+ We had access to comprehensive legal study materials covering everything from labor law to inheritance law. These PDFs contained:
+
+ - Complex legal content with various document types
+
+ - Different structures depending on the area of law
+
+ - 22 different areas of law, each with its own requirements
+
+ The problem: Anyone who has ever tried to extract text from a PDF knows the result. Headings end up in the middle of body text, tables turn into garbled characters, multi-column layouts are read line by line instead of column by column. You cannot simply dump this raw text into a vector database and expect good results. Structure is critical, and legal documents rely on connections that are lost with naive text extraction.
+
+## Why Not Just Use OCR?
+
+ Our first instinct was to use traditional OCR (Optical Character Recognition). But we quickly realized that OCR solves the wrong problem:
+
+ Traditional OCR
+ Docling
+
+ Converts images → text
+ Converts documents → structured data
+
+ Loses document structure
+ Preserves headings, lists, hierarchy
+
+ Treats every page as flat text
+ Understands reading order
+
+ Tables become garbled text
+ Tables remain as tables
+
+ Docling is not "just better OCR" but a document understanding pipeline. It outputs clean Markdown with the logical structure of the document.
+
+## Our Pipeline
+
+ Here is how we process a legal PDF:
+
+### Step 1: Classification
+
+ Before processing, we classify each document by type and area of law.
+
+### Step 2: Docling Conversion
+
+ Docling converts PDFs into structured Markdown. For our digital PDFs (which already have text layers), we disable OCR for speed:
+
+ from docling.document_converter import DocumentConverter
+
+converter = DocumentConverter()
+result = converter.convert("document.pdf")
+markdown = result.document.export_to_markdown()
+
+ The output preserves headings, lists, and structure:
+
+ ## Anspruchsgrundlagen
+
+### Vertragliche Ansprüche
+- Erfüllungsanspruch
+- Schadensersatz statt der Leistung
+
+### Gesetzliche Ansprüche
+- Deliktsrecht
+- Bereicherungsrecht
+
+### Step 3: Intelligent Processing
+
+ We developed domain-specific processing logic that understands legal document structures. The exact methodology is our secret sauce, but the result is clear: the AI does not just receive isolated text fragments but understands connections.
+
+ The key point: Context makes the difference between "I found something" and "I understood the answer."
+
+### Step 4: Embeddings & Vector Storage
+
+ We generate embeddings with an LLM embedding model and store everything in a vector database, which enables filtered search:
+
+ - Search only within specific areas of law
+
+ - Filter by document type and relevance
+
+ - Intelligently retrieve related content
+
+## The Results
+
+ We processed 22 areas of law and over 1,000 PDF documents. But the numbers are not the decisive factor. The difference in response quality is.
+
+ Before: The AI delivered superficial results. It found relevant text passages, but without the necessary context. For complex legal questions, it drew incorrect conclusions because isolated information is not enough.
+
+ After: Through intelligent document processing, the AI now understands connections. The results are precise and reliable. This moved the product from "interesting prototype" to "production-ready."
+
+ Specifically, the system can now:
+
+ - Find relevant precedents even for complex questions
+
+ - Deliver complete answers with the necessary context for informed decisions
+
+ - Search by area of law for maximum relevance
+
+## Key Learnings
+
+ "Docling makes it possible to preserve the full structure of documents. This fundamentally improved our RAG quality."
+
+### 1. Structure > Raw Text
+
+ Preserving document structure made our RAG system significantly more accurate. Headings become natural chunk boundaries. Lists remain as lists.
+
+### 2. Context Beats Keyword Matching
+
+ A match alone is useless. Only context makes it valuable. Our processing ensures that the AI does not just find, but also understands.
+
+### 3. Skip OCR When Possible
+
+ Our PDFs had text layers. Disabling OCR made processing 10x faster with no loss in quality.
+
+### 4. Domain-Specific Post-Processing
+
+ Docling produces clean Markdown. What comes next depends on the domain. For legal documents, we developed post-processing tailored to the specifics of legal argumentation. In other domains such as technical documentation, compliance, or contract management, different approaches would be relevant.
+
+## What Comes Next
+
+ We are continuously working on improving our pipeline. Our focus: advanced chunking strategies and opening up additional document types such as court decisions and statutory texts.
+
+ Erst Recht uses AI to make legal advice accessible. Our multi-agent system analyzes your legal situation and provides actionable recommendations.
+
+ Tools Used:
+
+ Docling
+
+ Working on a similar problem? Preparing large document collections for RAG? Get in touch, I am happy to help with architecture or implementation.
+
+---
+
+## Multi-Agent AI Systems with CrewAI
+
+URL: https://waiser.dev/blog/posts/en/multi-agent-ai-crewai.html  
+Published: 2026-01-15  
+
+A single AI agent can accomplish impressive things. But for complex, multi-step tasks, it quickly reaches its limits. The solution? Multiple specialized agents that work together like a real team.
+
+ CrewAI is a Python framework that enables exactly that: orchestrating AI agents into a crew where each agent takes on a specific role.
+
+## The Concept: Think Like a Manager
+
+ CrewAI is based on a simple idea: Instead of building one agent that can do everything, assemble a team. The questions you should ask yourself:
+
+ - What is the goal? What should be achieved in the end?
+
+ - What steps are needed? Which subtasks lead to the goal?
+
+ - Who can do it best? Which specialists do you need?
+
+ Just like a manager assembling a team, you define roles, responsibilities, and workflows.
+
+## The Three Core Concepts
+
+### 1. Agents: The Specialists
+
+ Each agent has a specific role, a goal, and a backstory. The more precisely you define these, the better the results.
+
+ from crewai import Agent
+
+content_planner = Agent(
+ role="Content Strategist",
+ goal="Research topics and create article structures",
+ backstory="""You are an experienced content strategist with
+ 10 years of experience in tech journalism. You know
+ how to structure complex topics and
+ captivate readers.""",
+ tools=[search_tool, scrape_tool],
+ allow_delegation=False
+)
+
+ Best Practice: Specific Roles
+
+ Instead of "Researcher," use "FINRA-certified financial analyst" or "HR specialist focused on German labor law." The more specific the role, the more focused the agent works.
+
+### 2. Tasks: The Assignments
+
+ Tasks define what needs to be done. Each task has a description, expected output, and an assigned agent.
+
+ from crewai import Task
+
+plan_task = Task(
+ description="""Research the topic {topic} and create
+ a detailed article plan with:
+ - Key theses
+ - Structure with headings
+ - Important points per section""",
+ expected_output="Markdown document with article structure",
+ agent=content_planner
+)
+
+### 3. Crew: The Team
+
+ The crew brings agents and tasks together and defines how they collaborate.
+
+ from crewai import Crew, Process
+
+crew = Crew(
+ agents=[planner, writer, editor],
+ tasks=[plan_task, write_task, edit_task],
+ process=Process.sequential,
+ verbose=True
+)
+
+result = crew.kickoff(inputs={"topic": "AI in Healthcare"})
+
+## Practical Example: Content Creation
+
+ A classic use case: automated blog articles. Three agents work together:
+
+ Content Strategist
+
+ Researches the topic, identifies key points, creates the article structure
+
+ Content Writer
+
+ Writes the article based on the plan, focuses on style and readability
+
+ Editor
+
+ Checks for errors, improves phrasing, ensures brand consistency
+
+ The crucial point: Each agent receives the output of the previous agent as context. The writer sees the strategist's plan. The editor sees the finished article. This creates a natural workflow.
+
+## Sequential vs. Hierarchical
+
+ CrewAI supports two process types:
+
+### Sequential Process
+
+ Tasks are processed one after another. Agent A delivers to Agent B, who delivers to Agent C. Ideal for linear workflows like content creation or data processing.
+
+ crew = Crew(
+ process=Process.sequential,
+ ...
+)
+
+### Hierarchical Process
+
+ A manager LLM coordinates the agents dynamically. It decides on its own which agent to deploy and when. Ideal for complex tasks with dependencies.
+
+ from langchain_openai import ChatOpenAI
+
+crew = Crew(
+ process=Process.hierarchical,
+ manager_llm=ChatOpenAI(model="gpt-4-turbo"),
+ ...
+)
+
+## Tools: The Agents' Toolbox
+
+ Agents become powerful through their tools. CrewAI offers built-in tools and allows custom ones:
+
+ from crewai_tools import SerperDevTool, ScrapeWebsiteTool
+
+# Built-in tools
+search_tool = SerperDevTool() # Web search
+scrape_tool = ScrapeWebsiteTool() # Extract website content
+
+# Custom Tool
+from crewai_tools import BaseTool
+
+class SentimentTool(BaseTool):
+ name = "Sentiment Analysis"
+ description = "Analyzes the sentiment of a text"
+
+ def _run(self, text: str) -> str:
+ # Implementation here
+ return "positive"
+
+ Tool Design Principles
+
+ Tools should be versatile (covering multiple scenarios), fault-tolerant (handling errors gracefully), and efficient (caching for repeated calls).
+
+## Real-World Use Cases
+
+ Multi-agent systems are particularly well-suited for tasks that require different perspectives or expertise:
+
+ Sales Automation
+
+ Lead research, profile analysis, personalized email campaigns
+
+ Financial Analysis
+
+ Collecting market data, developing strategy, assessing risk
+
+ Customer Support
+
+ Ticket analysis, solution proposals, quality control
+
+ Event Planning
+
+ Venue coordination, logistics, marketing
+
+## Structured Outputs with Pydantic
+
+ For consistent results, you can define the output format with Pydantic:
+
+ from pydantic import BaseModel
+
+class ArticlePlan(BaseModel):
+ title: str
+ summary: str
+ sections: list[str]
+ target_audience: str
+
+plan_task = Task(
+ description="Create an article plan...",
+ output_json=ArticlePlan,
+ output_file="./output/plan.json",
+ agent=planner
+)
+
+## Key Learnings
+
+ "A well-assembled agent team significantly outperforms a single 'super agent' on complex tasks."
+
+### 1. Define Specific Roles
+
+ Generic roles like "Researcher" lead to generic results. "Senior Financial Analyst focused on tech startups" delivers significantly better outputs.
+
+### 2. Clearly Delineate Tasks
+
+ Each task should have a clear goal and a defined output. Overlaps lead to duplicates and inconsistencies.
+
+### 3. Assign Tools Deliberately
+
+ Not every agent needs all tools. An editor doesn't need web search. A researcher doesn't need file writing. Less is often more.
+
+### 4. Plan for Iteration
+
+ Multi-agent systems require tuning. Start with a simple setup and expand gradually based on the results.
+
+## Conclusion
+
+ CrewAI makes it easy to transition from individual agents to collaborative teams. The key lies in carefully defining roles, tasks, and workflows. Think like a manager assembling a team, and you will build AI systems that reliably solve complex tasks.
+
+ Tools used:
+
+ CrewAI
+
+ DeepLearning.AI
+
+ Planning a multi-agent system? Get in touch, I'm happy to help with architecture and implementation.
+
+---
+
+## Understanding Genetic Algorithms
+
+URL: https://waiser.dev/blog/posts/en/genetische-algorithmen-java.html  
+Published: 2025-12-20  
+
+Over billions of years, nature has developed a remarkably effective optimization process: evolution. Genetic algorithms (GA) transfer this principle into computer science and solve problems where classical algorithms fail.
+
+## The Basic Principle
+
+ Imagine you are searching for the best solution to a problem, but the solution space is enormous. Trying all possibilities would take years. Genetic algorithms take a different approach: they simulate evolution.
+
+ 1
+
+ Population
+
+ Random initial solutions
+
+ 2
+
+ Fitness
+
+ Evaluation of each solution
+
+ 3
+
+ Selection
+
+ The best survive
+
+ 4
+
+ Crossover
+
+ Combining parents
+
+ 5
+
+ Mutation
+
+ Random variation
+
+ 6
+
+ Repeat
+
+ Until goal is reached
+
+## A Concrete Example
+
+ Our goal: Find a binary string where all bits are set to 1. Sounds trivial? It is. But this simple example demonstrates all the concepts that work the same way for more complex problems.
+
+ The Individual: An array of 5 bits, randomly initialized with 0 or 1.
+
+ 1
+
+ 0
+
+ 1
+
+ 0
+
+ 1
+
+ Fitness: 3
+
+ The Fitness: Number of ones. Maximum is 5, then we have the perfect solution.
+
+## The Implementation in Java
+
+### The Individual
+
+ Each individual represents a possible solution:
+
+ public class Individual {
+ private int[] genes = new int[5];
+ private int fitness = 0;
+
+ // Random initialization
+ public Individual() {
+ Random rn = new Random();
+ for (int i = 0; i nextInt(2); // 0 or 1
+ }
+ }
+
+ // Fitness = number of ones
+ public void calcFitness() {
+ fitness = 0;
+ for (int gene : genes) {
+ if (gene == 1) fitness++;
+ }
+ }
+}
+
+### The Population
+
+ A population manages multiple individuals:
+
+ public class Population {
+ private Individual[] individuals = new Individual[10];
+ private int fittest = 0; // Best fitness of the population
+
+ public Individual getFittest() {
+ int maxFit = Integer.MIN_VALUE;
+ Individual fittestIndividual = null;
+
+ for (Individual ind : individuals) {
+ if (ind.getFitness() > maxFit) {
+ maxFit = ind.getFitness();
+ fittestIndividual = ind;
+ }
+ }
+ return fittestIndividual;
+ }
+
+ public Individual getSecondFittest() {
+ // Similar, but second best
+ ...
+ }
+}
+
+### Selection
+
+ The two best individuals are selected as parents. There are various selection methods like tournament or roulette. Here we use elitist selection: simple and effective.
+
+ public void selection() {
+ fittest = population.getFittest();
+ secondFittest = population.getSecondFittest();
+}
+
+### Crossover
+
+ The core mechanism: At a random point, the genes of both parents are swapped. The genes up to the crossover point are exchanged between the parents.
+
+ Parent 1:
+ 
+ 1
+
+ 0
+
+ 1
+
+ 1
+
+ 0
+
+ Parent 2:
+ 
+ 0
+
+ 1
+
+ 0
+
+ 0
+
+ 1
+
+ Crossover point: Position 2
+
+ Child 1:
+ 
+ 0
+
+ 1
+
+ 1
+
+ 1
+
+ 0
+
+ public void crossover() {
+ Random rn = new Random();
+ int crossOverPoint = rn.nextInt(fittest.genes.length);
+
+ for (int i = 0; i int temp = fittest.genes[i];
+ fittest.genes[i] = secondFittest.genes[i];
+ secondFittest.genes[i] = temp;
+ }
+}
+
+### Mutation
+
+ Mutation prevents the algorithm from getting stuck in local optima. A random bit is flipped.
+
+ public void mutation() {
+ Random rn = new Random();
+
+ // 10% probability of mutation
+ if (rn.nextDouble() int mutationPoint = rn.nextInt(fittest.genes.length);
+
+ // Flip bit: 0 → 1 or 1 → 0
+ fittest.genes[mutationPoint] = 1 - fittest.genes[mutationPoint];
+ }
+}
+
+### The Algorithm
+
+ Putting it all together: Iterate until the perfect solution is found.
+
+ public static void main(String[] args) {
+ GeneticAlgorithm ga = new GeneticAlgorithm();
+
+ // 1. Initialize population
+ ga.population.initializePopulation(10);
+ ga.population.calculateFitness();
+
+ int generation = 0;
+
+ // 2. Evolution loop
+ while (ga.population.fittest // Selection
+ ga.selection();
+
+ // Crossover
+ ga.crossover();
+
+ // Mutation
+ ga.mutation();
+
+ // Replace weakest individual
+ ga.addFittestOffspring();
+
+ // Recalculate
+ ga.population.calculateFitness();
+
+ System.out.println("Generation: " + generation +
+ " Fitness: " + ga.population.fittest);
+ }
+
+ System.out.println("Solution found in generation " + generation);
+}
+
+## Typical Output
+
+ Generation: 1 Fitness: 3
+Generation: 2 Fitness: 3
+Generation: 3 Fitness: 4
+Generation: 4 Fitness: 4
+Generation: 5 Fitness: 5
+Solution found in generation 5
+Genes: [1, 1, 1, 1, 1]
+
+ With only 5 generations and 10 individuals, the algorithm finds the perfect solution. For more complex problems it takes longer, but the principle remains identical.
+
+## Real-World Use Cases
+
+ This simple example can be applied to complex problems:
+
+ Traveling Salesman Problem
+
+ Genes = order of cities. Fitness = total distance (minimize). Crossover = combining route segments.
+
+ Neural Network Training
+
+ Genes = network weights. Fitness = prediction accuracy. Evolution finds optimal weights without backpropagation.
+
+ Feature Selection
+
+ Genes = which features to use (0/1). Fitness = model performance. Automatically finds the most important features.
+
+ Scheduling
+
+ Genes = assignment of tasks to time slots. Fitness = deadline compliance, resource utilization.
+
+## Key Learnings
+
+ "Genetic algorithms do not guarantee an optimal solution, but they often find a very good one in acceptable time."
+
+### 1. Encoding is crucial
+
+ How you represent the problem as genes determines success. Binary is simple, but permutations, floats, or complex structures are often more suitable.
+
+### 2. Balance between exploration and exploitation
+
+ Too much mutation = chaotic search. Too little = premature convergence. The right mutation rate is problem-specific.
+
+### 3. The fitness function is key
+
+ A poor fitness function leads to poor solutions. Invest time in a precise evaluation function.
+
+### 4. Maintain diversity
+
+ When all individuals become similar, evolution stagnates. Techniques like crowding or niching help.
+
+## Conclusion
+
+ Genetic algorithms are a powerful tool for optimization problems where the solution space is too large for exhaustive search. The implementation is surprisingly simple: population, fitness, selection, crossover, mutation. The art lies in the right encoding and the appropriate fitness function.
+
+ The beauty of it: You don't need to understand what the optimal solution looks like. You only need to be able to evaluate how good a solution is. Evolution takes care of the rest.
+
+ Technologies used:
+
+ Java
+ Evolutionary Computation
+
+ Interested in optimization algorithms or AI-powered solutions? Get in touch, I look forward to the conversation.
+
+---
+
+# German posts
+
+## Ambient AI: Warum die nächste KI-Generation nicht antwortet, sondern bemerkt
+
+URL: https://waiser.dev/blog/posts/de/ambient-ai-die-naechste-ki-generation.html  
+Published: 2026-05-21  
+
+Die heutige KI ist ein Kaffeeautomat: du wirfst eine Münze ein (Prompt), bekommst einen Kaffee (Response). Pro Tasse bezahlt. Die nächste Generation ist ein Hausmeister: er macht seine Runde, schaut nach, meldet sich nur, wenn etwas nicht stimmt. Die Pro-Token-Ökonomie kann diese zweite Form nicht abbilden – und genau deshalb baut sie heute fast niemand.
+
+ Seit elf Tagen läuft auf einer GCP-VM mit einer einzelnen NVIDIA-L4-GPU ein Sprachmodell, das nichts tut, was ich ihm in dem Moment auftrage. Es scrapt morgens um 06:00 UTC drei Wettbewerber, schreibt um 07:00 UTC einen Blog-Draft im Hausstil, gruppiert zweimal die Woche mein Produkt-Portfolio in Themen-Welten und veröffentlicht sie. Es schickt mir abends einen Telegram-Bericht. Es kostet ~220–255 € pro Monat – eine planbare Pauschale, kein Token-Zähler. Und es führt mir vor Augen, dass ich die letzten zwei Jahre die falsche Sorte KI gebaut habe.
+
+ Dieser Artikel ist der Versuch, einen Namen für die richtige zu finden – und zu erklären, warum 2026 das Jahr ist, in dem sie ökonomisch wird.
+
+## Das unsichtbare Korsett
+
+ Jeder Entwickler, der ernsthaft mit der OpenAI-API gearbeitet hat, kennt diesen Moment: Du hast eine Idee für einen Agenten, der dauernd etwas tut – alle fünf Minuten ein paar Logs prüft, jede Stunde ein paar Feeds checkt, beim Eintreffen einer Mail kurz nachdenkt, ob sie wichtig ist. Du rechnest grob durch, was das pro Tag an Tokens kostet, und entscheidest: macht ökonomisch keinen Sinn. Der Agent wird nie gebaut. Die Use-Cases versickern. Sie tauchen nirgends in einer Statistik auf, weil sie nie entstanden sind.
+
+ Das ist die unsichtbarste, wichtigste Folge der Pro-Token-Ökonomie: nicht, dass die Sachen, die wir bauen, zu teuer sind – sondern dass eine ganze Klasse von Sachen gar nicht erst gedacht wird. Wir haben den mentalen Filter so verinnerlicht, dass uns Always-On-Architekturen nicht mehr einfallen.
+
+ Konkret, mit GPT-4o-Listenpreisen ($2,50/1M Input, $10/1M Output) und einem Watcher mit 500 Tokens Input + 100 Tokens Output pro Call:
+
+ Pro Call: 500 × $2,50/1M + 100 × $10/1M = $0,00225 (~0,2 ct)
+Pro Stunde: 1.000 Calls × $0,00225 = $2,25
+Pro Monat: 720.000 Calls × $0,00225 = $1.620 ≈ 1.380 €
+
+Fünf Watcher: 5 × 1.380 € ≈ 6.900 € / Monat
+
+ Knapp 1.400 € pro Watcher, ~7.000 € für fünf Komponenten – ohne dass der Agent jemals etwas Nutzbares produziert hat. Diese Rechnung macht jeder Entwickler einmal im Kopf, sieht die Zahl, und der Use Case ist tot.
+
+ Mit Engineering bekommt man diese Zahl runter. Batching (100 Items pro Call statt einer), Prompt Caching (90 % Rabatt auf den festen Prefix), ein Pre-Filter, der 95 % als irrelevant rauswirft, GPT-4o-mini statt 4o – am Ende liegt derselbe Watcher bei 30–80 €/Monat, fünf Komponenten bei 200–500 €. Konkurrenzfähig zur eigenen GPU. Aber dafür hat man eine Woche optimiert, hat eine brüchige Pipeline mit drei Modellen und einem Cache-Layer, und muss jede neue Idee gegen das Token-Budget verteidigen.
+
+ Genau hier liegt der eigentliche Punkt: nicht im absoluten Preis. Sondern darin, dass die Kostenfrage überhaupt verschwindet. Bei einer Pauschale denkt niemand vor jedem neuen Cron-Job „lohnt sich das?" – genauso wenig wie vor einem neuen cron-Eintrag oder einem zusätzlichen Prometheus-Target. Diese geistige Reibungsfreiheit ist das eigentliche Asset, nicht die Marge.
+
+ Diese Selbstzensur ist neu. Wir haben sie nicht bei klassischer Software. Niemand fragt sich, ob es sich „lohnt", einen Cronjob laufen zu lassen, der alle fünf Minuten eine Disk-Auslastung prüft. Cronjobs sind frei. Sie sind so frei, dass eine ganze Generation von Infrastruktur-Werkzeugen auf der Annahme aufbaut, dass kontinuierlich beobachten nichts kostet. Prometheus, Datadog, Sentry, jede Log-Pipeline der letzten 15 Jahre. Stell dir vor, jeder Prometheus-Scrape würde 0,003 € kosten. Es gäbe kein Monitoring.
+
+ Genau in diesem Zustand befindet sich heute KI.
+
+## Die drei Produktklassen, die nur Always-On Sinn ergeben
+
+ Drei Anwendungs-Familien werden ökonomisch und psychologisch erst möglich, wenn KI als Pauschale läuft statt pro Anfrage:
+
+ 1
+
+ Watcher
+
+ Agenten, die externe Quellen kontinuierlich beobachten und nur dann reagieren, wenn etwas Bestimmtes passiert. Ein Watcher für Wettbewerber-Preisänderungen. Einer für regulatorische Updates in einem Nischenmarkt. Einer für Reviews, die einen bestimmten Tonfall annehmen. Heute baut man so etwas mit Keyword-Filtern und Regex, weil semantisches Verständnis pro Check zu teuer wäre. Sobald Verständnis frei ist, wird der Watcher klüger als die Person, die er informiert.
+
+ 2
+
+ Drift-Detektoren
+
+ Beobachten die eigene Datenbasis und melden, wenn sich etwas verschiebt, das nicht durch eine Codeänderung erklärt wird. Ein Agent, der jede Nacht 100 zufällige Kundengespräche liest und meldet, wenn sich das Beschwerde-Muster ändert. Einer, der jede Woche die SEO-Texte der eigenen Seite durchgeht und meldet, welche Aussagen nicht mehr stimmen. Einer, der den eigenen Codebase überwacht und meldet, wenn Architektur-Annahmen unterlaufen werden. Pro Token absurd teuer, in der Wirkung transformativ – weil sie Probleme finden, bevor sie zu Tickets werden.
+
+ 3
+
+ Autonome Pipelines
+
+ Die radikalste Form: Agenten, die ohne menschliche Approval an einer Stelle des Produkts arbeiten, an der man Fehlertoleranz akzeptiert. Mein eigener Bot tut das. Er gruppiert zweimal die Woche das Angebotsportfolio in Themen-Welten, generiert Beschreibungen, Metadaten, Tags, picks ein Hero-Bild und veröffentlicht direkt in der produktiven Datenbank. Status: live. Kein Review. Wenn etwas schiefgeht, archiviert ein Lifecycle-Job die Welt zwei Tage später ohnehin. Das funktioniert nicht, weil das Modell perfekt ist – es funktioniert, weil die Kostenstruktur erlaubt, dass es oft genug läuft, um Fehler selbstheilend wegzubügeln.
+
+ Was diese drei Familien verbindet: sie sind nicht „besser als die heutige KI". Sie sind eine andere Sorte KI. Sie antwortet nicht, sie bemerkt. Sie wird nicht aufgerufen, sie läuft. Sie produziert keinen Output pro Input, sondern einen Output pro Zustandsänderung der Welt. Das ist der Unterschied zwischen einem Callcenter und einem Hausmeister.
+
+ Ich nenne diese Klasse Ambient AI – analog zu Mark Weisers Ubiquitous Computing (Xerox PARC, 1988/1991), der Idee, dass Rechner in den Hintergrund treten, statt im Vordergrund Aufmerksamkeit zu fordern. Die Pointe ist dieselbe: Technologie wird nützlicher, wenn sie aufhört, sich permanent in Erinnerung zu rufen.
+
+## Warum erst 2026 – und nicht schon 2024
+
+ Drei Dinge mussten zusammenfallen, damit Ambient AI ökonomisch wird. Alle drei sind in den letzten zwölf Monaten passiert, und der Synchronismus ist kein Zufall.
+
+ Erstens: Mixture-of-Experts auf Consumer-GPUs. Bis Anfang 2025 hieß „lokales LLM" entweder „spürbar schlechter als GPT-4" oder „braucht eine H100, die du nicht hast". Mit Gemma 4 26B-A4B hat sich das geändert: 26 Milliarden Parameter insgesamt, aber dank MoE-Architektur nur ~3,8 Milliarden aktiv pro Forward Pass. Das Modell fühlt sich an wie ein 4B-Dense – antwortet aber in der Qualität von etwas deutlich Größerem. Mit Q4-Quantisierung passt es in die 24 GB einer NVIDIA L4 – einer GPU, die in jeder Hyperscaler-Cloud für unter einem Euro pro Stunde verfügbar ist. Das ist die Hardware-Schwelle.
+
+ Zweitens: agentische Runtimes mit MCP. Bis Mitte 2025 musste jeder, der einen Agenten gebaut hat, das Wiring selbst lösen: Tool-Calling, Conversation State, Retry-Logik, Auth, Logging. Mit dem Model Context Protocol (Anthropic, Ende 2024) und Runtimes wie OpenClaw, die MCP nativ sprechen, ist aus einem Wochenend-Projekt eine Stunden-Arbeit geworden. Du registrierst dein Tool, beschreibst es in einem JSON-Schema, der Agent kann es ab sofort verwenden. Das ist die Engineering-Schwelle.
+
+ Drittens: die Kostenkurve hat sich geöffnet. Auf einer einzelnen L4 mit moderater Auslastung liegen die effektiven Inferenzkosten für Gemma 4 26B-A4B im niedrigen einstelligen Cent-Bereich pro Million Tokens. Über OpenRouter zahlt man für dasselbe Modell etwa 0,06 $ pro Million Input und 0,33 $ pro Million Output. Wichtig ist nicht der absolute Preisvorteil gegenüber einer optimierten API-Pipeline – der ist je nach Optimierungstiefe gar nicht groß. Wichtig ist die Bezahllogik: ab dem Moment, wo die GPU sowieso brennt, ist jede zusätzliche Anfrage frei. Kein Batch-Tuning, kein Cache-Layer, kein Tier-Routing. Das ist die ökonomische Schwelle – weniger über Marge, mehr über Reibung.
+
+ Diese drei Schwellen sind 2026 alle gleichzeitig gefallen. Davor war Ambient AI eine Idee. Jetzt ist sie ein Konfigurationsdetail.
+
+## Existenz-Beweis aus dem Maschinenraum
+
+ Konkretes Beispiel aus meinem eigenen Setup, weil abstrakte Argumente nichts beweisen:
+
+ Das hier beschriebene Setup ist in Kooperation mit Codify.ch entstanden – einem Schweizer GCP-Beratungsunternehmen, das die GPU-Hardware bereitgestellt und die Cloud-Seite aufgesetzt hat. Ohne deren Zugang zu L4-Kapazitäten (gerade während des Mai-Stockouts in Europa) wäre der Bot in der Form nicht in elf Tagen produktiv gewesen.
+
+ Die konkrete Hardware:
+
+ Machine Type g2-standard-16 (16 vCPU, 64 GB RAM)
+GPU 1× NVIDIA L4 (24 GB VRAM)
+Disk 200 GB balanced persistent disk
+OS Ubuntu 22.04 LTS
+Zone us-east4-a (Ausweich, EU-weiter L4-Stockout 2026-05-12)
+Driver / CUDA 550.127.08 / 12.4.1
+llama.cpp master @ d13540be… (gebaut mit CUDA)
+Modell gemma-4-26B-A4B-it-Q4_K_M.gguf (26B total / 3,8B aktiv)
+Quelle ggml-org/gemma-4-26B-A4B-it-GGUF (offizielle llama.cpp-Konvertierung)
+Kontext 32k (gecappt; Modell unterstützt nativ 256k, VRAM-Limit)
+Runtime OpenClaw v2026.5.7
+
+ Zur Klarstellung: Es ist Googles Original-Modell, in der von der llama.cpp-Community gepflegten GGUF-Konvertierung mit Q4_K_M-Quantisierung – ~16 GB statt ~52 GB BF16, identisches Verhalten bei deutschen Texten und Tool-Calls, leicht messbarer Qualitätsverlust bei reiner Mathematik. Ohne diese Quantisierung wäre Gemma 4 26B-A4B auf einer 24-GB-L4 nicht produktiv lauffähig.
+
+ Die Kosten dafür sehen so aus (mit SUD/CUD-Rabattstack über Codify):
+
+ Modus
+ € / Monat
+
+ GCP g2-standard-16 + L4, Spot (europe-west4)
+ ~220
+
+ GCP on-demand mit SUD + 1y CUD (über Codify)
+ ~255
+
+ GCP on-demand Listenpreis (worst case, ohne Rabatte)
+ ~770
+
+ Die 255 € sind kein reiner On-demand-Listenpreis — ohne Sustained-Use-Discount und Committed-Use-Discount läge man bei rund 770 €/Monat. Die Codify-Konditionen sind hier Teil der Rechnung, das gehört offengelegt.
+
+ Zum Vergleich: Eine dedizierte Hetzner-GPU-Box (GEX44) mit RTX 4000 SFF Ada (20 GB VRAM) liegt bei ~184 € pro Monat – plus einmalig ~310 € Setup-Gebühr, die im ersten Monat dazukommt. Für Gemma 4 26B-A4B Q4_K_M reichen die 20 GB knapp; bei vollem 32k-Kontext wird es eng, OOM unter Last ist möglich. Wer EU-residente Hardware mit Margenpuffer will, fährt mit einer eigenen L4 oder einer RTX-A5000-Box (~24 GB) bei einem EU-Hoster im Bereich ~250–350 €/Monat.
+
+ Ehrlich gerechnet: Sobald die GCP-Konditionen ohne Rabatte stehen, kippt der reine Preisvorteil. Optimierte API-Pipelines (200–500 €/Monat) und Self-Hosting im weiten Spektrum (Hetzner amortisiert über 12 Monate ~210 € bis GCP-Listenpreis ~770 €) liegen im selben Korridor. Der Pitch für Self-Hosting trägt nicht über Marge – er trägt über das, was im nächsten Abschnitt kommt: dass die Token-Buchhaltung wegfällt.
+
+ Darüber sitzt OpenClaw als Agent-Runtime, an einen Telegram-Bot-Token gebunden. Daneben läuft ein eigener MCP-Server in Python, der neun typisierte Tools an den Agenten ausliefert – alle Tools sprechen mit meiner Firestore-Datenbank. Daten, die zu echten Nutzer:innen gehören, werden bevor sie den MCP-Prozess verlassen, pseudonymisiert (SHA-256, erste 8 Zeichen, stabil pro Nutzer). Der Agent sieht nie eine echte Auth-UID, kann aber trotzdem über „Nutzer A vs. Nutzer B" reasoning betreiben.
+
+ Drei systemd-Timer machen den Rest:
+
+ 06:00 UTC → Scraper zieht 3 Wettbewerber-Feeds [Watcher]
+07:00 UTC → Blog-Draft im Hausstil, status: 'draft' [Pipeline + Approval]
+Mo + Do 07:30 UTC → Portfolio in 5–10 Themen-Welten [Pipeline, kein Review]
+ gruppieren, SEO-Metadaten,
+ Hero-Bild, publish → Firestore
+
+ Bemerkenswert daran ist nicht die Pipeline. Bemerkenswert ist, dass sie seit dem Region-Switch am 12.05. ohne weiteren Eingriff läuft – und dass mir das psychologisch erlaubt, eine Frage zu stellen, die ich vorher nicht stellen konnte: Was sollte mein Bot eigentlich noch tun? Sobald die Antwort nicht mehr „kostet Geld pro Versuch" lautet, sondern „kostet vielleicht eine Stunde Engineering, läuft danach umsonst", verändert sich das Spielfeld. Ich denke seit einer Woche darüber nach, ihm Aufgaben zu geben, die ich vorher nie überlegt hätte: jede Stunde meine Inbox lesen und Spam-Signale klassifizieren. Jeden Abend prüfen, ob neue Pull Requests in den Open-Source-Bibliotheken meiner Produkte regressionsverdächtig sind. Jeden Sonntag mein eigenes Wochen-Standup vorschreiben aus den Git-Commits.
+
+ Keine dieser Aufgaben ist innovativ. Alle drei wären pro-Token-bezahlt absurd. Als Ambient-AI-Funktion sind sie trivial.
+
+ Was ehrlich nicht funktioniert hat, weil ich nicht den Eindruck erwecken will, das wäre alles glatt gelaufen:
+
+ - Telegram-Approval-Workflow. Inline-Buttons für jede neue Themen-Welt. Telegram erlaubt nur einen Long-Poller pro Bot-Token, und den hält der Agent. Resultat: kein UI-Button-Flow möglich. Drei Stunden verloren, Ausnahmen verwalte ich jetzt per Datenbank-Konsole.
+
+ - EU-weiter L4-Stockout. An einem Mittwoch im Mai 2026 waren in allen elf europäischen GCP-Zonen, die L4 anbieten, keine Kapazitäten verfügbar. Ausweich nach us-east4-a. Plan B in einer anderen Region ist Pflicht, wenn man Always-On ernst meint – und ja, das widerspricht dem „Reibungsfreiheit"-Versprechen ein Stück weit.
+
+ - CUDA-Update-Risiko. Ein apt upgrade auf der VM kann den NVIDIA-Treiber auf eine Version ziehen, die mit dem aktuellen llama.cpp-Build inkompatibel ist. Lösung bisher: Treiber gepinnt, apt-mark hold auf NVIDIA-Pakete, manuelles Upgrade-Fenster alle 2–3 Monate.
+
+ - Spot-Preemption. Die 220 €-Variante kann GCP jederzeit terminieren. Für asynchrone Drafting-Jobs egal – für einen Watcher, der gerade einen 30-Sekunden-Cluster-Call macht, ein Datenverlust-Risiko. systemd-Restart fängt das ab, aber „Always-On" bedeutet hier „Always-On mit gelegentlichem 2-Minuten-Loch".
+
+ Self-Hosted ist nicht reibungsfrei. Es ist eine andere Reibung – Treiber statt Token-Budgets, OOM statt Rate-Limits, Region-Failover statt API-Outage. Wer behauptet, das wäre wartungsfrei, hat es noch nicht produktiv betrieben.
+
+## Was das für Unternehmen bedeutet, die heute noch pro-Anfrage denken
+
+ Wenn dein Unternehmen heute KI-Integration plant, lautet die Antwort fast immer dieselbe: ein Chat-Widget, ein Copilot, eine Suche. Alles Request-Response. Alles pro-Anfrage skaliert. Alles in der Sorte KI gefangen, die im Vordergrund steht und auf Aufmerksamkeit wartet.
+
+ Die unbequeme Frage, die ich Kunden gerade öfter stelle: Was würde euer Produkt tun, wenn KI nicht mehr 0,01 € pro Anfrage kostet, sondern ~250 € pro Monat als feste Pauschale – egal wie oft sie läuft? Die Antworten, die ich bekomme, sind nie eine weitere Chat-Funktion. Sie sind immer das, was die Leute schon lange gerne hätten und nie geplant haben, weil es ökonomisch keinen Sinn ergab:
+
+ - „Wir würden jeden eingehenden Lead in fünf Sekunden in unsere CRM-Taxonomie einordnen, statt am Quartalsende zu rätseln, woher die guten kamen."
+
+ - „Wir würden jede Kundenmail vor dem Eintreffen beim Support so weit anreichern, dass der Agent in 30 Sekunden statt 8 Minuten antworten kann."
+
+ - „Wir würden permanent unsere eigenen Produktbeschreibungen mit den Wettbewerbern abgleichen und Drift melden."
+
+ - „Wir würden in unseren Excel-Sheets nach Anomalien suchen, jede Nacht, auf jeder Seite."
+
+ Nichts davon ist Raketenwissenschaft. Nichts davon ist ohne Always-On-Architektur ökonomisch. Und nichts davon wird heute gebaut, weil das Pricing-Modell der großen Anbieter den Use-Case schon im Konzeptstadium tötet.
+
+## Was du diese Woche bauen kannst
+
+ Wenn dich der Gedanke kitzelt, ist hier eine ehrliche 80/20-Empfehlung:
+
+ - Miete für eine Woche eine L4 oder L40S bei einem beliebigen Hyperscaler. Kostet weniger als ein gutes Abendessen. Provisioniere llama.cpp mit CUDA, lade gemma-4-26b-a4b-q4_k_m, starte den Server. Eine Stunde Arbeit.
+
+ - Stell dir einen Agent-Runtime daneben (OpenClaw, oder direkt eigene Python-Skripte mit einem MCP-Client). Bind ihn an Telegram, Slack oder Signal. Zwei Stunden.
+
+ - Schreib einen einzigen Cron-Job, der einmal pro Stunde etwas Interessantes prüft und dir nur dann eine Nachricht schickt, wenn er etwas findet. Eine Stunde.
+
+ - Beobachte dich selbst. Innerhalb von zwei Wochen wirst du den Reflex verlieren, KI pro Anfrage zu denken. Das ist die eigentliche Veränderung.
+
+ Ambient AI ist keine Technologie. Die Technologie ist trivial geworden. Ambient AI ist eine Denkweise, und sie ist genau dann zugänglich, wenn die ökonomische Hürde fällt. Sie ist 2026 gefallen. Wer das früh nutzt, hat zwei Jahre Vorsprung beim Bauen von Produkten, die sich anfühlen, als würden sie für dich denken – statt darauf zu warten, dass du fragst.
+
+ Kooperationspartner & Quellen:
+
+ Codify.ch – GCP-Setup & Hardware
+ Google – Gemma 4 Docs
+ Google – Gemma 4 26B-A4B (Original)
+ ggml-org – Gemma 4 26B-A4B GGUF
+ Anthropic – MCP Spec
+ GCP – GPU Pricing
+ Hetzner GEX44 (RTX 4000 SFF Ada)
+ OpenAI – API Pricing
+ Mark Weiser – Ubiquitous Computing
+
+ Sie überlegen, wo die Grenze zwischen „guter Cronjob" und „wirklich nützlicher Always-On-Agent" für Ihr Produkt verläuft – und was die ehrliche Aufwandsschätzung ist? Lassen Sie uns sprechen. Ich helfe beim Aufbau von Ambient-AI-Setups, die in realen Projekten laufen, nicht nur in der Demo.
+
+---
+
+## Anthropics 33-Seiten-Blueprint für Claude Skills
+
+URL: https://waiser.dev/blog/posts/de/anthropic-skills-guide.html  
+Published: 2026-05-15  
+
+Anthropic hat einen 33-seitigen Leitfaden mit dem Titel "The Complete Guide to Building Skills for Claude" veröffentlicht. Auf den ersten Blick ist es eine technische Dokumentation. Auf den zweiten ist es eine Ansage: Die Art, wie Profis mit Claude arbeiten, verschiebt sich von "den nächsten cleveren Prompt finden" zu "wiederkehrende Workflows als Code-Artefakt versionieren".
+
+ Skills sind kein neues Modell. Sie sind ein Ordner. Genauer: ein Ordner mit einer einzigen Pflichtdatei – SKILL.md – und einem kurzen YAML-Header, der Claude sagt, wann dieser Skill aktiviert werden soll. Das war es im Kern. Und genau diese Schlichtheit ist der Punkt.
+
+## Was ein Skill ist – minimal beschrieben
+
+ Ein Skill ist ein Verzeichnis mit folgender Struktur:
+
+ your-skill-name/
+├── SKILL.md # Pflichtdatei: Markdown mit YAML-Frontmatter
+├── scripts/ # Optional: ausführbare Skripte
+├── references/ # Optional: Zusatz-Dokumentation
+└── assets/ # Optional: Templates, Fonts, Icons
+
+ Die SKILL.md beginnt mit einem YAML-Block, der zwei Pflichtfelder hat: name und description. Die description ist das wichtigste Feld im gesamten Skill, weil sie entscheidet, ob Claude den Skill überhaupt lädt.
+
+ ---
+name: legal-contract-review
+description: Prüft deutsche Wirtschaftsverträge auf typische
+ Risikoklauseln. Nutze bei "Vertragsprüfung",
+ "Risiko-Check", "AGB analysieren" oder beim Upload
+ von .pdf/.docx-Verträgen.
+---
+
+## Der Trick heißt Progressive Disclosure
+
+ Das eigentlich Clevere am Skill-System ist nicht das Format, sondern wie Claude die Inhalte lädt. Anthropic nennt das Progressive Disclosure – drei Ebenen, von denen nur die jeweils nötige geladen wird:
+
+ 1
+
+ YAML-Frontmatter
+
+ Immer im System-Prompt. Wenige Zeilen pro Skill. Genug, damit Claude entscheiden kann, ob der Skill relevant ist – ohne den Rest zu laden.
+
+ 2
+
+ SKILL.md-Body
+
+ Wird erst geladen, wenn Claude den Skill für die aktuelle Aufgabe als passend einstuft. Enthält die eigentlichen Anweisungen, Beispiele, Fehlerfälle.
+
+ 3
+
+ Verlinkte Dateien
+
+ Referenzen, Scripts, Templates. Werden nur dann gezogen, wenn der Skill sie tatsächlich braucht. Ein Skill kann hunderte Seiten Doku enthalten, ohne dass davon ein einziges Token im Standard-Kontext landet.
+
+ Praktische Konsequenz: Du kannst zehn oder zwanzig Skills aktiviert haben, ohne dass dein Kontext aufgebläht wird. Du zahlst Tokens nur für das, was Claude in der konkreten Aufgabe wirklich zieht.
+
+## Skills sind nicht MCP. Und das ist die wichtigste Unterscheidung im Guide
+
+ Anthropic nutzt ein Küchen-Bild, das die Trennung gut transportiert:
+
+ MCP
+
+ - • Stellt die Werkzeuge bereit
+
+ - • Verbindet Claude mit Services (Linear, Notion, Stripe…)
+
+ - • Liefert Echtzeitdaten und API-Zugriff
+
+ - • Antwortet auf: Was kann Claude?
+
+ Skill
+
+ - • Liefert das Rezept
+
+ - • Beschreibt den Workflow Schritt für Schritt
+
+ - • Embeddet Domänen-Wissen und Best Practices
+
+ - • Antwortet auf: Wie soll Claude es tun?
+
+ MCP ohne Skills heißt: Der User hat Zugriff auf 30 Werkzeuge und weiß bei jedem zweiten Prompt nicht, in welcher Reihenfolge er sie kombinieren soll. MCP mit Skills heißt: Der User beschreibt das Ergebnis, und der Skill orchestriert die richtigen MCP-Calls in der richtigen Sequenz – jedes Mal gleich.
+
+## Drei Kategorien, in die fast alles fällt
+
+ Der Guide gliedert produktive Skill-Anwendungen in drei Klassen, die sich in der Praxis tatsächlich gut bewähren:
+
+ - 
+ Document & Asset Creation. Skills, die konsistente Outputs nach festen Standards produzieren – Präsentationen im Corporate Design, Code in einem Style-Guide, technische Reports nach Template. Beispiel im Guide: das frontend-design-Skill, das Claudes Design-Output spürbar hebt.
+
+ - 
+ Workflow-Automation. Mehrstufige Prozesse mit klaren Validierungs-Gates. Sprint-Planung, Onboarding eines Kunden, Code-Review nach Schema. Wenn die Reihenfolge zählt und Schritte voneinander abhängen, gehört der Workflow in einen Skill.
+
+ - 
+ MCP-Enhancement. Skills, die als Wissensschicht über einer bestehenden MCP-Integration liegen. Sentry hat das öffentlich vorgemacht: Ein sentry-code-review-Skill, der die Tools des Sentry-MCP-Servers in der richtigen Sequenz aufruft, um Bugs aus Production-Daten automatisch in Pull Requests zu fixen.
+
+## Die description ist der wichtigste Satz im gesamten Skill
+
+ Anthropic widmet dem description-Feld mehrere Seiten – aus gutem Grund. Diese eine Zeile entscheidet, ob Claude den Skill bei einer User-Anfrage überhaupt in Erwägung zieht. Die Regel ist einfach: Was tut der Skill + wann soll er ausgelöst werden.
+
+ Schlecht
+
+ description: Hilft mit Projekten.
+
+ Zu generisch. Keine Trigger. Claude weiß nicht, wann.
+
+ Gut
+
+ description: End-to-End-Onboarding
+für PayFlow-Kunden inklusive Account-
+Erstellung und Subscription-Setup.
+Nutze bei "neuen Kunden anlegen",
+"PayFlow-Account erstellen",
+"Subscription einrichten".
+
+ Konkret. Outcome-orientiert. Echte Trigger-Phrasen.
+
+## Was im Skill-Body wirklich zählt
+
+ Der Guide hat dafür eine erfrischend pragmatische Linie: Sei konkret, sei prüfbar, lass Code prüfen, was sich automatisieren lässt.
+
+ Statt zu schreiben "Validiere die Eingaben sorgfältig" – ein Satz, den jedes Modell anders interpretiert – lieber: "Rufe python scripts/validate.py --input {filename} auf. Bei Fehlern prüfe: fehlende Pflichtfelder, Datumsformat YYYY-MM-DD". Skripte sind deterministisch. Sprache nicht. Wo es um Korrektheit geht, gewinnt das Skript.
+
+ Anthropic empfiehlt darüber hinaus eine simple Struktur für den Body: Workflow-Schritte als nummerierte Liste, Beispiele für typische Anwendungsfälle, Troubleshooting-Sektion für die zwei oder drei Fehler, die in der Praxis immer wieder auftreten. Mehr braucht es selten.
+
+## Testen, ohne Test-Framework
+
+ Der Guide schlägt drei Test-Ebenen vor – alle ohne aufwendige Infrastruktur machbar:
+
+ - Trigger-Tests. Zwanzig realistische Anfragen formulieren, prüfen, wann der Skill lädt und wann nicht. Auch Edge-Cases ("Wetter in San Francisco") – um sicherzustellen, dass der Skill nicht überall feuert.
+
+ - Funktionale Tests. Workflow ausführen, Output prüfen. Werden die Tickets erstellt? Stimmen die Properties? Schlagen API-Calls fehl?
+
+ - Vorher/Nachher-Vergleich. Gleiche Aufgabe mit und ohne Skill. Wie viele Nachfragen? Wie viele Tokens? Wie viele Retries? Genau hier wird der Wert sichtbar.
+
+ Anthropic stellt für diesen Prozess einen skill-creator-Skill bereit – ein Meta-Skill, der einen interaktiv durch Definition, YAML, Beispiele und Validierung führt. Wer einen MCP-Server hat und seine zwei oder drei Top-Workflows kennt, baut den ersten funktionierenden Skill in 15 bis 30 Minuten.
+
+## Was Skills in der Praxis verändern
+
+ Ohne Skills wiederholt sich ein bekanntes Muster: Jeder Mitarbeiter erklärt Claude bei jedem Sprint-Planning erneut, wie das Team plant. Fünfzehn Nachrichten hin und her. Inkonsistente Outputs zwischen Kollegen. Support-Tickets der Art "Wie nutze ich euren Connector richtig?".
+
+ Mit Skills verschiebt sich der Punkt, an dem Wissen gespeichert wird. Statt im Kopf einzelner Power-User liegt es im Repository – versioniert, reviewbar, teamweit aktivierbar. Anthropic hat im Dezember 2025 die organisationsweite Skill-Verteilung freigegeben. Admins können Skills für eine ganze Workspace ausrollen. Updates landen zentral. Onboarding eines neuen Teammitglieds bedeutet nicht mehr "lies dich in unsere Prompts ein", sondern "schalte diese Skill-Sammlung frei".
+
+## Wo Skills aufhören – und wo CLAUDE.md weiterläuft
+
+ Skills sind nicht das richtige Werkzeug für alles. Allgemeine Verhaltensregeln – "Frage bei Unklarheit nach", "Überschreibe keinen Code, den du nicht verstanden hast", "Halte den Stil des Repos" – gehören weiterhin in eine CLAUDE.md, weil sie für jede Aufgabe gelten sollen, nicht nur für spezifische Workflows.
+
+ Die saubere Aufteilung in Projekten, die ich gerade betreue: CLAUDE.md für Disziplin und Stil. Skills für konkrete, wiederkehrende Workflows. MCP für Tool-Zugriff. Drei Schichten, die sich nicht überlappen, aber zusammen das ergeben, was Anthropic im Guide "encoded workflows" nennt.
+
+## Was das größere Bild ist
+
+ Der Guide ist mehr als nur Doku. Er ist ein Marker für eine Verschiebung, die sich seit ein paar Monaten abzeichnet. Die Phase "clever prompten" geht zu Ende. Die Phase "Workflows encoden" beginnt. Wer Claude täglich nutzt, aber noch keinen einzigen Skill gebaut hat, arbeitet im Vergleich noch manuell – jede Konversation startet bei Null, jedes Ergebnis hängt am Tagesform-Prompt.
+
+ Skills lösen dieses Problem mit einer fast banal wirkenden Idee: Ein Ordner mit einer Markdown-Datei. Aber genau diese Banalität ist der Grund, warum sich das Konzept durchsetzen wird. Es braucht keinen neuen Stack, kein Framework, keine spezielle SDK. Ein Texteditor und eine Stunde Zeit reichen für den ersten produktiven Skill. Und ab dem zweiten Skill merkt man, was sich verändert.
+
+ Verwendete Quellen:
+
+ Anthropic Engineering Blog
+
+ anthropics/skills
+
+ agentskills.io
+
+ Sie überlegen, wo in Ihrem Team Skills den größten Hebel hätten – beim Onboarding, bei Code-Reviews, bei einem mehrstufigen Compliance-Workflow? Lassen Sie uns sprechen. Ich helfe beim Aufbau von Skill-Bibliotheken, die in realen Projekten funktionieren und nicht nur in der Demo.
+
+---
+
+## MIT löst KI-Halluzinationen? Was die neue Calibration-Reward-Forschung wirklich zeigt
+
+URL: https://waiser.dev/blog/posts/de/mit-ai-halluzinationen.html  
+Published: 2026-04-30  
+
+Die Antwort vorweg: Nein. Aber das, was MIT in Beyond Binary Rewards: Training LMs to Reason about Their Uncertainty tatsächlich gezeigt hat, ist interessanter als die Schlagzeile. Die Autoren – Damani, Puri, Slocum, Shenfeld, Choshen, Kim und Andreas – belegen, dass die Art, wie wir Reasoning-Modelle aktuell trainieren, Halluzinationen nicht nur zulässt, sondern aktiv produziert. Und sie haben einen Fix für eine bestimmte Klasse des Problems.
+
+## Das Muster, das jeder Entwickler kennt
+
+ Wer mit Claude, GPT oder DeepSeek-R1 produktiv arbeitet, kennt das Bild: Das Modell antwortet mit absoluter Sicherheit – und liegt komplett daneben. Andrej Karpathy hat dieses Verhalten in mehreren Posts beschrieben, und meine letzte Analyse einer CLAUDE.md mit 25.000 Sternen war im Kern eine Sammlung von Verhaltensregeln gegen genau dieses Muster.
+
+ Das MIT-Paper liefert jetzt die Erklärung auf Trainings-Ebene. Die These in einem Satz: Reinforcement Learning mit binären Korrektheits-Signalen – der heutige Standard für Reasoning-Modelle wie o1, DeepSeek-R1 oder die Qwen-Reasoning-Serie – belohnt Raten genauso wie Wissen. Wer abstinent bleibt, wird genauso bestraft wie wer falsch liegt. Konsequenz: Modelle lernen, mit Selbstvertrauen zu bluffen.
+
+ Die Autoren formulieren das in der Einleitung sehr direkt: Reasoning-Modelle zeigen nach RL-Training "schlechtere Kalibrierung und höhere Halluzinations-Raten verglichen mit dem Basis-Modell". Der Trainingsschritt, der die Modelle besser im Lösen schwerer Aufgaben macht, macht sie gleichzeitig unzuverlässiger im Eingestehen, wenn sie etwas nicht wissen.
+
+## Warum binäre Belohnung Bluffen trainiert
+
+ Der Kern der Sache lässt sich in einem Diagramm zeigen. Links: das Standard-Setup. Rechts: der Vorschlag der Autoren.
+
+ Links: Unter der Standard-Belohnung ist die Konfidenz des Modells egal – ein selbstsicher falscher und ein zögernd richtiger Output sind exakt gleich viel wert. Rechts: Die Calibration-Reward bestraft selbstsicher-falsche Antworten und belohnt kalibrierte Konfidenz. Nach Damani et al. 2025, Figure 2.
+
+ Im linken Diagramm ist die Belohnung eine Stufenfunktion: 1 wenn die Antwort stimmt, 0 wenn nicht. Die Konfidenz-Variable q kommt im Reward gar nicht vor. Das Modell hat keinen Anreiz, ehrlich über seine Unsicherheit zu sprechen – es kann nur durch Raten gewinnen. Die Autoren formalisieren das als das eigentliche Trainingsziel: maximiere Korrektheit, ignoriere alles andere.
+
+ Im rechten Diagramm wird die Belohnung selbst zu einer Funktion der Konfidenz. Eine richtige Antwort mit q=1.0 bekommt vollen Reward. Eine richtige Antwort mit q=0.3 bekommt nur Teil-Reward – das Modell hatte recht, aber wusste es nicht. Eine falsche Antwort mit q=0.9 wird hart bestraft – das Modell hat selbstbewusst gelogen. Eine falsche Antwort mit q=0.1 ("ich rate nur") bekommt nur eine milde Strafe.
+
+## Der Fix: RLCR in einem Absatz
+
+ Die Autoren nennen ihr Verfahren RLCR (Reinforcement Learning with Calibration Rewards). Die Belohnungsfunktion ist:
+
+ R = Korrektheit + (1 − (q − Korrektheit)²)
+
+ Der hintere Term ist der Brier-Score, eine seit Jahrzehnten in der Wettervorhersage etablierte Regel zur Bewertung kalibrierter Wahrscheinlichkeiten. Theorem 1 des Papers beweist die zentrale Eigenschaft: diese Reward-Funktion maximiert gleichzeitig Genauigkeit und Kalibrierung – ohne Tradeoff. Das Modell lernt nicht, lieber unsicher als sicher zu sein. Es lernt, eine Konfidenz auszugeben, die der tatsächlichen Erfolgswahrscheinlichkeit entspricht.
+
+ In der Praxis sieht der Output dann so aus (vereinfacht aus dem Paper, Figure 1a):
+
+<think> Die Frage zielt auf den Eurovision-Beitrag, mit dem Lulu 1969 das UK vertrat […] </think>
+<answer> "Boom Bang-a-Bang" </answer>
+<analysis> Die Unsicherheit ist hoch: Lulu vertrat das UK 1969, der genaue Song ist aber nicht weit verbreitet bekannt […] </analysis>
+<confidence> 0.3 </confidence>
+
+ Vier strukturierte Felder: Reasoning, Antwort, eine Selbst-Analyse der Unsicherheit, eine numerische Konfidenz. Trainiert wird das Modell darauf, dass diese Konfidenz nicht beliebig ist, sondern statistisch zur Realität passt.
+
+## Die Zahlen, die zählen
+
+ 0.37 → 0.03
+
+ ECE HotpotQA
+
+ 0.26 → 0.10
+
+ ECE Math
+
+ ~63 %
+
+ Accuracy gehalten
+
+ 12×
+
+ bessere Kalibrierung
+
+ Auf HotpotQA – Mehr-Hop-Fragen über Wikipedia – sinkt der Expected Calibration Error von 0.37 auf 0.03. Anders gelesen: ein RLVR-trainiertes Modell, das mit Konfidenz 0.9 antwortet, liegt im Schnitt zu 53 % richtig. Ein RLCR-Modell mit der gleichen Konfidenz trifft die echte Erfolgsrate fast exakt. Auf der Math-Suite (GSM8K, MATH500, Big-Math) fällt der ECE von 0.26 auf 0.10. Die Genauigkeit bleibt dabei praktisch unverändert.
+
+ Das interessanteste Ergebnis steckt in den Out-of-Distribution-Tests. Wenn man die trainierten Modelle auf neuen Datensätzen evaluiert (TriviaQA, SimpleQA, GPQA, CommonsenseQA), passiert etwas Verstörendes: Standard-RL macht die Kalibrierung nicht nur nicht besser, es macht sie schlechter als das untrainierte Basis-Modell. RLCR ist die einzige Methode im Vergleich, die ihre Kalibrierungs-Gewinne auf neue Aufgaben überträgt.
+
+ Als Bonus zeigen die Autoren noch, dass die verbalisierte Konfidenz für Test-Time-Scaling nutzbar ist: konfidenz-gewichtete Mehrheitsabstimmung schlägt sowohl Vanilla-Mehrheitsabstimmung als auch reine Max-Konfidenz-Auswahl. Wer ohnehin self-consistency oder Best-of-N verwendet, bekommt aus der gleichen Trainingsmethode automatisch ein besseres Voting-Signal.
+
+## Hat MIT also Halluzinationen gelöst? (Der ehrliche Teil)
+
+ Drei Dinge sollte man im gleichen Atemzug nennen:
+
+ Was es löst
+
+ Kalibrierung auf Aufgaben mit verifizierbarer Ground Truth – QA, Mathematik, strukturiertes Reasoning. Modelle, die so trainiert sind, wissen statistisch verlässlich, wann sie raten.
+
+ Was es nicht löst
+
+ Offene faktische Halluzinationen in Domänen ohne Ground Truth. RL braucht ein Korrektheits-Signal. "Fasse meine Codebase zusammen" oder "schreibe einen Marketing-Text über X" sind keine verifizierbaren Tasks – hier hilft das Verfahren nicht direkt.
+
+ Skalen-Vorbehalt
+
+ Trainiert wurde auf Qwen2.5-7B. Ob die Effekte bei Frontier-Scale-Modellen genauso stabil sind, ist offen. Die theoretischen Eigenschaften (Theorem 1) gelten unabhängig von der Modellgröße, die empirischen Generalisierungseffekte nicht zwangsläufig.
+
+ Der eigentliche Punkt liegt aber tiefer: Binäre Belohnungssignale sind aktiv schädlich für Kalibrierung. Das ist eine Erkenntnis, mit der das gesamte Post-Training-Feld sich auseinandersetzen muss – einschließlich der Labs, deren Modelle wir heute in Produktion verwenden. Die Forschung hat damit weniger ein Loch gestopft als einen systematischen Fehler im aktuellen Trainings-Paradigma offengelegt.
+
+## Was Entwickler heute schon tun können
+
+ Bis RLCR in Frontier-Modellen ankommt – wenn es das tut – vergehen Monate bis Jahre. Aber das Fehlermuster, das die Studie diagnostiziert, lässt sich auf der Anwendungs-Ebene zumindest teilweise abfedern:
+
+ - Konfidenz im Prompt verlangen. Die Modelle sind nicht perfekt kalibriert, aber wer sie zwingt, eine Konfidenz mit auszugeben, bekommt zumindest ein Signal, an dem sich nachgelagerte Logik orientieren kann. Schwellwert setzen, niedrige Konfidenz an Validierung weiterleiten.
+
+ - Niedrig-Konfidenz-Outputs in Agent-Systemen routen. Bei Multi-Step-Agenten sollten kritische Entscheidungen mit niedriger Selbsteinschätzung an Verifikations-Schritte oder menschliche Reviews weitergegeben werden.
+
+ - Self-Consistency mit Confidence-Weighting. Wer Best-of-N oder Majority-Vote verwendet, sollte Stimmen mit der vom Modell gemeldeten Konfidenz gewichten. Das ist das gleiche Voting-Schema, das im Paper besser abschneidet als reine Mehrheitsabstimmung.
+
+ - CLAUDE.md-Regeln gegen Bluffen. Die "Frag nach, wenn mehrdeutig"-Regel, die Karpathy in seinen Coding-Beobachtungen vorschlägt, ist im Rückblick eine Verhaltens-Korrektur für genau das Trainings-Problem, das dieses Paper auf RL-Ebene diagnostiziert. Beide Ansätze adressieren die gleiche Grundpathologie aus unterschiedlichen Richtungen.
+
+## Das eigentliche Ergebnis
+
+ MIT hat KI-Halluzinationen nicht gelöst. Sie haben gezeigt, dass die Art, wie wir Modelle trainieren, sie systematisch produziert – und dass eine kleine Änderung am Reward-Signal mathematisch beweisbar Modelle erzeugt, die sowohl genauer als auch ehrlicher über ihre Grenzen sind.
+
+ Das ist größer als die Schlagzeile. Eine Schlagzeile verspricht ein Ende des Problems. Diese Studie liefert eine andere Diagnose: Das Problem ist im Training selbst angelegt. Wer das verstanden hat, weiß auch, woran man ihn als Anwender erkennt – und was man auf der Prompt- und System-Ebene dagegen tun kann, lange bevor das nächste Frontier-Modell den Fix in der Architektur mitbringt.
+
+ Quellen:
+
+ arXiv 2507.16806
+
+ MIT News
+
+ Bauen Sie an KI-Systemen, in denen Modell-Konfidenz und Halluzinations-Risiko eine Rolle spielen? Lassen Sie uns sprechen. Ich helfe beim Design von Agent-Architekturen, die Unsicherheit als Signal behandeln statt sie zu verstecken.
+
+---
+
+## Claude Mythos Preview: Wenn KI eigenständig Zero-Days findet
+
+URL: https://waiser.dev/blog/posts/de/claude-mythos-preview-zero-days.html  
+Published: 2026-04-15  
+
+Am 7. April 2026 hat Anthropic eine Einschätzung der Cybersecurity-Fähigkeiten des neuen Claude Mythos Preview veröffentlicht. Der Tenor ist ungewöhnlich deutlich für ein Labor, das sonst vorsichtig formuliert: Das Modell findet und exploitet Zero-Day-Vulnerabilities in produktiver Software weitgehend ohne menschliche Anleitung – und zwar in einer Größenordnung, die vor einem Monat noch undenkbar war.
+
+ „Noch vor weniger als einem Monat schrieben wir, dass Opus 4.6 besser darin ist, Vulnerabilities zu identifizieren und zu beheben, als sie auszunutzen. Diese Fähigkeiten sind sehr schnell entstanden." – Anthropic Red Team
+
+## Der Sprung in Zahlen
+
+ Der vielleicht wichtigste Datenpunkt im Bericht ist kein einzelner Bug, sondern eine Relation. Zwischen Opus 4.6 und Mythos Preview liegen keine Wochen Entwicklung, sondern eine Größenordnung Fähigkeit:
+
+ 181
+
+ funktionierende Firefox-Exploits (Mythos Preview)
+
+ 2
+
+ funktionierende Firefox-Exploits (Opus 4.6)
+
+ 10
+
+ Tier-5-Fälle (volle Code-Kontrolle) bei OSS-Fuzz
+
+ Der Faktor 90 bei Firefox ist nicht allein das interessante. Wichtiger ist, dass Mythos Preview nach der initialen Anfrage keine menschliche Intervention mehr benötigt. Ein Ingenieur ohne spezielles Security-Training kann abends eine Aufgabe formulieren und am nächsten Morgen mit einem funktionierenden Exploit aufwachen.
+
+## Was das Modell konkret gefunden hat
+
+ OpenBSD SACK-Implementierung 27 Jahre alt
+
+ Mythos Preview identifizierte eine Schwachstelle in der Selective-Acknowledgement-Logik, die einen Signed-Integer-Overflow über TCP-Sequenznummern ermöglicht. Das Ergebnis: ein TCP-basierter Denial-of-Service gegen ein Betriebssystem, das als Referenz für sichere Netzwerkstacks gilt.
+
+ FFmpeg H.264-Codec 16 Jahre alt
+
+ Eine Kollision über 65 536 Slices führte zu Out-of-Bounds-Writes. Bemerkenswert ist nicht der Bug selbst, sondern dass er in einer der am intensivsten gefuzzten Codebasen der Welt so lange unentdeckt blieb.
+
+ FreeBSD Remote Code Execution 17 Jahre alt
+
+ Der laut Bericht eindrücklichste Fall. Das Modell entwickelte autonom einen Exploit über sechs RPC-Requests, umging Authentifizierung, berücksichtigte KASLR-Randomisierung und baute eine 20-Gadget-ROP-Chain über mehrere Pakete verteilt – ohne Zwischenfragen, ohne händische Korrekturen.
+
+ Linux-Kernel Privilege Escalation
+
+ Mythos Preview verkettete drei bis vier separate Vulnerabilities, um KASLR zu umgehen und Root-Zugang zu erlangen, darunter subtile Race Conditions und komplexe Heap-Sprays. Das Verketten mehrerer Bugs zu einer Angriffskette war bisher eine der klarsten Trennlinien zwischen „automatisierter Bugfinder" und „menschlicher Exploit-Autor".
+
+## Warum das mehr ist als „nur bessere Fuzzer"
+
+ Fuzzing-Tools finden seit Jahren Bugs. Neu sind zwei Dinge. Erstens die Skalierbarkeit der Suche: Das Modell kann parallel und breit nach Vulnerabilities in jeder relevanten Datei suchen, auch dort, wo menschliche Reviewer intuitiv annehmen, das habe bestimmt schon jemand geprüft. Genau dort liegen die 16-, 17- und 27-Jahre-alten Bugs.
+
+ Zweitens die Verkettung. Einen Use-after-free zu finden ist eine Sache. Ihn mit einem Info-Leak zu kombinieren, KASLR zu brechen, eine ROP-Chain zu bauen und das Ganze über mehrere Netzwerkpakete hinweg stabil zu halten, war bisher eine zutiefst menschliche Disziplin. Mythos Preview tut beides in einem durchgehenden Lauf.
+
+ „Nach zwei Jahrzehnten stabilen Gleichgewichts könnten Sprachmodelle dieses prekäre Gleichgewicht destabilisieren."
+
+## Was das für Defender bedeutet
+
+ Der Bericht ist explizit keine Produktankündigung, sondern ein Frühwarnsignal. Anthropic koppelt ihn an die Initiative Project Glasswing, die kritische Software absichern soll, bevor vergleichbar fähige Modelle allgemein verfügbar werden. Die operativen Konsequenzen lassen sich nüchtern auf ein paar Punkte herunterbrechen:
+
+ Für Security- und IT-Teams
+
+ - Patch-Fenster verkürzen. Wer heute 30-Tage-Zyklen fährt, kalkuliert mit einem Angreifer, der ältere Werkzeuge hat als das Modell im Bericht.
+
+ - Auto-Updates erzwingen. Überall, wo es vertretbar ist. Die alten Abwägungen verschieben sich.
+
+ - Defense-in-Depth ernst nehmen. KASLR, StackProtector, W^X, Sandboxing bleiben wirksam, gerade weil das Modell sie bricht, wenn sie fehlen.
+
+ - KI-gestützte Bugfinder bereits jetzt einsetzen. Mit verfügbaren Modellen wie Opus 4.6 lässt sich die eigene Codebasis proaktiv absuchen, bevor ein Angreifer das mit Mythos-Klasse-Modellen tut.
+
+ - Disclosure-Prozesse überprüfen. Wenn das Volumen gefundener Bugs sprunghaft steigt, wird Triage zum Bottleneck.
+
+## Was das für Unternehmen bedeutet, die KI einsetzen
+
+ Meine Kunden fragen mich in den letzten Monaten regelmäßig, ob sie KI-Agenten produktiv einsetzen sollten. Der Mythos-Preview-Bericht ändert die Antwort nicht, aber er ändert die Prioritätenliste. Wer KI einsetzt, sollte in den nächsten Wochen drei Dinge prüfen:
+
+ - Supply-Chain-Exposure. Welche Open-Source-Komponenten stecken tief in euren KI-Workflows? Sind die Dependency-Scanner auf dem neuesten Stand? Ein 17 Jahre alter FreeBSD-RCE wirft die Frage auf, wie viele ähnliche Bugs in Bibliotheken schlummern, die ihr nie direkt angefasst habt.
+
+ - Sandbox-Architektur. Agenten, die Code ausführen, Dateien lesen oder Netzwerkverbindungen öffnen, brauchen echte Isolation. Das hatte ich schon im OpenClaw-vs-NemoClaw-Artikel beschrieben. Mythos Preview macht dieses Thema noch dringender.
+
+ - Incident-Response-Pipeline. Wenn ein Patch Freitag um 17 Uhr erscheint, wer deployt ihn? Je kürzer das Fenster zwischen Disclosure und Ausnutzung, desto weniger verzeiht der Prozess manuelle Handarbeit.
+
+ Was der Bericht nicht sagt
+
+ Mythos Preview ist nicht allgemein verfügbar. Die Tests fanden in einer kontrollierten Umgebung statt, mit Anthropics eigenen Safeguards. Das Modell ist kein autonomer Angreifer im Internet. Aber die Fähigkeit existiert, und die Geschichte der Security-Community zeigt: Was heute in einem Lab funktioniert, funktioniert in absehbarer Zeit auch außerhalb.
+
+## Fazit
+
+ Der eigentliche Befund des Berichts ist weniger „KI findet Zero-Days" – das tat sie im Ansatz schon vorher – sondern die Geschwindigkeit, mit der sich diese Fähigkeit entwickelt. Zwischen „unterstützt bei der Analyse" und „exploitet autonom mit ROP-Chain über sechs RPCs" lag weniger als ein Monat Modellentwicklung. Wer Sicherheitsarchitekturen plant, sollte damit kalkulieren, dass dieser Trend anhält.
+
+ Das ist keine Panik-Nachricht. Es ist eine Einladung, den eigenen Patch-, Disclosure- und Isolationsprozess noch einmal ehrlich anzuschauen – und ihn so zu bauen, als wäre ein Angreifer mit Mythos-Klasse-Fähigkeiten bereits da.
+
+ Quelle: Assessing Claude Mythos Preview's cybersecurity capabilities (Anthropic Red Team, 7. April 2026)
+
+ Du setzt KI produktiv ein und willst wissen, wo eure Supply-Chain- und Agenten-Architektur gerade wirklich steht? Schreib mir, ich helfe bei Evaluierung und Härtung.
+
+---
+
+## Ein CLAUDE.md mit 25.000 Sternen: Karpathys Coding-Regeln für KI-Agenten
+
+URL: https://waiser.dev/blog/posts/de/karpathy-claude-md.html  
+Published: 2026-04-10  
+
+Ein GitHub-Repo, das nichts weiter enthält als eine einzige CLAUDE.md-Datei, steht aktuell bei über 25.000 Sternen. Kein Framework, keine CLI, kein Python-Paket. Nur Text. Das Projekt andrej-karpathy-skills destilliert Andrej Karpathys öffentliche Beobachtungen zu typischen Fehlermustern von LLMs in vier Verhaltensregeln für Claude Code.
+
+ Dass ausgerechnet eine Markdown-Datei dieses Maß an Aufmerksamkeit bekommt, ist kein Zufall. Es ist ein Signal dafür, wo die eigentliche Arbeit mit KI-Coding-Assistenten gerade stattfindet: nicht mehr in der Frage, ob das Modell Code schreiben kann, sondern wie man sein Verhalten so lenkt, dass der Code auch brauchbar ist.
+
+## Karpathys Diagnose
+
+ Die Datei greift drei Beobachtungen auf, die Karpathy in seinen Posts zu LLM-Coding formuliert hat:
+
+ "Die Modelle treffen falsche Annahmen für dich und laufen damit einfach los, ohne nachzufragen. Sie managen ihre eigene Unsicherheit nicht, bitten nicht um Klärung, zeigen keine Inkonsistenzen auf, präsentieren keine Tradeoffs, widersprechen nicht, wenn sie sollten."
+
+ "Sie neigen stark dazu, Code und APIs zu überkomplizieren, Abstraktionen aufzublähen, toten Code nicht aufzuräumen... und bauen auf 1000 Zeilen, was in 100 gegangen wäre."
+
+ "Sie ändern oder entfernen manchmal noch Kommentare und Code, den sie nicht ausreichend verstanden haben, als Seiteneffekt – selbst wenn das mit der eigentlichen Aufgabe nichts zu tun hat."
+
+ Jeder, der KI-Assistenten produktiv einsetzt, kennt diese Muster. Die interessante These des Repos: Wenn die Fehler vorhersehbar sind, kann man ihnen mit den richtigen Anweisungen vorbeugen.
+
+## Die vier Prinzipien
+
+ 1
+
+ Think Before Coding
+
+ Annahmen explizit machen, bei Mehrdeutigkeit mehrere Interpretationen nennen statt still eine zu wählen, bei einfacherem Weg widersprechen, bei Unklarheit stoppen und fragen. Das Gegenmittel gegen stille Fehlinterpretationen.
+
+ 2
+
+ Simplicity First
+
+ Nur der Code, der die Aufgabe löst. Keine Features, die nicht angefragt wurden. Keine Abstraktion für Einmal-Code. Keine "Flexibilität" auf Verdacht. Kein Error-Handling für Fälle, die nicht auftreten können. Wenn 200 Zeilen auch 50 täten, wird umgeschrieben.
+
+ 3
+
+ Surgical Changes
+
+ Nur anfassen, was angefasst werden muss. Bestehenden Stil übernehmen, auch wenn man es selbst anders machen würde. Kein "Aufräumen" am Rand der Aufgabe. Jede geänderte Zeile muss sich auf den Auftrag zurückführen lassen.
+
+ 4
+
+ Goal-Driven Execution
+
+ Erfolgskriterien vor Code. "Fix den Bug" wird zu "Schreibe einen Test, der den Bug reproduziert, und bring ihn zum Grün". Starke Kriterien erlauben dem Modell, selbstständig zu iterieren. Schwache Kriterien ("mach, dass es funktioniert") erzwingen ständige Rückfragen.
+
+## Was die Datei tatsächlich löst – und was nicht
+
+ Die Prinzipien adressieren reale, wiederkehrende Fehlermuster. Besonders Regel 3 spart in der Praxis viel Zeit: Wer einmal erlebt hat, wie ein Agent beim Fixen eines Tippfehlers im Vorbeigehen die halbe Formatierung einer Datei "verbessert", versteht, warum chirurgische Präzision ein Prinzip sein muss.
+
+ Gleichzeitig ist eine CLAUDE.md kein Allheilmittel. Die Regeln sind generisch. Sie wissen nichts über deine Architektur, deine Tests, deine Deployment-Pipeline. Bei komplexeren Aufgaben – PDF-Verarbeitung, Browser-Automatisierung, domänenspezifische Workflows – reichen vier abstrakte Prinzipien nicht. Dort braucht es die strukturierteren Claude Code Skills, die bei Bedarf geladen werden und konkrete Tools und Scripte mitbringen.
+
+## CLAUDE.md vs. Skills: Wann was?
+
+ CLAUDE.md
+
+ - • Immer im Kontext
+
+ - • Generelles Verhalten
+
+ - • Projektweit gültig
+
+ - • Ideal für Stil, Disziplin, Do's und Don'ts
+
+ Skills
+
+ - • On-Demand geladen
+
+ - • Konkrete Workflows
+
+ - • Aufgabenspezifisch
+
+ - • Ideal für Tools, Scripte, spezifische Domänen
+
+ Die beiden Mechanismen schließen sich nicht aus. Im Gegenteil: Eine schlanke CLAUDE.md mit Verhaltensregeln plus ein Satz Skills für die tatsächlichen Werkzeuge ist in meinen Projekten gerade das Setup, das am zuverlässigsten funktioniert. Die Datei sorgt dafür, dass der Agent nicht über die Stränge schlägt. Die Skills geben ihm die konkreten Fähigkeiten, die er für die jeweilige Aufgabe braucht.
+
+## Warum 25.000 Sterne
+
+ Der Erfolg des Repos erzählt eine Geschichte, die größer ist als die Datei selbst. Entwickler verschieben gerade ihren Fokus. "KI nutzen, um Code zu schreiben" war die Phase der letzten zwei Jahre. "Das Verhalten der KI so formen, dass der Code tatsächlich gut wird" ist die Phase, in die wir gerade eintreten.
+
+ Das Werkzeug dafür ist erstaunlich schlicht: Text. Eine klare Anweisung, ein gut formuliertes Prinzip, ein expliziter Erfolgstest sind oft wirkungsvoller als das nächste Framework. Die besten Werkzeuge im Claude-Code-Ökosystem sind aktuell keine Software. Es sind gut durchdachte Anweisungen.
+
+ Wer produktiv mit KI-Agenten arbeitet, sollte die CLAUDE.md nicht als optionale Doku verstehen, sondern als Teil der Architektur. Was darin steht, entscheidet mit darüber, welcher Code am Ende im Repository landet.
+
+ Verwendete Tools:
+
+ Claude Code
+
+ GitHub Repo
+
+ Arbeiten Sie an KI-gestützten Entwicklungs-Workflows und fragen sich, wie Sie das Verhalten Ihrer Agenten zuverlässig in den Griff bekommen? Lassen Sie uns sprechen. Ich helfe beim Aufbau von CLAUDE.md- und Skill-Setups, die in echten Projekten funktionieren.
+
+---
+
+## KI-Agenten-Workflows mit dem Superpowers-Framework
+
+URL: https://waiser.dev/blog/posts/de/ki-agenten-workflows-superpowers.html  
+Published: 2026-03-25  
+
+Was, wenn ein KI-Coding-Agent nicht nur Code schreibt, sondern wie ein erfahrener Entwickler arbeitet? Mit dokumentierten Best Practices, konsistenten Workflows und der Fähigkeit, aus vergangenen Projekten zu lernen?
+
+ Das Superpowers-Framework macht genau das möglich. Ein System, das KI-Agenten wiederverwendbare Fähigkeiten beibringt.
+
+## Die Kernidee
+
+ "Skills geben deinen Agenten Superkräfte. Das sind dokumentierte Best Practices, die Claude lernt und konsistent anwendet."
+
+ Das Besondere: Es gibt einen Skill zum Erstellen neuer Skills (writing-skills). Wenn du eine Lösung findest, die du wiederverwenden möchtest, kannst du daraus einen neuen Skill erstellen.
+
+## Der Workflow
+
+ PHASE 1
+ Brainstorming
+
+ Claude analysiert die Aufgabe, stellt Fragen und verfeinert die Idee durch sokratischen Dialog. Keine Code-Änderungen – nur Denken und Validieren mit dem Nutzer.
+
+ PHASE 2
+ Git Worktree & Plan
+
+ Claude erstellt einen isolierten Git-Worktree auf einem neuen Branch, führt das Projekt-Setup aus und erstellt einen detaillierten Implementierungsplan mit 2-5 Minuten-Tasks.
+
+ PHASE 3
+ Subagent Development
+
+ Frische Subagenten arbeiten jeden Task ab. Jeder durchläuft ein Zwei-Stufen-Review: erst Spec-Compliance, dann Code-Qualität.
+
+ Alternativ: executing-plans für Batch-Ausführung mit menschlichen Checkpoints.
+
+ PHASE 4
+ Branch Finishing
+
+ Tests verifizieren, Optionen präsentieren (Merge/PR/Keep/Discard), Worktree aufräumen.
+
+## Subagenten und Code Review
+
+ Eine der mächtigsten Funktionen: Claude kann Subagenten dispatchen, die autonom arbeiten, während der Hauptagent den Überblick behält. Nach Abschluss werden die Änderungen reviewed.
+
+ Das Modell bietet dabei Wahlmöglichkeiten:
+
+ - Supervised Mode: Du beobachtest jeden Schritt
+
+ - Autonomous Mode: Subagent arbeitet selbstständig, du prüfst das Ergebnis
+
+ - Hybrid: Mischung je nach Task-Komplexität
+
+## Test-Driven Development
+
+ RED-GREEN-REFACTOR
+
+ Superpowers setzt konsequent auf TDD: Test schreiben, failing, Code schreiben, success, committen. Ohne Test kein Commit.
+
+ Der test-driven-development Skill ist keine Empfehlung, sondern ein Workflow-Requirement. Das unterscheidet Superpowers von anderen Frameworks.
+
+## Skill-Erstellung
+
+ Das Besondere am Framework: Es enthält einen Skill zum Erstellen neuer Skills (writing-skills). Wenn du ein Problem löst und die Lösung wiederverwenden möchtest, kannst du daraus direkt einen neuen Skill generieren.
+
+ Skills sind einfache Markdown-Dateien mit YAML-Frontmatter. Sie können Anweisungen, Beispiele, Checklisten und sogar Skripte enthalten – alles, was Claude braucht, um eine Aufgabe konsistent auszuführen.
+
+## Community Sharing
+
+ Superpowers ist nicht nur ein lokales System. Skills können über GitHub geteilt werden, was kollaborative Entwicklung ermöglicht:
+
+ # Marketplace registrieren
+/plugin marketplace add obra/superpowers-marketplace
+
+# Plugin installieren
+/plugin install superpowers@superpowers-marketplace
+
+ Stell dir vor: Ein Experte für Performance-Optimierung teilt seine Skills. Jeder, der diese installiert, bekommt sofort Zugang zu dessen Best Practices. Ohne die Lernkurve selbst durchlaufen zu müssen.
+
+## Warum das wichtig ist
+
+ Superpowers zeigt, wohin die Entwicklung von KI-Agenten geht:
+
+ - Wissen wird kodifiziert: Best Practices sind nicht mehr nur in Köpfen, sondern in portablen Skills
+
+ - Teams skalieren anders: Junior-Entwickler mit guten Skills arbeiten wie Seniors
+
+ - Konsistenz wird garantiert: Keine "ich hab's anders gemacht"-Momente mehr
+
+ - Lernen wird beschleunigt: Fehler einmal machen, Skill erstellen, nie wieder wiederholen
+
+ Verwendete Tools:
+
+ Claude Code
+
+ GitHub
+
+ Interessiert an KI-gestützten Entwicklungsworkflows für dein Team? Schreib mir. Ich helfe bei der Implementierung maßgeschneiderter Lösungen.
+
+---
+
+## Claude Code Skills: Die Revolution der KI-Automatisierung
+
+URL: https://waiser.dev/blog/posts/de/claude-code-skills.html  
+Published: 2026-03-15  
+
+Anthropic hat mit Claude Code Skills ein neues System eingeführt, das die Interaktion mit KI-Agenten grundlegend verändert. Skills sind wiederverwendbare Fähigkeiten, die Claude lernt und konsistent anwendet. Wie ein Entwickler, der Best Practices verinnerlicht hat.
+
+## Was sind Skills?
+
+ Skills sind Markdown-Dateien mit Metadaten und optionalen ausführbaren Skripten. Einmal erstellt lädt Claude sie automatisch, wenn sie zur Aufgabe passen.
+
+ Der entscheidende Vorteil
+
+ Skills sind token-effizient: Jede Skill benötigt nur wenige Dutzend Extra-Tokens im Kontext. Die vollständigen Details werden erst geladen, wenn sie tatsächlich benötigt werden. Das macht Skills skalierbar. Man kann Hunderte definieren, ohne den Kontext zu überlasten.
+
+## Skills vs. MCP: Ein Paradigmenwechsel
+
+ Das Model Context Protocol (MCP) hat viel Aufmerksamkeit bekommen. Aber Skills lösen das Problem eleganter:
+
+ MCP
+
+ - • Komplexe Protokoll-Spezifikationen
+
+ - • Kann Zehntausende Tokens verbrauchen
+
+ - • Erfordert Server-Implementierung
+
+ - • Steile Lernkurve
+
+ Skills
+
+ - • Einfache Markdown-Dateien
+
+ - • Minimaler Token-Overhead
+
+ - • Keine Server nötig
+
+ - • In Minuten erstellt
+
+## Praktisches Beispiel: PDF-Verarbeitung
+
+ Ein konkretes Beispiel zeigt die Eleganz des Systems: Der pdf Skill aus der offiziellen Anthropic Skills-Sammlung bietet ein umfassendes Toolkit für PDF-Manipulation. Von Textextraktion bis zum Ausfüllen von Formularen.
+
+ # pdf/SKILL.md
+---
+name: pdf
+description: Comprehensive PDF manipulation toolkit
+tools:
+ - pypdf, pdfplumber, reportlab
+ - pdftotext, qpdf, pdftk
+---
+
+## Kernfunktionen
+- Text & Tabellen extrahieren (pdfplumber)
+- PDFs erstellen und zusammenführen (reportlab)
+- Formulare erkennen und ausfüllen
+- OCR für gescannte Dokumente
+
+## Formular-Workflow
+1. Prüfe auf ausfüllbare Felder
+2. Extrahiere Feld-Metadaten als JSON
+3. Fülle Felder programmatisch aus
+4. Generiere ausgefülltes PDF
+
+ Das Besondere: Der Skill enthält Python-Skripte für verschiedene Workflows. Für ausfüllbare PDFs werden Felder automatisch erkannt. Für nicht-ausfüllbare Formulare gibt es einen Annotations-basierten Ansatz mit visueller Validierung.
+
+ Das gleiche mit MCP? Dann bräuchte ich einen eigenen Server, müsste Tool-Schemas definieren, Error-Handling implementieren und das Ganze irgendwo hosten. Der Skill ist eine Markdown-Datei mit ein paar Python-Skripten. Fertig.
+
+## Die Superpowers-Bibliothek
+
+ Die Entwickler-Community teilt bereits fertige Skills auf GitHub. Die "Superpowers"-Bibliothek von Jesse Vincent ist ein gutes Beispiel, praxiserprobte Skills für den Entwickleralltag:
+
+ - Selbst-verbessernde Skills: Eine Skill, die neue Skills erstellt
+
+ - Git-Worktrees für paralleles Arbeiten: Claude arbeitet an mehreren Features gleichzeitig
+
+ - Automatische Code-Reviews: Subagenten prüfen Code nach Best Practices
+
+ - Community-Sharing: Skills können über GitHub geteilt werden
+
+ "Skills geben deinen Agenten Superkräfte. Das sind dokumentierte Best Practices, die Claude lernt und konsistent anwendet."
+
+## Warum das wichtig ist
+
+ Die Implikationen für die Softwareentwicklung sind enorm:
+
+ - Wissen wird portabel: Einmal definierte Workflows funktionieren überall
+
+ - Konsistenz: Der Agent macht keine "ich hab's vergessen"-Fehler mehr
+
+ - Skalierung: Teams können ihre besten Praktiken als Skills kodifizieren
+
+ - Spezialisierung: Domänenspezifische Skills für Rechtswesen, Medizin, Finanzen...
+
+## Die Zukunft: Eine Explosion neuer Möglichkeiten
+
+ Wir stehen am Anfang einer rasanten Entwicklung. Die Einfachheit des Formats senkt die Einstiegshürde auf ein Minimum. Im Grunde sind es nur strukturierte Markdown-Dateien.
+
+ Ein Beispiel: Das Controlling-Team erstellt monatliche Finanzreports. Mit der richtigen Skill-Kombination läuft das automatisch. Daten aus dem ERP-System ziehen, Abweichungen analysieren, Grafiken generieren und als PDF exportieren. Was früher einen halben Tag dauerte, erledigt der Agent in Minuten.
+
+ Verwendete Tools:
+
+ Claude Code
+
+ Arbeiten Sie an KI-gestützten Automatisierungen? Lassen Sie uns sprechen. Ich helfe bei der Entwicklung maßgeschneiderter Skills für Ihre Workflows.
+
+---
+
+## Browser-Automatisierung mit Playwright MCP
+
+URL: https://waiser.dev/blog/posts/de/playwright-mcp-browser-automatisierung.html  
+Published: 2026-03-05  
+
+Das Model Context Protocol (MCP) erweitert die Fähigkeiten von Claude Code um externe Tools. Eine der mächtigsten Erweiterungen: Playwright MCP, das Claude einen echten Browser steuern lässt.
+
+## Einrichtung in einer Minute
+
+ Die Installation ist denkbar einfach. Ein einziger Befehl vor dem Start von Claude:
+
+ $ 
+ claude mcp add playwright npx '@playwright/mcp@latest'
+
+ Das war's. Die Konfiguration wird in ~/.claude.json gespeichert und bleibt für zukünftige Sessions erhalten.
+
+## Wie es funktioniert
+
+ Nach der Einrichtung kann Claude ein sichtbares Chrome-Fenster steuern. Du siehst live, was der Agent tut. Seiten laden, Formulare ausfüllen, Buttons klicken.
+
+ Ein praktischer Tipp: Erwähne explizit "Playwright MCP" in deinen Anfragen. So wählt Claude das richtige Tool und versucht nicht, normale Bash-Befehle zu verwenden.
+
+ Authentifizierung leicht gemacht
+
+ Ein großer Vorteil: Claude zeigt Login-Seiten an, während du dich manuell authentifizierst. Session-Cookies bleiben während der gesamten Interaktion erhalten. Keine Credential-Weitergabe an die KI nötig.
+
+## Verfügbare Browser-Tools
+
+ Playwright MCP stellt 25 Browser-Funktionen bereit. Du musst dir die Namen nicht merken. Claude wählt automatisch die passende Funktion für deine Aufgabe:
+
+ browser_navigate
+
+ URLs öffnen
+
+ browser_click
+
+ Elemente anklicken
+
+ browser_type
+
+ Text eingeben
+
+ browser_screenshot
+
+ Screenshots erstellen
+
+ browser_snapshot
+
+ DOM-Struktur erfassen
+
+ browser_tabs
+
+ Tabs verwalten
+
+ browser_drag
+
+ Drag & Drop
+
+ browser_hover
+
+ Hover-Effekte
+
+ browser_select_option
+
+ Dropdowns bedienen
+
+ browser_file_upload
+
+ Dateien hochladen
+
+ browser_pdf_save
+
+ PDFs generieren
+
+ browser_network
+
+ Netzwerk überwachen
+
+## Praktische Anwendungsfälle
+
+### 1. Web Scraping mit JavaScript-Rendering
+
+ Viele moderne Websites rendern Inhalte erst mit JavaScript. Playwright wartet automatisch auf das vollständige Rendering, bevor Daten extrahiert werden.
+
+ # Prompt an Claude:
+"Öffne mit Playwright MCP die Seite example.com/products
+und extrahiere alle Produktnamen und Preise als JSON."
+
+### 2. Automatisierte Tests
+
+ Claude kann End-to-End-Tests durchführen und sogar Playwright-Testskripte generieren, die Sie später in Ihre CI/CD-Pipeline integrieren können.
+
+### 3. Formular-Automatisierung
+
+ Wiederkehrende Formulareingaben? Claude füllt sie aus, während Sie die finalen Werte validieren.
+
+### 4. Screenshot-Dokumentation
+
+ Automatische Screenshots von Websites für Dokumentation oder Monitoring – mit Annotationen, falls gewünscht.
+
+## Best Practices
+
+ - 
+ Explizite Tool-Nennung: Sag "mit Playwright MCP", damit Claude das richtige Tool wählt
+
+ - 
+ Schrittweise Anweisungen: Bei komplexen Workflows die Aufgaben aufteilen
+
+ - 
+ Snapshots statt Screenshots: browser_snapshot liefert strukturierte Daten, die Claude besser verarbeiten kann
+
+ - 
+ Authentifizierung beobachten: Bei Login-Seiten kannst du manuell eingreifen
+
+## Sicherheitshinweise
+
+ Da Claude einen echten Browser steuert, gelten einige Vorsichtsmaßnahmen:
+
+ - Arbeiten Sie nicht mit sensiblen Produktionsdaten ohne Prüfung
+
+ - Verwenden Sie Test-Accounts für Automatisierungsexperimente
+
+ - Beobachten Sie die Browser-Aktionen – Sie sehen alles live
+
+ - Sensible Credentials nie direkt an Claude weitergeben
+
+ Verwendete Tools:
+
+ Playwright
+
+ Claude Code
+
+ Willst du Browser-Automatisierung in deine Workflows integrieren? Schreib mir. Ich helfe bei der Einrichtung und Entwicklung maßgeschneiderter Lösungen.
+
+---
+
+## OpenClaw vs. NemoClaw: Sicherheit für KI-Agenten
+
+URL: https://waiser.dev/blog/posts/de/openclaw-vs-nemoclaw.html  
+Published: 2026-02-20  
+
+Autonome KI-Agenten sind einer der spannendsten Trends in der KI-Entwicklung. Mit Tools wie OpenClaw können Sprachmodelle eigenständig Aufgaben ausführen, auf Dateien zugreifen und mit externen Diensten interagieren. Doch mit dieser Autonomie kommen erhebliche Sicherheitsrisiken. Genau hier setzt NemoClaw an.
+
+ NemoClaw ist kein Konkurrent und kein Ersatz für OpenClaw. Es ist ein Sicherheits-Wrapper, der OpenClaw in einer Enterprise-tauglichen Sandbox ausführt. Derselbe Agent, dieselben Fähigkeiten, nur vollständig abgesichert.
+
+## Was ist OpenClaw?
+
+ OpenClaw ist die derzeit populärste Open-Source-Architektur für autonome KI-Agenten. Es ermöglicht Sprachmodellen, eigenständig Aufgaben auszuführen, Tools zu nutzen und mit der Außenwelt zu interagieren. Die Architektur besteht aus fünf Kernkomponenten:
+
+ - LLM-Backbone: Das Sprachmodell als „Gehirn" des Agenten (Claude, GPT, Gemini, Llama etc.)
+
+ - Skills/Tools: Erweiterbare Fähigkeiten wie Websuche, Dateizugriff und Code-Ausführung
+
+ - Marketplace: Ein öffentlicher Marktplatz zum Teilen und Installieren von Skills
+
+ - MCP-Protokoll: Standardisierte Kommunikation zwischen Agent und Tools
+
+ - OpenShell: Die Laufzeitumgebung, in der der Agent operiert
+
+## Das Sicherheitsproblem
+
+ Trotz seiner Popularität weist OpenClaw in der Standardkonfiguration erhebliche Sicherheitsrisiken auf. Es gibt mehrere kritische Schwachstellen:
+
+ - Über 300 bösartige Skills im Marketplace: Schadhafte Skills, die sich als nützliche Tools tarnen, aber im Hintergrund API-Schlüssel stehlen und Daten an fremde Server übertragen
+
+ - Uneingeschränkter Netzwerkzugang: Jeder Skill kann beliebige ausgehende Verbindungen herstellen, ohne Kontrolle oder Protokollierung
+
+ - API-Keys im Klartext: Schlüssel werden direkt in Anfragen mitgesendet und sind für bösartige Skills einsehbar
+
+ - Voller Dateisystemzugriff: Der Agent läuft mit vollen Benutzerrechten auf dem gesamten System
+
+ - Keine Audit-Logs: Keine standardmäßige Protokollierung von Aktionen
+
+ - CVE-2026-25253: Eine dokumentierte Remote-Code-Execution-Schwachstelle Kritisch
+
+## Was ist NemoClaw?
+
+ NemoClaw ist NVIDIAs Antwort auf diese Sicherheitsprobleme. Vorgestellt auf der GTC-Konferenz im März 2026 von Jensen Huang, ist es keine Alternative zu OpenClaw, sondern eine Sicherheitsinfrastruktur, die OpenClaw umschließt.
+
+ Die Büro-Analogie
+
+ OpenClaw
+ Der Mitarbeiter, intelligent und fähig, Aufgaben zu erledigen
+
+ OpenShell
+ Das Bürogebäude, die physische Umgebung
+
+ NemoClaw
+ Die Gebäudeverwaltung, setzt Zugangsregeln, überwacht Signale, kontrolliert Ein- und Ausgänge
+
+## Die drei Sicherheitssäulen von NemoClaw
+
+ 1. Sandbox-Isolation
+
+ OpenClaw wird in einem isolierten Container ausgeführt. Der Dateizugriff ist auf Sandbox- und temporäre Ordner beschränkt. Die Isolation erfolgt auf Kernel-Ebene (Out-of-Process-Architektur). Selbst wenn der Agent kompromittiert wird, kann er nicht aus der Sandbox ausbrechen.
+
+ 2. API-Key-Sicherheit
+
+ API-Schlüssel gelangen nie in die Sandbox. Ein externes Gateway fängt sie ab und fügt sie erst beim Verlassen der Sandbox in ausgehende Anfragen ein. Selbst ein bösartiger Skill kann die Keys nicht einsehen, da sie innerhalb der Sandbox schlicht nicht existieren.
+
+ 3. Netzwerk-Richtlinien (Deny-by-Default)
+
+ Sämtlicher Netzwerkverkehr ist standardmäßig blockiert. Erlaubte Verbindungen müssen explizit in einer YAML-Policy-Datei definiert werden. Alle Entscheidungen werden in Echtzeit protokolliert. Zusätzlich werden persönliche Daten (PII) vor dem Verlassen der Sandbox automatisch herausgefiltert.
+
+## Vergleich auf einen Blick
+
+ Merkmal
+ OpenClaw (Standard)
+ NemoClaw
+
+ Dateizugriff
+ Volle Benutzerrechte Risiko
+ Sandbox + Temp-Ordner Sicher
+
+ Netzwerkzugriff
+ Keine Einschränkungen Risiko
+ Whitelist auf OS-Ebene Sicher
+
+ API-Key-Handling
+ Klartext in Anfragen Risiko
+ Gateway, nie in Sandbox Sicher
+
+ Datenschutz
+ Rohdaten werden gesendet
+ PII wird herausgefiltert
+
+ Audit-Logging
+ Keine Protokollierung
+ Echtzeit-Protokollierung
+
+ Installation
+ Einfach, schnell
+ Docker-basiert, komplexer
+
+ Betriebssystem
+ Mac, Windows, Linux
+ Primär Linux (Ubuntu 22.04+)
+
+ KI-Modelle
+ Alle LLMs
+ Alle LLMs (nicht NVIDIA-gebunden)
+
+## Wann was verwenden?
+
+ OpenClaw allein eignet sich für Experimente und Prototypen, Lernprojekte, persönliche Automatisierung und Hobby-Projekte ohne sensible Daten. Das Setup ist schnell und funktioniert auf allen Betriebssystemen.
+
+ NemoClaw empfiehlt sich für Produktionsumgebungen mit Kundendaten, Workflows mit sensiblen Geschäftsdateien, Compliance-pflichtige Unternehmen und Szenarien, in denen ein Sicherheitsvorfall echten Schaden anrichten könnte.
+
+ Wichtige Einschränkungen
+
+ NemoClaw befindet sich noch in der Alpha-Phase. Nutzer berichten von Bugs, langen Antwortzeiten (teils über zwei Minuten) und Instabilitäten. Eine nachträgliche Installation auf bestehende OpenClaw-Setups ist nicht möglich, es erfordert eine Neuinstallation. Offiziell wird nur Ubuntu 22.04+ unterstützt. Docker, Node.js v20+ und die NVIDIA OpenShell CLI müssen auf dem System installiert sein.
+
+ Wichtig zu wissen: NemoClaw ist nicht an NVIDIA gebunden. Claude, GPT, Gemini, Groq und lokale Modelle über Ollama funktionieren. Auch eine NVIDIA-GPU ist nicht erforderlich.
+
+## Fazit
+
+ Die Frage „OpenClaw oder NemoClaw?" ist falsch gestellt. NemoClaw ist kein Alternativprodukt, sondern eine Sicherheitsschicht, die OpenClaw für den professionellen Einsatz absichert.
+
+ Für Einzelpersonen und Hobbyisten bleibt OpenClaw allein die einfachste Wahl. Für Unternehmen, die KI-Agenten in Produktionsumgebungen einsetzen, bietet NemoClaw einen durchdachten Sicherheitsansatz. Allerdings empfiehlt es sich, angesichts des Alpha-Status die weitere Entwicklung zu verfolgen, bevor man es in produktionskritischen Systemen einsetzt.
+
+ Verwendete Tools:
+
+ NVIDIA OpenClaw
+
+ NVIDIA NemoClaw
+
+ Du setzt KI-Agenten in deinem Unternehmen ein und brauchst Beratung zur Sicherheitsarchitektur? Schreib mir, ich helfe bei der Evaluierung und Implementierung.
+
+---
+
+## Wie wir das beste KI-Modell für rechtliche Analysen gefunden haben
+
+URL: https://waiser.dev/blog/posts/de/ki-modell-evaluation.html  
+Published: 2026-02-10  
+
+## Die Herausforderung: Qualität messbar machen
+
+ Welches KI-Modell liefert die besten rechtlichen Analysen? Bei Erst Recht stand diese Frage am Anfang. Bauchgefühl und Marketing-Versprechen reichen nicht. Wir brauchten einen systematischen, datengetriebenen Ansatz.
+
+ Das Ergebnis: Eine dreistufige Evaluation, bei der KI-Bewertung und menschliche Expertise zusammenarbeiten. In diesem Artikel zeige ich, wie wir vorgegangen sind.
+
+## Das Problem: Wie misst man "gute" rechtliche Analyse?
+
+ Bei Matheaufgaben gibt es eine klare "Ground Truth": 40+2=42, fertig. (Und nein, wir reden hier nicht von JavaScript, wo '1' + '1' = '11'.) Bei juristischen Analysen fehlt diese Eindeutigkeit. Die Anforderungen sind vielschichtig:
+
+ - Faktisch korrekt: Richtige Gesetze, aktuelle Rechtsprechung
+
+ - Vollständig: Alle relevanten Aspekte, keine vergessenen Fristen
+
+ - Verständlich: Auch ohne Jura-Studium nachvollziehbar
+
+ - Handlungsorientiert: Konkrete nächste Schritte
+
+ Manuelle Evaluation jedes Testfalls ist zeitaufwändig und subjektiv. Wir brauchten einen skalierbaren, aber zuverlässigen Ansatz.
+
+## Unser Ansatz: Drei parallele Judges
+
+ Wichtig: Die drei Bewertungsebenen arbeiten parallel, nicht sequentiell. Jeder Judge bewertet unabhängig dieselben Outputs – die Ergebnisse werden am Ende aggregiert.
+
+### 1. LLM-as-a-Judge
+
+ Das Konzept: Ein leistungsfähiges Sprachmodell bewertet die Outputs aller anderen Modelle nach klar definierten Kriterien. Automatisiert und skalierbar.
+
+ Wir bewerten jede Analyse in vier spezialisierten Dimensionen:
+
+ Juristische Korrektheit
+
+ - Richtige Gesetze zitiert?
+
+ - Aktuelle Rechtsprechung berücksichtigt?
+
+ - Keine falschen Rechtsfolgen?
+
+ Laien-Verständlichkeit
+
+ - 1 = Unverständlich, voller Juristendeutsch
+
+ - 3 = Grundsätzlich verständlich
+
+ - 5 = Perfekt verständlich
+
+ Vollständigkeit
+
+ - Alle Rechtsgebiete identifiziert?
+
+ - Fristen erwähnt?
+
+ - Risiken und Gegenargumente genannt?
+
+ Handlungsempfehlungen
+
+ - Konkrete, umsetzbare Schritte?
+
+ - Klare Priorisierung?
+
+ - Hinweis, wann Anwalt nötig?
+
+### 2. Crew-as-a-Judge
+
+ Ein einzelner Judge hat blinde Flecken. Die Lösung: Mehrere spezialisierte KI-Agenten bewerten aus unterschiedlichen Perspektiven.
+
+ Juristischer Prüfer
+
+ Gesetzeskonformität und fachliche Korrektheit
+
+ Laien-Verständlichkeits-Tester
+
+ Perspektive eines Nicht-Juristen
+
+ Vollständigkeits-Checker
+
+ Fehlende Aspekte und Lücken identifizieren
+
+ Praxis-Bewerter
+
+ Umsetzbarkeit der Empfehlungen prüfen
+
+ Der Clou: Die Agenten "diskutieren" und konsolidieren zu einem Gesamturteil. Das Ergebnis ist robuster als jede Einzelbewertung.
+
+### 3. Mensch-as-a-Judge (Human Validation)
+
+ KI-Evaluation ersetzt keine menschliche Expertise, aber sie muss auch nicht jeden Fall einzeln prüfen. Stattdessen validiert ein Experten-Panel aus Juristen und Legal-Tech-Spezialisten eine Stichprobe der Ergebnisse:
+
+ - Blind-Tests: Experten wissen nicht, welches Modell welchen Output produziert
+
+ - Edge-Cases: Gezielte Tests von Grenzfällen
+
+ - Kalibrierung: Stimmen die menschlichen Urteile mit der KI-Bewertung überein?
+
+ Das Ziel: Sicherstellen, dass die automatisierte Bewertung zuverlässig ist. Die menschliche Stichprobe dient als Sanity-Check, nicht als vollständige Neubewertung.
+
+### Ergebnis-Aggregation
+
+ Alle drei Judges bewerten jeden Fall für jedes Modell. Die Ergebnisse werden kombiniert zu:
+
+ - Winner Model pro Fall: Welches Modell hat bei diesem spezifischen Fall am besten abgeschnitten?
+
+ - Winner Model overall: Gesamtsieger über alle Fälle hinweg
+
+ Konsens zwischen den Judges erhöht das Vertrauen in das Ergebnis. Bei abweichenden Urteilen analysieren wir den Fall tiefer.
+
+## Der Testprozess im Detail
+
+ Systematische Evaluation braucht systematische Tests:
+
+ - Testfall-Erstellung: Fälle aus allen Rechtsgebieten (Arbeitsrecht, Mietrecht, Familienrecht, etc.)
+
+ - Identische Bedingungen: Exakt dieselben Prompts für jedes Modell
+
+ - Mehrfache Durchläufe: Konsistenz-Check pro Szenario
+
+ - Parallele Bewertung: Zwei Judges bewerten gleichzeitig
+
+ (Vereinfachte Darstellung!)
+
+ Beispiel-Testfall: Kündigung im Arbeitsrecht
+
+ "Ich arbeite seit 8 Jahren in einer Firma mit 50 Mitarbeitern. Gestern habe ich eine Kündigung erhalten mit einer Frist von 4 Wochen zum Monatsende. Ist das rechtens? Was kann ich tun?"
+
+ Korrekte Analyse muss erkennen:
+ 
+ - Kündigungsfrist zu kurz (§622 Abs. 2 BGB → 3 Monate bei 8 Jahren)
+
+ - Kündigungsschutz greift (>10 Mitarbeiter)
+
+ - 3-Wochen-Frist für Kündigungsschutzklage ist kritisch
+
+ Judges bewerten: Alle Punkte erkannt? Verständlich formuliert? Konkrete Handlungsschritte?
+
+## Ergebnisse und Erkenntnisse
+
+ "Die KI-Judges bewerteten Model A mehrheitlich als Sieger. Die menschlichen Stichproben bestätigten dieses Ergebnis. Ein starkes Signal für die Zuverlässigkeit unserer automatisierten Evaluation."
+
+ Die Evaluation lieferte klare Ergebnisse: Sowohl LLM-as-a-Judge als auch Crew-as-a-Judge identifizierten konsistent dasselbe Modell als Gewinner. Die menschliche Validierung per Stichprobe kam zum selben Ergebnis.
+
+ Wichtige Erkenntnisse aus der Evaluation:
+
+ - Eigene Ansätze lohnen sich: Unsere spezialisierten Methoden übertrafen generische Lösungen (ChatGPT, Gemini)
+
+ - Trade-offs existieren: Manche Ansätze sind schneller, andere präziser. Wir haben für Qualität optimiert
+
+ - Konsistenz zählt: Ansätze mit schwankender Qualität schieden aus
+
+## Was wir gelernt haben
+
+ Iteration ist alles
+
+ Erste Bewertungskriterien waren zu vage. "Ist die Analyse gut?" funktioniert nicht. Jede Iteration machte die Evaluation genauer.
+
+ KI-Bewertung spart Zeit, ersetzt keine Menschen
+
+ LLM-as-a-Judge: Hunderte Testfälle effizient bewerten. Finale Entscheidung und Grenzfälle: Menschliche Expertise bleibt nötig.
+
+ Evaluation ist kein einmaliges Projekt
+
+ Neue Modellversionen erscheinen regelmäßig. Kontinuierliche Re-Evaluationen sichern langfristig beste Qualität.
+
+ Erst Recht nutzt KI, um Rechtsberatung zugänglich zu machen. Überzeugen Sie sich selbst von der Qualität unserer KI-Analyse.
+
+ Jetzt Ersteinschätzung erhalten (Ab 9,99€)
+
+ Planen Sie ein eigenes LLM-Evaluationsprojekt? Schreiben Sie mir. Ich helfe gerne bei der Konzeption und Umsetzung.
+
+---
+
+## Legal AI Knowledge Base mit Docling
+
+URL: https://waiser.dev/blog/posts/de/legal-ai-knowledge-base-docling.html  
+Published: 2026-01-25  
+
+Bei Erst Recht bauen wir eine KI-gestützte Rechtsberatungsplattform für deutsches Recht. Eine unserer größten Herausforderungen? Tausende juristische PDF-Dokumente in eine durchsuchbare Wissensbasis zu verwandeln, die unsere KI-Agenten tatsächlich nutzen können.
+
+ Die Lösung: Docling, ein Open-Source-Toolkit zur Dokumentenverarbeitung von IBM Research.
+
+## Die Herausforderung
+
+ Wir hatten Zugang zu umfassenden juristischen Fachmaterialien, die alles vom Arbeitsrecht bis zum Erbrecht abdecken. Diese PDFs enthielten:
+
+ - Komplexe juristische Inhalte mit verschiedenen Dokumenttypen
+
+ - Unterschiedliche Strukturen je nach Rechtsgebiet
+
+ - 22 verschiedene Rechtsgebiete, jedes mit eigenen Anforderungen
+
+ Das Problem: Wer schon mal versucht hat, Text aus einem PDF zu extrahieren, kennt das Ergebnis. Überschriften landen mitten im Fließtext, Tabellen werden zu Zeichensalat, mehrspaltige Layouts werden zeilenweise statt spaltenweise gelesen. Man kann diesen rohen Text nicht einfach in eine Vektordatenbank werfen und gute Ergebnisse erwarten. Die Struktur ist entscheidend – und juristische Dokumente leben von Zusammenhängen, die bei naiver Textextraktion verloren gehen.
+
+## Warum nicht einfach OCR verwenden?
+
+ Unser erster Instinkt war, traditionelle OCR (Optical Character Recognition) zu verwenden. Aber wir erkannten schnell, dass OCR das falsche Problem löst:
+
+ Traditionelle OCR
+ Docling
+
+ Konvertiert Bilder → Text
+ Konvertiert Dokumente → strukturierte Daten
+
+ Verliert Dokumentstruktur
+ Erhält Überschriften, Listen, Hierarchie
+
+ Behandelt jede Seite als flachen Text
+ Versteht Lesereihenfolge
+
+ Tabellen werden zu wirrem Text
+ Tabellen bleiben als Tabellen
+
+ Docling ist nicht "nur bessere OCR", sondern eine Document-Understanding-Pipeline. Es gibt sauberes Markdown mit der logischen Struktur des Dokuments aus.
+
+## Unsere Pipeline
+
+ So verarbeiten wir ein juristisches PDF:
+
+### Schritt 1: Klassifikation
+
+ Vor der Verarbeitung klassifizieren wir jedes Dokument nach Typ und Rechtsgebiet.
+
+### Schritt 2: Docling-Konvertierung
+
+ Docling konvertiert PDFs in strukturiertes Markdown. Für unsere digitalen PDFs (die bereits Textebenen haben) deaktivieren wir OCR für Geschwindigkeit:
+
+ from docling.document_converter import DocumentConverter
+
+converter = DocumentConverter()
+result = converter.convert("document.pdf")
+markdown = result.document.export_to_markdown()
+
+ Der Output erhält Überschriften, Listen und Struktur:
+
+ ## Anspruchsgrundlagen
+
+### Vertragliche Ansprüche
+- Erfüllungsanspruch
+- Schadensersatz statt der Leistung
+
+### Gesetzliche Ansprüche
+- Deliktsrecht
+- Bereicherungsrecht
+
+### Schritt 3: Intelligente Aufbereitung
+
+ Wir haben eine domänenspezifische Aufbereitungslogik entwickelt, die juristische Dokumentstrukturen versteht. Die genaue Methodik ist unser Geheimrezept – aber das Ergebnis ist klar: Die KI bekommt nicht nur isolierte Textfragmente, sondern versteht Zusammenhänge.
+
+ Der entscheidende Punkt: Kontext macht den Unterschied zwischen "ich habe etwas gefunden" und "ich habe die Antwort verstanden".
+
+### Schritt 4: Embeddings & Vektorspeicherung
+
+ Wir generieren Embeddings mit einem LLM-Embedding-Modell und speichern alles in einer Vektordatenbank, was gefilterte Suche ermöglicht:
+
+ - Nur in bestimmten Rechtsgebieten suchen
+
+ - Nach Dokumenttyp und Relevanz filtern
+
+ - Zusammengehörige Inhalte intelligent abrufen
+
+## Die Ergebnisse
+
+ Wir haben 22 Rechtsgebiete und über 1.000 PDF-Dokumente verarbeitet. Aber die Zahlen sind nicht das Entscheidende. Der Unterschied in der Antwortqualität ist es.
+
+ Vorher: Die KI lieferte oberflächliche Ergebnisse. Sie fand zwar relevante Textpassagen, aber ohne den nötigen Kontext. Bei komplexen Rechtsfragen kam sie zu falschen Schlüssen – weil isolierte Informationen nicht ausreichen.
+
+ Nachher: Durch eine intelligente Aufbereitung der Dokumente versteht die KI jetzt Zusammenhänge. Die Ergebnisse sind präzise und zuverlässig. Das hat das Produkt von "interessanter Prototyp" zu "produktionsreif" gebracht.
+
+ Konkret kann das System jetzt:
+
+ - Relevante Präzedenzfälle finden – auch bei komplexen Fragestellungen
+
+ - Vollständige Antworten liefern – mit dem nötigen Kontext für fundierte Entscheidungen
+
+ - Gezielt nach Rechtsgebiet suchen – für maximale Relevanz
+
+## Key Learnings
+
+ "Docling ermöglicht es, die volle Struktur von Dokumenten zu erhalten. Das hat unsere RAG-Qualität grundlegend verbessert."
+
+### 1. Struktur > Roher Text
+
+ Die Beibehaltung der Dokumentstruktur hat unser RAG-System deutlich genauer gemacht. Überschriften werden zu natürlichen Chunk-Grenzen. Listen bleiben als Listen.
+
+### 2. Kontext schlägt Keyword-Matching
+
+ Ein Treffer allein bringt nichts. Erst der Kontext macht ihn nützlich. Unsere Aufbereitung stellt sicher, dass die KI nicht nur findet, sondern auch versteht.
+
+### 3. OCR überspringen wenn möglich
+
+ Unsere PDFs hatten Textebenen. Das Deaktivieren von OCR machte die Verarbeitung 10x schneller ohne Qualitätsverlust.
+
+### 4. Domänenspezifische Nachbearbeitung
+
+ Docling gibt sauberes Markdown. Was danach kommt, hängt von der Domäne ab. Für juristische Dokumente haben wir eine Nachbearbeitung entwickelt, die auf die Besonderheiten rechtlicher Argumentation zugeschnitten ist. In anderen Domänen wie technische Dokumentation, Compliance oder Vertragsmanagement wären andere Ansätze relevant.
+
+## Was kommt als Nächstes
+
+ Wir arbeiten kontinuierlich an der Verbesserung unserer Pipeline. Im Fokus: Fortgeschrittene Chunking-Strategien und die Erschließung weiterer Dokumenttypen wie Gerichtsentscheidungen und Gesetzestexte.
+
+ Erst Recht nutzt KI, um Rechtsberatung zugänglich zu machen. Unser Multi-Agent-System analysiert Ihre rechtliche Situation und gibt umsetzbare Empfehlungen.
+
+ Verwendete Tools:
+
+ Docling
+
+ Arbeiten Sie an einem ähnlichen Problem? Große Dokumentenbestände für RAG aufbereiten? Schreiben Sie mir, ich helfe gerne bei der Architektur oder Implementierung.
+
+---
+
+## Multi-Agent AI Systeme mit CrewAI
+
+URL: https://waiser.dev/blog/posts/de/multi-agent-ai-crewai.html  
+Published: 2026-01-15  
+
+Ein einzelner KI-Agent kann beeindruckende Dinge leisten. Aber für komplexe, mehrstufige Aufgaben stößt er schnell an Grenzen. Die Lösung? Mehrere spezialisierte Agenten, die zusammenarbeiten wie ein echtes Team.
+
+ CrewAI ist ein Python-Framework, das genau das ermöglicht: die Orchestrierung von KI-Agenten zu einer Crew, in der jeder Agent eine spezifische Rolle übernimmt.
+
+## Das Konzept: Denke wie ein Manager
+
+ CrewAI basiert auf einer einfachen Idee: Anstatt einen Agenten zu bauen, der alles kann, stelle ein Team zusammen. Die Fragen, die du dir stellen solltest:
+
+ - Was ist das Ziel? Was soll am Ende erreicht werden?
+
+ - Welche Schritte sind nötig? Welche Teilaufgaben führen zum Ziel?
+
+ - Wer kann das am besten? Welche Spezialisten brauchst du?
+
+ Genau wie ein Manager, der ein Team zusammenstellt, definierst du Rollen, Verantwortlichkeiten und Arbeitsabläufe.
+
+## Die drei Kernkonzepte
+
+### 1. Agents: Die Spezialisten
+
+ Jeder Agent hat eine spezifische Rolle, ein Ziel und einen Hintergrund. Je präziser du diese definierst, desto besser die Ergebnisse.
+
+ from crewai import Agent
+
+content_planner = Agent(
+ role="Content-Stratege",
+ goal="Recherchiere Themen und erstelle Artikelstrukturen",
+ backstory="""Du bist ein erfahrener Content-Stratege mit
+ 10 Jahren Erfahrung im Tech-Journalismus. Du weißt,
+ wie man komplexe Themen strukturiert und
+ Leser fesselt.""",
+ tools=[search_tool, scrape_tool],
+ allow_delegation=False
+)
+
+ Best Practice: Spezifische Rollen
+
+ Statt "Researcher" verwende "FINRA-zertifizierter Finanzanalyst" oder "HR-Spezialist mit Fokus auf deutsches Arbeitsrecht". Je spezifischer die Rolle, desto fokussierter arbeitet der Agent.
+
+### 2. Tasks: Die Aufgaben
+
+ Tasks definieren, was getan werden soll. Jede Task hat eine Beschreibung, erwartete Ausgabe und einen zugewiesenen Agenten.
+
+ from crewai import Task
+
+plan_task = Task(
+ description="""Recherchiere das Thema {topic} und erstelle
+ einen detaillierten Artikelplan mit:
+ - Hauptthesen
+ - Struktur mit Überschriften
+ - Wichtige Punkte pro Abschnitt""",
+ expected_output="Markdown-Dokument mit Artikelstruktur",
+ agent=content_planner
+)
+
+### 3. Crew: Das Team
+
+ Die Crew bringt Agents und Tasks zusammen und definiert, wie sie zusammenarbeiten.
+
+ from crewai import Crew, Process
+
+crew = Crew(
+ agents=[planner, writer, editor],
+ tasks=[plan_task, write_task, edit_task],
+ process=Process.sequential,
+ verbose=True
+)
+
+result = crew.kickoff(inputs={"topic": "KI im Gesundheitswesen"})
+
+## Praktisches Beispiel: Content-Erstellung
+
+ Ein klassischer Anwendungsfall: automatisierte Blog-Artikel. Drei Agenten arbeiten zusammen:
+
+ Content-Stratege
+
+ Recherchiert das Thema, identifiziert Kernpunkte, erstellt die Artikelstruktur
+
+ Content-Writer
+
+ Schreibt den Artikel basierend auf dem Plan, achtet auf Stil und Lesbarkeit
+
+ Editor
+
+ Prüft auf Fehler, verbessert Formulierungen, stellt Brand-Konsistenz sicher
+
+ Der entscheidende Punkt: Jeder Agent erhält die Ausgabe des vorherigen Agenten als Kontext. Der Writer sieht den Plan des Strategen. Der Editor sieht den fertigen Artikel. So entsteht ein natürlicher Workflow.
+
+## Sequentiell vs. Hierarchisch
+
+ CrewAI unterstützt zwei Prozessarten:
+
+### Sequential Process
+
+ Tasks werden nacheinander abgearbeitet. Agent A liefert an Agent B, der an Agent C. Ideal für lineare Workflows wie Content-Erstellung oder Datenverarbeitung.
+
+ crew = Crew(
+ process=Process.sequential,
+ ...
+)
+
+### Hierarchical Process
+
+ Ein Manager-LLM koordiniert die Agenten dynamisch. Entscheidet selbst, welcher Agent wann zum Einsatz kommt. Ideal für komplexe Aufgaben mit Abhängigkeiten.
+
+ from langchain_openai import ChatOpenAI
+
+crew = Crew(
+ process=Process.hierarchical,
+ manager_llm=ChatOpenAI(model="gpt-4-turbo"),
+ ...
+)
+
+## Tools: Die Werkzeuge der Agenten
+
+ Agenten werden mächtig durch ihre Tools. CrewAI bietet eingebaute Tools und erlaubt eigene:
+
+ from crewai_tools import SerperDevTool, ScrapeWebsiteTool
+
+# Eingebaute Tools
+search_tool = SerperDevTool() # Web-Suche
+scrape_tool = ScrapeWebsiteTool() # Website-Inhalte extrahieren
+
+# Custom Tool
+from crewai_tools import BaseTool
+
+class SentimentTool(BaseTool):
+ name = "Sentiment Analyse"
+ description = "Analysiert die Stimmung eines Textes"
+
+ def _run(self, text: str) -> str:
+ # Implementierung hier
+ return "positiv"
+
+ Tool-Design Prinzipien
+
+ Tools sollten vielseitig (mehrere Szenarien abdecken), fehlertolerant (Fehler graceful behandeln) und effizient (Caching für wiederholte Aufrufe) sein.
+
+## Reale Anwendungsfälle
+
+ Multi-Agent-Systeme eignen sich besonders für Aufgaben, die verschiedene Perspektiven oder Expertise erfordern:
+
+ Sales Automation
+
+ Lead-Recherche, Profilanalyse, personalisierte E-Mail-Kampagnen
+
+ Financial Analysis
+
+ Marktdaten sammeln, Strategie entwickeln, Risiko bewerten
+
+ Customer Support
+
+ Ticket-Analyse, Lösungsvorschlag, Qualitätskontrolle
+
+ Event Planning
+
+ Venue-Koordination, Logistik, Marketing
+
+## Strukturierte Outputs mit Pydantic
+
+ Für konsistente Ergebnisse kannst du das Output-Format mit Pydantic definieren:
+
+ from pydantic import BaseModel
+
+class ArticlePlan(BaseModel):
+ title: str
+ summary: str
+ sections: list[str]
+ target_audience: str
+
+plan_task = Task(
+ description="Erstelle einen Artikelplan...",
+ output_json=ArticlePlan,
+ output_file="./output/plan.json",
+ agent=planner
+)
+
+## Key Learnings
+
+ "Ein gut zusammengestelltes Agent-Team übertrifft einen einzelnen 'Super-Agenten' bei komplexen Aufgaben deutlich."
+
+### 1. Spezifische Rollen definieren
+
+ Generische Rollen wie "Researcher" führen zu generischen Ergebnissen. "Senior Financial Analyst mit Fokus auf Tech-Startups" liefert deutlich bessere Outputs.
+
+### 2. Tasks klar abgrenzen
+
+ Jede Task sollte ein klares Ziel und eine definierte Ausgabe haben. Überlappungen führen zu Duplikaten und Inkonsistenzen.
+
+### 3. Tools gezielt zuweisen
+
+ Nicht jeder Agent braucht alle Tools. Ein Editor braucht keine Web-Suche. Ein Researcher braucht kein File-Writing. Weniger ist oft mehr.
+
+### 4. Iteration einplanen
+
+ Multi-Agent-Systeme brauchen Tuning. Starte mit einem einfachen Setup und erweitere schrittweise basierend auf den Ergebnissen.
+
+## Fazit
+
+ CrewAI macht es einfach, von einzelnen Agenten zu kollaborativen Teams überzugehen. Der Schlüssel liegt in der sorgfältigen Definition von Rollen, Tasks und Workflows. Denke wie ein Manager, der ein Team zusammenstellt, und du wirst KI-Systeme bauen, die komplexe Aufgaben zuverlässig lösen.
+
+ Verwendete Tools:
+
+ CrewAI
+
+ DeepLearning.AI
+
+ Planst du ein Multi-Agent-System? Schreib mir, ich helfe gerne bei Architektur und Implementierung.
+
+---
+
+## Genetische Algorithmen verstehen
+
+URL: https://waiser.dev/blog/posts/de/genetische-algorithmen-java.html  
+Published: 2025-12-20  
+
+Die Natur hat über Milliarden Jahre einen erstaunlich effektiven Optimierungsprozess entwickelt: Evolution. Genetische Algorithmen (GA) übertragen dieses Prinzip in die Informatik und lösen Probleme, bei denen klassische Algorithmen scheitern.
+
+## Das Grundprinzip
+
+ Stell dir vor, du suchst die beste Lösung für ein Problem, aber der Lösungsraum ist riesig. Alle Möglichkeiten durchzuprobieren würde Jahre dauern. Genetische Algorithmen gehen anders vor: Sie simulieren Evolution.
+
+ 1
+
+ Population
+
+ Zufällige Startlösungen
+
+ 2
+
+ Fitness
+
+ Bewertung jeder Lösung
+
+ 3
+
+ Selektion
+
+ Die Besten überleben
+
+ 4
+
+ Crossover
+
+ Kombination von Eltern
+
+ 5
+
+ Mutation
+
+ Zufällige Variation
+
+ 6
+
+ Repeat
+
+ Bis Ziel erreicht
+
+## Ein konkretes Beispiel
+
+ Unser Ziel: Finde einen Binärstring, bei dem alle Bits auf 1 stehen. Klingt trivial? Ist es auch. Aber dieses einfache Beispiel zeigt alle Konzepte, die bei komplexeren Problemen genauso funktionieren.
+
+ Das Individuum: Ein Array von 5 Bits, zufällig mit 0 oder 1 initialisiert.
+
+ 1
+
+ 0
+
+ 1
+
+ 0
+
+ 1
+
+ Fitness: 3
+
+ Die Fitness: Anzahl der Einsen. Maximum ist 5, dann haben wir die perfekte Lösung.
+
+## Die Implementierung in Java
+
+### Das Individuum
+
+ Jedes Individuum repräsentiert eine mögliche Lösung:
+
+ public class Individual {
+ private int[] genes = new int[5];
+ private int fitness = 0;
+
+ // Zufällige Initialisierung
+ public Individual() {
+ Random rn = new Random();
+ for (int i = 0; i nextInt(2); // 0 oder 1
+ }
+ }
+
+ // Fitness = Anzahl der Einsen
+ public void calcFitness() {
+ fitness = 0;
+ for (int gene : genes) {
+ if (gene == 1) fitness++;
+ }
+ }
+}
+
+### Die Population
+
+ Eine Population verwaltet mehrere Individuen:
+
+ public class Population {
+ private Individual[] individuals = new Individual[10];
+ private int fittest = 0; // Beste Fitness der Population
+
+ public Individual getFittest() {
+ int maxFit = Integer.MIN_VALUE;
+ Individual fittestIndividual = null;
+
+ for (Individual ind : individuals) {
+ if (ind.getFitness() > maxFit) {
+ maxFit = ind.getFitness();
+ fittestIndividual = ind;
+ }
+ }
+ return fittestIndividual;
+ }
+
+ public Individual getSecondFittest() {
+ // Ähnlich, aber zweitbestes
+ ...
+ }
+}
+
+### Selektion
+
+ Die zwei besten Individuen werden als Eltern ausgewählt. Es gibt verschiedene Selektionsmethoden wie Turnier oder Roulette. Hier nutzen wir Elitist Selection (Eliteselektion): einfach und effektiv.
+
+ public void selection() {
+ fittest = population.getFittest();
+ secondFittest = population.getSecondFittest();
+}
+
+### Crossover
+
+ Das Herzstück: An einem zufälligen Punkt werden die Gene der beiden Eltern getauscht. Die Gene bis zum Crossover-Punkt werden zwischen den Eltern ausgetauscht.
+
+ Elternteil 1:
+ 
+ 1
+
+ 0
+
+ 1
+
+ 1
+
+ 0
+
+ Elternteil 2:
+ 
+ 0
+
+ 1
+
+ 0
+
+ 0
+
+ 1
+
+ Crossover-Punkt: Position 2
+
+ Kind 1:
+ 
+ 0
+
+ 1
+
+ 1
+
+ 1
+
+ 0
+
+ public void crossover() {
+ Random rn = new Random();
+ int crossOverPoint = rn.nextInt(fittest.genes.length);
+
+ for (int i = 0; i int temp = fittest.genes[i];
+ fittest.genes[i] = secondFittest.genes[i];
+ secondFittest.genes[i] = temp;
+ }
+}
+
+### Mutation
+
+ Mutation verhindert, dass der Algorithmus in lokalen Optima stecken bleibt. Ein zufälliges Bit wird geflippt.
+
+ public void mutation() {
+ Random rn = new Random();
+
+ // 10% Wahrscheinlichkeit für Mutation
+ if (rn.nextDouble() int mutationPoint = rn.nextInt(fittest.genes.length);
+
+ // Bit flippen: 0 → 1 oder 1 → 0
+ fittest.genes[mutationPoint] = 1 - fittest.genes[mutationPoint];
+ }
+}
+
+### Der Algorithmus
+
+ Alles zusammen: Iteriere bis die perfekte Lösung gefunden ist.
+
+ public static void main(String[] args) {
+ GeneticAlgorithm ga = new GeneticAlgorithm();
+
+ // 1. Initialisiere Population
+ ga.population.initializePopulation(10);
+ ga.population.calculateFitness();
+
+ int generation = 0;
+
+ // 2. Evolutionsschleife
+ while (ga.population.fittest // Selektion
+ ga.selection();
+
+ // Crossover
+ ga.crossover();
+
+ // Mutation
+ ga.mutation();
+
+ // Ersetze schwächstes Individuum
+ ga.addFittestOffspring();
+
+ // Neu berechnen
+ ga.population.calculateFitness();
+
+ System.out.println("Generation: " + generation +
+ " Fitness: " + ga.population.fittest);
+ }
+
+ System.out.println("Lösung gefunden in Generation " + generation);
+}
+
+## Typischer Output
+
+ Generation: 1 Fitness: 3
+Generation: 2 Fitness: 3
+Generation: 3 Fitness: 4
+Generation: 4 Fitness: 4
+Generation: 5 Fitness: 5
+Lösung gefunden in Generation 5
+Gene: [1, 1, 1, 1, 1]
+
+ Mit nur 5 Generationen und 10 Individuen findet der Algorithmus die perfekte Lösung. Bei komplexeren Problemen dauert es länger, aber das Prinzip bleibt identisch.
+
+## Reale Anwendungsfälle
+
+ Dieses einfache Beispiel lässt sich auf komplexe Probleme übertragen:
+
+ Traveling Salesman Problem
+
+ Gene = Reihenfolge der Städte. Fitness = Gesamtstrecke (minimieren). Crossover = Abschnitte von Routen kombinieren.
+
+ Neural Network Training
+
+ Gene = Gewichte des Netzwerks. Fitness = Vorhersagegenauigkeit. Evolution findet optimale Gewichte ohne Backpropagation.
+
+ Feature Selection
+
+ Gene = welche Features nutzen (0/1). Fitness = Modellperformance. Findet die wichtigsten Features automatisch.
+
+ Scheduling
+
+ Gene = Zuordnung von Aufgaben zu Zeitslots. Fitness = Deadline-Einhaltung, Ressourcenauslastung.
+
+## Key Learnings
+
+ "Genetische Algorithmen finden keine garantiert optimale Lösung, aber oft eine sehr gute in akzeptabler Zeit."
+
+### 1. Encoding ist entscheidend
+
+ Wie du das Problem als Gene darstellst, bestimmt den Erfolg. Binär ist einfach, aber Permutationen, Floats oder komplexe Strukturen sind oft besser geeignet.
+
+### 2. Balance zwischen Exploration und Exploitation
+
+ Zu viel Mutation = chaotische Suche. Zu wenig = vorzeitige Konvergenz. Die richtige Mutationsrate ist problemspezifisch.
+
+### 3. Fitness-Funktion ist der Schlüssel
+
+ Eine schlechte Fitness-Funktion führt zu schlechten Lösungen. Investiere Zeit in eine präzise Bewertungsfunktion.
+
+### 4. Diversity erhalten
+
+ Wenn alle Individuen ähnlich werden, stagniert die Evolution. Techniken wie Crowding oder Niching helfen.
+
+## Fazit
+
+ Genetische Algorithmen sind ein mächtiges Werkzeug für Optimierungsprobleme, bei denen der Lösungsraum zu groß für erschöpfende Suche ist. Die Implementierung ist überraschend einfach: Population, Fitness, Selektion, Crossover, Mutation. Die Kunst liegt im richtigen Encoding und der passenden Fitness-Funktion.
+
+ Das Schöne: Du musst nicht verstehen, wie die optimale Lösung aussieht. Du musst nur bewerten können, wie gut eine Lösung ist. Den Rest erledigt die Evolution.
+
+ Verwendete Technologien:
+
+ Java
+ Evolutionary Computation
+
+ Interesse an Optimierungsalgorithmen oder KI-gestützten Lösungen? Schreib mir, ich freue mich auf den Austausch.
+
+---

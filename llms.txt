@@ -1,0 +1,46 @@
+# Nils Weiser — IT Consulting: KI & App Entwicklung
+
+> Personal portfolio and blog of Nils Weiser, an IT consultant and developer from the Lake Constance region (Bodenseeraum), Germany. Focus areas: AI strategy, AI agents, app and web development, and technical consulting — from concept to delivery. The blog covers Claude / Claude Code, Anthropic Skills, multi-agent systems (CrewAI), legal AI, model evaluation, and AI-tooling deep dives, published in German and English.
+
+- Site: https://waiser.dev/
+- Author: Nils Weiser — IT Consultant & Developer (Bodenseeraum, DE)
+- Languages: German (default) and English
+- Contact: https://waiser.dev/#contact
+
+## Main pages
+
+- [Home (DE/EN)](https://waiser.dev/): Portfolio — services, projects, and contact for AI strategy, app and web development, and technical consulting.
+- [Blog — German](https://waiser.dev/blog/): Articles on AI, development and technology.
+- [Blog — English](https://waiser.dev/blog/en/): English translations of the blog.
+
+## Blog posts (English)
+
+- [Ambient AI: Why the Next Generation Doesn't Answer – It Notices](https://waiser.dev/blog/posts/en/ambient-ai-the-next-ai-generation.html): As long as we pay AI per request, we only build one shape of it: vending machines that react to a coin drop. The interesting shape is the janitor who notices on his own when something is off. What changes when the unit of compute flips.
+- [Anthropic's 33-Page Blueprint for Claude Skills](https://waiser.dev/blog/posts/en/anthropic-skills-guide.html): Anthropic published a 33-page guide on building Claude Skills. What's actually inside, how progressive disclosure works, and why skills quietly replace prompt engineering.
+- [Did MIT solve AI hallucinations? What the new calibration-reward research actually shows](https://waiser.dev/blog/posts/en/mit-ai-hallucinations.html): A new MIT paper promises fewer AI hallucinations through calibrated reward signals. What it actually shows – and what it means for developers today.
+- [Claude Mythos Preview: When AI Finds Zero-Days on Its Own](https://waiser.dev/blog/posts/en/claude-mythos-preview-zero-days.html): Anthropic's Mythos Preview finds and exploits zero-days largely autonomously: 181 Firefox exploits, a 27-year-old OpenBSD bug, a full FreeBSD RCE. What it means for defenders and companies.
+- [A CLAUDE.md With 25,000 Stars: Karpathy's Coding Rules for AI Agents](https://waiser.dev/blog/posts/en/karpathy-claude-md.html): How a single Markdown file distilling Andrej Karpathy's observations about LLM failure modes became the most-starred repository in the Claude Code ecosystem – and what holds up in practice.
+- [AI Agent Workflows with the Superpowers Framework](https://waiser.dev/blog/posts/en/ki-agenten-workflows-superpowers.html): How the Superpowers framework teaches AI agents reusable skills and enables multi-stage development workflows.
+- [Claude Code Skills: The Revolution of AI Automation](https://waiser.dev/blog/posts/en/claude-code-skills.html): Claude Code Skills enable teaching AI agents reusable capabilities. A look at the future of AI-powered development.
+- [Browser Automation with Playwright MCP](https://waiser.dev/blog/posts/en/playwright-mcp-browser-automatisierung.html): How Playwright MCP revolutionizes browser automation with Claude Code. A practical guide with setup instructions and usage examples.
+- [OpenClaw vs. NemoClaw: Security for AI Agents](https://waiser.dev/blog/posts/en/openclaw-vs-nemoclaw.html): NemoClaw is not a replacement for OpenClaw, but a security wrapper for enterprise-ready AI agents. An analysis of the differences and use cases.
+- [How We Found the Best AI Model for Legal Analysis](https://waiser.dev/blog/posts/en/ki-modell-evaluation.html): How do you find the best AI model for legal analysis? With LLM-as-a-Judge, Crew-as-a-Judge, and human validation. A behind-the-scenes look at our systematic model selection.
+- [Legal AI Knowledge Base with Docling](https://waiser.dev/blog/posts/en/legal-ai-knowledge-base-docling.html): How we transformed 1000+ legal PDF documents with Docling into a searchable knowledge base for our AI-powered legal advisory platform.
+- [Multi-Agent AI Systems with CrewAI](https://waiser.dev/blog/posts/en/multi-agent-ai-crewai.html): How to orchestrate specialized AI agents that collaborate like a real team. A practical guide to CrewAI with real-world use cases.
+- [Understanding Genetic Algorithms](https://waiser.dev/blog/posts/en/genetische-algorithmen-java.html): Evolution as an algorithm: How genetic algorithms solve optimization problems. A practical introduction with Java implementation.
+
+## Blog posts (German)
+
+- [Ambient AI: Warum die nächste KI-Generation nicht antwortet, sondern bemerkt](https://waiser.dev/blog/posts/de/ambient-ai-die-naechste-ki-generation.html): Solange wir KI pro Anfrage bezahlen, bauen wir nur eine Form davon: Automaten, die auf Münzwurf reagieren. Die interessantere Form ist der Hausmeister, der von selbst merkt, wenn etwas nicht stimmt. Was sich ändert, wenn die Recheneinheit kippt.
+- [Anthropics 33-Seiten-Blueprint für Claude Skills](https://waiser.dev/blog/posts/de/anthropic-skills-guide.html): Anthropic hat einen 33-seitigen Leitfaden zum Bau von Claude Skills veröffentlicht. Was darin steht, wie Progressive Disclosure funktioniert und warum Skills mehr sind als bessere Prompts.
+- [MIT löst KI-Halluzinationen? Was die neue Calibration-Reward-Forschung wirklich zeigt](https://waiser.dev/blog/posts/de/mit-ai-halluzinationen.html): Eine neue MIT-Studie verspricht weniger KI-Halluzinationen durch kalibrierte Belohnungssignale. Was steckt dahinter – und was bedeutet das für Entwickler heute?
+- [Claude Mythos Preview: Wenn KI eigenständig Zero-Days findet](https://waiser.dev/blog/posts/de/claude-mythos-preview-zero-days.html): Anthropics Mythos Preview findet und exploitet Zero-Days weitgehend autonom: 181 Firefox-Exploits, ein 27 Jahre alter OpenBSD-Bug, ein kompletter FreeBSD-RCE. Was das für Defender und Unternehmen bedeutet.
+- [Ein CLAUDE.md mit 25.000 Sternen: Karpathys Coding-Regeln für KI-Agenten](https://waiser.dev/blog/posts/de/karpathy-claude-md.html): Wie eine einzelne Markdown-Datei auf Basis von Andrej Karpathys Beobachtungen zu LLM-Fehlverhalten zum meistbeachteten Repository im Claude-Code-Ökosystem wurde – und was sie in der Praxis wirklich bringt.
+- [KI-Agenten-Workflows mit dem Superpowers-Framework](https://waiser.dev/blog/posts/de/ki-agenten-workflows-superpowers.html): Wie das Superpowers-Framework KI-Agenten wiederverwendbare Fähigkeiten beibringt und mehrstufige Entwicklungs-Workflows ermöglicht.
+- [Claude Code Skills: Die Revolution der KI-Automatisierung](https://waiser.dev/blog/posts/de/claude-code-skills.html): Claude Code Skills ermöglichen es, KI-Agenten wiederverwendbare Fähigkeiten beizubringen. Ein Blick auf die Zukunft der KI-gestützten Entwicklung.
+- [Browser-Automatisierung mit Playwright MCP](https://waiser.dev/blog/posts/de/playwright-mcp-browser-automatisierung.html): Wie Playwright MCP die Browser-Automatisierung mit Claude Code revolutioniert. Ein praktischer Leitfaden mit Einrichtung und Anwendungsbeispielen.
+- [OpenClaw vs. NemoClaw: Sicherheit für KI-Agenten](https://waiser.dev/blog/posts/de/openclaw-vs-nemoclaw.html): NemoClaw ist kein Ersatz für OpenClaw, sondern ein Sicherheits-Wrapper für Enterprise-taugliche KI-Agenten. Eine Analyse der Unterschiede und Einsatzszenarien.
+- [Wie wir das beste KI-Modell für rechtliche Analysen gefunden haben](https://waiser.dev/blog/posts/de/ki-modell-evaluation.html): Wie findet man das beste KI-Modell für juristische Analysen? Mit LLM-as-a-Judge, Crew-as-a-Judge und menschlicher Validierung. Ein Blick hinter die Kulissen unserer systematischen Modellauswahl.
+- [Legal AI Knowledge Base mit Docling](https://waiser.dev/blog/posts/de/legal-ai-knowledge-base-docling.html): Wie wir 1000+ juristische PDF-Dokumente mit Docling in eine durchsuchbare Wissensbasis für unsere KI-gestützte Rechtsberatungsplattform verwandelt haben.
+- [Multi-Agent AI Systeme mit CrewAI](https://waiser.dev/blog/posts/de/multi-agent-ai-crewai.html): Wie man spezialisierte KI-Agenten orchestriert, die wie ein echtes Team zusammenarbeiten. Ein praktischer Leitfaden zu CrewAI mit realen Anwendungsfällen.
+- [Genetische Algorithmen verstehen](https://waiser.dev/blog/posts/de/genetische-algorithmen-java.html): Evolution als Algorithmus: Wie genetische Algorithmen Optimierungsprobleme lösen. Eine praktische Einführung mit Java-Implementierung.

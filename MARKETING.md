@@ -22,7 +22,9 @@ Marketing data, analytics, SEO assets, and growth tracking for the personal port
   each with `xhtml:link` hreflang alternates. Submitted in Google Search Console.
 - **robots.txt:** present — `Allow: /`, disallows `/easter-egg/` + `/blackhole/`,
   references the sitemap.
-- **llms.txt:** _not yet present_ — TODO
+- **llms.txt:** `llms.txt` (curated index of site + all posts) and `llms-full.txt`
+  (full article text inlined) at site root, referenced from `robots.txt`. For
+  AI-assistant/GEO citation, not Google indexing. Regenerate after adding posts.
 - **Meta:** title/description + canonical per page; OG + Twitter cards on homepage.
 - **Hreflang:** homepage is a single bilingual URL → `x-default` only (no de/en
   pair, which previously caused duplicate-canonical errors). Blog indexes and all
