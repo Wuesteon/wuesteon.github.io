@@ -18,11 +18,39 @@ Marketing data, analytics, SEO assets, and growth tracking for the personal port
 
 ## SEO
 
-- **Sitemap:** _not yet generated_ — TODO
-- **robots.txt:** _not yet present_ — TODO
+- **Sitemap:** `sitemap.xml` — 29 URLs (home + blog DE/EN + 13 DE + 13 EN posts),
+  each with `xhtml:link` hreflang alternates. Submitted in Google Search Console.
+- **robots.txt:** present — `Allow: /`, disallows `/easter-egg/` + `/blackhole/`,
+  references the sitemap.
 - **llms.txt:** _not yet present_ — TODO
-- **Meta:** title/description per page in HTML head
-- **Schema markup:** TBD
+- **Meta:** title/description + canonical per page; OG + Twitter cards on homepage.
+- **Hreflang:** homepage is a single bilingual URL → `x-default` only (no de/en
+  pair, which previously caused duplicate-canonical errors). Blog indexes and all
+  posts carry de/en/x-default alternates that match the sitemap.
+- **Schema markup (JSON-LD):**
+  - Homepage: `@graph` with `Person` (`#person`) + `WebSite` (`#website`).
+  - Every blog post: `@graph` with `BlogPosting` (author/publisher linked to
+    `#person`, `dateModified`, `mainEntityOfPage`) + `BreadcrumbList`.
+- **Internal linking:** every post is linked from its blog index; each post also
+  has a hand-curated "Related posts" section (3 same-language topical links,
+  `.related-posts` component in `styles.css`) → 78 internal links/language.
+
+### Indexing fixes — May 2026 (Google Search Console)
+
+GSC reported duplicate-canonical and "Discovered/Crawled – not indexed" issues
+shortly after the SEO sweep launch. Root causes + fixes:
+
+- Homepage declared `hreflang="de"` **and** `="en"` both pointing at the same
+  single bilingual URL → fixed to `x-default` only.
+- Blog index pages (`blog/`, `blog/en/`) had **no** canonical/hreflang → added.
+- Sitemap was **missing 2 EN posts** (`ambient-ai-the-next-ai-generation`,
+  `anthropic-skills-guide`) → added; now 13 DE + 13 EN.
+- Added BreadcrumbList schema + related-post cross-links site-wide to improve
+  crawl equity for the not-yet-indexed pages.
+
+**Open follow-up (GSC, manual):** resubmit sitemap, "Request indexing" on home +
+blog indexes, "Start validation" on each error row. "Discovered – not indexed"
+is largely new-domain authority and resolves over weeks, not instantly.
 
 ## Content
 
