@@ -20,21 +20,53 @@
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "KI-Agenten-Workflows mit dem Superpowers-Framework",
-  "description": "Wie das Superpowers-Framework KI-Agenten wiederverwendbare Fähigkeiten beibringt und mehrstufige Entwicklungs-Workflows ermöglicht.",
-  "datePublished": "2026-03-25",
-  "author": {
-    "@type": "Person",
-    "name": "Nils Weiser",
-    "url": "https://waiser.dev/"
-  },
-  "image": "https://waiser.dev/og-default.png",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://waiser.dev/blog/posts/de/ki-agenten-workflows-superpowers.html"
-  },
-  "inLanguage": "de"
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "KI-Agenten-Workflows mit dem Superpowers-Framework",
+      "description": "Wie das Superpowers-Framework KI-Agenten wiederverwendbare Fähigkeiten beibringt und mehrstufige Entwicklungs-Workflows ermöglicht.",
+      "datePublished": "2026-03-25",
+      "author": {
+        "@type": "Person",
+        "name": "Nils Weiser",
+        "@id": "https://waiser.dev/#person"
+      },
+      "image": "https://waiser.dev/og-default.png",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://waiser.dev/blog/posts/de/ki-agenten-workflows-superpowers.html"
+      },
+      "inLanguage": "de",
+      "@id": "https://waiser.dev/blog/posts/de/ki-agenten-workflows-superpowers.html#article",
+      "publisher": {
+        "@id": "https://waiser.dev/#person"
+      },
+      "dateModified": "2026-03-25"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Startseite",
+          "item": "https://waiser.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://waiser.dev/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Superpowers: Wie KI-Agenten lernen, wie echte Teams zu arbeiten",
+          "item": "https://waiser.dev/blog/posts/de/ki-agenten-workflows-superpowers.html"
+        }
+      ]
+    }
+  ]
 }
     </script>
 
@@ -289,6 +321,22 @@
             </div>
         </div>
     </article>
+
+    <!-- Related posts (internal cross-links for crawl equity) -->
+    <nav class="related-posts" aria-label="Weitere Artikel">
+        <p class="related-posts__heading">// Weitere Artikel</p>
+        <div class="related-posts__grid">
+                <a class="related-posts__card" href="multi-agent-ai-crewai.html">
+                    <span class="related-posts__card-title">Multi-Agent AI Systeme mit CrewAI: Teams statt Einzelkämpfer</span>
+                </a>
+                <a class="related-posts__card" href="anthropic-skills-guide.html">
+                    <span class="related-posts__card-title">Anthropics 33-Seiten-Blueprint für Claude Skills</span>
+                </a>
+                <a class="related-posts__card" href="claude-code-skills.html">
+                    <span class="related-posts__card-title">Claude Code Skills: Der MCP-Killer?</span>
+                </a>
+        </div>
+    </nav>
 
     <div id="footer-placeholder"></div>
     <div id="back-to-top-placeholder"></div>

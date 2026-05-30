@@ -20,21 +20,53 @@
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "Legal AI Knowledge Base with Docling",
-  "description": "How we transformed 1000+ legal PDF documents with Docling into a searchable knowledge base for our AI-powered legal advisory platform.",
-  "datePublished": "2026-01-25",
-  "author": {
-    "@type": "Person",
-    "name": "Nils Weiser",
-    "url": "https://waiser.dev/"
-  },
-  "image": "https://waiser.dev/og-default.png",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://waiser.dev/blog/posts/en/legal-ai-knowledge-base-docling.html"
-  },
-  "inLanguage": "en"
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Legal AI Knowledge Base with Docling",
+      "description": "How we transformed 1000+ legal PDF documents with Docling into a searchable knowledge base for our AI-powered legal advisory platform.",
+      "datePublished": "2026-01-25",
+      "author": {
+        "@type": "Person",
+        "name": "Nils Weiser",
+        "@id": "https://waiser.dev/#person"
+      },
+      "image": "https://waiser.dev/og-default.png",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://waiser.dev/blog/posts/en/legal-ai-knowledge-base-docling.html"
+      },
+      "inLanguage": "en",
+      "@id": "https://waiser.dev/blog/posts/en/legal-ai-knowledge-base-docling.html#article",
+      "publisher": {
+        "@id": "https://waiser.dev/#person"
+      },
+      "dateModified": "2026-01-25"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://waiser.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://waiser.dev/blog/en/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "From PDF Chaos to Precise Legal AI: How We Structured 1000+ Documents with Docling",
+          "item": "https://waiser.dev/blog/posts/en/legal-ai-knowledge-base-docling.html"
+        }
+      ]
+    }
+  ]
 }
     </script>
 
@@ -425,6 +457,22 @@ markdown = result.document.<span class="code-function">export_to_markdown</span>
             </div>
         </div>
     </article>
+
+    <!-- Related posts (internal cross-links for crawl equity) -->
+    <nav class="related-posts" aria-label="Related posts">
+        <p class="related-posts__heading">// Related posts</p>
+        <div class="related-posts__grid">
+                <a class="related-posts__card" href="ki-modell-evaluation.html">
+                    <span class="related-posts__card-title">How We Found the Best AI Model for Legal Analysis</span>
+                </a>
+                <a class="related-posts__card" href="multi-agent-ai-crewai.html">
+                    <span class="related-posts__card-title">Multi-Agent AI Systems with CrewAI: Teams Instead of Solo Players</span>
+                </a>
+                <a class="related-posts__card" href="ki-agenten-workflows-superpowers.html">
+                    <span class="related-posts__card-title">Superpowers: How AI Agents Learn to Work Like Real Teams</span>
+                </a>
+        </div>
+    </nav>
 
     <div id="footer-placeholder"></div>
     <div id="back-to-top-placeholder"></div>

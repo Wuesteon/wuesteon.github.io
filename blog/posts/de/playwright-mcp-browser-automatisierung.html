@@ -20,21 +20,53 @@
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "Browser-Automatisierung mit Playwright MCP",
-  "description": "Wie Playwright MCP die Browser-Automatisierung mit Claude Code revolutioniert. Ein praktischer Leitfaden mit Einrichtung und Anwendungsbeispielen.",
-  "datePublished": "2026-03-05",
-  "author": {
-    "@type": "Person",
-    "name": "Nils Weiser",
-    "url": "https://waiser.dev/"
-  },
-  "image": "https://waiser.dev/og-default.png",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://waiser.dev/blog/posts/de/playwright-mcp-browser-automatisierung.html"
-  },
-  "inLanguage": "de"
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Browser-Automatisierung mit Playwright MCP",
+      "description": "Wie Playwright MCP die Browser-Automatisierung mit Claude Code revolutioniert. Ein praktischer Leitfaden mit Einrichtung und Anwendungsbeispielen.",
+      "datePublished": "2026-03-05",
+      "author": {
+        "@type": "Person",
+        "name": "Nils Weiser",
+        "@id": "https://waiser.dev/#person"
+      },
+      "image": "https://waiser.dev/og-default.png",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://waiser.dev/blog/posts/de/playwright-mcp-browser-automatisierung.html"
+      },
+      "inLanguage": "de",
+      "@id": "https://waiser.dev/blog/posts/de/playwright-mcp-browser-automatisierung.html#article",
+      "publisher": {
+        "@id": "https://waiser.dev/#person"
+      },
+      "dateModified": "2026-03-05"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Startseite",
+          "item": "https://waiser.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://waiser.dev/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Browser-Automatisierung mit Playwright MCP und Claude Code",
+          "item": "https://waiser.dev/blog/posts/de/playwright-mcp-browser-automatisierung.html"
+        }
+      ]
+    }
+  ]
 }
     </script>
 
@@ -322,6 +354,22 @@ und extrahiere alle Produktnamen und Preise als JSON."</span></code></pre>
             </div>
         </div>
     </article>
+
+    <!-- Related posts (internal cross-links for crawl equity) -->
+    <nav class="related-posts" aria-label="Weitere Artikel">
+        <p class="related-posts__heading">// Weitere Artikel</p>
+        <div class="related-posts__grid">
+                <a class="related-posts__card" href="ki-agenten-workflows-superpowers.html">
+                    <span class="related-posts__card-title">Superpowers: Wie KI-Agenten lernen, wie echte Teams zu arbeiten</span>
+                </a>
+                <a class="related-posts__card" href="multi-agent-ai-crewai.html">
+                    <span class="related-posts__card-title">Multi-Agent AI Systeme mit CrewAI: Teams statt Einzelkämpfer</span>
+                </a>
+                <a class="related-posts__card" href="claude-code-skills.html">
+                    <span class="related-posts__card-title">Claude Code Skills: Der MCP-Killer?</span>
+                </a>
+        </div>
+    </nav>
 
     <div id="footer-placeholder"></div>
     <div id="back-to-top-placeholder"></div>

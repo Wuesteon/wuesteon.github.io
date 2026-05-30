@@ -20,21 +20,53 @@
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "Ein CLAUDE.md mit 25.000 Sternen: Karpathys Coding-Regeln für KI-Agenten",
-  "description": "Wie eine einzelne Markdown-Datei auf Basis von Andrej Karpathys Beobachtungen zu LLM-Fehlverhalten zum meistbeachteten Repository im Claude-Code-Ökosystem wurde – und was sie in der Praxis wirklich bringt.",
-  "datePublished": "2026-04-10",
-  "author": {
-    "@type": "Person",
-    "name": "Nils Weiser",
-    "url": "https://waiser.dev/"
-  },
-  "image": "https://waiser.dev/og-default.png",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://waiser.dev/blog/posts/de/karpathy-claude-md.html"
-  },
-  "inLanguage": "de"
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Ein CLAUDE.md mit 25.000 Sternen: Karpathys Coding-Regeln für KI-Agenten",
+      "description": "Wie eine einzelne Markdown-Datei auf Basis von Andrej Karpathys Beobachtungen zu LLM-Fehlverhalten zum meistbeachteten Repository im Claude-Code-Ökosystem wurde – und was sie in der Praxis wirklich bringt.",
+      "datePublished": "2026-04-10",
+      "author": {
+        "@type": "Person",
+        "name": "Nils Weiser",
+        "@id": "https://waiser.dev/#person"
+      },
+      "image": "https://waiser.dev/og-default.png",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://waiser.dev/blog/posts/de/karpathy-claude-md.html"
+      },
+      "inLanguage": "de",
+      "@id": "https://waiser.dev/blog/posts/de/karpathy-claude-md.html#article",
+      "publisher": {
+        "@id": "https://waiser.dev/#person"
+      },
+      "dateModified": "2026-04-10"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Startseite",
+          "item": "https://waiser.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://waiser.dev/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Ein CLAUDE.md mit 25.000 Sternen",
+          "item": "https://waiser.dev/blog/posts/de/karpathy-claude-md.html"
+        }
+      ]
+    }
+  ]
 }
     </script>
 
@@ -285,6 +317,22 @@
             </div>
         </div>
     </article>
+
+    <!-- Related posts (internal cross-links for crawl equity) -->
+    <nav class="related-posts" aria-label="Weitere Artikel">
+        <p class="related-posts__heading">// Weitere Artikel</p>
+        <div class="related-posts__grid">
+                <a class="related-posts__card" href="anthropic-skills-guide.html">
+                    <span class="related-posts__card-title">Anthropics 33-Seiten-Blueprint für Claude Skills</span>
+                </a>
+                <a class="related-posts__card" href="claude-code-skills.html">
+                    <span class="related-posts__card-title">Claude Code Skills: Der MCP-Killer?</span>
+                </a>
+                <a class="related-posts__card" href="ki-agenten-workflows-superpowers.html">
+                    <span class="related-posts__card-title">Superpowers: Wie KI-Agenten lernen, wie echte Teams zu arbeiten</span>
+                </a>
+        </div>
+    </nav>
 
     <div id="footer-placeholder"></div>
     <div id="back-to-top-placeholder"></div>

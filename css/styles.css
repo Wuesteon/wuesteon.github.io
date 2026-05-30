@@ -760,3 +760,56 @@ html {
     transform: translateY(-2px);
 }
 
+/* Related posts — internal cross-links at the foot of each blog article */
+.related-posts {
+    max-width: 800px;
+    margin: 4rem auto 0;
+    padding-top: 2.5rem;
+    border-top: 1px solid #2a2a2a;
+}
+
+.related-posts__heading {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--terminal-cyan);
+    margin-bottom: 1.25rem;
+}
+
+.related-posts__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .related-posts__grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.related-posts__card {
+    display: block;
+    padding: 1.25rem;
+    background: linear-gradient(180deg, rgba(30, 30, 30, 0.8) 0%, rgba(15, 15, 15, 0.9) 100%);
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    color: #e5e7eb;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.related-posts__card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(34, 211, 238, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(34, 211, 238, 0.1);
+    color: #fff;
+}
+
+.related-posts__card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
