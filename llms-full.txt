@@ -6,9 +6,56 @@ This file inlines the full text of all blog posts so AI assistants can read them
 
 # English posts
 
+## Opus 4.8 & Dynamic Workflows: How 7 Agents Audited My Platform in 5 Minutes
+
+URL: https://waiser.dev/blog/posts/en/opus-4-8-dynamic-workflows-erst-recht-audit.html
+Published: 2026-05-31
+
+Seven agents, a real legal-tech platform, five minutes. But that's not the story. The story is what it means that this is now possible.
+
+On Friday evening I asked Claude to go through my AI legal-advice platform Erst Recht end to end — backend, database, payment flow, the lawyer-upgrade path, the whole spread. Instead of working through it step by step itself, Claude wrote a short script: seven specialized agents, one per domain, all running at once.
+
+Five minutes and eleven seconds later I had a findings list sorted by severity that would have cost a single developer half a day. Among them: several critical findings, including a security-critical flaw a single pass would have missed — and it's exactly this one that best shows what this new way of working is about.
+
+That's impressive. But it isn't the point. The point is what it makes possible that a model can now turn an entire plan into executable code and unleash a swarm of agents on it in parallel. That's exactly what Claude Opus 4.8 and dynamic workflows have been about since May 28.
+
+### Opus 4.8 in one paragraph
+
+Anthropic shipped Opus 4.8 just 41 days after 4.7 — its fastest flagship cycle yet. One thing matters most to me: the model has become more honest as an agent. It lets code flaws slip through roughly four times less often, flags its own uncertainties, and makes fewer unsupported claims. On top of that come new effort controls (you choose how hard Claude thinks) and a cheaper fast mode. It sounds like detail polish — but it's exactly the foundation on which you'd trust an agent with a live product in the first place.
+
+### The real shift: the plan moves into the script
+
+Until now, the ceiling for everything an AI agent could do autonomously was always the same: the context window. The agent held the plan in its head, and every intermediate result — every file read, every tool call — landed in that same window. Eventually it filled up and the agent lost the thread. Pulling in more helpers didn't help, because their results flowed back into that one memory too.
+
+Dynamic workflows turn that around. Claude no longer writes the plan into its head but as a script: which agents run, in what order, what gets passed to whom. A runtime executes that script in the background while the intermediate results live in script variables — not in the model's context. Claude's memory holds only the finished answer at the end. The plan moves out of the head and into code. That removes the limit that bounded everything before — and a single run can coordinate dozens to hundreds of agents (up to 16 at a time, 1,000 total).
+
+This is more than "the same, but faster." Because the plan is now code, it can enforce repeatable quality patterns: agents that try to refute what other agents found before anything is reported. In my case, that became the decisive step.
+
+### My 5-minute proof
+
+The workflow for Erst Recht had two phases. Phase 1 (Audit): seven read-only agents, each owning a domain — backend API, database, lawyer upgrade, payment, frontend wiring, build/tests/dependencies, email. They only read, all at the same time. Phase 2 (Synthesis): the seven raw audits are distilled into a single findings list, prioritized by severity — the blueprint for the fixes that followed.
+
+Add the agents up and that's roughly half an hour of work. But because they ran at the same time, the whole phase was done in 5m 11s — exactly the slowest agent, nothing more. That's the difference between "one agent works through a long list" and "a swarm finishes it in the time of its slowest member."
+
+### Where the model distrusted itself
+
+The most interesting moment came after the findings — and it belongs to exactly that security-critical flaw. The first fix for it looked clean. But on live verification against the actual system it turned out the fix was a shot in the dark. The root cause sat one level deeper than the first glance suggested — after the "fix" the problem was still exactly as it had been. A normal audit would have checked the first fix off as done. Because the workflow tested every critical finding adversarially against live reality, the failure surfaced — and the problem was actually fixed, not just seemingly. The end result was six commits on main, across security, the checkout flow, the lawyer upgrade and stale dependencies — every critical fix verified live once more before it was closed.
+
+### What this really unlocks
+
+Once "a plan plus a thousand agents" becomes normal, what shifts is which work is even conceivable. Tasks nobody touches today become doable: a migration across hundreds of thousands of lines, an audit of every API route, a cleanup spanning an old repo. Research cross-checks itself instead of sounding plausible. Hard decisions can be drafted from several independent angles and weighed against each other. Verification becomes the default — agents refuting findings rather than believing them. Workflows become repeatable processes instead of one-off prompts. And the developer's role shifts from typing prompts to conducting swarms — reach that used to take a whole department, now within range of a small team or a solo developer.
+
+### The honest flip side
+
+Dynamic workflows are a research preview — not a finished product. A swarm costs noticeably more tokens than the same task in conversation, and more agents aren't automatically better: for a small, well-scoped question a single agent is faster and cheaper. The lever only fires when a task breaks into many independent parts, spans more material than one context window can hold, and produces a result that tolerates cross-checking.
+
+Erst Recht (https://erst-recht.com) is my own legal-tech platform — and at the same time my testbed for exactly these workflows.
+
+---
+
 ## Ambient AI: Why the Next Generation Doesn't Answer – It Notices
 
-URL: https://waiser.dev/blog/posts/en/ambient-ai-the-next-ai-generation.html  
+URL: https://waiser.dev/blog/posts/en/ambient-ai-the-next-ai-generation.html
 Published: 2026-05-21  
 
 Today's AI is a vending machine: you drop in a coin (prompt), you get a coffee (response). Paid per cup. The next generation is a janitor: he makes his rounds, checks things, only speaks up when something is off. The per-token economy can't represent that second shape – and that's precisely why almost nobody is building it today.
@@ -1965,9 +2012,56 @@ Genes: [1, 1, 1, 1, 1]
 
 # German posts
 
+## Opus 4.8 & dynamische Workflows: Wie 7 Agents meine Plattform in 5 Minuten auditiert haben
+
+URL: https://waiser.dev/blog/posts/de/opus-4-8-dynamische-workflows-erst-recht-audit.html
+Published: 2026-05-31
+
+Sieben Agents, eine echte Legal-Tech-Plattform, fünf Minuten. Aber das ist nicht die Story. Die Story ist, was es bedeutet, dass das jetzt geht.
+
+Am Freitagabend habe ich Claude gebeten, meine KI-Rechtsberatungs-Plattform Erst Recht durchzuleuchten – Backend, Datenbank, Bezahlflow, das Anwalts-Upgrade, die ganze Palette. Statt sich selbst Schritt für Schritt durchzuarbeiten, schrieb Claude ein kurzes Skript: sieben spezialisierte Agents, jeder für eine Domäne, alle gleichzeitig.
+
+Fünf Minuten und elf Sekunden später lag eine nach Schweregrad sortierte Findings-Liste vor mir, an der ein einzelner Entwickler einen halben Tag gesessen hätte. Darin: mehrere kritische Funde, darunter eine sicherheitskritische Schwachstelle, die ein einzelner Durchlauf übersehen hätte – und genau an ihr zeigt sich am besten, worum es bei dieser neuen Arbeitsweise geht.
+
+Das ist beeindruckend. Aber es ist nicht der Punkt. Der Punkt ist, was es möglich macht, dass ein Modell jetzt einen ganzen Plan in ausführbaren Code gießen und einen Schwarm von Agents parallel darauf loslassen kann. Genau dafür gibt es seit dem 28. Mai Claude Opus 4.8 und die dynamischen Workflows.
+
+### Opus 4.8 in einem Absatz
+
+Anthropic hat Opus 4.8 nur 41 Tage nach 4.7 veröffentlicht – der schnellste Flaggschiff-Zyklus bisher. Für mich zählt davon vor allem eines: Das Modell ist als Agent ehrlicher geworden. Es übersieht Code-Fehler rund viermal seltener, flaggt Unsicherheiten von sich aus und macht weniger unbelegte Behauptungen. Dazu kommen neue Effort-Controls (man wählt, wie tief Claude nachdenkt) und ein günstigerer Fast-Mode. Klingt nach Detailpolitur – ist aber genau die Grundlage, auf der man einem Agenten überhaupt ein laufendes Produkt anvertraut.
+
+### Die eigentliche Verschiebung: Der Plan zieht ins Skript
+
+Bisher war das Limit für alles, was ein KI-Agent autonom erledigen konnte, immer dasselbe: das Kontextfenster. Der Agent hielt den Plan im Kopf, und jedes Zwischenergebnis – jede gelesene Datei, jeder Tool-Aufruf – landete im selben Fenster. Irgendwann war es voll, und der Agent verlor den Faden. Mehr Helfer dazuzuholen half nicht, denn auch deren Ergebnisse flossen wieder in dieses eine Gedächtnis.
+
+Dynamische Workflows drehen das um. Claude schreibt den Plan nicht mehr in seinen Kopf, sondern als Skript: Welche Agents laufen, in welcher Reihenfolge, was an wen weitergereicht wird. Eine Laufzeit führt dieses Skript im Hintergrund aus, während die Zwischenergebnisse in Skript-Variablen leben – nicht im Kontext des Modells. Claudes Gedächtnis hält am Ende nur noch die fertige Antwort. Der Plan wandert aus dem Kopf in den Code. Damit fällt die Grenze, die bisher alles begrenzt hat – und ein einzelner Lauf kann Dutzende bis hunderte Agents koordinieren (bis zu 16 gleichzeitig, 1.000 insgesamt).
+
+Das ist mehr als „dasselbe, nur schneller". Weil der Plan jetzt Code ist, kann er wiederholbare Qualitätsmuster erzwingen: Agents, die die Funde anderer Agents gezielt zu widerlegen versuchen, bevor irgendetwas berichtet wird. Genau das wurde in meinem Fall zum entscheidenden Schritt.
+
+### Mein 5-Minuten-Beweis
+
+Der Workflow für Erst Recht hatte zwei Phasen. Phase 1 (Audit): sieben Read-only-Agents, jeder mit einer Domäne – Backend-API, Datenbank, Anwalts-Upgrade, Payment, Frontend-Verdrahtung, Build/Tests/Dependencies, E-Mail. Sie lesen nur, und alle gleichzeitig. Phase 2 (Synthese): Die sieben Roh-Audits werden zu einer einzigen, nach Schweregrad priorisierten Findings-Liste verdichtet – die Vorlage für die anschließenden Fixes.
+
+Addiert man die Agents auf, sind das rund eine halbe Stunde Arbeit. Weil sie aber gleichzeitig liefen, war die ganze Phase nach 5m 11s durch – exakt der langsamste Agent, sonst nichts. Das ist der Unterschied zwischen „ein Agent arbeitet eine lange Liste ab" und „ein Schwarm erledigt sie in der Zeit seines langsamsten Mitglieds".
+
+### Wo das Modell sich selbst misstraut hat
+
+Der spannendste Moment kam nach den Funden – und er gehört genau zu jener sicherheitskritischen Schwachstelle. Der erste Fix dafür sah sauber aus. Doch bei der Live-Gegenprüfung gegen das echte System stellte sich heraus: Der Fix lief ins Leere. Die Ursache lag eine Ebene tiefer, als der erste Blick vermuten ließ – nach dem „Fix" bestand das Problem unverändert weiter. Ein normaler Audit hätte den ersten Fix als erledigt abgehakt. Weil der Workflow jeden kritischen Fund gegen das laufende System prüfte – mit dem ausdrücklichen Ziel, ihn zu widerlegen –, fiel der Fehlschlag auf, und das Problem wurde wirklich behoben, nicht nur scheinbar. Am Ende standen sechs Commits auf main, quer durch Sicherheit, Bezahlflow, das Anwalts-Upgrade und veraltete Abhängigkeiten – jeder kritische Fix vor dem Schließen noch einmal live gegengeprüft.
+
+### Was das wirklich aufschließt
+
+Wenn „ein Plan plus tausend Agents" zum Normalfall wird, verschiebt sich, welche Arbeit überhaupt denkbar ist. Aufgaben, die heute niemand anfasst, werden machbar: eine Migration über hunderttausende Zeilen, ein Audit jeder API-Route, ein Aufräumen quer durch ein altes Repo. Recherche prüft sich selbst gegen, statt nur plausibel zu klingen. Schwere Entscheidungen lassen sich aus mehreren unabhängigen Blickwinkeln entwerfen und gegeneinander abwägen. Verifikation wird zur Voreinstellung – Agents widerlegen Funde, statt ihnen zu glauben. Workflows werden zu wiederholbaren Prozessen statt einmaliger Prompts. Und die Rolle des Entwicklers verschiebt sich vom Prompt-Tippen zum Dirigieren von Schwärmen – Reichweite, die früher eine ganze Abteilung gebraucht hätte, jetzt in Reichweite eines kleinen Teams oder Solo-Entwicklers.
+
+### Die ehrliche Kehrseite
+
+Dynamische Workflows sind eine Research-Preview – kein fertiges Produkt. Ein Schwarm kostet spürbar mehr Tokens als dieselbe Aufgabe im Gespräch, und mehr Agents sind nicht automatisch besser: Für eine kleine, gut umrissene Frage ist ein einzelner Agent schneller und billiger. Der Hebel zündet erst, wenn eine Aufgabe in viele unabhängige Teile zerfällt, mehr Material umfasst, als ein Kontextfenster trägt, und ein Ergebnis liefert, das eine Gegenprüfung verträgt.
+
+Erst Recht (https://erst-recht.com) ist meine eigene Legal-Tech-Plattform – und gleichzeitig mein Testfeld für genau solche Workflows.
+
+---
+
 ## Ambient AI: Warum die nächste KI-Generation nicht antwortet, sondern bemerkt
 
-URL: https://waiser.dev/blog/posts/de/ambient-ai-die-naechste-ki-generation.html  
+URL: https://waiser.dev/blog/posts/de/ambient-ai-die-naechste-ki-generation.html
 Published: 2026-05-21  
 
 Die heutige KI ist ein Kaffeeautomat: du wirfst eine Münze ein (Prompt), bekommst einen Kaffee (Response). Pro Tasse bezahlt. Die nächste Generation ist ein Hausmeister: er macht seine Runde, schaut nach, meldet sich nur, wenn etwas nicht stimmt. Die Pro-Token-Ökonomie kann diese zweite Form nicht abbilden – und genau deshalb baut sie heute fast niemand.
