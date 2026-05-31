@@ -18,7 +18,7 @@ Marketing data, analytics, SEO assets, and growth tracking for the personal port
 
 ## SEO
 
-- **Sitemap:** `sitemap.xml` — 29 URLs (home + blog DE/EN + 13 DE + 13 EN posts),
+- **Sitemap:** `sitemap.xml` — 31 URLs (home + blog DE/EN + 14 DE + 14 EN posts),
   each with `xhtml:link` hreflang alternates. Submitted in Google Search Console.
 - **robots.txt:** present — `Allow: /`, disallows `/easter-egg/` + `/blackhole/`,
   references the sitemap.
@@ -57,7 +57,11 @@ is largely new-domain authority and resolves over weeks, not instantly.
 ## Content
 
 - **Blog:** `blog/` — posts in DE + EN under `blog/posts/de/` and `blog/posts/en/`
-- **Topics:** Claude Code, Skills, AI agents, CrewAI, Playwright MCP, legal AI, model evaluation
+- **Topics:** Claude Code, Skills, AI agents, CrewAI, Playwright MCP, legal AI, model evaluation, Opus 4.8 / dynamic workflows
+- **Latest post (2026-05-31):** `opus-4-8-dynamische-workflows-erst-recht-audit` (DE) /
+  `opus-4-8-dynamic-workflows-erst-recht-audit` (EN) — first-hand report on Opus 4.8
+  + dynamic workflows, anchored on the real 7-agent parallel audit of Erst Recht
+  (run `wf_bdce4196-c77`, ~814k tokens, done in 5m 11s).
 - **Courses:** `courses/`
 - **Skills:** `skills/` (showcase of published Claude skills)
 

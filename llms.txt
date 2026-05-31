@@ -15,6 +15,7 @@
 
 ## Blog posts (English)
 
+- [Opus 4.8 & Dynamic Workflows: How 7 Agents Audited My Legal-Tech Platform in 5 Minutes](https://waiser.dev/blog/posts/en/opus-4-8-dynamic-workflows-erst-recht-audit.html): A first-hand report on Claude Opus 4.8 and dynamic workflows. Seven agents audited the Erst Recht legal-tech platform in parallel in 5m 11s and surfaced several critical findings. What it means that the plan now moves from the context window into a script — and what a swarm of up to 1,000 agents unlocks.
 - [Ambient AI: Why the Next Generation Doesn't Answer – It Notices](https://waiser.dev/blog/posts/en/ambient-ai-the-next-ai-generation.html): As long as we pay AI per request, we only build one shape of it: vending machines that react to a coin drop. The interesting shape is the janitor who notices on his own when something is off. What changes when the unit of compute flips.
 - [Anthropic's 33-Page Blueprint for Claude Skills](https://waiser.dev/blog/posts/en/anthropic-skills-guide.html): Anthropic published a 33-page guide on building Claude Skills. What's actually inside, how progressive disclosure works, and why skills quietly replace prompt engineering.
 - [Did MIT solve AI hallucinations? What the new calibration-reward research actually shows](https://waiser.dev/blog/posts/en/mit-ai-hallucinations.html): A new MIT paper promises fewer AI hallucinations through calibrated reward signals. What it actually shows – and what it means for developers today.
@@ -31,6 +32,7 @@
 
 ## Blog posts (German)
 
+- [Opus 4.8 & dynamische Workflows: Wie 7 Agents meine Legal-Tech-Plattform in 5 Minuten auditiert haben](https://waiser.dev/blog/posts/de/opus-4-8-dynamische-workflows-erst-recht-audit.html): Ein Erfahrungsbericht zu Claude Opus 4.8 und dynamischen Workflows. Sieben Agents auditierten die Legal-Tech-Plattform Erst Recht parallel in 5m 11s und fanden mehrere kritische Schwachstellen. Was es bedeutet, dass der Plan jetzt aus dem Kontextfenster in ein Skript wandert – und was ein Schwarm von bis zu 1.000 Agents aufschließt.
 - [Ambient AI: Warum die nächste KI-Generation nicht antwortet, sondern bemerkt](https://waiser.dev/blog/posts/de/ambient-ai-die-naechste-ki-generation.html): Solange wir KI pro Anfrage bezahlen, bauen wir nur eine Form davon: Automaten, die auf Münzwurf reagieren. Die interessantere Form ist der Hausmeister, der von selbst merkt, wenn etwas nicht stimmt. Was sich ändert, wenn die Recheneinheit kippt.
 - [Anthropics 33-Seiten-Blueprint für Claude Skills](https://waiser.dev/blog/posts/de/anthropic-skills-guide.html): Anthropic hat einen 33-seitigen Leitfaden zum Bau von Claude Skills veröffentlicht. Was darin steht, wie Progressive Disclosure funktioniert und warum Skills mehr sind als bessere Prompts.
 - [MIT löst KI-Halluzinationen? Was die neue Calibration-Reward-Forschung wirklich zeigt](https://waiser.dev/blog/posts/de/mit-ai-halluzinationen.html): Eine neue MIT-Studie verspricht weniger KI-Halluzinationen durch kalibrierte Belohnungssignale. Was steckt dahinter – und was bedeutet das für Entwickler heute?

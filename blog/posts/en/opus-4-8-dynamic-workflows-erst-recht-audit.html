@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opus 4.8 & Dynamic Workflows: 7 Agents Audited My Platform in 5 Minutes</title>
+    <meta name="description" content="What it means that Claude can now turn a plan into a script and run a swarm of agents in parallel — seen through a real audit of my legal-tech platform.">
+    <link rel="canonical" href="https://waiser.dev/blog/posts/en/opus-4-8-dynamic-workflows-erst-recht-audit.html">
+    <link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/opus-4-8-dynamische-workflows-erst-recht-audit.html">
+    <link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/opus-4-8-dynamic-workflows-erst-recht-audit.html">
+    <link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/opus-4-8-dynamische-workflows-erst-recht-audit.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Opus 4.8 & Dynamic Workflows: 7 Agents Audited My Platform in 5 Minutes">
+    <meta property="og:description" content="What it means that Claude can now turn a plan into a script and run a swarm of agents in parallel — seen through a real audit of my legal-tech platform.">
+    <meta property="og:url" content="https://waiser.dev/blog/posts/en/opus-4-8-dynamic-workflows-erst-recht-audit.html">
+    <meta property="og:image" content="https://waiser.dev/og-default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Opus 4.8 & Dynamic Workflows: 7 Agents Audited My Platform in 5 Minutes">
+    <meta name="twitter:description" content="What it means that Claude can now turn a plan into a script and run a swarm of agents in parallel — seen through a real audit of my legal-tech platform.">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Opus 4.8 & Dynamic Workflows: How 7 Agents Audited My Legal-Tech Platform in 5 Minutes",
+      "description": "What it means that Claude can now turn a plan into a script and run a swarm of agents in parallel — seen through a real audit of my legal-tech platform.",
+      "datePublished": "2026-05-31",
+      "author": {
+        "@type": "Person",
+        "name": "Nils Weiser",
+        "@id": "https://waiser.dev/#person"
+      },
+      "image": "https://waiser.dev/og-default.png",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://waiser.dev/blog/posts/en/opus-4-8-dynamic-workflows-erst-recht-audit.html"
+      },
+      "inLanguage": "en",
+      "@id": "https://waiser.dev/blog/posts/en/opus-4-8-dynamic-workflows-erst-recht-audit.html#article",
+      "publisher": {
+        "@id": "https://waiser.dev/#person"
+      },
+      "dateModified": "2026-05-31"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://waiser.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://waiser.dev/blog/en/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Opus 4.8 & Dynamic Workflows: 7 Agents Audited My Platform in 5 Minutes",
+          "item": "https://waiser.dev/blog/posts/en/opus-4-8-dynamic-workflows-erst-recht-audit.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+
+    <link rel="stylesheet" href="../../../css/tailwind.css">
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <style>
+        .workflow-diagram {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(34, 197, 94, 0.05) 100%);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        .phase-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        .phase-number {
+            background: linear-gradient(135deg, #22d3ee 0%, #4ade80 100%);
+            color: #0f172a;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+        .phase-title {
+            color: #22d3ee;
+            font-weight: 600;
+        }
+        .insight-box {
+            background: rgba(251, 191, 36, 0.1);
+            border-left: 3px solid #fbbf24;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .insight-box h4 {
+            color: #fbbf24;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .agent-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.875rem;
+        }
+        .agent-table th,
+        .agent-table td {
+            text-align: left;
+            padding: 0.6rem 0.9rem;
+            border-bottom: 1px solid rgba(6, 182, 212, 0.15);
+        }
+        .agent-table th {
+            color: #22d3ee;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .agent-table td:first-child {
+            font-family: 'JetBrains Mono', monospace;
+            color: #4ade80;
+        }
+        .agent-table tr.slowest td {
+            color: #fbbf24;
+        }
+        .tool-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #22d3ee;
+            margin: 0.25rem;
+        }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header -->
+    <section class="hero-bg pt-32 pb-12">
+        <div class="grid-pattern"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-3xl mx-auto">
+                <a href="../../en/" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    Back to Blog
+                </a>
+                <div class="flex items-center gap-3 mb-4 flex-wrap">
+                    <span class="blog-tag">Opus 4.8</span>
+                    <span class="blog-tag">Dynamic Workflows</span>
+                    <span class="blog-tag">Multi-Agent</span>
+                    <span class="blog-date">May 31, 2026</span>
+                </div>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+                    Opus 4.8 & Dynamic Workflows: How 7 Agents Audited My Platform in 5 Minutes
+                </h1>
+                <p class="text-xl text-gray-400">
+                    Seven agents, a real legal-tech platform, five minutes. But that's not the story. The story is what it means that this is now possible.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <article class="section-dark py-16">
+        <div class="container mx-auto px-6">
+            <div class="article-content">
+
+                <p>
+                    On Friday evening I asked Claude to go through my AI legal-advice platform <strong>Erst Recht</strong> end to end — backend, database, payment flow, the lawyer-upgrade path, the whole machine. Instead of working through it step by step itself, Claude wrote a short script: <em>seven specialized agents, one per domain, all running at once.</em>
+                </p>
+
+                <p>
+                    Five minutes and eleven seconds later I had a findings list sorted by severity that would have cost a single developer half a day. Among them: several critical findings, including a security-critical flaw a single pass would have missed — and it's exactly this one that best shows what this new way of working is about.
+                </p>
+
+                <p>
+                    That's impressive. But it isn't the point. The point is what it <strong>makes possible</strong> that a model can now turn an entire plan into executable code and unleash a swarm of agents on it in parallel. That's exactly what <strong>Claude Opus 4.8</strong> and <strong>dynamic workflows</strong> have been about since May 28.
+                </p>
+
+                <h2>Opus 4.8 in one paragraph</h2>
+
+                <p>
+                    Anthropic shipped <a href="https://www.anthropic.com/news/claude-opus-4-8" target="_blank" rel="noopener noreferrer">Opus 4.8</a> just 41 days after 4.7 — its fastest flagship cycle yet. One thing matters most to me: the model has become <em>more honest</em> as an agent. It lets code flaws slip through roughly four times less often, flags its own uncertainties, and makes fewer unsupported claims. On top of that come new "effort controls" (you choose how hard Claude thinks) and a cheaper fast mode. It sounds like detail polish — but it's exactly the foundation on which you'd trust an agent with a live product in the first place.
+                </p>
+
+                <h2>The real shift: the plan moves into the script</h2>
+
+                <p>
+                    Until now, the ceiling for everything an AI agent could do autonomously was always the same: the <strong>context window</strong>. The agent held the plan in its head, and every intermediate result — every file read, every tool call — landed in that same window. Eventually it filled up and the agent lost the thread. Pulling in more helpers didn't help, because their results flowed back into that one memory too.
+                </p>
+
+                <p>
+                    <a href="https://code.claude.com/docs/en/workflows" target="_blank" rel="noopener noreferrer">Dynamic workflows</a> turn that around. Claude no longer writes the plan into its head but as a <strong>script</strong>: which agents run, in what order, what gets passed to whom. A runtime executes that script in the background while the intermediate results live in script variables — not in the model's context. Claude's memory holds only the finished answer at the end.
+                </p>
+
+                <blockquote>
+                    The plan moves out of the head and into code. That removes the limit that bounded everything before — and a single run can coordinate dozens to hundreds of agents (up to 16 at a time, 1,000 total).
+                </blockquote>
+
+                <p>
+                    This is more than "the same, but faster." Because the plan is now code, it can enforce repeatable quality patterns: agents that <em>adversarially review</em> what other agents found before anything is reported. In my case, that became the decisive step.
+                </p>
+
+                <h2>My 5-minute proof</h2>
+
+                <p>
+                    The workflow for Erst Recht had two phases:
+                </p>
+
+                <div class="workflow-diagram">
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-number">PHASE 1</span>
+                            <span class="phase-title">Audit — 7 agents in parallel</span>
+                        </div>
+                        <p class="text-gray-400 text-sm">
+                            Seven read-only agents, each owning a domain: backend API, database, lawyer upgrade, payment, frontend wiring, build/tests/dependencies, email. They only read — and all at the same time.
+                        </p>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-number">PHASE 2</span>
+                            <span class="phase-title">Synthesis</span>
+                        </div>
+                        <p class="text-gray-400 text-sm">
+                            The seven raw audits are distilled into a single findings list, prioritized by severity — the blueprint for the fixes that followed.
+                        </p>
+                    </div>
+                </div>
+
+                <table class="agent-table">
+                    <thead>
+                        <tr><th>Agent</th><th>Tokens</th><th>Tools</th><th>Duration</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>backend-api</td><td>177.5k</td><td>36</td><td>4m 32s</td></tr>
+                        <tr class="slowest"><td>lawyer-upgrade</td><td>157.7k</td><td>34</td><td>5m 11s</td></tr>
+                        <tr><td>database</td><td>111.9k</td><td>40</td><td>4m 36s</td></tr>
+                        <tr><td>payment-stripe</td><td>108.4k</td><td>25</td><td>4m 34s</td></tr>
+                        <tr><td>frontend-wiring</td><td>100.8k</td><td>39</td><td>4m 01s</td></tr>
+                        <tr><td>build-tests-deps</td><td>86.5k</td><td>34</td><td>4m 27s</td></tr>
+                        <tr><td>email-notifications</td><td>71.7k</td><td>25</td><td>3m 27s</td></tr>
+                    </tbody>
+                </table>
+
+                <p>
+                    Here you can see the magic of parallel orchestration in black and white: add the agents up and that's roughly half an hour of work. But because they ran <strong>at the same time</strong>, the whole phase was done in <strong>5m 11s</strong> — exactly the slowest agent, nothing more. That's the difference between "one agent works through a long list" and "a swarm finishes it in the time of its slowest member."
+                </p>
+
+                <h2>Where the model distrusted itself</h2>
+
+                <p>
+                    The most interesting moment came <em>after</em> the findings — and it belongs to exactly that security-critical flaw. The first fix for it looked clean. But on live verification against the actual system it turned out the fix was a shot in the dark. The root cause sat one level deeper than the first glance suggested — after the "fix" the problem was still exactly as it had been.
+                </p>
+
+                <div class="insight-box">
+                    <h4>Verification beats trust</h4>
+                    <p class="text-gray-300 text-sm">
+                        A normal audit would have checked the first fix off as done. Because the workflow tested every critical finding adversarially against live reality, the failure surfaced — and the problem was actually fixed, not just seemingly.
+                    </p>
+                </div>
+
+                <p>
+                    This is where Opus 4.8's honesty and the structure of workflows mesh: a model more willing to admit "this looks done but isn't," inside a flow that gives that skepticism its own verification step. The end result was six commits on <code>main</code>, across security, the checkout flow, the lawyer upgrade and stale dependencies — every critical fix verified live once more before it was closed.
+                </p>
+
+                <h2>What this really unlocks</h2>
+
+                <p>
+                    Forget my audit for a moment. Once "a plan plus a thousand agents" becomes normal, what shifts is which work is even conceivable in the first place:
+                </p>
+
+                <ul>
+                    <li><strong>Tasks nobody touches today become doable.</strong> A migration across hundreds of thousands of lines, an audit of every single API route, a cleanup spanning an old repo — things you kept postponing because they were too big for one session.</li>
+                    <li><strong>Research that cross-checks itself.</strong> Instead of an answer that merely sounds plausible, agents fan a question out across several angles, fetch sources, and vote on which claim survives cross-checking. What fails is dropped before you ever see it.</li>
+                    <li><strong>Decisions from several minds.</strong> A hard architecture question can be drafted from three independent angles and weighed against each other before you commit — instead of endlessly spinning a single first draft.</li>
+                    <li><strong>Verification as the default.</strong> The built-in reflex to adversarially refute findings rather than believe them is exactly what saved my no-op fix. That becomes standard, not the exception.</li>
+                    <li><strong>Processes instead of prompts.</strong> A good workflow can be saved and run again and again. The one-off "go do this" becomes a repeatable routine — the branch review, the release check, the weekly audit, orchestrated identically every time.</li>
+                    <li><strong>A new role for the developer.</strong> You type fewer prompts and conduct more swarms. Especially for small teams and solo developers that means reach that used to take a whole department.</li>
+                </ul>
+
+                <h2>The honest flip side</h2>
+
+                <p>
+                    Dynamic workflows are a <strong>research preview</strong> — not a finished product. A swarm costs noticeably more tokens than the same task in conversation, and more agents aren't automatically better: for a small, well-scoped question a single agent is faster and cheaper. The lever only fires when a task breaks into many <em>independent</em> parts, spans more material than one context window can hold, and produces a result that tolerates cross-checking. That's exactly when — and only when — I reach for it.
+                </p>
+
+                <hr style="border-color: #374151; margin: 2rem 0;">
+
+                <p><strong>Tools used:</strong></p>
+                <div style="margin: 1rem 0;">
+                    <a href="https://claude.ai/code" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        Claude Code
+                    </a>
+                    <a href="https://www.anthropic.com/news/claude-opus-4-8" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        Opus 4.8
+                    </a>
+                </div>
+
+                <p>
+                    <a href="https://erst-recht.com" target="_blank" rel="noopener noreferrer">Erst Recht</a> is my own legal-tech platform — and at the same time my testbed for exactly these workflows. Wondering how AI-driven multi-agent flows could take real work off your team's plate? <a href="../../../index.html#contact">Get in touch</a>.
+                </p>
+
+            </div>
+        </div>
+    </article>
+
+    <!-- Related posts (internal cross-links for crawl equity) -->
+    <nav class="related-posts" aria-label="More articles">
+        <p class="related-posts__heading">// More articles</p>
+        <div class="related-posts__grid">
+                <a class="related-posts__card" href="ki-agenten-workflows-superpowers.html">
+                    <span class="related-posts__card-title">Superpowers: How AI Agents Learn to Work Like Real Teams</span>
+                </a>
+                <a class="related-posts__card" href="multi-agent-ai-crewai.html">
+                    <span class="related-posts__card-title">Multi-Agent AI Systems with CrewAI: Teams Instead of Lone Wolves</span>
+                </a>
+                <a class="related-posts__card" href="claude-mythos-preview-zero-days.html">
+                    <span class="related-posts__card-title">Claude Mythos Preview: When AI Finds Zero-Days on Its Own</span>
+                </a>
+        </div>
+    </nav>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script defer src="../../../js/components.js"></script>
+    <script defer src="../../../js/translations.js"></script>
+    <script defer src="../../../js/main.js"></script>
+</body>
+</html>
