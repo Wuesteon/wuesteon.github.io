@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loops, Not Prompts: Why the Head of Claude Code Stopped Prompting</title>
+    <meta name="description" content="Boris Cherny stopped prompting Claude; he writes loops. What that means, how /loop and /goal differ, and the autonomous triage loop I tested myself.">
+    <link rel="canonical" href="https://waiser.dev/blog/posts/en/loops-not-prompts-cherny.html">
+    <link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/loops-statt-prompts-cherny.html">
+    <link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/loops-not-prompts-cherny.html">
+    <link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/loops-statt-prompts-cherny.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Loops, Not Prompts: Why the Head of Claude Code Stopped Prompting">
+    <meta property="og:description" content="Boris Cherny stopped prompting Claude; he writes loops. What that means, how /loop and /goal differ, and the autonomous triage loop I tested myself.">
+    <meta property="og:url" content="https://waiser.dev/blog/posts/en/loops-not-prompts-cherny.html">
+    <meta property="og:image" content="https://waiser.dev/og-default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Loops, Not Prompts: Why the Head of Claude Code Stopped Prompting">
+    <meta name="twitter:description" content="Boris Cherny stopped prompting Claude; he writes loops. What that means, how /loop and /goal differ, and the autonomous triage loop I tested myself.">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Loops, Not Prompts: Why the Head of Claude Code Stopped Prompting, and What I Built From It",
+      "description": "Boris Cherny stopped prompting Claude; he writes loops. What that means, how /loop and /goal differ, and the autonomous triage loop I tested myself.",
+      "datePublished": "2026-06-11",
+      "author": {
+        "@type": "Person",
+        "name": "Nils Weiser",
+        "@id": "https://waiser.dev/#person"
+      },
+      "image": "https://waiser.dev/og-default.png",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://waiser.dev/blog/posts/en/loops-not-prompts-cherny.html"
+      },
+      "inLanguage": "en",
+      "@id": "https://waiser.dev/blog/posts/en/loops-not-prompts-cherny.html#article",
+      "publisher": {
+        "@id": "https://waiser.dev/#person"
+      },
+      "dateModified": "2026-06-11"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://waiser.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://waiser.dev/blog/en/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Loops, Not Prompts: Why the Head of Claude Code Stopped Prompting",
+          "item": "https://waiser.dev/blog/posts/en/loops-not-prompts-cherny.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+
+    <link rel="stylesheet" href="../../../css/tailwind.css">
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <style>
+        .insight-box {
+            background: rgba(251, 191, 36, 0.1);
+            border-left: 3px solid #fbbf24;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .insight-box h4 {
+            color: #fbbf24;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .phase-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        .phase-number {
+            background: linear-gradient(135deg, #22d3ee 0%, #4ade80 100%);
+            color: #0f172a;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+        .phase-title {
+            color: #22d3ee;
+            font-weight: 600;
+        }
+        .agent-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.875rem;
+        }
+        .agent-table th,
+        .agent-table td {
+            text-align: left;
+            padding: 0.6rem 0.9rem;
+            border-bottom: 1px solid rgba(6, 182, 212, 0.15);
+            vertical-align: top;
+        }
+        .agent-table th {
+            color: #22d3ee;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .agent-table td:first-child {
+            font-family: 'JetBrains Mono', monospace;
+            color: #4ade80;
+            white-space: nowrap;
+        }
+        .tool-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #22d3ee;
+            margin: 0.25rem;
+        }
+        .code-block {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin: 1.25rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            color: #e2e8f0;
+        }
+        .code-block .bad { color: #f87171; }
+        .code-block .good { color: #4ade80; }
+        .code-block .label {
+            display: block;
+            color: #64748b;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 0.5rem 0 0.25rem;
+        }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header -->
+    <section class="hero-bg pt-32 pb-12">
+        <div class="grid-pattern"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-3xl mx-auto">
+                <a href="../../en/" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    Back to Blog
+                </a>
+                <div class="flex items-center gap-3 mb-4 flex-wrap">
+                    <span class="blog-tag">Claude Code</span>
+                    <span class="blog-tag">Loops</span>
+                    <span class="blog-tag">Agentic Coding</span>
+                    <span class="blog-date">June 11, 2026</span>
+                </div>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+                    Loops, Not Prompts: Why the Head of Claude Code Stopped Prompting, and What I Built From It
+                </h1>
+                <p class="text-xl text-gray-400">
+                    The person who built Claude Code doesn't write prompts anymore. He writes loops. That sounded like hype at first, so I went and tested it myself.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <article class="section-dark py-16">
+        <div class="container mx-auto px-6">
+            <div class="article-content">
+
+                <p>
+                    Boris Cherny is the creator and head of Claude Code at Anthropic, the very person who built the tool I use every day. In early June he sat down for <em>Acquired Unplugged</em> (hosted by WorkOS, June 2, 2026) and said one line that has been bouncing around every other dev feed since:
+                </p>
+
+                <blockquote>
+                    "I don't prompt Claude anymore. I have loops that are running. They're the ones that are prompting Claude and figuring out what to do. My job is to write loops."
+                </blockquote>
+
+                <p>
+                    Put plainly: he no longer prompts Claude. He has loops running, and it's the loops that prompt Claude and decide what to do. His job is to write the loops. In the same conversation he mentioned that he had uninstalled his IDE back in November, because he hadn't opened it for a month. This isn't an anecdote pulled from a hype thread: the statement is verified across more than half a dozen outlets, and Fortune confirms the substance.
+                </p>
+
+                <p>
+                    My first reaction was skepticism. "I just write loops now" reads exactly like the kind of stage-line that lands online and falls apart in practice. So I didn't take it on faith. I built it. This piece is both things: what Cherny actually means, and the autonomous loop I genuinely put into one of my projects.
+                </p>
+
+                <h2>What Cherny actually means (and what's paraphrase)</h2>
+
+                <p>
+                    A bit of honesty first: the core quote above is verbatim. But "Loop Author" and the "four-component checklist" that spread afterwards? Cherny never actually said those; that's other people's framing, not his quote.
+                </p>
+
+                <p>
+                    The real lesson sits underneath the quote, and it's robust. The bottleneck when working with a strong model is shifting. Typing the perfect prompt is no longer the scarce resource; <strong>building the system around the model</strong> is: the goal, the check, the guardrails, the review. Once you've got that, you don't need the buzzwords at all.
+                </p>
+
+                <h2>/loop vs /goal: the practical part</h2>
+
+                <p>
+                    The nice thing is you don't have to argue about "loops" in the abstract, because Anthropic has already shipped two of them as real commands in Claude Code. Both are documented exactly as below in the official docs.
+                </p>
+
+                <table class="agent-table">
+                    <thead>
+                        <tr><th>Command</th><th>What drives it</th><th>What it's for</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>/loop</td>
+                            <td>Interval-based: a fixed cadence (e.g. every 5 min) <em>or</em> an interval Claude picks itself, from 1&nbsp;min to 1&nbsp;hour.</td>
+                            <td>Watching and tending. Has a built-in maintenance mode. From version 2.1.72.</td>
+                        </tr>
+                        <tr>
+                            <td>/goal</td>
+                            <td>Condition-driven: you set a completion condition; after each round a small fast model (Haiku) judges yes/no plus a reason for whether it holds.</td>
+                            <td>Getting done. Ends automatically once the goal is met. From version 2.1.139.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p>
+                    The one-liner that stuck with me: <strong>/loop is for watching. /goal is for finishing.</strong> <code>/goal</code> is the more interesting of the two, because it's essentially a built-in self-check (an automated check, or "eval"): Claude works, a second model acts as the referee and decides whether the goal is met, then it's done or it keeps going.
+                </p>
+
+                <div class="insight-box">
+                    <h4>The single most important rule for good /goal conditions</h4>
+                    <p class="text-gray-300 text-sm">
+                        The Haiku judge runs <strong>no</strong> commands and reads <strong>no</strong> files itself. It only judges what's in the conversation so far (the transcript). So your completion condition has to name three things: a <em>measurable end state</em>, the <em>check command</em> that proves it, and a boundary clause (a <em>scope fence</em>) that forbids shortcuts.
+                    </p>
+                </div>
+
+                <p>
+                    Why that matters shows up in the classic failure case. Set "all tests pass" as your goal, and the cheapest way to make it true is to delete the tests, and a judge that only sees the transcript waves it through. With a scope fence, the same condition looks very different:
+                </p>
+
+                <div class="code-block">
+                    <span class="label">Bad</span>
+                    <span class="bad">Condition: "all tests pass"</span>
+                    <span class="label">Good (with scope fence)</span>
+                    <span class="good">Condition: "npm test is green AND no test was deleted or
+  skipped with .skip (git diff shows no removed test cases)"</span>
+                </div>
+
+                <h2>What I built</h2>
+
+                <p>
+                    Enough theory. In one of my research projects, an autonomous multi-agent system searches scientific studies on dietary supplements, scores their evidence, and writes audited articles from them. Systems like that run regularly here in automated passes, and some fail. That's exactly where I built a classic loop: <strong>error logs → issue → fix → pull request</strong>. It comes in two halves. Loop A, the <strong>producer</strong>, turns failures into issues. Loop B, the <strong>consumer</strong>, turns those issues into fixes and pull requests. The first half is harmless, the second is the real test of nerve, so let's start with the harmless one.
+                </p>
+
+                <div class="phase-card">
+                    <div class="phase-header">
+                        <span class="phase-number">LOOP A</span>
+                        <span class="phase-title">Logs → deduplicated GitHub issue (built, running)</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        A Python script reads failed pipeline runs (status <code>failed</code>, <code>crashed</code>, <code>abandoned</code>) from the database, groups them by a <strong>normalized error signature</strong>, and collapses identical errors into one (this is called <strong>deduplication</strong>, "dedup" for short), so exactly <em>one</em> GitHub issue is created per signature. "Normalized" means changing details like IDs, numbers and timestamps are stripped out, so the same error type always gets the same stable fingerprint. The script uses <em>no</em> language model for this; it's pure, rule-based logic (the same input always yields the same result), so it's free.
+                    </p>
+                </div>
+
+                <p>
+                    The decisive test was the deduplication. I checked it against three failures, two of them with the same error: a timeout while loading studies from PubMed, differing only in their study IDs. That's exactly the kind of error that shows up constantly in real operation whenever an external API acts up, and it spawns a fresh run every time. Naively that's three separate issues, the start of an <em>issue storm</em> that floods your board with the same problem over and over. With the normalized signature the two identical errors were correctly merged into <strong>one</strong>: one issue, not three. That's exactly the difference between a useful loop and one that floods your issue board.
+                </p>
+
+                <p>
+                    The whole thing goes live through a scheduled GitHub Action that creates the issues, with a second safeguard against duplicates (does an open issue for the same error already exist?) and a dry-run mode for testing it safely. That's the producer. The exciting part comes now.
+                </p>
+
+                <div class="phase-card">
+                    <div class="phase-header">
+                        <span class="phase-number">LOOP B</span>
+                        <span class="phase-title">Issue → Claude fixes it → draft PR (built, with safeguards)</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        Loop B is the risky half: it reacts to the <code>auto-fix</code> label, lets Claude fix the issue, and opens a pull request. This is exactly where the system decides whether it's a useful tool or a hazard. Four safeguards make the difference. It <strong>locks the issue</strong> (<code>wip</code> label) before it starts, so no second run grabs the same one. It <strong>verifies every fix</strong> against the same signal as CI (ruff, mypy, pytest), and a PR is created only when everything is green. It <strong>may not touch critical files</strong> (cost limits, model configuration, DB migrations are off-limits). And the PR is always a <strong>draft</strong>: I merge, not the agent.
+                    </p>
+                </div>
+
+                <p>
+                    The non-obvious point lives in that verification step, and it's the reason a loop like this works at all. Remember how the judge in <code>/goal</code> only sees the conversation (the transcript)? That's the Achilles' heel: a working agent can simply <em>claim</em> "all tests green" without ever running them, and a judge that only reads the text believes it. The fix isn't magic, it's discipline: the condition demands that the <strong>real command output be in the transcript</strong>. Not "the tests pass," but "<code>pytest</code> was run and its output shows 0 failures." The agent can only fool its own referee if you leave it the gap, so you don't.
+                </p>
+
+                <h2>I tested it for real</h2>
+
+                <p>
+                    Theory is cheap, so I tested Loop B against a real, controlled bug. I deliberately slipped a small fault into the code, an off-by-one in the circuit breaker, opened an issue for it, and set the <code>auto-fix</code> label. From there I did nothing but watch.
+                </p>
+
+                <div class="insight-box">
+                    <h4>What the agent did autonomously</h4>
+                    <p class="text-gray-300 text-sm">
+                        It locked the issue, found the faulty line, and changed exactly that one, without touching any off-limits file. It ran the tests and waited until they were green. Then it pushed its own branch and opened a draft PR that closes the issue. From the moment I set the label to the finished pull request, not a single keystroke came from me.
+                    </p>
+                </div>
+
+                <p>
+                    What mattered wasn't that the fix worked, but how much discipline sits in the safeguards. The agent touched only the one allowed file. It cleared the eval gate only once the real <code>pytest</code> output was in the transcript, not on a bare claim. And the result was a <em>draft</em>, not a finished merge. The last step was mine, by design.
+                </p>
+
+                <p>
+                    That's not a glossy result, it's an honest one: an agent that does the boring, verifiable work autonomously, and a human who keeps the last call. And a loop isn't good when it impresses you, but when you can trust it in failure as much as in success. When a run fails, this one releases its lock again, leaves an honest comment, and touches no code. That cleanup discipline is exactly the difference between a useful tool and a hazard.
+                </p>
+
+                <h2>What's proven, and what's still aspiration</h2>
+
+                <p>
+                    This is where serious framing parts ways with hype. More is proven than you'd think: Cherny's quotes are verified, <code>/loop</code> and <code>/goal</code> are real products, GitHub's Copilot Coding Agent really does turn an issue into a pull request, and "ralph" (a well-known loop method) works for new, from-scratch projects (greenfield). But the limits are just as real.
+                </p>
+
+                <ul>
+                    <li><strong>Agents detect well and prioritize badly.</strong> A widely-cited test run by the software firm EPAM made this plain: 15 AI agents had to find one real, deliberately-hidden security vulnerability in roughly 350,000 lines of production code. They often found it, but one agent buried it under 46 more inflated "Critical" false alarms. The flaw was found, just unfindable in the noise. <em>Detecting</em> is the strength, <em>ranking by importance</em> the weakness.</li>
+                    <li><strong>Mature codebases are not loop terrain.</strong> Geoffrey Huntley, the creator of the ralph method, puts it bluntly himself: <em>"There's no way in heck would I use Ralph in an existing code base."</em> Loops shine on new projects and well-checkable routine work, not in a grown production system.</li>
+                    <li><strong>There are no reliable cost numbers.</strong> No verified figures exist for how many tokens (and therefore how much money) loops like these burn through. So: set caps, watch spend, and never let one run unattended against a metered (pay-per-use) API.</li>
+                </ul>
+
+                <h2>The five guardrails that made the difference in my producer/consumer case</h2>
+
+                <p>
+                    These five aren't a universal law, they're what made my specific logs-to-PR loop safe. A different loop needs different guardrails. What stays is the principle behind them: before you arm a loop, think about where it could do damage, and build a brake for each of those spots.
+                </p>
+
+                <div class="insight-box">
+                    <h4>The five guardrails that made the difference in my producer/consumer case</h4>
+                    <ol class="text-gray-300 text-sm" style="list-style: decimal; padding-left: 1.25rem; margin-top: 0.5rem;">
+                        <li><strong>Collapse duplicates</strong> (dedup) in the producer, so no issue storm builds up.</li>
+                        <li><strong>Lock a task the moment it's picked up</strong>, so two helpers (workers) don't work the same task at once.</li>
+                        <li><strong>A check gate via <code>/goal</code> with a scope fence</strong>, so the agent can't game the goal (e.g. deleting tests instead of making them pass).</li>
+                        <li><strong>Agent may only read; it writes only through an allowlist</strong> (a list of explicitly permitted actions), so the worst-case damage stays small.</li>
+                        <li><strong>A human decides the merge</strong> (the merge gate), always.</li>
+                    </ol>
+                </div>
+
+                <h2>Takeaway</h2>
+
+                <p>
+                    Cherny is right, directionally. But the lesson isn't "stop thinking." It's that the leverage now lives in the system around the model: the goal, the automatic check (eval), the guardrails, the review. That's exactly what I felt building this loop in <em>supplement</em>. The hard part wasn't telling Claude something. The work was in the error signature that doesn't spam the board, the verification gate the agent can't game, and the cleanup behavior that rolls back cleanly on every failure.
+                </p>
+
+                <p>
+                    My advice if you want to start: begin small, with a <code>/goal</code> on a convergent, zero-risk task. Climb the ladder only as far as you've cleanly built the guardrails. And keep the merge gate in human hands forever.
+                </p>
+
+                <hr style="border-color: #374151; margin: 2rem 0;">
+
+                <p><strong>Tools used:</strong></p>
+                <div style="margin: 1rem 0;">
+                    <a href="https://claude.ai/code" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        Claude Code
+                    </a>
+                    <a href="https://code.claude.com/docs/en/workflows" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M4 4h16v4H4zM4 10h16v4H4zM4 16h16v4H4z"/></svg>
+                        /loop &amp; /goal
+                    </a>
+                </div>
+
+                <p>
+                    Building a system like this (goal, eval, guardrails, review) is exactly the kind of work I do as an AI consultant. Wondering how an autonomous loop could take real, recurring work off your team's plate without becoming a liability? <a href="../../../index.html#contact">Get in touch</a>.
+                </p>
+
+            </div>
+        </div>
+    </article>
+
+    <!-- Related posts (internal cross-links for crawl equity) -->
+    <nav class="related-posts" aria-label="More articles">
+        <p class="related-posts__heading">// More articles</p>
+        <div class="related-posts__grid">
+                <a class="related-posts__card" href="opus-4-8-dynamic-workflows-erst-recht-audit.html">
+                    <span class="related-posts__card-title">Opus 4.8 & Dynamic Workflows: How 7 Agents Audited My Legal-Tech Platform in 5 Minutes</span>
+                </a>
+                <a class="related-posts__card" href="ki-agenten-workflows-superpowers.html">
+                    <span class="related-posts__card-title">Superpowers: How AI Agents Learn to Work Like Real Teams</span>
+                </a>
+                <a class="related-posts__card" href="multi-agent-ai-crewai.html">
+                    <span class="related-posts__card-title">Multi-Agent AI Systems with CrewAI: Teams Instead of Lone Wolves</span>
+                </a>
+        </div>
+    </nav>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script defer src="../../../js/components.js"></script>
+    <script defer src="../../../js/translations.js"></script>
+    <script defer src="../../../js/main.js"></script>
+</body>
+</html>
