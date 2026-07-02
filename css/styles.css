@@ -418,6 +418,17 @@ header nav a:hover {
     50% { opacity: 0.5; transform: scale(0.8); }
 }
 
+/* Scarcity badge glow (Custom Development card) */
+.badge-glow-amber {
+    box-shadow: 0 0 12px rgba(251, 191, 36, 0.25), 0 0 4px rgba(251, 191, 36, 0.3);
+    animation: glow-amber-pulse 3s ease-in-out infinite;
+}
+
+@keyframes glow-amber-pulse {
+    0%, 100% { box-shadow: 0 0 12px rgba(251, 191, 36, 0.25), 0 0 4px rgba(251, 191, 36, 0.3); }
+    50% { box-shadow: 0 0 18px rgba(251, 191, 36, 0.4), 0 0 6px rgba(251, 191, 36, 0.45); }
+}
+
 /* Tech stack badges */
 .tech-badge {
     display: inline-flex;
