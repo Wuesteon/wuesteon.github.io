@@ -327,8 +327,11 @@ function setLanguage(lang) {
 
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
-        if (translations[lang][key]) {
-            if (element.hasAttribute('data-i18n-html')) {
+        if (translations[lang][key] !== undefined) {
+            const attr = element.getAttribute('data-i18n-attr');
+            if (attr) {
+                element.setAttribute(attr, translations[lang][key]);
+            } else if (element.hasAttribute('data-i18n-html')) {
                 element.innerHTML = translations[lang][key];
             } else {
                 element.textContent = translations[lang][key];
