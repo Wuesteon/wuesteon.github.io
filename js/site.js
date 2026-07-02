@@ -490,9 +490,13 @@ window.addEventListener("load", ()=>{
    Universal: builds itself from whatever .nav on the page.
    Adds a DE/EN toggle to the drawer (nav toggle is a <button>,
    not cloned) so mobile users keep the language switch.
+   Runs after DOM ready because components.js injects .nav in its
+   own DOMContentLoaded handler (site.js loads after components.js,
+   so this listener fires after the nav exists).
    ============================================================ */
-(function(){
+function initMobileDrawer(){
   var nav = document.querySelector(".nav"); if(!nav) return;
+  if(document.querySelector(".mnav")) return; // already built
   var links = nav.querySelector(".links"); if(!links) return;
 
   var burger = document.createElement("button");
@@ -530,7 +534,10 @@ window.addEventListener("load", ()=>{
   panel.addEventListener("click", function(e){ if(e.target.tagName === "A") close(); });
   document.addEventListener("keydown", function(e){ if(e.key === "Escape") close(); });
   addEventListener("resize", function(){ if(innerWidth > 1024) close(); });
-})();
+}
+if(document.readyState === "loading"){
+  document.addEventListener("DOMContentLoaded", initMobileDrawer);
+} else { initMobileDrawer(); }
 
 /* ============================================================
    LIVING BUTTONS — upgrade every .btn--pri into a Cyberpunk
@@ -594,5 +601,10 @@ var upgradeLivingButtons; // exposed so onLanguageChange can re-sync i18n labels
   upgradeLivingButtons = function(){
     document.querySelectorAll(".btn--pri[data-i18n]").forEach(reupgrade);
   };
-  document.querySelectorAll(".btn--pri").forEach(upgrade);
+  function upgradeAll(){ document.querySelectorAll(".btn--pri").forEach(upgrade); }
+  // static buttons now; injected nav CTA after components.js runs (DOM ready).
+  upgradeAll();
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", upgradeAll);
+  } else { upgradeAll(); }
 })();
