@@ -68,8 +68,8 @@ body.mnav-lock{ overflow:hidden; }
 .grid3d { position:absolute; left:50%; bottom:-2vh; width:220vw; height:60vh; transform:translateX(-50%) perspective(340px) rotateX(73deg);
   transform-origin:center bottom; z-index:1; pointer-events:none;
   background-image:linear-gradient(rgba(255,42,60,.5) 1px,transparent 1px), linear-gradient(90deg,rgba(255,42,60,.4) 1px,transparent 1px);
-  background-size:64px 64px; mask-image:linear-gradient(to top, #000 0%, transparent 82%); animation:floor 3s linear infinite; }
-@keyframes floor { to { background-position:0 64px; } }
+  background-size:64px 64px; mask-image:linear-gradient(to top, #000 0%, transparent 82%); }
+/* grid floor is static (no scrolling animation) */
 .hero__glow { position:absolute; left:50%; bottom:-8vh; transform:translateX(-50%); width:80vw; height:40vh; z-index:1;
   background:radial-gradient(ellipse at 50% 100%, rgba(255,42,60,.45), transparent 65%); filter:blur(30px); }
 .hero__in { position:relative; z-index:3; text-align:center; padding:0 24px; max-width:1000px; }

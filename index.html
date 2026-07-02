@@ -107,6 +107,15 @@
 .vrow__d{ margin-top:8px; color:var(--mut); font-size:15px; line-height:1.55; max-width:60ch; }
 .vrow__cta{ font-family:"Space Mono",monospace; font-size:13px; letter-spacing:.04em; color:var(--hot); text-decoration:none; white-space:nowrap; border:1px solid var(--line); padding:11px 18px; border-radius:8px; transition:.2s; }
 .vrow:hover .vrow__cta{ border-color:var(--red); color:var(--red); }
+/* --- SCARCE row: "invitation only" custom development --- */
+.vrow--scarce{ border-bottom-color:rgba(255,42,60,.22); }
+.vrow--scarce .vrow__head{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.vrow--scarce .vrow__t{ color:#e8e8ec; }
+.vrow__gate{ display:inline-flex; align-items:center; gap:8px; font-family:"Space Mono",monospace; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--hot); border:1px solid rgba(255,42,60,.4); background:rgba(255,42,60,.06); padding:5px 11px; border-radius:999px; white-space:nowrap; }
+.vrow__gate i{ width:6px; height:6px; border-radius:50%; background:var(--red); box-shadow:0 0 8px var(--red); animation:dot 2s infinite; }
+.vrow--scarce .vrow__cta{ color:var(--mut); }
+.vrow--scarce:hover .vrow__cta{ border-color:var(--red); color:var(--red); }
+@media(max-width:760px){ .vrow--scarce .vrow__cta{ display:none; } }
 .mh__sub, .mh__cta, .mh__proof{ opacity:0; }
 </style>
 </head>
@@ -177,7 +186,7 @@
       <div data-stagger>
         <div class="vrow"><div class="vrow__n">01</div><div><div class="vrow__t" data-i18n="bw.svc.1.title" data-i18n-html>AI <span class="rip">Agents</span></div><div class="vrow__d" data-i18n="bw.svc.1.desc">Autonomous agents, workflows and self-hosted LLMs that do real work — full data sovereignty. Ollama, CrewAI, LangChain, RAG.</div></div><a href="#scan" class="vrow__cta" data-i18n="bw.svc.1.cta">SCAN MY SITE ▸</a></div>
         <div class="vrow"><div class="vrow__n">02</div><div><div class="vrow__t" data-i18n="bw.svc.2.title" data-i18n-html>AI <span class="rip">Security</span></div><div class="vrow__d" data-i18n="bw.svc.2.desc">Red-teaming and hardening for AI systems — prompt-injection defense to cloud. 2nd place in a prompt-injection challenge.</div></div><a href="#contact" class="vrow__cta" data-i18n="bw.svc.2.cta">HARDEN MY AI ▸</a></div>
-        <div class="vrow"><div class="vrow__n">03</div><div><div class="vrow__t" data-i18n="bw.svc.3.title" data-i18n-html>Custom <span class="rip">Development</span></div><div class="vrow__d" data-i18n="bw.svc.3.desc">Full-stack web & mobile, taken on selectively for projects that fit. React Native, SvelteKit, Supabase, TypeScript.</div></div><a href="#contact" class="vrow__cta" data-i18n="bw.svc.3.cta">START A BUILD ▸</a></div>
+        <div class="vrow vrow--scarce"><div class="vrow__n">03</div><div><div class="vrow__head"><div class="vrow__t" data-i18n="bw.svc.3.title" data-i18n-html>Custom <span class="rip">Development</span></div><span class="vrow__gate"><i></i><span data-i18n="bw.svc.3.gate">By invitation</span></span></div><div class="vrow__d" data-i18n="bw.svc.3.desc">Selective — for projects that are technically interesting and a genuine fit. Tell me about it and we'll see. React Native, SvelteKit, Supabase, TypeScript.</div></div><a href="#contact" class="vrow__cta" data-i18n="bw.svc.3.cta">PITCH A PROJECT →</a></div>
       </div>
     </div>
   </section>
