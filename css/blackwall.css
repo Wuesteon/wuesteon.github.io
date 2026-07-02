@@ -40,6 +40,16 @@ main { position:relative; z-index:2; }
 .nav .links a { text-decoration:none; transition:color .2s; } .nav .links a:hover, .nav .links a.on{ color:#fff; }
 .nav .avail { display:inline-flex; align-items:center; gap:8px; font-family:"Space Mono",monospace; font-size:11px; letter-spacing:.08em; color:#3ad17a; border:1px solid rgba(58,209,122,.28); padding:7px 12px; border-radius:8px; }
 .nav .avail i { width:7px; height:7px; border-radius:50%; background:#3ad17a; box-shadow:0 0 8px #3ad17a; animation:dot 2s infinite; }
+
+/* ---- language toggle: segmented pill, red active segment ---- */
+.lang-toggle{ display:inline-flex; align-items:center; gap:2px; padding:3px; border:1px solid var(--line); border-radius:999px; background:rgba(255,255,255,.03); cursor:pointer; font-family:"Space Mono",monospace; font-size:11px; letter-spacing:.06em; line-height:1; transition:border-color .2s; }
+.lang-toggle:hover{ border-color:rgba(255,42,60,.45); }
+.lang-toggle > span{ display:inline-flex; align-items:center; justify-content:center; min-width:26px; padding:5px 8px; border-radius:999px; color:var(--mut); transition:color .2s, background .2s, box-shadow .2s; }
+/* hide the legacy "|" separator span (any middle span without an id/indicator class) */
+.lang-toggle > span:not([id]):not([class]){ display:none; }
+.lang-toggle > span.active{ color:#050507; background:var(--red); font-weight:700; box-shadow:0 0 14px rgba(255,42,60,.45); }
+.lang-toggle:hover > span:not(.active){ color:#e8e8ec; }
+@media (prefers-reduced-motion: reduce){ .lang-toggle, .lang-toggle > span{ transition:none; } }
 @keyframes dot { 0%,100%{opacity:1;} 50%{opacity:.3;} }
 
 /* ---- mobile menu ---- */
