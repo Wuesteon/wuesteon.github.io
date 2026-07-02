@@ -1,6 +1,6 @@
-# Nils Weiser — IT Consulting: KI & App Entwicklung — Full Content
+# Nils Weiser — AI Agent Specialist & AI Security (wAIser.dev) — Full Content
 
-> Personal portfolio and blog of Nils Weiser, an IT consultant and developer from the Lake Constance region (Bodenseeraum), Germany. Focus areas: AI strategy, AI agents, app and web development, and technical consulting — from concept to delivery. The blog covers Claude / Claude Code, Anthropic Skills, multi-agent systems (CrewAI), legal AI, model evaluation, and AI-tooling deep dives, published in German and English.
+> Personal portfolio and blog of Nils Weiser, an AI Agent Specialist from the Lake Constance region (Bodenseeraum, Switzerland). He builds autonomous AI agents that do real work — and hardens them against attack (red-teaming, prompt-injection defense; 2nd place in a prompt-injection challenge). Also selective full-stack custom development. Tagline: "Make your agents wiser." The blog covers AI agents, AI security, Claude / Claude Code, Anthropic Skills, multi-agent systems (CrewAI), legal AI, and model evaluation, published in German and English.
 
 This file inlines the full text of all blog posts so AI assistants can read them without crawling. English posts first, then German.
 

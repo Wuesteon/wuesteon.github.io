@@ -1,17 +1,20 @@
-# Nils Weiser — IT Consulting: KI & App Entwicklung
+# Nils Weiser — AI Agent Specialist & AI Security (wAIser.dev)
 
-> Personal portfolio and blog of Nils Weiser, an IT consultant and developer from the Lake Constance region (Bodenseeraum), Germany. Focus areas: AI strategy, AI agents, app and web development, and technical consulting — from concept to delivery. The blog covers Claude / Claude Code, Anthropic Skills, multi-agent systems (CrewAI), legal AI, model evaluation, and AI-tooling deep dives, published in German and English.
+> Personal portfolio and blog of Nils Weiser, an AI Agent Specialist from the Lake Constance region (Bodenseeraum, Switzerland). He builds autonomous AI agents that do real work — and hardens them against attack (red-teaming, prompt-injection defense; 2nd place in a prompt-injection challenge). Also selective full-stack custom development. Tagline: "Make your agents wiser." The blog covers AI agents, AI security, Claude / Claude Code, Anthropic Skills, multi-agent systems (CrewAI), legal AI, and model evaluation, published in German and English.
 
 - Site: https://waiser.dev/
-- Author: Nils Weiser — IT Consultant & Developer (Bodenseeraum, DE)
+- Author: Nils Weiser — AI Agent Specialist & AI Security (Bodenseeraum, Schweiz)
+- Services: AI Agents · AI Security · Custom Development
 - Languages: German (default) and English
 - Contact: https://waiser.dev/#contact
 
 ## Main pages
 
-- [Home (DE/EN)](https://waiser.dev/): Portfolio — services, projects, and contact for AI strategy, app and web development, and technical consulting.
-- [Blog — German](https://waiser.dev/blog/): Articles on AI, development and technology.
+- [Home (DE/EN)](https://waiser.dev/): Portfolio — autonomous AI agents, AI security hardening, and custom development. Includes a free "Agent Opportunity Scan" tool.
+- [Blog — German](https://waiser.dev/blog/): Field notes on AI agents, AI security and development.
 - [Blog — English](https://waiser.dev/blog/en/): English translations of the blog.
+- [Impressum](https://waiser.dev/impressum.html): Legal notice (German).
+- [Datenschutz](https://waiser.dev/datenschutz.html): Privacy policy (German).
 
 ## Blog posts (English)
 

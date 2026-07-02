@@ -3,32 +3,46 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://waiser.dev/</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-07-02</lastmod>
   </url>
   <url>
     <loc>https://waiser.dev/blog/</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-07-02</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/en/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/"/>
   </url>
   <url>
     <loc>https://waiser.dev/blog/en/</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-07-02</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/en/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/"/>
   </url>
   <url>
-    <loc>https://waiser.dev/blog/posts/de/opus-4-8-dynamische-workflows-erst-recht-audit.html</loc>
-    <lastmod>2026-05-31</lastmod>
-    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/opus-4-8-dynamische-workflows-erst-recht-audit.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/opus-4-8-dynamic-workflows-erst-recht-audit.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/opus-4-8-dynamische-workflows-erst-recht-audit.html"/>
+    <loc>https://waiser.dev/blog/posts/de/agent-memory-poisoning-mem0.html</loc>
+    <lastmod>2026-06-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/agent-memory-poisoning-mem0.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/agent-memory-poisoning-mem0.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/agent-memory-poisoning-mem0.html"/>
+  </url>
+  <url>
+    <loc>https://waiser.dev/blog/posts/en/agent-memory-poisoning-mem0.html</loc>
+    <lastmod>2026-06-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/agent-memory-poisoning-mem0.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/agent-memory-poisoning-mem0.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/agent-memory-poisoning-mem0.html"/>
   </url>
   <url>
     <loc>https://waiser.dev/blog/posts/de/ambient-ai-die-naechste-ki-generation.html</loc>
-    <lastmod>2026-05-25</lastmod>
+    <lastmod>2026-05-21</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/ambient-ai-die-naechste-ki-generation.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/ambient-ai-the-next-ai-generation.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/ambient-ai-die-naechste-ki-generation.html"/>
+  </url>
+  <url>
+    <loc>https://waiser.dev/blog/posts/en/ambient-ai-the-next-ai-generation.html</loc>
+    <lastmod>2026-05-21</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/ambient-ai-die-naechste-ki-generation.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/ambient-ai-the-next-ai-generation.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/ambient-ai-die-naechste-ki-generation.html"/>
@@ -41,81 +55,172 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/anthropic-skills-guide.html"/>
   </url>
   <url>
+    <loc>https://waiser.dev/blog/posts/en/anthropic-skills-guide.html</loc>
+    <lastmod>2026-05-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/anthropic-skills-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/anthropic-skills-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/anthropic-skills-guide.html"/>
+  </url>
+  <url>
     <loc>https://waiser.dev/blog/posts/de/claude-code-skills.html</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-03-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/claude-code-skills.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/claude-code-skills.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/claude-code-skills.html"/>
+  </url>
+  <url>
+    <loc>https://waiser.dev/blog/posts/en/claude-code-skills.html</loc>
+    <lastmod>2026-03-15</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/claude-code-skills.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/claude-code-skills.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/claude-code-skills.html"/>
   </url>
   <url>
     <loc>https://waiser.dev/blog/posts/de/claude-mythos-preview-zero-days.html</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-04-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/claude-mythos-preview-zero-days.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/claude-mythos-preview-zero-days.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/claude-mythos-preview-zero-days.html"/>
+  </url>
+  <url>
+    <loc>https://waiser.dev/blog/posts/en/claude-mythos-preview-zero-days.html</loc>
+    <lastmod>2026-04-15</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/claude-mythos-preview-zero-days.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/claude-mythos-preview-zero-days.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/claude-mythos-preview-zero-days.html"/>
   </url>
   <url>
     <loc>https://waiser.dev/blog/posts/de/genetische-algorithmen-java.html</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2025-12-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/genetische-algorithmen-java.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/genetische-algorithmen-java.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/genetische-algorithmen-java.html"/>
+  </url>
+  <url>
+    <loc>https://waiser.dev/blog/posts/en/genetische-algorithmen-java.html</loc>
+    <lastmod>2025-12-20</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/genetische-algorithmen-java.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/genetische-algorithmen-java.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/genetische-algorithmen-java.html"/>
   </url>
   <url>
     <loc>https://waiser.dev/blog/posts/de/karpathy-claude-md.html</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-04-10</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/karpathy-claude-md.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/karpathy-claude-md.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/karpathy-claude-md.html"/>
+  </url>
+  <url>
+    <loc>https://waiser.dev/blog/posts/en/karpathy-claude-md.html</loc>
+    <lastmod>2026-04-10</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/karpathy-claude-md.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/karpathy-claude-md.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/karpathy-claude-md.html"/>
   </url>
   <url>
     <loc>https://waiser.dev/blog/posts/de/ki-agenten-workflows-superpowers.html</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-03-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/ki-agenten-workflows-superpowers.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/ki-agenten-workflows-superpowers.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/ki-agenten-workflows-superpowers.html"/>
+  </url>
+  <url>
+    <loc>https://waiser.dev/blog/posts/en/ki-agenten-workflows-superpowers.html</loc>
+    <lastmod>2026-03-25</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/ki-agenten-workflows-superpowers.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/ki-agenten-workflows-superpowers.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/ki-agenten-workflows-superpowers.html"/>
   </url>
   <url>
     <loc>https://waiser.dev/blog/posts/de/ki-modell-evaluation.html</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-02-10</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/ki-modell-evaluation.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/ki-modell-evaluation.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/ki-modell-evaluation.html"/>
+  </url>
+  <url>
+    <loc>https://waiser.dev/blog/posts/en/ki-modell-evaluation.html</loc>
+    <lastmod>2026-02-10</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/ki-modell-evaluation.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/ki-modell-evaluation.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/ki-modell-evaluation.html"/>
   </url>
   <url>
     <loc>https://waiser.dev/blog/posts/de/legal-ai-knowledge-base-docling.html</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-01-25</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/legal-ai-knowledge-base-docling.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/legal-ai-knowledge-base-docling.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/legal-ai-knowledge-base-docling.html"/>
   </url>
   <url>
+    <loc>https://waiser.dev/blog/posts/en/legal-ai-knowledge-base-docling.html</loc>
+    <lastmod>2026-01-25</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/legal-ai-knowledge-base-docling.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/legal-ai-knowledge-base-docling.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/legal-ai-knowledge-base-docling.html"/>
+  </url>
+  <url>
+    <loc>https://waiser.dev/blog/posts/de/loops-statt-prompts-cherny.html</loc>
+    <lastmod>2026-06-11</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/loops-statt-prompts-cherny.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/loops-not-prompts-cherny.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/loops-statt-prompts-cherny.html"/>
+  </url>
+  <url>
+    <loc>https://waiser.dev/blog/posts/en/loops-not-prompts-cherny.html</loc>
+    <lastmod>2026-06-11</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/loops-statt-prompts-cherny.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/loops-not-prompts-cherny.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/loops-statt-prompts-cherny.html"/>
+  </url>
+  <url>
     <loc>https://waiser.dev/blog/posts/de/mit-ai-halluzinationen.html</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-04-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/mit-ai-halluzinationen.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/mit-ai-hallucinations.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/mit-ai-halluzinationen.html"/>
+  </url>
+  <url>
+    <loc>https://waiser.dev/blog/posts/en/mit-ai-hallucinations.html</loc>
+    <lastmod>2026-04-30</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/mit-ai-halluzinationen.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/mit-ai-hallucinations.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/mit-ai-halluzinationen.html"/>
   </url>
   <url>
     <loc>https://waiser.dev/blog/posts/de/multi-agent-ai-crewai.html</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-01-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/multi-agent-ai-crewai.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/multi-agent-ai-crewai.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/multi-agent-ai-crewai.html"/>
+  </url>
+  <url>
+    <loc>https://waiser.dev/blog/posts/en/multi-agent-ai-crewai.html</loc>
+    <lastmod>2026-01-15</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/multi-agent-ai-crewai.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/multi-agent-ai-crewai.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/multi-agent-ai-crewai.html"/>
   </url>
   <url>
     <loc>https://waiser.dev/blog/posts/de/openclaw-vs-nemoclaw.html</loc>
-    <lastmod>2026-05-09</lastmod>
+    <lastmod>2026-02-20</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/openclaw-vs-nemoclaw.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/openclaw-vs-nemoclaw.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/openclaw-vs-nemoclaw.html"/>
   </url>
   <url>
-    <loc>https://waiser.dev/blog/posts/de/playwright-mcp-browser-automatisierung.html</loc>
-    <lastmod>2026-05-09</lastmod>
-    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/playwright-mcp-browser-automatisierung.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/playwright-mcp-browser-automatisierung.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/playwright-mcp-browser-automatisierung.html"/>
+    <loc>https://waiser.dev/blog/posts/en/openclaw-vs-nemoclaw.html</loc>
+    <lastmod>2026-02-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/openclaw-vs-nemoclaw.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/openclaw-vs-nemoclaw.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/openclaw-vs-nemoclaw.html"/>
+  </url>
+  <url>
+    <loc>https://waiser.dev/blog/posts/de/opus-4-8-dynamische-workflows-erst-recht-audit.html</loc>
+    <lastmod>2026-05-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/opus-4-8-dynamische-workflows-erst-recht-audit.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/opus-4-8-dynamic-workflows-erst-recht-audit.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/opus-4-8-dynamische-workflows-erst-recht-audit.html"/>
   </url>
   <url>
     <loc>https://waiser.dev/blog/posts/en/opus-4-8-dynamic-workflows-erst-recht-audit.html</loc>
@@ -125,94 +230,25 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/opus-4-8-dynamische-workflows-erst-recht-audit.html"/>
   </url>
   <url>
-    <loc>https://waiser.dev/blog/posts/en/ambient-ai-the-next-ai-generation.html</loc>
-    <lastmod>2026-05-25</lastmod>
-    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/ambient-ai-die-naechste-ki-generation.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/ambient-ai-the-next-ai-generation.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/ambient-ai-die-naechste-ki-generation.html"/>
-  </url>
-  <url>
-    <loc>https://waiser.dev/blog/posts/en/anthropic-skills-guide.html</loc>
-    <lastmod>2026-05-15</lastmod>
-    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/anthropic-skills-guide.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/anthropic-skills-guide.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/anthropic-skills-guide.html"/>
-  </url>
-  <url>
-    <loc>https://waiser.dev/blog/posts/en/claude-code-skills.html</loc>
-    <lastmod>2026-05-09</lastmod>
-    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/claude-code-skills.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/claude-code-skills.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/claude-code-skills.html"/>
-  </url>
-  <url>
-    <loc>https://waiser.dev/blog/posts/en/claude-mythos-preview-zero-days.html</loc>
-    <lastmod>2026-05-09</lastmod>
-    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/claude-mythos-preview-zero-days.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/claude-mythos-preview-zero-days.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/claude-mythos-preview-zero-days.html"/>
-  </url>
-  <url>
-    <loc>https://waiser.dev/blog/posts/en/genetische-algorithmen-java.html</loc>
-    <lastmod>2026-05-09</lastmod>
-    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/genetische-algorithmen-java.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/genetische-algorithmen-java.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/genetische-algorithmen-java.html"/>
-  </url>
-  <url>
-    <loc>https://waiser.dev/blog/posts/en/karpathy-claude-md.html</loc>
-    <lastmod>2026-05-09</lastmod>
-    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/karpathy-claude-md.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/karpathy-claude-md.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/karpathy-claude-md.html"/>
-  </url>
-  <url>
-    <loc>https://waiser.dev/blog/posts/en/ki-agenten-workflows-superpowers.html</loc>
-    <lastmod>2026-05-09</lastmod>
-    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/ki-agenten-workflows-superpowers.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/ki-agenten-workflows-superpowers.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/ki-agenten-workflows-superpowers.html"/>
-  </url>
-  <url>
-    <loc>https://waiser.dev/blog/posts/en/ki-modell-evaluation.html</loc>
-    <lastmod>2026-05-09</lastmod>
-    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/ki-modell-evaluation.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/ki-modell-evaluation.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/ki-modell-evaluation.html"/>
-  </url>
-  <url>
-    <loc>https://waiser.dev/blog/posts/en/legal-ai-knowledge-base-docling.html</loc>
-    <lastmod>2026-05-09</lastmod>
-    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/legal-ai-knowledge-base-docling.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/legal-ai-knowledge-base-docling.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/legal-ai-knowledge-base-docling.html"/>
-  </url>
-  <url>
-    <loc>https://waiser.dev/blog/posts/en/mit-ai-hallucinations.html</loc>
-    <lastmod>2026-05-09</lastmod>
-    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/mit-ai-halluzinationen.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/mit-ai-hallucinations.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/mit-ai-halluzinationen.html"/>
-  </url>
-  <url>
-    <loc>https://waiser.dev/blog/posts/en/multi-agent-ai-crewai.html</loc>
-    <lastmod>2026-05-09</lastmod>
-    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/multi-agent-ai-crewai.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/multi-agent-ai-crewai.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/multi-agent-ai-crewai.html"/>
-  </url>
-  <url>
-    <loc>https://waiser.dev/blog/posts/en/openclaw-vs-nemoclaw.html</loc>
-    <lastmod>2026-05-09</lastmod>
-    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/openclaw-vs-nemoclaw.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/openclaw-vs-nemoclaw.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/openclaw-vs-nemoclaw.html"/>
-  </url>
-  <url>
-    <loc>https://waiser.dev/blog/posts/en/playwright-mcp-browser-automatisierung.html</loc>
-    <lastmod>2026-05-09</lastmod>
+    <loc>https://waiser.dev/blog/posts/de/playwright-mcp-browser-automatisierung.html</loc>
+    <lastmod>2026-03-05</lastmod>
     <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/playwright-mcp-browser-automatisierung.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/playwright-mcp-browser-automatisierung.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/playwright-mcp-browser-automatisierung.html"/>
+  </url>
+  <url>
+    <loc>https://waiser.dev/blog/posts/en/playwright-mcp-browser-automatisierung.html</loc>
+    <lastmod>2026-03-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/playwright-mcp-browser-automatisierung.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/playwright-mcp-browser-automatisierung.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/playwright-mcp-browser-automatisierung.html"/>
+  </url>
+  <url>
+    <loc>https://waiser.dev/impressum.html</loc>
+    <lastmod>2026-07-02</lastmod>
+  </url>
+  <url>
+    <loc>https://waiser.dev/datenschutz.html</loc>
+    <lastmod>2026-07-02</lastmod>
   </url>
 </urlset>
