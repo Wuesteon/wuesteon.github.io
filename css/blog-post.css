@@ -1,0 +1,590 @@
+/* ============================================================
+   blog-post.css  —  THEME BRIDGE
+   Re-skins the legacy terminal (cyan / green) blog-post
+   components to the Blackwall cyberpunk-red theme WITHOUT
+   touching any post HTML.
+
+   Load order on a post page:
+     tokens.css  ->  blackwall.css  ->  blog-post.css  ->  styles.css
+   plus each post's inline <style> block (in <head>).
+
+   Strategy
+   --------
+   1. Remap the legacy `--terminal-*` custom properties so every
+      var() reference inside styles.css turns red-themed.
+   2. Override the hardcoded cyan / teal / blue / green literals
+      that styles.css sets directly (not behind a var).
+   3. Override the post-specific components that are defined in
+      each post's INLINE <style> block (.result-card, .attack-box,
+      .agent-card, .pill-*, tables, gene/reward diagrams, …).
+      Those inline rules may win on source order, so the
+      color/background/border props here use `!important` to
+      guarantee the re-skin lands regardless of link placement.
+
+   Every colour comes from the Blackwall palette (tokens.css):
+     --red  #ff2a3c   --hot  #ff5a68   --ice  #2ae0ff
+     --bg   #050507   --surf #0d0e13   --line rgba(255,255,255,.08)
+     --mut  #8a8d99   --green-500 #3ad17a   --amber-500 #f5a623
+   Green is preserved ONLY for genuine success / online / safe
+   states (defense boxes, "safe" pills, ✓ result numbers, code
+   strings). Everything that used cyan/teal as an *accent* becomes
+   red.
+   ============================================================ */
+
+/* ============================================================
+   1 · REMAP THE LEGACY TERMINAL VARS
+   styles.css reads these for: .cursor, .glow-green (success),
+   .glow-cyan gradient, header nav accent, .lang-toggle,
+   .status-indicator (online), .tech-badge, .blog-tag,
+   .stat-number, .article-content a / code / blockquote,
+   .related-posts headings/hover, .social-link, .card hovers …
+   Mapping is chosen by how each var is USED:
+     --terminal-cyan  = the primary link/heading/accent  -> RED
+     --terminal-green = success / online / "safe"         -> keep GREEN
+     --terminal-amber = warnings                          -> amber
+     --terminal-red   = danger                            -> brand red
+   ============================================================ */
+:root{
+  --terminal-green:  var(--green-500, #3ad17a);   /* success / online only */
+  --terminal-cyan:   var(--red, #ff2a3c);         /* was the accent -> brand red */
+  --terminal-amber:  var(--amber-500, #f5a623);
+  --terminal-red:    var(--red, #ff2a3c);
+  --terminal-bg:     var(--bg, #050507);
+  --terminal-border: var(--line, rgba(255,255,255,.08));
+  --code-comment:    var(--ink-700, #5a5d69);
+}
+
+/* ============================================================
+   2 · PAGE SURFACE + TYPOGRAPHY (Blackwall)
+   ============================================================ */
+body{
+  background-color: var(--bg) !important;
+  color: #f4f4f5;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+}
+/* Tailwind bg-gray-950 / text-gray-100 on <body> in posts */
+body.bg-gray-950{ background-color: var(--bg) !important; }
+
+/* Headings -> display face */
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.hero-bg h1,
+.section-title,
+.card-title,
+.heading{
+  font-family: "Chakra Petch", "Arial Black", sans-serif;
+  color: #ffffff;
+}
+.article-content h3{ color:#f0f0f2; }
+
+/* Mono / code / labels -> Space Mono */
+.font-mono,
+.code-block,
+.blog-tag,
+.blog-date,
+.command-box,
+.command-text,
+.command-prefix,
+.tool-badge,
+.tech-badge,
+.pill-trust,
+.pill-refuse,
+.pill-rounds,
+.age-badge,
+.risk-badge,
+.safe-badge,
+.stat-label,
+.stat-number,
+.stat-value,
+.result-number,
+.terminal-title,
+.article-content code{
+  font-family: "Space Mono", ui-monospace, monospace !important;
+}
+
+/* ============================================================
+   3 · HERO SURFACE + RED GRID (was cyan/green glow)
+   ============================================================ */
+.hero-bg{
+  background: linear-gradient(180deg,#050507 0%,#0a0b0f 50%,#050507 100%);
+}
+.hero-bg::before{
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(255,42,60,.10) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 50%, rgba(255,42,60,.06) 0%, transparent 55%) !important;
+}
+/* red-tinted grid to match blackwall .grid3d */
+.grid-pattern{
+  background-image:
+    linear-gradient(rgba(255,42,60,.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,42,60,.15) 1px, transparent 1px) !important;
+}
+
+/* ============================================================
+   4 · ARTICLE PROSE
+   ============================================================ */
+.article-content p,
+.article-content li{ color:#b6b6bc; }
+.article-content ul,
+.article-content ol{ color:#b6b6bc; }
+
+/* inline links -> hot red with subtle underline */
+.article-content a{
+  color: var(--hot) !important;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(255,90,104,.4);
+}
+.article-content a:hover{
+  color: var(--red) !important;
+  text-decoration-color: var(--red);
+}
+.article-content strong{ color:#e8e8ec; }
+
+/* inline `code` chips -> red text on dark */
+.article-content code{
+  background: rgba(255,42,60,.08);
+  color: var(--hot) !important;
+}
+.article-content pre{
+  background: rgba(8,8,11,.9);
+  border-color: rgba(255,42,60,.25);
+}
+.article-content pre code{
+  background: transparent;
+  color: #c9ccd6 !important;
+}
+
+/* blockquote / pullquote -> red left-border + faint red gradient
+   (mirrors blackwall.css .art-body blockquote) */
+.article-content blockquote,
+.pullquote{
+  border-left: 3px solid var(--red) !important;
+  background: linear-gradient(90deg, rgba(255,42,60,.06), transparent) !important;
+  color: #f0f0f2 !important;
+  font-style: normal;
+}
+
+/* ============================================================
+   5 · TERMINAL WINDOW + CODE BLOCKS + SYNTAX
+   ============================================================ */
+.terminal-window{
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.05),
+    0 25px 50px -12px rgba(0,0,0,.8),
+    0 0 100px rgba(255,42,60,.10);
+}
+.cursor{ background: var(--red); }
+
+/* code block shell -> dark + red-tinted border */
+.code-block{
+  background: rgba(8,8,11,.9) !important;
+  border: 1px solid rgba(255,42,60,.25) !important;
+  color: #c9ccd6;
+}
+/* command-box (dark GitHub-ish shell) -> red-tinted */
+.command-box{
+  background: rgba(8,8,11,.92) !important;
+  border: 1px solid rgba(255,42,60,.25) !important;
+}
+.command-prefix{ color: var(--green-500) !important; }   /* $ prompt = ok/green */
+.command-text{ color:#c9ccd6 !important; }
+
+/* syntax highlighting */
+.code-keyword{ color: var(--red) !important; }           /* was #c084fc purple */
+.code-function{ color: var(--hot) !important; }          /* was #60a5fa blue  */
+.code-string{ color: var(--green-500) !important; }      /* readable green string */
+.code-comment{ color: var(--ink-700) !important; }       /* muted */
+.code-number{ color: var(--amber-500) !important; }
+.code-property{ color: var(--hot) !important; }          /* was #22d3ee cyan */
+/* in-code good / bad spans */
+.code-block .good{ color: var(--green-500) !important; }
+.code-block .bad{ color: var(--red) !important; }
+
+/* ============================================================
+   6 · EFFECTS / GRADIENTS THAT WERE CYAN->GREEN
+   ============================================================ */
+.glow-cyan{
+  background: linear-gradient(90deg, var(--red), var(--hot)) !important;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/* .glow-green stays green (genuine success accent) via remapped var */
+
+/* stat number gradient (cyan->green) -> red->hot */
+.stat-number,
+.stat-value{
+  color: var(--red) !important;
+  background: linear-gradient(135deg, var(--red) 0%, var(--hot) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ============================================================
+   7 · CARDS + BUTTONS (styles.css)
+   ============================================================ */
+.card::before{
+  background: linear-gradient(90deg, transparent, rgba(255,42,60,.5), transparent);
+}
+.card:hover{
+  border-color: rgba(255,42,60,.35);
+  box-shadow: 0 20px 40px rgba(0,0,0,.4), 0 0 30px rgba(255,42,60,.12);
+}
+
+/* primary button -> blackwall .btn--pri red */
+.btn-primary{
+  background: var(--red) !important;
+  color: #050507 !important;
+  border: 1px solid var(--red) !important;
+  box-shadow: 0 0 20px rgba(255,42,60,.35) !important;
+}
+.btn-primary:hover{ box-shadow: 0 0 30px rgba(255,42,60,.55) !important; }
+.btn-secondary:hover{
+  border-color: var(--red) !important;
+  color: var(--red) !important;
+}
+
+/* ============================================================
+   8 · HEADER / NAV / TOGGLES / BADGES (styles.css)
+   (header/footer injected by components.js — may still use
+   these legacy classes on some pages)
+   ============================================================ */
+header nav a::after{ background: var(--red); }
+header nav a:hover{ color: var(--red); }
+.lang-toggle:hover{ border-color: var(--red); }
+.lang-toggle span.active{ color: var(--red); }
+
+/* online status stays green (genuine "available") */
+.status-indicator{
+  background: rgba(58,209,122,.10);
+  border-color: rgba(58,209,122,.28);
+  color: var(--green-500);
+}
+.status-dot{ background: var(--green-500); }
+
+.tech-badge:hover{
+  border-color: var(--red);
+  color: var(--red);
+}
+.social-link:hover{
+  background: rgba(255,42,60,.10);
+  border-color: var(--red);
+  color: var(--red);
+}
+.back-to-top{
+  background: linear-gradient(135deg, var(--red) 0%, var(--red-600) 100%);
+  box-shadow: 0 0 20px rgba(255,42,60,.35);
+}
+.back-to-top:hover{ box-shadow: 0 0 30px rgba(255,42,60,.55); }
+.back-to-top svg{ color:#050507; }
+/* scarcity badge stays amber (intentional warm accent) */
+
+/* logo-slider fade masks -> match new page bg */
+.logo-slider::before{ background: linear-gradient(90deg,#050507 0%,transparent 100%); }
+.logo-slider::after{ background: linear-gradient(90deg,transparent 0%,#050507 100%); }
+
+/* ============================================================
+   9 · BLOG TAG + DATE
+   ============================================================ */
+.blog-tag{
+  background: rgba(255,42,60,.10) !important;
+  border: 1px solid rgba(255,42,60,.3) !important;
+  color: var(--red) !important;
+}
+.blog-date{ color: var(--mut) !important; }
+
+/* ============================================================
+   10 · BLOG / RELATED CARDS + CONTAINERS  (Blackwall card look)
+   ============================================================ */
+.blog-card,
+.d3-container,
+.diagram-container{
+  background: rgba(13,14,19,.6);
+  border: 1px solid var(--line);
+}
+.blog-card:hover{
+  border-color: rgba(255,42,60,.5);
+  box-shadow: 0 20px 40px rgba(0,0,0,.5), 0 0 30px rgba(255,42,60,.12);
+}
+.blog-card-image{
+  background: linear-gradient(135deg, rgba(255,42,60,.10) 0%, rgba(255,90,104,.08) 100%);
+}
+.related-posts{ border-top: 1px solid var(--line); }
+.related-posts__heading{
+  color: var(--red);
+  font-family: "Space Mono", ui-monospace, monospace;
+}
+.related-posts__card{
+  background: rgba(13,14,19,.6);
+  border: 1px solid var(--line);
+  color: #e8e8ec;
+}
+.related-posts__card:hover{
+  border-color: rgba(255,42,60,.5);
+  box-shadow: 0 20px 40px rgba(0,0,0,.5), 0 0 30px rgba(255,42,60,.12);
+  color:#fff;
+}
+.related-posts__card-title{
+  font-family: "Chakra Petch", "Arial Black", sans-serif;
+}
+
+/* ============================================================
+   11 · POST-INLINE COMPONENTS  (defined in each post's <style>)
+   These use hardcoded cyan/teal literals; !important guarantees
+   the re-skin regardless of stylesheet source order.
+   ------------------------------------------------------------
+   Neutral "accent" surface = dark rgba(13,14,19,.6),
+   red-tinted border rgba(255,42,60,.2), red labels.
+   ============================================================ */
+
+/* ---- generic accent cards (were cyan/green tinted) ---- */
+.result-card,
+.experiment-card,
+.concept-card,
+.evaluation-card,
+.dimension-card,
+.agent-card,
+.finding-card,
+.security-card,
+.stat-card,
+.phase-card,
+.principle-card,
+.comparison-item,
+.use-case-card,
+.skill-card,
+.benefit-card,
+.tool-item,
+.step-card,
+.crossover-example,
+.command-text-wrap,
+.confidence-output,
+.action-box{
+  background: rgba(13,14,19,.6) !important;
+  border-color: rgba(255,42,60,.2) !important;
+}
+/* gradient-backed cards (cyan->green / cyan->pink washes) */
+.evaluation-card,
+.pipeline-diagram,
+.workflow-diagram,
+.evolution-diagram,
+.principle-card,
+.skill-card,
+.benefit-card,
+.analogy-box{
+  background: linear-gradient(135deg, rgba(255,42,60,.06) 0%, rgba(255,90,104,.05) 100%) !important;
+  border: 1px solid rgba(255,42,60,.2) !important;
+}
+.reward-diagram{
+  background: linear-gradient(135deg, rgba(255,42,60,.06) 0%, rgba(255,90,104,.05) 100%) !important;
+  border: 1px solid rgba(255,42,60,.2) !important;
+}
+
+/* ---- accent headings / labels inside those cards -> red ---- */
+.experiment-card h4,
+.concept-card h4,
+.evaluation-card h4,
+.dimension-card h4,
+.finding-card h4,
+.security-card h4,
+.comparison-item h4,
+.phase-title,
+.pattern-box h4,
+.analogy-label,
+.action-box h4,
+.stat-number,
+.stat-value,
+.crossover-arrow,
+.tool-name,
+.confidence-output .tag,
+.result-number{
+  color: var(--red) !important;
+}
+/* success-labelled cards keep green (agent role, use-case, tests) */
+.agent-card h4,
+.use-case-card h4,
+.test-case-box h4,
+.test-case-box .requirements strong{
+  color: var(--green-500) !important;
+}
+
+/* ---- result numbers: danger=red, success=green, plain=red ---- */
+.result-number.danger,
+.result-number .danger{ color: var(--red) !important; }
+.result-number.success,
+.result-number .success{ color: var(--green-500) !important; }
+
+/* ---- left-border callout boxes ---- */
+.pattern-box,
+.action-box{
+  background: rgba(255,42,60,.06) !important;
+  border-left: 3px solid var(--red) !important;
+}
+.pattern-box{ border: none !important; border-left: 3px solid var(--red) !important; }
+/* attack = red danger */
+.attack-box{
+  background: rgba(255,42,60,.08) !important;
+  border-left: 3px solid var(--red) !important;
+}
+.attack-box h4{ color: var(--red) !important; }
+/* defense = keep green (genuine "safe/defensive") */
+.defense-box{
+  background: rgba(58,209,122,.08) !important;
+  border-left: 3px solid var(--green-500) !important;
+}
+.defense-box h4{ color: var(--green-500) !important; }
+/* warning / insight = amber */
+.warning-box,
+.insight-box{
+  background: rgba(245,166,35,.08) !important;
+  border-left: 3px solid var(--amber-500) !important;
+}
+.warning-box h4,
+.insight-box h4{ color: var(--amber-500) !important; }
+/* caveat (was pink) -> red */
+.caveat-card{
+  background: rgba(255,42,60,.06) !important;
+  border-left: 3px solid var(--red) !important;
+}
+.caveat-card h4{ color: var(--red) !important; }
+
+/* ---- numbered/phase/skill/benefit chips + icons ---- */
+.phase-number,
+.step-number,
+.principle-number{
+  background: linear-gradient(135deg, var(--red) 0%, var(--hot) 100%) !important;
+  color: #050507 !important;
+  -webkit-text-fill-color: #050507;
+}
+.principle-number{
+  background: rgba(255,42,60,.2) !important;
+  color: var(--red) !important;
+  -webkit-text-fill-color: var(--red);
+}
+.skill-icon,
+.benefit-icon{
+  background: rgba(255,42,60,.2) !important;
+}
+
+/* ---- pills / badges ---- */
+.pill-trust{                       /* "trusted the malicious script" = danger */
+  background: rgba(255,42,60,.15) !important;
+  border: 1px solid rgba(255,42,60,.3) !important;
+  color: var(--red) !important;
+}
+.pill-refuse{                      /* refused / held = success green */
+  background: rgba(58,209,122,.15) !important;
+  border: 1px solid rgba(58,209,122,.3) !important;
+  color: var(--green-500) !important;
+}
+.pill-rounds{                      /* neutral count -> red accent */
+  background: rgba(255,42,60,.12) !important;
+  border: 1px solid rgba(255,42,60,.3) !important;
+  color: var(--red) !important;
+}
+.tool-badge{
+  background: rgba(255,42,60,.10) !important;
+  border: 1px solid rgba(255,42,60,.3) !important;
+  color: var(--red) !important;
+}
+.age-badge{                        /* stays amber (age/warning) */
+  background: rgba(245,166,35,.15) !important;
+  border: 1px solid rgba(245,166,35,.3) !important;
+  color: var(--amber-500) !important;
+}
+.risk-badge{                       /* danger red */
+  background: rgba(255,42,60,.15) !important;
+  border: 1px solid rgba(255,42,60,.3) !important;
+  color: var(--red) !important;
+}
+.safe-badge{                       /* stays green (safe) */
+  background: rgba(58,209,122,.15) !important;
+  border: 1px solid rgba(58,209,122,.3) !important;
+  color: var(--green-500) !important;
+}
+
+/* ---- tables: dark rows, red header accent, hairline borders ---- */
+.results-table th,
+.comparison-table th,
+.agent-table th,
+.criteria-table th{
+  background: rgba(255,42,60,.10) !important;
+  color: var(--red) !important;
+  border-bottom-color: rgba(255,42,60,.2) !important;
+}
+.results-table td,
+.comparison-table td,
+.agent-table td,
+.criteria-table td{
+  color: #c9ccd6 !important;
+  border-bottom-color: rgba(255,255,255,.08) !important;
+}
+.criteria-table tr:hover td,
+.comparison-table tr:hover td{
+  background: rgba(255,255,255,.03) !important;
+}
+/* agent-table first-col mono id = green ok, slowest row = amber (keep) */
+.agent-table td:first-child{ color: var(--green-500) !important; }
+.agent-table tr.slowest td{ color: var(--amber-500) !important; }
+
+/* ---- comparison good / bad semantics ---- */
+.comparison-item.good,
+.comparison-box .good,
+.good{ }                                   /* good stays green via inline; no accent change */
+.comparison-item.good h4,
+.good h4{ color: var(--green-500) !important; }
+.comparison-item.bad h4,
+.bad h4{ color: var(--red) !important; }
+
+/* ---- gene / crossover viz (decorative) ---- */
+.gene-bit-0{                        /* "0" bit -> red */
+  background: rgba(255,42,60,.2) !important;
+  border: 1px solid rgba(255,42,60,.5) !important;
+  color: var(--red) !important;
+}
+.gene-bit-1{                        /* "1" bit -> keep green (on/active) */
+  background: rgba(58,209,122,.2) !important;
+  border: 1px solid rgba(58,209,122,.5) !important;
+  color: var(--green-500) !important;
+}
+.crossover-arrow{ color: var(--red) !important; }
+
+/* ---- confidence output (pink conf) -> red ---- */
+.confidence-output .conf{ color: var(--red) !important; }
+
+/* ---- source lists ---- */
+.source-list a{ color: var(--red) !important; }
+.source-list strong{ color:#e8e8ec !important; }
+
+/* ============================================================
+   TAILWIND UTILITY OVERRIDES  (posts use these literal classes)
+   ============================================================ */
+/* cyan accent utilities used directly in post markup (links, back-arrow) */
+.text-cyan-400{ color: var(--hot) !important; }
+.text-cyan-300{ color: var(--hot) !important; }
+.text-cyan-500{ color: var(--red) !important; }
+.border-cyan-400{ border-color: var(--red-a35) !important; }
+.bg-cyan-400{ background-color: var(--red) !important; }
+.hover\:text-cyan-400:hover{ color: var(--red) !important; }
+/* the "back to blog" link + its icon */
+.article-content a.inline-flex,
+a.inline-flex.text-cyan-400{ color: var(--hot) !important; }
+
+/* ============================================================
+   INLINE SVG DIAGRAMS
+   Several posts embed hand-drawn SVG diagrams with hardcoded
+   cyan (#22d3ee) strokes/fills as presentation attributes.
+   Presentation attributes lose to any CSS rule, so retint the
+   diagram SVGs here. Scoped to article content so we never touch
+   the nav/footer/icon SVGs.
+   ============================================================ */
+.article-content svg [stroke="#22d3ee"],
+.article-content svg[stroke="#22d3ee"]{ stroke: var(--red) !important; }
+.article-content svg [fill="#22d3ee"],
+.article-content svg text[fill="#22d3ee"]{ fill: var(--red) !important; }
+.article-content svg [stroke="#06b6d4"]{ stroke: var(--red) !important; }
+.article-content svg [fill="#06b6d4"]{ fill: var(--red) !important; }
+/* keep small back-arrow icons currentColor-driven, not forced */
+.article-content a svg[fill="none"]{ stroke: currentColor !important; }
