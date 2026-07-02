@@ -326,6 +326,31 @@ function renderHomeFeed(){
 }
 renderHomeFeed();
 
+/* ---------------- article page enhancer ----------------
+   On a single post: fill in read-time from POSTS and render 3 related posts
+   into #art-more-grid. Matches the current post by its filename in either the
+   de or en href. */
+function enhanceArticle(){
+  var grid = document.getElementById("art-more-grid");
+  var readEl = document.querySelector("[data-art-read]");
+  if(!grid && !readEl) return;                 // not an article page
+  var file = location.pathname.split("/").pop();
+  var lang = siteLang();
+  var idx = POSTS.findIndex(function(p){
+    return (p.de.href.split("/").pop() === file) || (p.en.href.split("/").pop() === file);
+  });
+  if(idx < 0) return;
+  var post = POSTS[idx];
+  if(readEl){ readEl.textContent = (post[lang] || post.de).read; }
+  if(grid){
+    var more = [];
+    for(var i=1;i<=3;i++){ more.push(POSTS[(idx+i) % POSTS.length]); }
+    grid.innerHTML = more.map(tcardHTML).join("");
+    if(typeof attachTilt === "function") attachTilt();
+  }
+}
+enhanceArticle();
+
 /* ---------------- client logo rail + AI scan ---------------- */
 const LOGOS = [
   {s:"logos/coop.webp",a:"Coop"},{s:"logos/bih_charite.webp",a:"BIH Charité"},{s:"logos/misanto.webp",a:"Misanto"},
@@ -376,6 +401,7 @@ function renderBlogList(){
 window.onLanguageChange = function(){
   renderHomeFeed();
   renderBlogList();
+  enhanceArticle();
   if(typeof upgradeLivingButtons === "function") upgradeLivingButtons();
 };
 

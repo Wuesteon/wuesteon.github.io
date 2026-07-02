@@ -148,38 +148,26 @@
 
     <div id="header-placeholder"></div>
 
-    <!-- Article Header -->
-    <section class="hero-bg pt-32 pb-12">
+    <!-- Article Header (Blackwall art-hero) -->
+    <section class="art-hero" data-screen-label="Article">
+        <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
         <div class="grid-pattern"></div>
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="max-w-3xl mx-auto">
-                <a href="../../" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                    </svg>
-                    Zurück zum Blog
-                </a>
-                <div class="flex items-center gap-3 mb-4 flex-wrap">
-                    <span class="blog-tag">Ambient AI</span>
-                    <span class="blog-tag">Agents</span>
-                    <span class="blog-tag">Self-Hosted</span>
-                    <span class="blog-tag">Gemma</span>
-                    <span class="blog-date">21. Mai 2026</span>
-                </div>
-                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                    Ambient AI: Warum die nächste KI-Generation nicht antwortet, sondern bemerkt
-                </h1>
-                <p class="text-xl text-gray-400">
-                    Solange wir KI pro Anfrage bezahlen, bauen wir nur eine Form davon: Automaten, die auf Münzwurf reagieren. Die interessantere Form ist der Hausmeister, der von selbst merkt, wenn etwas nicht stimmt. Was sich ändert, wenn die Recheneinheit kippt.
-                </p>
+        <div class="art-hero__in">
+            <a class="art-back" href="../../">◄ ALLE POSTS</a>
+            <div><span class="art-cat">Ambient AI</span></div>
+            <h1 class="art-title">Ambient AI: Warum die nächste KI-Generation nicht antwortet, sondern bemerkt</h1>
+            <div class="art-meta">
+                <span class="who"><span class="av">NW</span> Nils Weiser</span>
+                <span class="sep">•</span><span data-art-date>21. Mai 2026</span>
+                <span class="sep">•</span><span data-art-read>—</span>
             </div>
         </div>
     </section>
+    <div class="art-hr"><div></div></div>
 
-    <!-- Article Content -->
-    <article class="section-dark py-16">
-        <div class="container mx-auto px-6">
-            <div class="article-content">
+    <!-- Article Content (Blackwall art-body) -->
+    <article class="art-body">
+                <p class="lead">Solange wir KI pro Anfrage bezahlen, bauen wir nur eine Form davon: Automaten, die auf Münzwurf reagieren. Die interessantere Form ist der Hausmeister, der von selbst merkt, wenn etwas nicht stimmt. Was sich ändert, wenn die Recheneinheit kippt.</p>
 
                 <div class="pullquote">
                     Die heutige KI ist ein Kaffeeautomat: du wirfst eine Münze ein (Prompt), bekommst einen Kaffee (Response). Pro Tasse bezahlt. Die nächste Generation ist ein Hausmeister: er macht seine Runde, schaut nach, meldet sich nur, wenn etwas nicht stimmt. Die Pro-Token-Ökonomie kann diese zweite Form nicht abbilden – und genau deshalb baut sie heute fast niemand.
@@ -458,9 +446,19 @@ Mo + Do 07:30 UTC  →  Portfolio in 5–10 Themen-Welten   [Pipeline, kein Revi
                     Sie überlegen, wo die Grenze zwischen „guter Cronjob" und „wirklich nützlicher Always-On-Agent" für Ihr Produkt verläuft – und was die ehrliche Aufwandsschätzung ist? <a href="../../../index.html#contact">Lassen Sie uns sprechen</a>. Ich helfe beim Aufbau von Ambient-AI-Setups, die in realen Projekten laufen, nicht nur in der Demo.
                 </p>
 
-            </div>
-        </div>
     </article>
+
+    <!-- Author share + related posts -->
+    <div class="art-share">
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
+      <a href="../../../index.html#contact" class="btn btn--pri">MIT MIR ARBEITEN ▸</a>
+    </div>
+    <section class="art-more">
+      <div class="wrap">
+        <div class="art-more__head"><h2>Weitere Field Notes</h2><a href="../../">ALLE POSTS ▸</a></div>
+        <div class="art-more__grid" id="art-more-grid"></div>
+      </div>
+    </section>
 
     <!-- Related posts (internal cross-links for crawl equity) -->
     <nav class="related-posts" aria-label="Weitere Artikel">

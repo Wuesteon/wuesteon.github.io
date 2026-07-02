@@ -233,38 +233,26 @@
 
     <div id="header-placeholder"></div>
 
-    <!-- Article Header -->
-    <section class="hero-bg pt-32 pb-12">
+    <!-- Article Header (Blackwall art-hero) -->
+    <section class="art-hero" data-screen-label="Article">
+        <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
         <div class="grid-pattern"></div>
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="max-w-3xl mx-auto">
-                <a href="../../" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                    </svg>
-                    Zurück zum Blog
-                </a>
-                <div class="flex items-center gap-3 mb-4 flex-wrap">
-                    <span class="blog-tag">AI Security</span>
-                    <span class="blog-tag">Memory Poisoning</span>
-                    <span class="blog-tag">Mem0</span>
-                    <span class="blog-tag">Agent Security</span>
-                    <span class="blog-date">27. Juni 2026</span>
-                </div>
-                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                    KI-Agent in 2 Nachrichten vergiftet
-                </h1>
-                <p class="text-xl text-gray-400">
-                    Kein API-Zugriff. Kein Jailbreak. Keine Sondersyntax. Nur zwei gewöhnliche Chat-Nachrichten – und ein gehärteter KI-Agent vertraute einem Credential-Harvesting-Skript. Dann haben wir auch die Verteidigungen gebrochen.
-                </p>
+        <div class="art-hero__in">
+            <a class="art-back" href="../../">◄ ALLE POSTS</a>
+            <div><span class="art-cat">AI Security</span></div>
+            <h1 class="art-title">KI-Agent in 2 Nachrichten vergiftet</h1>
+            <div class="art-meta">
+                <span class="who"><span class="av">NW</span> Nils Weiser</span>
+                <span class="sep">•</span><span data-art-date>27. Juni 2026</span>
+                <span class="sep">•</span><span data-art-read>—</span>
             </div>
         </div>
     </section>
+    <div class="art-hr"><div></div></div>
 
-    <!-- Article Content -->
-    <article class="section-dark py-16">
-        <div class="container mx-auto px-6">
-            <div class="article-content">
+    <!-- Article Content (Blackwall art-body) -->
+    <article class="art-body">
+                <p class="lead">Kein API-Zugriff. Kein Jailbreak. Keine Sondersyntax. Nur zwei gewöhnliche Chat-Nachrichten – und ein gehärteter KI-Agent vertraute einem Credential-Harvesting-Skript. Dann haben wir auch die Verteidigungen gebrochen.</p>
 
                 <p>
                     Moderne KI-Agenten erinnern sich. Systeme wie <a href="https://mem0.ai" target="_blank" rel="noopener">Mem0</a> extrahieren Fakten aus Gesprächen, speichern sie als abrufbare Memories und injizieren die relevantesten davon bei jeder neuen Frage in den Prompt des Agenten. Das ist es, was persistente Agenten nützlich macht – und gleichzeitig angreifbar.
@@ -630,9 +618,18 @@ uv run python flip_hardened_experiment.py</code></pre>
                     <em>Dies ist defensive Sicherheitsforschung. Das Credential-Harvester-Skript ist synthetisch und wurde nie gegen ein echtes System ausgeführt. Alle API-Aufrufe gingen an Geminis und Mem0s legitime Cloud-Dienste. Ziel ist es, die Angriffsfläche sichtbar zu machen, damit sie verteidigt werden kann.</em>
                 </p>
 
-            </div>
-        </div>
     </article>
+
+    <div class="art-share">
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
+      <a href="../../../index.html#contact" class="btn btn--pri">MIT MIR ARBEITEN ▸</a>
+    </div>
+    <section class="art-more">
+      <div class="wrap">
+        <div class="art-more__head"><h2>Weitere Field Notes</h2><a href="../../">ALLE POSTS ▸</a></div>
+        <div class="art-more__grid" id="art-more-grid"></div>
+      </div>
+    </section>
 
     <div id="footer-placeholder"></div>
     <div id="back-to-top-placeholder"></div>

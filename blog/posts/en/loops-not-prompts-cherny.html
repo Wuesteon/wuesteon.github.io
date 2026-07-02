@@ -187,37 +187,26 @@
 
     <div id="header-placeholder"></div>
 
-    <!-- Article Header -->
-    <section class="hero-bg pt-32 pb-12">
+    <!-- Article Header (Blackwall art-hero) -->
+    <section class="art-hero" data-screen-label="Article">
+        <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
         <div class="grid-pattern"></div>
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="max-w-3xl mx-auto">
-                <a href="../../en/" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                    </svg>
-                    Back to Blog
-                </a>
-                <div class="flex items-center gap-3 mb-4 flex-wrap">
-                    <span class="blog-tag">Claude Code</span>
-                    <span class="blog-tag">Loops</span>
-                    <span class="blog-tag">Agentic Coding</span>
-                    <span class="blog-date">June 11, 2026</span>
-                </div>
-                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                    Loops, Not Prompts: Why the Head of Claude Code Stopped Prompting, and What I Built From It
-                </h1>
-                <p class="text-xl text-gray-400">
-                    The person who built Claude Code doesn't write prompts anymore. He writes loops. That sounded like hype at first, so I went and tested it myself.
-                </p>
+        <div class="art-hero__in">
+            <a class="art-back" href="../../en/">◄ ALL POSTS</a>
+            <div><span class="art-cat">Claude Code</span></div>
+            <h1 class="art-title">Loops, Not Prompts: Why the Head of Claude Code Stopped Prompting, and What I Built From It</h1>
+            <div class="art-meta">
+                <span class="who"><span class="av">NW</span> Nils Weiser</span>
+                <span class="sep">•</span><span data-art-date>June 11, 2026</span>
+                <span class="sep">•</span><span data-art-read>—</span>
             </div>
         </div>
     </section>
+    <div class="art-hr"><div></div></div>
 
-    <!-- Article Content -->
-    <article class="section-dark py-16">
-        <div class="container mx-auto px-6">
-            <div class="article-content">
+    <!-- Article Content (Blackwall art-body) -->
+    <article class="art-body">
+                <p class="lead">The person who built Claude Code doesn't write prompts anymore. He writes loops. That sounded like hype at first, so I went and tested it myself.</p>
 
                 <p>
                     Boris Cherny is the creator and head of Claude Code at Anthropic, the very person who built the tool I use every day. In early June he sat down for <em>Acquired Unplugged</em> (hosted by WorkOS, June 2, 2026) and said one line that has been bouncing around every other dev feed since:
@@ -408,9 +397,19 @@
                     Building a system like this (goal, eval, guardrails, review) is exactly the kind of work I do as an AI consultant. Wondering how an autonomous loop could take real, recurring work off your team's plate without becoming a liability? <a href="../../../index.html#contact">Get in touch</a>.
                 </p>
 
-            </div>
-        </div>
     </article>
+
+    <!-- Author share + related posts -->
+    <div class="art-share">
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
+      <a href="../../../index.html#contact" class="btn btn--pri">WORK WITH ME ▸</a>
+    </div>
+    <section class="art-more">
+      <div class="wrap">
+        <div class="art-more__head"><h2>More field notes</h2><a href="../../en/">ALL POSTS ▸</a></div>
+        <div class="art-more__grid" id="art-more-grid"></div>
+      </div>
+    </section>
 
     <!-- Related posts (internal cross-links for crawl equity) -->
     <nav class="related-posts" aria-label="More articles">

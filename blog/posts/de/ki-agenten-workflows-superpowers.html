@@ -148,37 +148,26 @@
 
     <div id="header-placeholder"></div>
 
-    <!-- Article Header -->
-    <section class="hero-bg pt-32 pb-12">
+    <!-- Article Header (Blackwall art-hero) -->
+    <section class="art-hero" data-screen-label="Article">
+        <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
         <div class="grid-pattern"></div>
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="max-w-3xl mx-auto">
-                <a href="../../" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                    </svg>
-                    Zurück zum Blog
-                </a>
-                <div class="flex items-center gap-3 mb-4 flex-wrap">
-                    <span class="blog-tag">AI Agents</span>
-                    <span class="blog-tag">Workflows</span>
-                    <span class="blog-tag">Automatisierung</span>
-                    <span class="blog-date">12. Dezember 2025</span>
-                </div>
-                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                    Superpowers: Wie KI-Agenten lernen, wie echte Teams zu arbeiten
-                </h1>
-                <p class="text-xl text-gray-400">
-                    Ein Framework, das Claude Code wiederverwendbare Fähigkeiten beibringt und mehrstufige Entwicklungs-Workflows orchestriert.
-                </p>
+        <div class="art-hero__in">
+            <a class="art-back" href="../../">◄ ALLE POSTS</a>
+            <div><span class="art-cat">AI Agents</span></div>
+            <h1 class="art-title">Superpowers: Wie KI-Agenten lernen, wie echte Teams zu arbeiten</h1>
+            <div class="art-meta">
+                <span class="who"><span class="av">NW</span> Nils Weiser</span>
+                <span class="sep">•</span><span data-art-date>12. Dezember 2025</span>
+                <span class="sep">•</span><span data-art-read>—</span>
             </div>
         </div>
     </section>
+    <div class="art-hr"><div></div></div>
 
-    <!-- Article Content -->
-    <article class="section-dark py-16">
-        <div class="container mx-auto px-6">
-            <div class="article-content">
+    <!-- Article Content (Blackwall art-body) -->
+    <article class="art-body">
+                <p class="lead">Ein Framework, das Claude Code wiederverwendbare Fähigkeiten beibringt und mehrstufige Entwicklungs-Workflows orchestriert.</p>
 
                 <p>
                     Was, wenn ein KI-Coding-Agent nicht nur Code schreibt, sondern wie ein erfahrener Entwickler arbeitet? Mit dokumentierten Best Practices, konsistenten Workflows und der Fähigkeit, aus vergangenen Projekten zu lernen?
@@ -327,9 +316,19 @@
                     Interessiert an KI-gestützten Entwicklungsworkflows für dein Team? <a href="../../../index.html#contact">Schreib mir</a>. Ich helfe bei der Implementierung maßgeschneiderter Lösungen.
                 </p>
 
-            </div>
-        </div>
     </article>
+
+    <!-- Author share + related posts -->
+    <div class="art-share">
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
+      <a href="../../../index.html#contact" class="btn btn--pri">MIT MIR ARBEITEN ▸</a>
+    </div>
+    <section class="art-more">
+      <div class="wrap">
+        <div class="art-more__head"><h2>Weitere Field Notes</h2><a href="../../">ALLE POSTS ▸</a></div>
+        <div class="art-more__grid" id="art-more-grid"></div>
+      </div>
+    </section>
 
     <!-- Related posts (internal cross-links for crawl equity) -->
     <nav class="related-posts" aria-label="Weitere Artikel">

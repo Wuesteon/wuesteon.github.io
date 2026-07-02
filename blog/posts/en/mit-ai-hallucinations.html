@@ -176,37 +176,26 @@
 
     <div id="header-placeholder"></div>
 
-    <!-- Article Header -->
-    <section class="hero-bg pt-32 pb-12">
+    <!-- Article Header (Blackwall art-hero) -->
+    <section class="art-hero" data-screen-label="Article">
+        <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
         <div class="grid-pattern"></div>
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="max-w-3xl mx-auto">
-                <a href="../../en/" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                    </svg>
-                    Back to Blog
-                </a>
-                <div class="flex items-center gap-3 mb-4 flex-wrap">
-                    <span class="blog-tag">AI Research</span>
-                    <span class="blog-tag">Reinforcement Learning</span>
-                    <span class="blog-tag">LLM Calibration</span>
-                    <span class="blog-date">Apr 30, 2026</span>
-                </div>
-                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                    Did MIT solve AI hallucinations?
-                </h1>
-                <p class="text-xl text-gray-400">
-                    A new study from Cambridge promises more reliable models through calibrated reward signals. What it actually shows – and what it means for developers today.
-                </p>
+        <div class="art-hero__in">
+            <a class="art-back" href="../../en/">◄ ALL POSTS</a>
+            <div><span class="art-cat">AI Research</span></div>
+            <h1 class="art-title">Did MIT solve AI hallucinations?</h1>
+            <div class="art-meta">
+                <span class="who"><span class="av">NW</span> Nils Weiser</span>
+                <span class="sep">•</span><span data-art-date>Apr 30, 2026</span>
+                <span class="sep">•</span><span data-art-read>—</span>
             </div>
         </div>
     </section>
+    <div class="art-hr"><div></div></div>
 
-    <!-- Article Content -->
-    <article class="section-dark py-16">
-        <div class="container mx-auto px-6">
-            <div class="article-content">
+    <!-- Article Content (Blackwall art-body) -->
+    <article class="art-body">
+                <p class="lead">A new study from Cambridge promises more reliable models through calibrated reward signals. What it actually shows – and what it means for developers today.</p>
 
                 <p>
                     Short answer first: no. But what MIT actually showed in <a href="https://arxiv.org/abs/2507.16806" target="_blank" rel="noopener noreferrer">Beyond Binary Rewards: Training LMs to Reason about Their Uncertainty</a> is more interesting than the headline. Damani, Puri, Slocum, Shenfeld, Choshen, Kim, and Andreas demonstrate that the way we currently train reasoning models doesn't merely allow hallucinations – it actively produces them. And they have a fix for one specific class of the problem.
@@ -416,9 +405,19 @@
                     Building AI systems where model confidence and hallucination risk matter? <a href="../../../index.html#contact">Let's talk.</a> I help design agent architectures that treat uncertainty as signal instead of hiding it.
                 </p>
 
-            </div>
-        </div>
     </article>
+
+    <!-- Author share + related posts -->
+    <div class="art-share">
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
+      <a href="../../../index.html#contact" class="btn btn--pri">WORK WITH ME ▸</a>
+    </div>
+    <section class="art-more">
+      <div class="wrap">
+        <div class="art-more__head"><h2>More field notes</h2><a href="../../en/">ALL POSTS ▸</a></div>
+        <div class="art-more__grid" id="art-more-grid"></div>
+      </div>
+    </section>
 
     <!-- Related posts (internal cross-links for crawl equity) -->
     <nav class="related-posts" aria-label="Related posts">
