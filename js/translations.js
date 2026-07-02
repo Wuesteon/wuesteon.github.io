@@ -161,8 +161,8 @@ function setLanguage(lang) {
 
     if (isHomePage) {
         document.title = lang === 'de'
-            ? 'Nils Weiser - IT Consulting: KI & App Entwicklung'
-            : 'Nils Weiser - IT Consulting: AI & App Development';
+            ? 'Nils Weiser - AI Agent Specialist & AI Security'
+            : 'Nils Weiser - AI Agent Specialist & AI Security';
     } else if (isBlogPage) {
         // Only overwrite the title if the page explicitly opts in via [data-page-title].
         // Blog posts already render a localized <title> per file, so leaving it untouched
