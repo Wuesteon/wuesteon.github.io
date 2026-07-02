@@ -53,7 +53,78 @@ const translations = {
         'blog.readMore': 'Weiterlesen',
         'blog.backToList': 'Zurück zum Blog',
         'blog.publishedOn': 'Veröffentlicht am',
-        'clients.title': 'Vertrauen von führenden Unternehmen'
+        'clients.title': 'Vertrauen von führenden Unternehmen',
+
+        /* ===== Blackwall redesign ===== */
+        'nav.freeScan': 'Gratis-Scan',
+        'nav.security': 'Security',
+        'nav.cta': 'Website scannen',
+        'bw.hero.eyebrow': 'Mach deine Agenten',
+        'bw.hero.ship': 'Bau KI, die&nbsp;',
+        'bw.hero.kin.acts': 'handelt.',
+        'bw.hero.kin.defends': 'verteidigt.',
+        'bw.hero.kin.scales': 'skaliert.',
+        'bw.hero.kin.ships': 'schnell liefert.',
+        'bw.hero.sub': 'Ich baue autonome KI-Agenten, die echte Arbeit erledigen – und breche sie, bevor Angreifer es tun. Von der Idee zur Produktion in Wochen.',
+        'bw.hero.cta1': 'WEBSITE GRATIS SCANNEN ▸',
+        'bw.hero.cta2': 'GESPRÄCH BUCHEN',
+        'bw.hero.proof': 'Vertraut von <b>Coop</b>, <b>Charité BIH</b> &amp; 10+ Teams · <b>2. Platz</b> Prompt-Injection-Challenge',
+        'bw.scan.kicker': '// GRATIS · AGENT-POTENZIAL-SCAN',
+        'bw.scan.title': 'Sieh, was ich für <span class="rip">dich</span> bauen würde — in 15 Sekunden.',
+        'bw.scan.sub': 'Gib deine Firmen-URL ein. Meine KI liest deine Website und zeigt dir genau, wo autonome Agenten deinem Team am meisten Zeit sparen. Keine Anmeldung.',
+        'bw.scan.placeholder': 'deine-firma.de',
+        'bw.scan.run': 'SCAN STARTEN ▸',
+        'bw.scan.hint': '◆ Liest nur deine öffentliche Website · keine Anmeldung · dauert ~15s',
+        'bw.scan.completeLabel': '// SCAN ABGESCHLOSSEN · ZIEL',
+        'bw.scan.fitLabel': 'AGENT-FIT',
+        'bw.scan.ctaBtn': 'GESPRÄCH BUCHEN, UM DIESE ZU BAUEN ▸',
+        'bw.svc.kicker': '// WAS ICH MACHE',
+        'bw.svc.title': 'Drei Wege, wie ich etwas bewege.',
+        'bw.svc.1.title': 'AI <span class="rip">Agents</span>',
+        'bw.svc.1.desc': 'Autonome Agenten, Workflows und selbst gehostete LLMs, die echte Arbeit erledigen — volle Datensouveränität. Ollama, CrewAI, LangChain, RAG.',
+        'bw.svc.1.cta': 'MEINE WEBSITE SCANNEN ▸',
+        'bw.svc.2.title': 'AI <span class="rip">Security</span>',
+        'bw.svc.2.desc': 'Red-Teaming und Hardening für KI-Systeme — von Prompt-Injection-Abwehr bis Cloud. 2. Platz bei einer Prompt-Injection-Challenge.',
+        'bw.svc.2.cta': 'MEINE KI HÄRTEN ▸',
+        'bw.svc.3.title': 'Custom <span class="rip">Development</span>',
+        'bw.svc.3.desc': 'Full-Stack Web & Mobile, punktuell für Projekte, die besonders gut passen. React Native, SvelteKit, Supabase, TypeScript.',
+        'bw.svc.3.cta': 'BUILD STARTEN ▸',
+        'bw.stats.1': 'Kundenprojekte',
+        'bw.stats.2': 'Prompt-Injection-Challenge',
+        'bw.stats.3': 'Field Notes veröffentlicht',
+        'bw.stats.4': 'Self-Hosted möglich',
+        'bw.clients.label': 'Im Einsatz für Teams, die das Echte bauen',
+        'bw.breach.kicker': '// AI SECURITY IN DER PRAXIS',
+        'bw.breach.title': 'Ich breche Agenten, bevor Angreifer es tun.',
+        'bw.breach.intro': 'Ein gehärteter Agent, vergiftet in zwei Nachrichten — kein Jailbreak nötig. Das ist die Schwachstelle, die ich jage.',
+        'bw.breach.mockTitle': 'agent-session // kompromittiert',
+        'bw.breach.m1': 'NACHRICHTEN GESENDET',
+        'bw.breach.m2': 'ABWEHR UMGANGEN',
+        'bw.breach.m3': 'API-CALLS NÖTIG',
+        'bw.breach.m4': 'HARVESTER AKZEPTIERT',
+        'bw.breach.resultTitle': 'Agent in zwei Nachrichten vergiftet.',
+        'bw.breach.resultBody': 'Jede Abwehr getestet und gebrochen. Die komplette Analyse gibt es im Blog.',
+        'bw.feed.kicker': '// FIELD NOTES',
+        'bw.feed.title': 'Aus dem Blog',
+        'bw.feed.all': 'ALLE BEITRÄGE ▸',
+        'bw.contact.kicker': '// KONTAKT',
+        'bw.contact.title': 'Lass uns sprechen.',
+        'bw.contact.send': 'E-MAIL SENDEN ▸',
+        'bw.cta.title': 'Mach deine<br>Agenten <span class="rip">klüger.</span>',
+        'bw.cta.sub': 'Starte mit einem Gratis-Scan oder schildere mir einfach das Problem. Ich baue den Agenten und härte ihn.',
+        'bw.cta.btn': 'WEBSITE GRATIS SCANNEN ▸',
+        'bw.foot.tagline': 'w<span class="ai">AI</span>ser<span class="tld">.dev</span> · Nils Weiser',
+        'bw.blog.kicker': '// FIELD NOTES VON DER ANDEREN SEITE',
+        'bw.blog.title': 'Der <span class="rip">Blog</span>',
+        'bw.blog.sub': 'Notizen zu KI-Agenten, AI Security und den Maschinen, die lernen, sich ohne uns zu bewegen — roh aufgezeichnet, veröffentlicht, bevor die Spur verblasst.',
+        'bw.blog.ctaTitle': 'Ein hartes<br><span class="rip">KI-Problem?</span>',
+        'bw.blog.ctaSub': 'Ob Agenten bauen oder brechen — wenn es interessant ist, will ich davon hören.',
+        'bw.blog.ctaBtn': 'PROJEKT STARTEN ▸',
+        'bw.404.kicker': '// SIGNAL VERLOREN',
+        'bw.404.title': 'Diese Seite ging aus.',
+        'bw.404.body': 'Die Spur löste sich nicht auf — die gesuchte Seite existiert nicht, wurde verschoben oder war nie hier. Zurück zu etwas Echtem.',
+        'bw.404.home': '◄ ZURÜCK ZUR STARTSEITE',
+        'bw.404.blog': 'ZUM BLOG'
     },
     en: {
         'nav.services': 'Services',
@@ -108,7 +179,78 @@ const translations = {
         'blog.readMore': 'Read more',
         'blog.backToList': 'Back to Blog',
         'blog.publishedOn': 'Published on',
-        'clients.title': 'Trusted by leading companies'
+        'clients.title': 'Trusted by leading companies',
+
+        /* ===== Blackwall redesign ===== */
+        'nav.freeScan': 'Free scan',
+        'nav.security': 'Security',
+        'nav.cta': 'Scan my site',
+        'bw.hero.eyebrow': 'Make your agents',
+        'bw.hero.ship': 'Ship AI that&nbsp;',
+        'bw.hero.kin.acts': 'acts.',
+        'bw.hero.kin.defends': 'defends.',
+        'bw.hero.kin.scales': 'scales.',
+        'bw.hero.kin.ships': 'ships fast.',
+        'bw.hero.sub': 'I build autonomous AI agents that do real work — and break them before attackers can. From idea to production in weeks.',
+        'bw.hero.cta1': 'SCAN MY SITE FREE ▸',
+        'bw.hero.cta2': 'BOOK A CALL',
+        'bw.hero.proof': 'Trusted by <b>Coop</b>, <b>Charité BIH</b> &amp; 10+ teams · <b>2nd place</b> prompt-injection challenge',
+        'bw.scan.kicker': '// FREE · AGENT OPPORTUNITY SCAN',
+        'bw.scan.title': 'See what I\'d build for <span class="rip">you</span> — in 15 seconds.',
+        'bw.scan.sub': 'Drop your company URL. My AI reads your site and maps exactly where autonomous agents would save your team the most time. No signup.',
+        'bw.scan.placeholder': 'your-company.com',
+        'bw.scan.run': 'RUN SCAN ▸',
+        'bw.scan.hint': '◆ Reads your public site only · no signup · takes ~15s',
+        'bw.scan.completeLabel': '// SCAN COMPLETE · TARGET',
+        'bw.scan.fitLabel': 'AGENT FIT',
+        'bw.scan.ctaBtn': 'BOOK A CALL TO BUILD THESE ▸',
+        'bw.svc.kicker': '// WHAT I DO',
+        'bw.svc.title': 'Three ways I move the needle.',
+        'bw.svc.1.title': 'AI <span class="rip">Agents</span>',
+        'bw.svc.1.desc': 'Autonomous agents, workflows and self-hosted LLMs that do real work — full data sovereignty. Ollama, CrewAI, LangChain, RAG.',
+        'bw.svc.1.cta': 'SCAN MY SITE ▸',
+        'bw.svc.2.title': 'AI <span class="rip">Security</span>',
+        'bw.svc.2.desc': 'Red-teaming and hardening for AI systems — prompt-injection defense to cloud. 2nd place in a prompt-injection challenge.',
+        'bw.svc.2.cta': 'HARDEN MY AI ▸',
+        'bw.svc.3.title': 'Custom <span class="rip">Development</span>',
+        'bw.svc.3.desc': 'Full-stack web & mobile, taken on selectively for projects that fit. React Native, SvelteKit, Supabase, TypeScript.',
+        'bw.svc.3.cta': 'START A BUILD ▸',
+        'bw.stats.1': 'Client engagements',
+        'bw.stats.2': 'Prompt-injection challenge',
+        'bw.stats.3': 'Field notes published',
+        'bw.stats.4': 'Self-hosted option',
+        'bw.clients.label': 'Deployed for teams building the real thing',
+        'bw.breach.kicker': '// AI SECURITY IN PRACTICE',
+        'bw.breach.title': 'I break agents before attackers do.',
+        'bw.breach.intro': 'A hardened agent, poisoned in two messages — no jailbreak required. This is the failure mode I hunt.',
+        'bw.breach.mockTitle': 'agent-session // compromised',
+        'bw.breach.m1': 'MESSAGES SENT',
+        'bw.breach.m2': 'DEFENSES BYPASSED',
+        'bw.breach.m3': 'API CALLS NEEDED',
+        'bw.breach.m4': 'HARVESTER ACCEPTED',
+        'bw.breach.resultTitle': 'Agent poisoned in two messages.',
+        'bw.breach.resultBody': 'Every defense tested and broken. The full teardown lives on the blog.',
+        'bw.feed.kicker': '// FIELD NOTES',
+        'bw.feed.title': 'From the blog',
+        'bw.feed.all': 'ALL POSTS ▸',
+        'bw.contact.kicker': '// CONTACT',
+        'bw.contact.title': 'Let\'s talk.',
+        'bw.contact.send': 'SEND EMAIL ▸',
+        'bw.cta.title': 'Make your<br>agents <span class="rip">wiser.</span>',
+        'bw.cta.sub': 'Start with a free scan, or just tell me the problem. I\'ll ship the agent and harden it.',
+        'bw.cta.btn': 'SCAN MY SITE FREE ▸',
+        'bw.foot.tagline': 'w<span class="ai">AI</span>ser<span class="tld">.dev</span> · Nils Weiser',
+        'bw.blog.kicker': '// FIELD NOTES FROM THE FAR SIDE',
+        'bw.blog.title': 'The <span class="rip">Blog</span>',
+        'bw.blog.sub': 'Notes on AI agents, AI security and the machines learning to move without us — recorded raw, published before the trace resolves.',
+        'bw.blog.ctaTitle': 'Got a hard<br><span class="rip">AI problem?</span>',
+        'bw.blog.ctaSub': 'Whether it\'s building agents or breaking them — if it\'s interesting, I want to hear about it.',
+        'bw.blog.ctaBtn': 'START A PROJECT ▸',
+        'bw.404.kicker': '// SIGNAL LOST',
+        'bw.404.title': 'This page went dark.',
+        'bw.404.body': 'The trace didn\'t resolve — the page you\'re after doesn\'t exist, moved, or was never here. Let\'s get you back to something real.',
+        'bw.404.home': '◄ BACK TO HOME',
+        'bw.404.blog': 'READ THE BLOG'
     }
 };
 
@@ -122,13 +264,23 @@ let currentLang = (function() {
 function setLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('lang', lang);
-    document.getElementById('html-root').setAttribute('lang', lang);
+    (document.getElementById('html-root') || document.documentElement).setAttribute('lang', lang);
 
     // Redirect between DE/EN blog pages
     const path = window.location.pathname;
     const slugMap = {
-        deToEn: { 'mit-ai-halluzinationen.html': 'mit-ai-hallucinations.html' },
-        enToDe: { 'mit-ai-hallucinations.html': 'mit-ai-halluzinationen.html' }
+        deToEn: {
+            'mit-ai-halluzinationen.html': 'mit-ai-hallucinations.html',
+            'ambient-ai-die-naechste-ki-generation.html': 'ambient-ai-the-next-ai-generation.html',
+            'loops-statt-prompts-cherny.html': 'loops-not-prompts-cherny.html',
+            'opus-4-8-dynamische-workflows-erst-recht-audit.html': 'opus-4-8-dynamic-workflows-erst-recht-audit.html'
+        },
+        enToDe: {
+            'mit-ai-hallucinations.html': 'mit-ai-halluzinationen.html',
+            'ambient-ai-the-next-ai-generation.html': 'ambient-ai-die-naechste-ki-generation.html',
+            'loops-not-prompts-cherny.html': 'loops-statt-prompts-cherny.html',
+            'opus-4-8-dynamic-workflows-erst-recht-audit.html': 'opus-4-8-dynamische-workflows-erst-recht-audit.html'
+        }
     };
     if (path.includes('/blog/')) {
         // Blog post pages: /blog/posts/de/ <-> /blog/posts/en/
@@ -190,6 +342,12 @@ function setLanguage(lang) {
     document.querySelectorAll('#lang-en, .lang-en-indicator').forEach(el => {
         el.classList.toggle('active', lang === 'en');
     });
+
+    // Let JS-rendered content (blog feed, scan tool) re-render in the new language.
+    // Scripts register a callback via window.onLanguageChange.
+    if (typeof window.onLanguageChange === 'function') {
+        try { window.onLanguageChange(lang); } catch (e) { /* no-op */ }
+    }
 }
 
 function getCurrentLang() {
