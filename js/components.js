@@ -17,7 +17,7 @@ function getHeader(basePath = '', activePage = '', useAnchorLinks = false) {
     // mobile drawer by cloning .links anchors + the toggle.
     return `
     <nav class="nav">
-        <a class="brand" href="${homeLink}"><span class="m"></span><span class="wm">w<span class="ai">AI</span>ser<span class="tld">.dev</span></span></a>
+        <a class="brand" href="${homeLink}"><img class="m" src="${basePath}logos/mark.svg" alt="" width="30" height="30" aria-hidden="true"><span class="wm">w<span class="ai">AI</span>ser<span class="tld">.dev</span></span></a>
         <div class="links">
             <a href="${scanLink}" data-i18n="nav.freeScan">Free scan</a>
             <a href="${servicesLink}" data-i18n="nav.services">Services</a>
@@ -42,7 +42,7 @@ function getFooter(basePath = '') {
     return `
     <footer class="foot">
         <div class="wrap">
-            <span class="wm">w<span class="ai">AI</span>ser<span class="tld">.dev</span> · Nils Weiser</span>
+            <span class="foot__brand"><img class="foot__mark" src="${basePath}logos/mark.svg" alt="" width="22" height="22" aria-hidden="true"><span class="wm">w<span class="ai">AI</span>ser<span class="tld">.dev</span> · Nils Weiser</span></span>
             <div class="foot__links">
                 <a href="${blogLink}" data-i18n="nav.blog">Blog</a>
                 <a href="${basePath}index.html#services" data-i18n="nav.services">Services</a>
