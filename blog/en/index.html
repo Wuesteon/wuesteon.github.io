@@ -1,493 +1,87 @@
 <!DOCTYPE html>
 <html lang="en" id="html-root">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog | Nils Weiser - IT Consulting</title>
-    <meta name="description" content="Nils Weiser's blog — thoughts and insights on AI, development and technology.">
-    <link rel="canonical" href="https://waiser.dev/blog/en/">
-    <link rel="alternate" hreflang="de" href="https://waiser.dev/blog/">
-    <link rel="alternate" hreflang="en" href="https://waiser.dev/blog/en/">
-    <link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/">
-    <link rel="stylesheet" href="../../css/tailwind.css">
-    <link rel="stylesheet" href="../../css/styles.css">
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — wAIser.dev · Nils Weiser</title>
+<meta name="description" content="Field notes on AI agents, AI security and development — by Nils Weiser (wAIser.dev).">
+<link rel="canonical" href="https://waiser.dev/blog/en/">
+<link rel="alternate" hreflang="de" href="https://waiser.dev/blog/">
+<link rel="alternate" hreflang="en" href="https://waiser.dev/blog/en/">
+<link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/">
+<meta name="author" content="Nils Weiser">
+<meta name="theme-color" content="#050507">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="wAIser.dev">
+<meta property="og:title" content="Blog — wAIser.dev · Field notes on AI agents & AI security">
+<meta property="og:description" content="Notes on AI agents, AI security and the machines learning to move without us — by Nils Weiser (wAIser.dev).">
+<meta property="og:url" content="https://waiser.dev/blog/en/">
+<meta property="og:image" content="https://waiser.dev/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Blog — wAIser.dev · Field notes on AI agents & AI security">
+<meta name="twitter:description" content="Notes on AI agents, AI security and the machines learning to move without us.">
+<meta name="twitter:image" content="https://waiser.dev/og-default.png">
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="apple-touch-icon" href="../../favicon.svg">
+<link rel="preload" href="/fonts/ChakraPetch-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/SpaceGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../css/tokens.css">
+<link rel="stylesheet" href="../../css/blackwall.css">
+<script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
 </head>
-<body class="bg-gray-950 text-gray-100 min-h-screen flex flex-col">
+<body>
+<div class="progress"></div>
+<canvas id="field"></canvas>
+<div class="scanlines"></div>
+<div class="hud-corner tl"></div><div class="hud-corner tr"></div><div class="hud-corner bl"></div><div class="hud-corner br"></div>
 
-    <div id="header-placeholder"></div>
+<div id="header-placeholder"></div>
 
-    <!-- Blog Hero -->
-    <section class="hero-bg pt-32 pb-16">
-        <div class="grid-pattern"></div>
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="max-w-3xl mx-auto text-center">
-                <p class="text-cyan-400 font-mono text-sm mb-4 uppercase tracking-wider">// <span data-i18n="blog.kicker">Latest Articles</span></p>
-                <h1 class="text-4xl md:text-5xl font-bold mb-6" data-i18n="blog.title">Blog</h1>
-                <p class="text-xl text-gray-400" data-i18n="blog.subtitle">
-                    Thoughts and insights on AI, development, and technology
-                </p>
-            </div>
-        </div>
-    </section>
+<main>
+  <section class="blog-hero" data-screen-label="Blog hero">
+    <div class="hero__glow" style="bottom:auto; top:0; opacity:.45"></div>
+    <div class="wrap" style="position:relative; z-index:2">
+      <span class="k" data-i18n="bw.blog.kicker">// FIELD NOTES FROM THE FAR SIDE</span>
+      <h1 class="gtext" data-text="The Blog" data-i18n="bw.blog.title" data-i18n-html>The <span class="rip">Blog</span></h1>
+      <p data-i18n="bw.blog.sub">Notes on AI agents, AI security and the machines learning to move without us — recorded raw, published before the trace resolves.</p>
+      <div class="blog-filter">
+        <span class="chip on" data-cat="ALL">ALL</span>
+        <span class="chip" data-cat="AI SECURITY">AI SECURITY</span>
+        <span class="chip" data-cat="AGENTS">AGENTS</span>
+        <span class="chip" data-cat="CLAUDE CODE">CLAUDE CODE</span>
+        <span class="chip" data-cat="CLAUDE">CLAUDE</span>
+        <span class="chip" data-cat="RESEARCH">RESEARCH</span>
+        <span class="chip" data-cat="DEVELOPMENT">DEVELOPMENT</span>
+      </div>
+    </div>
+  </section>
 
-    <!-- Blog Posts Grid -->
-    <section class="section-dark py-16 flex-grow">
-        <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+  <section class="blog-list">
+    <div class="wrap">
+      <div class="feed__grid" id="blog-list"></div>
+    </div>
+  </section>
 
-                <!-- Blog Post: Agent Memory Poisoning - June 27, 2026 -->
-                <article class="blog-card fade-in-up">
-                    <div class="blog-card-image flex items-center justify-center">
-                        <svg class="w-16 h-16 text-cyan-400/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                        </svg>
-                    </div>
-                    <div class="blog-card-content">
-                        <div class="flex items-center gap-3 mb-3 flex-wrap">
-                            <span class="blog-tag">AI Security</span>
-                            <span class="blog-tag">Memory Poisoning</span>
-                            <span class="blog-tag">Mem0</span>
-                            <span class="blog-date">June 27, 2026</span>
-                        </div>
-                        <h2 class="text-xl font-bold text-white mb-3">
-                            <a href="../posts/en/agent-memory-poisoning-mem0.html" class="hover:text-cyan-400 transition-colors">
-                                We Poisoned a "Security-Conscious" AI Agent in 2 Messages
-                            </a>
-                        </h2>
-                        <p class="text-gray-400 text-sm mb-4">
-                            No API access, no jailbreak — just 2 chat messages that made a hardened AI agent trust a credential harvester. Four experiments on Mem0 memory poisoning, with every defense tested and broken.
-                        </p>
-                        <a href="../posts/en/agent-memory-poisoning-mem0.html" class="text-cyan-400 text-sm font-mono hover:underline" data-i18n="blog.readMore">
-                            Read more →
-                        </a>
-                    </div>
-                </article>
+  <section class="cta-end" style="padding:14vh 0 20vh">
+    <div class="hero__glow" style="bottom:auto; top:10%; opacity:.5"></div>
+    <div class="wrap">
+      <h2 data-i18n="bw.blog.ctaTitle" data-i18n-html>Got a hard<br><span class="rip">AI problem?</span></h2>
+      <p data-i18n="bw.blog.ctaSub">Whether it's building agents or breaking them — if it's interesting, I want to hear about it.</p>
+      <a href="../../index.html#contact" class="btn btn--pri" data-i18n="bw.blog.ctaBtn">START A PROJECT ▸</a>
+    </div>
+  </section>
 
-                <!-- Blog Post: Loops, Not Prompts (Cherny) - June 11, 2026 -->
-                <article class="blog-card fade-in-up">
-                    <div class="blog-card-image flex items-center justify-center">
-                        <svg class="w-16 h-16 text-cyan-400/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-                        </svg>
-                    </div>
-                    <div class="blog-card-content">
-                        <div class="flex items-center gap-3 mb-3 flex-wrap">
-                            <span class="blog-tag">Claude Code</span>
-                            <span class="blog-tag">Loops</span>
-                            <span class="blog-tag">Agentic Coding</span>
-                            <span class="blog-date">June 11, 2026</span>
-                        </div>
-                        <h2 class="text-xl font-bold text-white mb-3">
-                            <a href="../posts/en/loops-not-prompts-cherny.html" class="hover:text-cyan-400 transition-colors">
-                                Loops, Not Prompts: Why the Head of Claude Code Stopped Prompting
-                            </a>
-                        </h2>
-                        <p class="text-gray-400 text-sm mb-4">
-                            Boris Cherny stopped prompting Claude – he writes loops. What that means, how /loop and /goal differ, and the autonomous triage loop I built myself.
-                        </p>
-                        <a href="../posts/en/loops-not-prompts-cherny.html" class="text-cyan-400 text-sm font-mono hover:underline" data-i18n="blog.readMore">
-                            Read more →
-                        </a>
-                    </div>
-                </article>
+  <div id="footer-placeholder"></div>
+</main>
 
-                <!-- Blog Post: Opus 4.8 Dynamic Workflows - May 31, 2026 -->
-                <article class="blog-card fade-in-up">
-                    <div class="blog-card-image flex items-center justify-center">
-                        <svg class="w-16 h-16 text-cyan-400/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"/>
-                        </svg>
-                    </div>
-                    <div class="blog-card-content">
-                        <div class="flex items-center gap-3 mb-3 flex-wrap">
-                            <span class="blog-tag">Opus 4.8</span>
-                            <span class="blog-tag">Dynamic Workflows</span>
-                            <span class="blog-tag">Multi-Agent</span>
-                            <span class="blog-date">May 31, 2026</span>
-                        </div>
-                        <h2 class="text-xl font-bold text-white mb-3">
-                            <a href="../posts/en/opus-4-8-dynamic-workflows-erst-recht-audit.html" class="hover:text-cyan-400 transition-colors">
-                                Opus 4.8 & Dynamic Workflows: 7 Agents in 5 Minutes
-                            </a>
-                        </h2>
-                        <p class="text-gray-400 text-sm mb-4">
-                            Seven agents, a real legal-tech platform, five minutes. What it means that Claude can now turn a plan into a script and run a swarm in parallel — and why verification changes everything.
-                        </p>
-                        <a href="../posts/en/opus-4-8-dynamic-workflows-erst-recht-audit.html" class="text-cyan-400 text-sm font-mono hover:underline" data-i18n="blog.readMore">
-                            Read more →
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Blog Post: Ambient AI - May 21, 2026 -->
-                <article class="blog-card fade-in-up">
-                    <div class="blog-card-image flex items-center justify-center">
-                        <svg class="w-16 h-16 text-cyan-400/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                        </svg>
-                    </div>
-                    <div class="blog-card-content">
-                        <div class="flex items-center gap-3 mb-3 flex-wrap">
-                            <span class="blog-tag">Ambient AI</span>
-                            <span class="blog-tag">Agents</span>
-                            <span class="blog-tag">Self-Hosted</span>
-                            <span class="blog-date">May 21, 2026</span>
-                        </div>
-                        <h2 class="text-xl font-bold text-white mb-3">
-                            <a href="../posts/en/ambient-ai-the-next-ai-generation.html" class="hover:text-cyan-400 transition-colors">
-                                Ambient AI: Why the Next Generation Doesn't Answer – It Notices
-                            </a>
-                        </h2>
-                        <p class="text-gray-400 text-sm mb-4">
-                            As long as we pay AI per request, we only build one shape of it. The interesting shape is the janitor who notices on his own when something is off – and 2026 is the year it becomes economical.
-                        </p>
-                        <a href="../posts/en/ambient-ai-the-next-ai-generation.html" class="text-cyan-400 text-sm font-mono hover:underline" data-i18n="blog.readMore">
-                            Read more
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Blog Post: Anthropic Skills Guide - May 15, 2026 -->
-                <article class="blog-card fade-in-up">
-                    <div class="blog-card-image flex items-center justify-center">
-                        <svg class="w-16 h-16 text-cyan-400/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-                        </svg>
-                    </div>
-                    <div class="blog-card-content">
-                        <div class="flex items-center gap-3 mb-3 flex-wrap">
-                            <span class="blog-tag">Claude</span>
-                            <span class="blog-tag">Skills</span>
-                            <span class="blog-tag">Anthropic</span>
-                            <span class="blog-date">May 15, 2026</span>
-                        </div>
-                        <h2 class="text-xl font-bold text-white mb-3">
-                            <a href="../posts/en/anthropic-skills-guide.html" class="hover:text-cyan-400 transition-colors">
-                                Anthropic's 33-Page Blueprint for Claude Skills
-                            </a>
-                        </h2>
-                        <p class="text-gray-400 text-sm mb-4">
-                            An official guide showing how to teach Claude the way you work – without writing a single line of code. What's actually in it, and why skills quietly retire prompt engineering.
-                        </p>
-                        <a href="../posts/en/anthropic-skills-guide.html" class="text-cyan-400 text-sm font-mono hover:underline" data-i18n="blog.readMore">
-                            Read more
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Blog Post: MIT Calibration-Reward - Apr 30, 2026 -->
-                <article class="blog-card fade-in-up">
-                    <div class="blog-card-image flex items-center justify-center">
-                        <svg class="w-16 h-16 text-cyan-400/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-                        </svg>
-                    </div>
-                    <div class="blog-card-content">
-                        <div class="flex items-center gap-3 mb-3 flex-wrap">
-                            <span class="blog-tag">AI Research</span>
-                            <span class="blog-tag">Reinforcement Learning</span>
-                            <span class="blog-tag">LLM Calibration</span>
-                            <span class="blog-date">Apr 30, 2026</span>
-                        </div>
-                        <h2 class="text-xl font-bold text-white mb-3">
-                            <a href="../posts/en/mit-ai-hallucinations.html" class="hover:text-cyan-400 transition-colors">
-                                Did MIT solve AI hallucinations?
-                            </a>
-                        </h2>
-                        <p class="text-gray-400 text-sm mb-4">
-                            A new study from Cambridge promises more reliable models through calibrated reward signals. What it actually shows – and what it means for developers today.
-                        </p>
-                        <a href="../posts/en/mit-ai-hallucinations.html" class="text-cyan-400 text-sm font-mono hover:underline" data-i18n="blog.readMore">
-                            Read more
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Blog Post: Karpathy CLAUDE.md - Apr 14, 2026 -->
-                <article class="blog-card fade-in-up">
-                    <div class="blog-card-image flex items-center justify-center">
-                        <svg class="w-16 h-16 text-cyan-400/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                        </svg>
-                    </div>
-                    <div class="blog-card-content">
-                        <div class="flex items-center gap-3 mb-3 flex-wrap">
-                            <span class="blog-tag">Claude Code</span>
-                            <span class="blog-tag">Prompt Engineering</span>
-                            <span class="blog-tag">CLAUDE.md</span>
-                            <span class="blog-date">Apr 14, 2026</span>
-                        </div>
-                        <h2 class="text-xl font-bold text-white mb-3">
-                            <a href="../posts/en/karpathy-claude-md.html" class="hover:text-cyan-400 transition-colors">
-                                A CLAUDE.md With 25,000 Stars
-                            </a>
-                        </h2>
-                        <p class="text-gray-400 text-sm mb-4">
-                            How a single Markdown file built from Karpathy's observations became the most-starred repo in the Claude Code ecosystem – and what actually holds up in practice.
-                        </p>
-                        <a href="../posts/en/karpathy-claude-md.html" class="text-cyan-400 text-sm font-mono hover:underline" data-i18n="blog.readMore">
-                            Read more
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Blog Post: Claude Mythos Preview Zero-Days - Apr 8, 2026 -->
-                <article class="blog-card fade-in-up">
-                    <div class="blog-card-image flex items-center justify-center">
-                        <svg class="w-16 h-16 text-cyan-400/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                        </svg>
-                    </div>
-                    <div class="blog-card-content">
-                        <div class="flex items-center gap-3 mb-3 flex-wrap">
-                            <span class="blog-tag">AI Security</span>
-                            <span class="blog-tag">Zero-Day</span>
-                            <span class="blog-tag">Anthropic</span>
-                            <span class="blog-date">Apr 8, 2026</span>
-                        </div>
-                        <h2 class="text-xl font-bold text-white mb-3">
-                            <a href="../posts/en/claude-mythos-preview-zero-days.html" class="hover:text-cyan-400 transition-colors">
-                                Claude Mythos Preview: When AI Finds Zero-Days on Its Own
-                            </a>
-                        </h2>
-                        <p class="text-gray-400 text-sm mb-4">
-                            181 Firefox exploits, a 27-year-old OpenBSD bug, a full FreeBSD RCE with a ROP chain. Why the offense-defense balance is shifting right now.
-                        </p>
-                        <a href="../posts/en/claude-mythos-preview-zero-days.html" class="text-cyan-400 text-sm font-mono hover:underline" data-i18n="blog.readMore">
-                            Read more
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Blog Post: OpenClaw vs NemoClaw - Apr 2, 2026 -->
-                <article class="blog-card fade-in-up">
-                    <div class="blog-card-image flex items-center justify-center">
-                        <svg class="w-16 h-16 text-cyan-400/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
-                        </svg>
-                    </div>
-                    <div class="blog-card-content">
-                        <div class="flex items-center gap-3 mb-3 flex-wrap">
-                            <span class="blog-tag">AI Agents</span>
-                            <span class="blog-tag">NVIDIA</span>
-                            <span class="blog-tag">Security</span>
-                            <span class="blog-date">Apr 2, 2026</span>
-                        </div>
-                        <h2 class="text-xl font-bold text-white mb-3">
-                            <a href="../posts/en/openclaw-vs-nemoclaw.html" class="hover:text-cyan-400 transition-colors">
-                                OpenClaw vs. NemoClaw: Why the Question Is Wrong
-                            </a>
-                        </h2>
-                        <p class="text-gray-400 text-sm mb-4">
-                            NemoClaw is not a replacement for OpenClaw, but a security wrapper for enterprise-ready AI agents. An analysis of the differences and use cases.
-                        </p>
-                        <a href="../posts/en/openclaw-vs-nemoclaw.html" class="text-cyan-400 text-sm font-mono hover:underline" data-i18n="blog.readMore">
-                            Read more
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Blog Post: AI Model Evaluation - Jan 7, 2025 -->
-                <article class="blog-card fade-in-up">
-                    <div class="blog-card-image flex items-center justify-center">
-                        <svg class="w-16 h-16 text-cyan-400/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                        </svg>
-                    </div>
-                    <div class="blog-card-content">
-                        <div class="flex items-center gap-3 mb-3 flex-wrap">
-                            <span class="blog-tag">AI Evaluation</span>
-                            <span class="blog-tag">Legal Tech</span>
-                            <span class="blog-date">Jan 7, 2025</span>
-                        </div>
-                        <h2 class="text-xl font-bold text-white mb-3">
-                            <a href="../posts/en/ki-modell-evaluation.html" class="hover:text-cyan-400 transition-colors">
-                                How We Found the Best AI Model for Legal Analysis
-                            </a>
-                        </h2>
-                        <p class="text-gray-400 text-sm mb-4">
-                            With LLM-as-a-Judge, Crew-as-a-Judge, and human validation. A look behind the scenes of our systematic model selection.
-                        </p>
-                        <a href="../posts/en/ki-modell-evaluation.html" class="text-cyan-400 text-sm font-mono hover:underline" data-i18n="blog.readMore">
-                            Read more
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Blog Post: Legal AI Knowledge Base - Dec 30, 2025 -->
-                <article class="blog-card fade-in-up">
-                    <div class="blog-card-image flex items-center justify-center">
-                        <svg class="w-16 h-16 text-cyan-400/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                        </svg>
-                    </div>
-                    <div class="blog-card-content">
-                        <div class="flex items-center gap-3 mb-3 flex-wrap">
-                            <span class="blog-tag">Docling</span>
-                            <span class="blog-tag">RAG</span>
-                            <span class="blog-date">Dec 30, 2025</span>
-                        </div>
-                        <h2 class="text-xl font-bold text-white mb-3">
-                            <a href="../posts/en/legal-ai-knowledge-base-docling.html" class="hover:text-cyan-400 transition-colors">
-                                Legal AI Knowledge Base with 1000+ PDFs
-                            </a>
-                        </h2>
-                        <p class="text-gray-400 text-sm mb-4">
-                            How we transformed legal PDF documents with Docling into a searchable knowledge base for AI-powered legal consulting.
-                        </p>
-                        <a href="../posts/en/legal-ai-knowledge-base-docling.html" class="text-cyan-400 text-sm font-mono hover:underline" data-i18n="blog.readMore">
-                            Read more
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Blog Post: AI Agent Workflows - Dec 12, 2025 -->
-                <article class="blog-card fade-in-up" style="transition-delay: 0.1s">
-                    <div class="blog-card-image flex items-center justify-center">
-                        <svg class="w-16 h-16 text-cyan-400/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
-                        </svg>
-                    </div>
-                    <div class="blog-card-content">
-                        <div class="flex items-center gap-3 mb-3 flex-wrap">
-                            <span class="blog-tag">AI Agents</span>
-                            <span class="blog-tag">Workflows</span>
-                            <span class="blog-date">Dec 12, 2025</span>
-                        </div>
-                        <h2 class="text-xl font-bold text-white mb-3">
-                            <a href="../posts/en/ki-agenten-workflows-superpowers.html" class="hover:text-cyan-400 transition-colors">
-                                Superpowers: AI Agents Like Real Teams
-                            </a>
-                        </h2>
-                        <p class="text-gray-400 text-sm mb-4">
-                            A framework that teaches Claude Code reusable skills and orchestrates multi-step development workflows.
-                        </p>
-                        <a href="../posts/en/ki-agenten-workflows-superpowers.html" class="text-cyan-400 text-sm font-mono hover:underline" data-i18n="blog.readMore">
-                            Read more
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Blog Post: Claude Code Skills - Dec 2, 2025 -->
-                <article class="blog-card fade-in-up" style="transition-delay: 0.2s">
-                    <div class="blog-card-image flex items-center justify-center">
-                        <svg class="w-16 h-16 text-cyan-400/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                        </svg>
-                    </div>
-                    <div class="blog-card-content">
-                        <div class="flex items-center gap-3 mb-3 flex-wrap">
-                            <span class="blog-tag">Claude Code</span>
-                            <span class="blog-tag">AI Agents</span>
-                            <span class="blog-date">Dec 2, 2025</span>
-                        </div>
-                        <h2 class="text-xl font-bold text-white mb-3">
-                            <a href="../posts/en/claude-code-skills.html" class="hover:text-cyan-400 transition-colors">
-                                Claude Code Skills: The MCP Killer?
-                            </a>
-                        </h2>
-                        <p class="text-gray-400 text-sm mb-4">
-                            How skills revolutionize the interaction with AI agents. Reusable capabilities that Claude learns and consistently applies.
-                        </p>
-                        <a href="../posts/en/claude-code-skills.html" class="text-cyan-400 text-sm font-mono hover:underline" data-i18n="blog.readMore">
-                            Read more
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Blog Post: Playwright MCP - Oct 3, 2025 -->
-                <article class="blog-card fade-in-up" style="transition-delay: 0.3s">
-                    <div class="blog-card-image flex items-center justify-center">
-                        <svg class="w-16 h-16 text-cyan-400/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                        </svg>
-                    </div>
-                    <div class="blog-card-content">
-                        <div class="flex items-center gap-3 mb-3 flex-wrap">
-                            <span class="blog-tag">Playwright</span>
-                            <span class="blog-tag">MCP</span>
-                            <span class="blog-date">Oct 3, 2025</span>
-                        </div>
-                        <h2 class="text-xl font-bold text-white mb-3">
-                            <a href="../posts/en/playwright-mcp-browser-automatisierung.html" class="hover:text-cyan-400 transition-colors">
-                                Browser Automation with Playwright MCP
-                            </a>
-                        </h2>
-                        <p class="text-gray-400 text-sm mb-4">
-                            How to teach Claude Code to control a real browser for web scraping, testing, and automation.
-                        </p>
-                        <a href="../posts/en/playwright-mcp-browser-automatisierung.html" class="text-cyan-400 text-sm font-mono hover:underline" data-i18n="blog.readMore">
-                            Read more
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Blog Post: Genetic Algorithms - Dec 1, 2024 -->
-                <article class="blog-card fade-in-up" style="transition-delay: 0.4s">
-                    <div class="blog-card-image flex items-center justify-center">
-                        <svg class="w-16 h-16 text-cyan-400/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-                        </svg>
-                    </div>
-                    <div class="blog-card-content">
-                        <div class="flex items-center gap-3 mb-3 flex-wrap">
-                            <span class="blog-tag">Algorithms</span>
-                            <span class="blog-tag">Java</span>
-                            <span class="blog-date">Dec 1, 2024</span>
-                        </div>
-                        <h2 class="text-xl font-bold text-white mb-3">
-                            <a href="../posts/en/genetische-algorithmen-java.html" class="hover:text-cyan-400 transition-colors">
-                                Understanding Genetic Algorithms
-                            </a>
-                        </h2>
-                        <p class="text-gray-400 text-sm mb-4">
-                            Evolution as an optimization tool: How genetic algorithms solve complex problems. A practical introduction with Java.
-                        </p>
-                        <a href="../posts/en/genetische-algorithmen-java.html" class="text-cyan-400 text-sm font-mono hover:underline" data-i18n="blog.readMore">
-                            Read more
-                        </a>
-                    </div>
-                </article>
-
-                <!-- Blog Post: Multi-Agent AI with CrewAI - Nov 15, 2024 -->
-                <article class="blog-card fade-in-up" style="transition-delay: 0.5s">
-                    <div class="blog-card-image flex items-center justify-center">
-                        <svg class="w-16 h-16 text-cyan-400/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                        </svg>
-                    </div>
-                    <div class="blog-card-content">
-                        <div class="flex items-center gap-3 mb-3 flex-wrap">
-                            <span class="blog-tag">CrewAI</span>
-                            <span class="blog-tag">AI Agents</span>
-                            <span class="blog-date">Nov 15, 2024</span>
-                        </div>
-                        <h2 class="text-xl font-bold text-white mb-3">
-                            <a href="../posts/en/multi-agent-ai-crewai.html" class="hover:text-cyan-400 transition-colors">
-                                Multi-Agent AI Systems with CrewAI
-                            </a>
-                        </h2>
-                        <p class="text-gray-400 text-sm mb-4">
-                            How to orchestrate specialized AI agents that collaborate like a real team. A practical guide with code examples.
-                        </p>
-                        <a href="../posts/en/multi-agent-ai-crewai.html" class="text-cyan-400 text-sm font-mono hover:underline" data-i18n="blog.readMore">
-                            Read more
-                        </a>
-                    </div>
-                </article>
-
-            </div>
-        </div>
-    </section>
-
-    <div id="footer-placeholder"></div>
-    <div id="back-to-top-placeholder"></div>
-
-    <script src="../../js/components.js"></script>
-    <script src="../../js/translations.js"></script>
-    <script src="../../js/main.js"></script>
+<script src="../../js/vendor/gsap.min.js"></script>
+<script src="../../js/vendor/ScrollTrigger.min.js"></script>
+<script src="../../js/translations.js"></script>
+<script src="../../js/components.js"></script>
+<script src="../../js/main.js"></script>
+<script src="../../js/site.js"></script>
 </body>
 </html>
