@@ -255,15 +255,22 @@
     setTimeout(function(){ cur.classList.remove('out'); }, 500);
   }, 2100);
 })();
-/* hero reveal (no GSAP dependency for these) */
-window.addEventListener('load', function(){
-  if(typeof gsap==='undefined') return;
-  var r=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(r){ gsap.set(['.mh__sub','.mh__cta','.mh__proof'],{opacity:1}); return; }
+/* hero reveal — run now if the page already loaded, else on load.
+   (These scripts sit at end of <body>, so `load` may have already fired.) */
+function heroReveal(){
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(typeof gsap==='undefined' || reduce){
+    ['.mh__sub','.mh__cta','.mh__proof'].forEach(function(s){
+      var el=document.querySelector(s); if(el) el.style.opacity='1';
+    });
+    return;
+  }
   gsap.to('.mh__sub',{opacity:1,duration:.7,delay:1.4});
   gsap.to('.mh__cta',{opacity:1,duration:.7,delay:1.6});
   gsap.to('.mh__proof',{opacity:1,duration:.7,delay:1.9});
-});
+}
+if(document.readyState==='complete'){ heroReveal(); }
+else { window.addEventListener('load', heroReveal); }
 </script>
 </body>
 </html>
