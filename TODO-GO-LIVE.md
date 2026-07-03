@@ -8,12 +8,11 @@ Das Redesign ist **fertig und getestet**. Zwei Dinge sind noch offen — nur **e
 
 ## 🔴 Blocker — muss vor Live erledigt sein
 
-- [ ] **Calendly-Link einsetzen**
-  Der "Termin buchen / Book a call"-Button (Kontaktbereich, Pfad A) zeigt aktuell auf
-  den Platzhalter `https://calendly.com/DEIN-LINK` → führt sonst ins Leere.
-  **Datei:** `index.html` (eine Stelle, Zeile ~234, im Kontaktbereich `.cpath--primary`).
-  → Echten Calendly-/Cal.com-Link einsetzen. (Claude kann das in 1 Sekunde machen,
-    sobald du den Link schickst.)
+- [x] **Calendly-Link einsetzen** ✅ erledigt 2026-07-03
+  Der "Termin buchen / Book a call"-Button (Kontaktbereich, Pfad A) öffnet jetzt
+  `https://calendly.com/nils-weiser-kn/30min` in einem neuen Tab (einfacher Link,
+  KEIN externes Calendly-Script → behält die "0 Third-Party / GDPR"-Linie der Seite).
+  **Datei:** `index.html` (Kontaktbereich `.cpath--primary`).
 
 ---
 
