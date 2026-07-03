@@ -142,16 +142,22 @@
       con.innerHTML='<span class="c">'+(lang()==='de'?'Scanne…':'Scanning…')+'</span>';
       animP=Promise.resolve();
     } else {
+      // The typing animation is cosmetic. It resolves either when it finishes
+      // naturally OR after a wall-clock cap — so a throttled background tab (where
+      // chained setTimeouts are slowed to ~1Hz) can never hold the result hostage.
       animP=new Promise(function(resolve){
+        var done=false, fin=function(){ if(done) return; done=true; resolve(); };
         var LINES=scanLines(domain), buf='', li=0, ci=0;
         (function type(){
-          if(li>=LINES.length){ con.innerHTML=buf; return setTimeout(resolve, 300); }
+          if(done) return;
+          if(li>=LINES.length){ con.innerHTML=buf; return setTimeout(fin, 300); }
           var L=LINES[li];
           if(L.nl){ buf+='\n'; li++; ci=0; return setTimeout(type, 90); }
           var txt=L.x;
           if(ci<txt.length){ if(ci===0){ buf+='<span class="'+L.c+'">'; } buf+=txt[ci]; ci++; con.innerHTML=buf+'</span><span class="azcur"></span>'; setTimeout(type, txt[ci-1]==='.'?10:16); }
           else { buf+='</span>'; li++; ci=0; setTimeout(type, 60); }
         })();
+        setTimeout(fin, 9000); // hard cap: never let the animation block finish()
       });
     }
     Promise.all([scanP, animP]).then(function(r){
