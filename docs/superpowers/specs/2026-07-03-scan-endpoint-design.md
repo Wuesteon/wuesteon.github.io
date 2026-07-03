@@ -60,13 +60,14 @@ Caddy on openclaw_M  (scan.waiser.dev :443, Let's Encrypt auto-TLS)
    ▼
 Node service "waiser-scan" (systemd)
    ├── normalize + validate domain            (domain.js — SSRF guard)
+   ├── content-policy: domain denylist        (policy.js — pre-fetch, free)  ──blocked──▶ 451
    ├── rate-limit check per IP                (ratelimit.js; cache hits exempt)
    ├── SQLite cache lookup ──hit──▶ return cached JSON (instant, free)
    │        │ miss
    │        ▼
    ├── fetch public site, capped              (scrape.js)
    ├── extract readable text
-   ├── Gemini → {score, verdict, ops[3]} JSON (analyze.js)
+   ├── Gemini → {score, verdict, ops[3], blocked?} (analyze.js — content gate) ──blocked──▶ 451
    ├── write to SQLite cache                  (cache.js)
    └── return JSON { score, verdict, ops:[{t,d,fit}], cached:false }
 ```
@@ -117,7 +118,8 @@ Each is a small, independently testable module.
 - CORS: `Access-Control-Allow-Origin: https://waiser.dev` only; handle `OPTIONS` preflight.
 - Orchestrates: validate → rate-limit → cache → scrape → analyze → cache-write → respond.
 - Error envelope: `{ "error": "<code>", "message": "<human>" }` with appropriate status
-  (400 bad url, 422 thin-content, 429 rate-limited, 502 upstream/LLM failure, 500 internal).
+  (400 bad url, 422 thin-content, 429 rate-limited, 451 content-policy blocked,
+  502 upstream/LLM failure, 500 internal).
   **The `message` is a fixed hardcoded string per error code — never the caught error's
   `.message`/URL interpolated in.** The real error is logged server-side only. A test
   asserts a forced Gemini failure response body contains no fragment of the API key.
@@ -152,6 +154,34 @@ and a private IP (or multiple A records, one private) to the socket. Therefore:
   IP, preserving the original `Host` header and TLS SNI so virtual-hosted sites still work.
 - This same resolve-once-validate-connect routine is reused by `scrape.js` for the initial
   fetch **and every redirect hop**.
+
+### `policy.js` — content-policy gate (block adult + illegal/harmful sites)
+Two layers; **blocked categories: adult/pornographic and illegal/harmful only** (gambling
+and hate/extremist are intentionally *not* blocked — a legal casino or an edgy-but-legal
+site still gets scanned). A blocked site returns **HTTP 451** ("Unavailable For Legal
+Reasons" — the honest status) with a fixed polite message the frontend shows instead of a
+fake result. Blocked verdicts are **not cached as normal scans**; a short-TTL "blocked"
+marker may be cached (keyed by domain) so the same junk domain isn't re-fetched repeatedly.
+
+- **Layer 1 — pre-fetch domain denylist (free, before any fetch/LLM cost):**
+  - **Keyword match** on the normalized hostname (e.g. `porn`, `xxx`, `sex`, `escort`,
+    `nsfw`, `hentai`, … — a small curated list). Use word-boundary/segment matching to
+    reduce the classic false-positive (`expertsexchange.com`); accept that the Gemini gate
+    is the safety net for anything the keyword list wrongly clears **or** wrongly flags —
+    a borderline keyword hit can optionally *demote to "scan-and-let-Gemini-decide"* rather
+    than hard-block, to avoid false-positive rejections of legitimate businesses.
+  - **Adult TLD block:** `.xxx`, `.adult`, `.sex`, `.porn`, `.cam`, `.tube`, `.sexy` → hard block.
+  - **External blocklist feed:** a maintained public adult/malware domain list (e.g. a
+    Steven Black / adult-hosts feed) loaded into a `Set` at startup and refreshed by a
+    periodic job (see below). Exact-host and parent-domain match → hard block.
+- **Layer 2 — post-analysis LLM gate:** see `analyze.js` (the model returns a `blocked`
+  flag; costs no extra call). This catches sites whose domain looks innocent.
+
+**Blocklist refresh:** a small `systemd` timer (or cron) re-downloads the external feed
+(e.g. daily) into a local file; `policy.js` reloads it. If the download fails, keep the
+last-good file (fail-open on refresh, not on the whole check). The feed URL and refresh
+interval are env-config (`BLOCKLIST_URL`, `BLOCKLIST_REFRESH_HOURS`). Ship a small bundled
+seed list so the service is safe on first boot before the first refresh runs.
 
 ### `scrape.js`
 - Fetch homepage over HTTPS (fallback HTTP) with hard caps:
@@ -190,6 +220,13 @@ and a private IP (or multiple A records, one private) to the socket. Therefore:
   (scrape budget + 2 Gemini attempts) must stay under Caddy's proxy timeout **and** under
   the client-side fetch timeout so browser and server agree on the outcome. On timeout →
   throw `ANALYZE_FAILED` (→ 502) rather than hanging.
+- **Content gate (no extra call):** the JSON schema includes a `blocked` object
+  `{ blocked: bool, category: "adult"|"illegal"|null }`. The prompt instructs the model to
+  set `blocked:true` if the site is pornographic/adult or facilitates clearly illegal/harmful
+  activity (malware, phishing, weapons/drug marketplaces) — **not** for gambling or merely
+  edgy content. If `blocked` is true, the orchestrator returns **451** and does **not** cache
+  a normal result (a short-TTL blocked marker may be written). Gemini also natively refuses
+  the most egregious illegal content; treat an SDK safety-refusal as `blocked:illegal`.
 - Parses + validates the JSON: exactly 3 ops, `fit ∈ {hi,md}`, score clamped, verdict
   non-empty. On any violation, retry once; if still bad, throw `ANALYZE_FAILED`.
 - **Opportunity pool as a soft style guide, not a hard menu.** The pool from
@@ -270,6 +307,9 @@ RATE_LIMIT=20            # per-IP scans/hour
 MAX_SCANS_PER_DAY=300    # global uncached-scan ceiling (cost cap)
 CACHE_TTL_DAYS=0         # 0 = never expire
 MIN_CONTENT_CHARS=500    # thin-content (SPA) threshold
+BLOCKLIST_URL=…          # external adult/malware domain feed
+BLOCKLIST_REFRESH_HOURS=24
+BLOCKED_TTL_HOURS=168    # how long a "blocked" marker suppresses re-scan
 ```
 
 ## Security posture (summary)
@@ -286,6 +326,9 @@ MIN_CONTENT_CHARS=500    # thin-content (SPA) threshold
   swap in a private IP at connect time. Redirects followed manually with the same guard
   per hop; non-http schemes rejected; size/time capped; HTML-only. Prevents the endpoint
   probing internal networks or acting as a fetch amplifier.
+- **Content policy**: adult + illegal/harmful sites are refused (451), never analyzed into a
+  branded result — a free pre-fetch domain denylist (keyword + adult TLDs + refreshed external
+  feed) plus a no-extra-cost Gemini content gate. Blocked results aren't cached as normal scans.
 - **Secrets**: Gemini key in root-only env, never in the repo or browser.
 - **No PII**: cache holds only public domain + generated analysis.
 - **VPS IP is public** (A-record). No inbound ports open beyond Caddy :443 (+ existing 22,
@@ -310,7 +353,11 @@ care so the existing control flow and animations don't break:
 - **REDUCED-motion path:** currently renders instantly. It must instead show a static
   "scanning…" indicator, `await` the fetch (or its timeout), then render `finish()` — so
   reduced-motion users don't see a frozen button and still get the real result.
-- On network error / non-200 / timeout / 422 thin-content, **fall back to the current
+- **Content-policy 451 and 422 thin-content do NOT fall back to the stub** — they show their
+  honest message ("this site can't be scanned" / "couldn't read enough of that site").
+  Falling back to the fake positive here would mean a porn/illegal site gets a cheerful
+  "strong fit, here are 3 agents" result under your brand — the exact thing we're blocking.
+- On network error / non-200 (other than 451/422) / timeout, **fall back to the current
   deterministic stub** so the UI never dead-ends. **Caveat:** this fallback masks real
   backend failures (429/502/cost-cap-stub) from both visitor and operator. To keep the
   backend observable, the fetch path logs the real HTTP status to the console and (optional)
@@ -329,6 +376,8 @@ care so the existing control flow and animations don't break:
 2. `npm ci` (deps: **`@google/genai`**, **`better-sqlite3`**; no web framework — `node:http`).
 3. `systemd` unit `waiser-scan.service` running `node server.js` as a dedicated non-root
    user where possible, `EnvironmentFile=/etc/waiser-scan/.env`, restart-on-failure.
+   Plus a `waiser-scan-blocklist.timer` (daily) that refreshes the external adult/malware
+   domain feed into a local file the service reloads (keeps last-good on failure).
 4. **Provider-side cost backstop:** set a hard billing/quota cap on the Gemini API key in
    the Google Cloud console (the true ceiling behind the app-layer `MAX_SCANS_PER_DAY`).
 5. **Inbound ports 80 + 443 (do not assume open).** Only 22/27991/xray were observed
@@ -356,8 +405,9 @@ care so the existing control flow and animations don't break:
    **and** the existing `:27991` xray endpoint still serve; revert to the snapshot if either fails.
 7. **DNS**: user adds Namecheap `A` record `scan → 37.60.244.84`.
 8. Verify: TLS provisions, `GET https://scan.waiser.dev/health` → 200, end-to-end scan
-   works, 2nd scan of same domain returns `cached:true` instantly, a blocked target
-   (`http://localhost`, `http://169.254.169.254`) returns 400, and an SPA/thin site returns 422.
+   works, 2nd scan of same domain returns `cached:true` instantly, an SSRF target
+   (`http://localhost`, `http://169.254.169.254`) returns 400, an SPA/thin site returns 422,
+   and a known adult domain returns 451 (and shows the polite message, not a fake result).
 
 ## Testing
 
@@ -370,7 +420,11 @@ care so the existing control flow and animations don't break:
   - `scrape.js` (mock HTTP): **redirect → private IP is blocked**; non-HTML → `NOT_HTML`;
     oversize → `TOO_LARGE`; timeout → `FETCH_FAILED`; **empty SPA shell → `THIN_CONTENT`**;
     non-http scheme redirect rejected.
-  - `cache.js`: get/put round-trip, TTL expiry, key includes lang, `THIN_CONTENT` not cached.
+  - `policy.js`: adult keyword/TLD/blocklist hostnames → blocked (451); a benign domain with
+    an awkward substring (`expertsexchange.com`) is **not** hard-blocked; blocklist refresh
+    keeps last-good on download failure.
+  - `cache.js`: get/put round-trip, TTL expiry, key includes lang, `THIN_CONTENT` not cached,
+    blocked marker respects `BLOCKED_TTL_HOURS`.
   - `costcap.js`: daily miss counter increments on miss only, not on cache hit; over-cap
     returns the stub (200) rather than erroring.
   - `analyze.js`: valid Gemini JSON parses; malformed JSON triggers retry then
@@ -405,6 +459,9 @@ Folded into the design above; listed here so the plan-writer sees they were cons
 - **Trusted-proxy client IP** (no raw XFF); **fixed error strings** (no key leakage).
 - **Ports 80/443** must be opened+verified; **Caddy change** has validate + rollback.
 - **Pool = soft style guide**, localized `t`/`d`; **score framed as readiness**, tiers coupled to frontend.
+- **Content policy** (added on request): adult + illegal/harmful sites refused (451) via a
+  pre-fetch domain denylist (keyword + adult TLDs + refreshed external feed) + a no-extra-cost
+  Gemini content gate; 451/422 don't fall back to the fake stub.
 
 ### Explicitly refuted by review (not changed)
 - CORS to `waiser.dev` does **not** break the real scan for GitHub Pages (the *server* makes
