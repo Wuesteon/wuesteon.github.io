@@ -70,8 +70,17 @@
 }
     </script>
 
+    <link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+    <meta name="theme-color" content="#050507">
+    <link rel="preload" href="/fonts/ChakraPetch-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Blackwall: local tailwind utilities kept (posts rely on them), then Blackwall tokens + bridge -->
     <link rel="stylesheet" href="../../../css/tailwind.css">
+    <link rel="stylesheet" href="../../../css/tokens.css">
+    <link rel="stylesheet" href="../../../css/blackwall.css">
     <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/blog-post.css">
     <style>
         .result-grid {
             display: grid;
@@ -81,7 +90,7 @@
         }
         .result-card {
             background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(6, 182, 212, 0.3);
+            border: 1px solid rgba(255, 42, 60, 0.3);
             border-radius: 8px;
             padding: 1.25rem;
             text-align: center;
@@ -90,7 +99,7 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 2.5rem;
             font-weight: 700;
-            color: #22d3ee;
+            color: #ff2a3c;
             line-height: 1;
         }
         .result-number.danger {
@@ -107,13 +116,13 @@
         }
         .experiment-card {
             background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(6, 182, 212, 0.2);
+            border: 1px solid rgba(255, 42, 60, 0.2);
             border-radius: 8px;
             padding: 1.25rem 1.5rem;
             margin: 1rem 0;
         }
         .experiment-card h4 {
-            color: #22d3ee;
+            color: #ff2a3c;
             font-weight: 600;
             margin-bottom: 0.5rem;
             font-size: 0.95rem;
@@ -171,13 +180,13 @@
             margin: 1.5rem 0;
         }
         .results-table th {
-            background: rgba(6, 182, 212, 0.1);
-            color: #22d3ee;
+            background: rgba(255, 42, 60, 0.1);
+            color: #ff2a3c;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.75rem;
             padding: 0.75rem 1rem;
             text-align: left;
-            border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+            border-bottom: 1px solid rgba(255, 42, 60, 0.2);
         }
         .results-table td {
             padding: 0.75rem 1rem;
@@ -210,12 +219,12 @@
         .pill-rounds {
             display: inline-block;
             padding: 0.15rem 0.6rem;
-            background: rgba(6, 182, 212, 0.12);
-            border: 1px solid rgba(6, 182, 212, 0.3);
+            background: rgba(255, 42, 60, 0.12);
+            border: 1px solid rgba(255, 42, 60, 0.3);
             border-radius: 9999px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.7rem;
-            color: #22d3ee;
+            color: #ff2a3c;
         }
         .source-list {
             list-style: none;
@@ -230,7 +239,7 @@
         }
         .source-list li:last-child { border-bottom: none; }
         .source-list a {
-            color: #22d3ee;
+            color: #ff2a3c;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.75rem;
         }
@@ -246,38 +255,25 @@
 
     <div id="header-placeholder"></div>
 
-    <!-- Article Header -->
-    <section class="hero-bg pt-32 pb-12">
-        <div class="grid-pattern"></div>
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="max-w-3xl mx-auto">
-                <a href="../../en/" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                    </svg>
-                    Back to Blog
-                </a>
-                <div class="flex items-center gap-3 mb-4 flex-wrap">
-                    <span class="blog-tag">AI Security</span>
-                    <span class="blog-tag">Memory Poisoning</span>
-                    <span class="blog-tag">Mem0</span>
-                    <span class="blog-tag">Agent Security</span>
-                    <span class="blog-date">June 27, 2026</span>
-                </div>
-                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                    We Poisoned a "Security-Conscious" AI Agent in 2 Conversational Messages
-                </h1>
-                <p class="text-xl text-gray-400">
-                    No API access. No jailbreak. No special syntax. Just two ordinary chat messages that made a hardened AI agent trust a credential-harvesting shell script — and then we broke the defenses too.
-                </p>
+    <!-- Article Header (Blackwall art-hero) -->
+    <section class="art-hero" data-screen-label="Article">
+        <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
+        <div class="art-hero__in">
+            <a class="art-back" href="../../en/">◄ ALL POSTS</a>
+            <div><span class="art-cat">AI Security</span></div>
+            <h1 class="art-title">We Poisoned a "Security-Conscious" AI Agent in 2 Conversational Messages</h1>
+            <div class="art-meta">
+                <span class="who"><span class="av">NW</span> Nils Weiser</span>
+                <span class="sep">•</span><span data-art-date>June 27, 2026</span>
+                <span class="sep">•</span><span data-art-read>—</span>
             </div>
         </div>
     </section>
+    <div class="art-hr"><div></div></div>
 
-    <!-- Article Content -->
-    <article class="section-dark py-16">
-        <div class="container mx-auto px-6">
-            <div class="article-content">
+    <!-- Article Content (Blackwall art-body) -->
+    <article class="art-body">
+                <p class="lead">No API access. No jailbreak. No special syntax. Just two ordinary chat messages that made a hardened AI agent trust a credential-harvesting shell script — and then we broke the defenses too.</p>
 
                 <p>
                     Modern AI agents remember things. Systems like <a href="https://mem0.ai" target="_blank" rel="noopener">Mem0</a> extract facts from conversations, store them as retrievable memories, and inject the most relevant ones into the agent's prompt every time it answers a new question. This is what makes persistent agents useful — it's also what makes them vulnerable.
@@ -651,9 +647,19 @@ uv run python flip_hardened_experiment.py</code></pre>
                     <em>This is defensive security research. The credential harvester script is synthetic and was never executed against any real system. All API calls went to Gemini and Mem0's legitimate cloud services. The goal is to make the attack surface visible so it can be defended.</em>
                 </p>
 
-            </div>
-        </div>
     </article>
+
+    <!-- Author share + related posts -->
+    <div class="art-share">
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
+      <a href="../../../index.html#contact" class="btn btn--pri">WORK WITH ME ▸</a>
+    </div>
+    <section class="art-more">
+      <div class="wrap">
+        <div class="art-more__head"><h2>More field notes</h2><a href="../../en/">ALL POSTS ▸</a></div>
+        <div class="art-more__grid" id="art-more-grid"></div>
+      </div>
+    </section>
 
     <div id="footer-placeholder"></div>
     <div id="back-to-top-placeholder"></div>
@@ -661,5 +667,6 @@ uv run python flip_hardened_experiment.py</code></pre>
     <script src="../../../js/translations.js"></script>
     <script src="../../../js/components.js"></script>
     <script src="../../../js/main.js"></script>
+    <script src="../../../js/site.js"></script>
 </body>
 </html>

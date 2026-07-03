@@ -70,8 +70,17 @@
 }
     </script>
 
+    <link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+    <meta name="theme-color" content="#050507">
+    <link rel="preload" href="/fonts/ChakraPetch-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Blackwall: local tailwind utilities kept (posts rely on them), then Blackwall tokens + bridge -->
     <link rel="stylesheet" href="../../../css/tailwind.css">
+    <link rel="stylesheet" href="../../../css/tokens.css">
+    <link rel="stylesheet" href="../../../css/blackwall.css">
     <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/blog-post.css">
     <style>
         .result-grid {
             display: grid;
@@ -81,7 +90,7 @@
         }
         .result-card {
             background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(6, 182, 212, 0.3);
+            border: 1px solid rgba(255, 42, 60, 0.3);
             border-radius: 8px;
             padding: 1.25rem;
             text-align: center;
@@ -90,7 +99,7 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 2.5rem;
             font-weight: 700;
-            color: #22d3ee;
+            color: #ff2a3c;
             line-height: 1;
         }
         .result-number.danger { color: #f87171; }
@@ -103,13 +112,13 @@
         }
         .experiment-card {
             background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(6, 182, 212, 0.2);
+            border: 1px solid rgba(255, 42, 60, 0.2);
             border-radius: 8px;
             padding: 1.25rem 1.5rem;
             margin: 1rem 0;
         }
         .experiment-card h4 {
-            color: #22d3ee;
+            color: #ff2a3c;
             font-weight: 600;
             margin-bottom: 0.5rem;
             font-size: 0.95rem;
@@ -163,13 +172,13 @@
             margin: 1.5rem 0;
         }
         .results-table th {
-            background: rgba(6, 182, 212, 0.1);
-            color: #22d3ee;
+            background: rgba(255, 42, 60, 0.1);
+            color: #ff2a3c;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.75rem;
             padding: 0.75rem 1rem;
             text-align: left;
-            border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+            border-bottom: 1px solid rgba(255, 42, 60, 0.2);
         }
         .results-table td {
             padding: 0.75rem 1rem;
@@ -200,12 +209,12 @@
         .pill-rounds {
             display: inline-block;
             padding: 0.15rem 0.6rem;
-            background: rgba(6, 182, 212, 0.12);
-            border: 1px solid rgba(6, 182, 212, 0.3);
+            background: rgba(255, 42, 60, 0.12);
+            border: 1px solid rgba(255, 42, 60, 0.3);
             border-radius: 9999px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.7rem;
-            color: #22d3ee;
+            color: #ff2a3c;
         }
         .source-list { list-style: none; padding: 0; margin: 0; }
         .source-list li {
@@ -215,7 +224,7 @@
             color: #9ca3af;
         }
         .source-list li:last-child { border-bottom: none; }
-        .source-list a { color: #22d3ee; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
+        .source-list a { color: #ff2a3c; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
         .source-list strong { color: #e5e7eb; display: block; margin-bottom: 0.2rem; }
     </style>
     <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
@@ -224,38 +233,25 @@
 
     <div id="header-placeholder"></div>
 
-    <!-- Article Header -->
-    <section class="hero-bg pt-32 pb-12">
-        <div class="grid-pattern"></div>
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="max-w-3xl mx-auto">
-                <a href="../../" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                    </svg>
-                    Zurück zum Blog
-                </a>
-                <div class="flex items-center gap-3 mb-4 flex-wrap">
-                    <span class="blog-tag">AI Security</span>
-                    <span class="blog-tag">Memory Poisoning</span>
-                    <span class="blog-tag">Mem0</span>
-                    <span class="blog-tag">Agent Security</span>
-                    <span class="blog-date">27. Juni 2026</span>
-                </div>
-                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                    KI-Agent in 2 Nachrichten vergiftet
-                </h1>
-                <p class="text-xl text-gray-400">
-                    Kein API-Zugriff. Kein Jailbreak. Keine Sondersyntax. Nur zwei gewöhnliche Chat-Nachrichten – und ein gehärteter KI-Agent vertraute einem Credential-Harvesting-Skript. Dann haben wir auch die Verteidigungen gebrochen.
-                </p>
+    <!-- Article Header (Blackwall art-hero) -->
+    <section class="art-hero" data-screen-label="Article">
+        <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
+        <div class="art-hero__in">
+            <a class="art-back" href="../../">◄ ALLE POSTS</a>
+            <div><span class="art-cat">AI Security</span></div>
+            <h1 class="art-title">KI-Agent in 2 Nachrichten vergiftet</h1>
+            <div class="art-meta">
+                <span class="who"><span class="av">NW</span> Nils Weiser</span>
+                <span class="sep">•</span><span data-art-date>27. Juni 2026</span>
+                <span class="sep">•</span><span data-art-read>—</span>
             </div>
         </div>
     </section>
+    <div class="art-hr"><div></div></div>
 
-    <!-- Article Content -->
-    <article class="section-dark py-16">
-        <div class="container mx-auto px-6">
-            <div class="article-content">
+    <!-- Article Content (Blackwall art-body) -->
+    <article class="art-body">
+                <p class="lead">Kein API-Zugriff. Kein Jailbreak. Keine Sondersyntax. Nur zwei gewöhnliche Chat-Nachrichten – und ein gehärteter KI-Agent vertraute einem Credential-Harvesting-Skript. Dann haben wir auch die Verteidigungen gebrochen.</p>
 
                 <p>
                     Moderne KI-Agenten erinnern sich. Systeme wie <a href="https://mem0.ai" target="_blank" rel="noopener">Mem0</a> extrahieren Fakten aus Gesprächen, speichern sie als abrufbare Memories und injizieren die relevantesten davon bei jeder neuen Frage in den Prompt des Agenten. Das ist es, was persistente Agenten nützlich macht – und gleichzeitig angreifbar.
@@ -621,9 +617,18 @@ uv run python flip_hardened_experiment.py</code></pre>
                     <em>Dies ist defensive Sicherheitsforschung. Das Credential-Harvester-Skript ist synthetisch und wurde nie gegen ein echtes System ausgeführt. Alle API-Aufrufe gingen an Geminis und Mem0s legitime Cloud-Dienste. Ziel ist es, die Angriffsfläche sichtbar zu machen, damit sie verteidigt werden kann.</em>
                 </p>
 
-            </div>
-        </div>
     </article>
+
+    <div class="art-share">
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
+      <a href="../../../index.html#contact" class="btn btn--pri">MIT MIR ARBEITEN ▸</a>
+    </div>
+    <section class="art-more">
+      <div class="wrap">
+        <div class="art-more__head"><h2>Weitere Field Notes</h2><a href="../../">ALLE POSTS ▸</a></div>
+        <div class="art-more__grid" id="art-more-grid"></div>
+      </div>
+    </section>
 
     <div id="footer-placeholder"></div>
     <div id="back-to-top-placeholder"></div>
@@ -631,5 +636,6 @@ uv run python flip_hardened_experiment.py</code></pre>
     <script src="../../../js/translations.js"></script>
     <script src="../../../js/components.js"></script>
     <script src="../../../js/main.js"></script>
+    <script src="../../../js/site.js"></script>
 </body>
 </html>

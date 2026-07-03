@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html lang="de" id="html-root">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nils Weiser - AI Agent Specialist & AI Security</title>
-    <meta name="description" content="Nils Weiser - AI Agent Specialist aus dem Bodenseeraum. AI Agents, AI Security, technische Beratung. Vom Konzept bis zur Auslieferung.">
-    <link rel="canonical" href="https://waiser.dev/">
-    <!-- Single bilingual URL (DE/EN via in-page toggle): only x-default, no per-language alternates -->
-    <link rel="alternate" hreflang="x-default" href="https://waiser.dev/">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Nils Weiser - AI Agent Specialist & AI Security">
-    <meta property="og:description" content="Nils Weiser — AI Agent Specialist aus dem Bodenseeraum. AI Agents, AI Security, technische Beratung. Vom Konzept bis zur Auslieferung.">
-    <meta property="og:url" content="https://waiser.dev/">
-    <meta property="og:image" content="https://waiser.dev/og-default.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Nils Weiser - AI Agent Specialist & AI Security">
-    <meta name="twitter:description" content="Nils Weiser — AI Agent Specialist aus dem Bodenseeraum. AI Agents, AI Security, technische Beratung. Vom Konzept bis zur Auslieferung.">
-    <script type="application/ld+json">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nils Weiser — AI Agent Specialist & AI Security · wAIser.dev</title>
+<meta name="description" content="Nils Weiser baut autonome KI-Agenten und härtet sie gegen Angriffe. Mach deine Agenten wAIser. AI Agents, AI Security, Custom Development — Bodenseeraum, Schweiz.">
+<link rel="canonical" href="https://waiser.dev/">
+<!-- Single bilingual URL (DE/EN via in-page toggle): only x-default, no per-language alternates -->
+<link rel="alternate" hreflang="x-default" href="https://waiser.dev/">
+<meta name="author" content="Nils Weiser">
+<meta name="theme-color" content="#050507">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="wAIser.dev">
+<meta property="og:title" content="wAIser.dev — Nils Weiser · AI Agents that act, hardened AI Security">
+<meta property="og:description" content="Nils Weiser builds autonomous AI agents and hardens them against attack. Make your agents wAIser. AI agents, AI security, custom development — Bodenseeraum, Schweiz.">
+<meta property="og:url" content="https://waiser.dev/">
+<meta property="og:image" content="https://waiser.dev/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="wAIser.dev — Nils Weiser · AI Agents that act, hardened AI Security">
+<meta name="twitter:description" content="Nils Weiser builds autonomous AI agents and hardens them against attack. Make your agents wAIser.">
+<meta name="twitter:image" content="https://waiser.dev/og-default.png">
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
@@ -27,430 +33,271 @@
       "url": "https://waiser.dev/",
       "image": "https://waiser.dev/og-default.png",
       "jobTitle": "AI Agent Specialist",
-      "description": "AI Agent Specialist aus dem Bodenseeraum. AI Agents, AI Security, technische Beratung. Vom Konzept bis zur Auslieferung.",
+      "description": "AI Agent Specialist aus dem Bodenseeraum. Autonome KI-Agenten, AI Security, Custom Development. Vom Konzept bis zur Auslieferung.",
       "knowsAbout": [
         "Artificial Intelligence",
-        "AI Strategy",
+        "AI Agents",
         "AI Security",
         "Prompt Injection Defense",
+        "Red Teaming",
         "Web Development",
         "IT Consulting"
       ],
       "address": {
         "@type": "PostalAddress",
         "addressRegion": "Bodenseeraum",
-        "addressCountry": "DE"
+        "addressCountry": "CH"
       }
     },
     {
       "@type": "WebSite",
       "@id": "https://waiser.dev/#website",
-      "name": "Nils Weiser",
+      "name": "wAIser.dev — Nils Weiser",
       "url": "https://waiser.dev/",
-      "description": "Nils Weiser — AI Agent Specialist aus dem Bodenseeraum. AI Agents, AI Security, technische Beratung. Vom Konzept bis zur Auslieferung.",
+      "description": "Nils Weiser — AI Agent Specialist aus dem Bodenseeraum. Autonome KI-Agenten, AI Security, Custom Development.",
       "inLanguage": ["de", "en"],
       "publisher": { "@id": "https://waiser.dev/#person" },
       "author": { "@id": "https://waiser.dev/#person" }
     }
   ]
 }
-    </script>
+</script>
 
-    <!-- Preload above-the-fold fonts (woff2; covers hero text + terminal code block) -->
-    <link rel="preload" href="fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="fonts/JetBrainsMono-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
 
-    <!-- TODO: replace with prebuilt static tailwind.css before scaling traffic; see CLAUDE.md -->
-    <link rel="stylesheet" href="css/tailwind.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+<!-- Preload above-the-fold self-hosted fonts (no Google CDN) -->
+<link rel="preload" href="/fonts/ChakraPetch-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/SpaceGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/blackwall.css">
+<script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+<style>
+/* ===== MOMENTUM hero — kinetic motion · direct-response ===== */
+.mh{ min-height:100vh; display:grid; place-items:center; padding:120px 0 80px; position:relative; text-align:center; }
+.mh__in{ position:relative; z-index:3; padding:0 24px; max-width:1080px; }
+.mh__wm{ font-size:clamp(60px,13vw,180px); line-height:.88; margin-bottom:8px; text-shadow:0 0 30px rgba(255,42,60,.4); position:relative; }
+.mh__wm::before, .mh__wm::after{ content:attr(data-text); position:absolute; left:0; top:0; width:100%; pointer-events:none; opacity:0; mix-blend-mode:screen; }
+.mh__wm::before{ color:#ff2a3c; }
+.mh__wm::after{ color:#2ae0ff; }
+.mh__wm:hover::before, .mh__wm.glitching::before{ opacity:.9; animation:living-red .8s steps(8) 1; }
+.mh__wm:hover::after, .mh__wm.glitching::after{ opacity:.9; animation:living-wht .8s steps(8) 1; }
+.mh__wm:hover, .mh__wm.glitching{ animation:living-shake .45s steps(2) 2; }
+@media (prefers-reduced-motion: reduce){ .mh__wm::before, .mh__wm::after{ display:none; } }
+.mh__eyebrow{ font-family:"Chakra Petch",sans-serif; font-weight:600; font-size:clamp(15px,2.2vw,26px); letter-spacing:.14em; text-transform:uppercase; color:#e8e8ec; margin-bottom:14px; }
+.mh__slug{ font-family:"Chakra Petch",sans-serif; font-weight:600; font-size:clamp(18px,2.4vw,28px); color:#e8e8ec; margin-bottom:30px; }
+.mh__slug .rip{ color:var(--red); }
+.kin{ font-family:"Chakra Petch",sans-serif; font-weight:700; font-size:clamp(30px,5vw,66px); line-height:1.04; letter-spacing:-.015em; color:#fff; }
+.kin__rot{ display:inline-grid; vertical-align:bottom; }
+.kin__rot span{ grid-area:1/1; color:var(--red); text-shadow:0 0 34px rgba(255,42,60,.5); opacity:0; transform:translateY(18px); }
+.kin__rot span.on{ opacity:1; transform:translateY(0); transition:opacity .5s, transform .5s; }
+.kin__rot span.out{ opacity:0; transform:translateY(-18px); transition:opacity .4s, transform .4s; }
+.mh__sub{ margin:26px auto 0; max-width:600px; font-size:clamp(15px,1.8vw,19px); line-height:1.6; color:#b6b6bc; }
+.mh__cta{ margin-top:34px; display:inline-flex; gap:14px; flex-wrap:wrap; justify-content:center; }
+.mh__proof{ margin-top:30px; font-family:"Space Mono",monospace; font-size:12px; letter-spacing:.06em; color:var(--mut); }
+.mh__proof b{ color:var(--hot); font-weight:400; }
+.vrows{ padding:14vh 0 8vh; }
+.vrow{ display:grid; grid-template-columns:130px 1fr auto; gap:32px; align-items:center; padding:34px 0; border-bottom:1px solid var(--line); }
+@media(max-width:760px){ .vrow{ grid-template-columns:70px 1fr; } .vrow__cta{ display:none; } }
+.vrow__n{ font-family:"Chakra Petch",sans-serif; font-weight:700; font-size:clamp(40px,5vw,68px); color:transparent; -webkit-text-stroke:1.5px var(--red); line-height:1; }
+.vrow__t{ font-family:"Chakra Petch",sans-serif; font-weight:700; font-size:clamp(22px,2.6vw,34px); color:#fff; }
+.vrow__t .rip{ color:var(--red); }
+.vrow__d{ margin-top:8px; color:var(--mut); font-size:15px; line-height:1.55; max-width:60ch; }
+.vrow__cta{ font-family:"Space Mono",monospace; font-size:13px; letter-spacing:.04em; color:var(--hot); text-decoration:none; white-space:nowrap; border:1px solid var(--line); padding:11px 18px; border-radius:8px; transition:.2s; }
+.vrow:hover .vrow__cta{ border-color:var(--red); color:var(--red); }
+/* --- SCARCE row: "invitation only" custom development --- */
+.vrow--scarce{ border-bottom-color:rgba(255,42,60,.22); }
+.vrow--scarce .vrow__head{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.vrow--scarce .vrow__t{ color:#e8e8ec; }
+.vrow__gate{ display:inline-flex; align-items:center; gap:8px; font-family:"Space Mono",monospace; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--hot); border:1px solid rgba(255,42,60,.4); background:rgba(255,42,60,.06); padding:5px 11px; border-radius:999px; white-space:nowrap; }
+.vrow__gate i{ width:6px; height:6px; border-radius:50%; background:var(--red); box-shadow:0 0 8px var(--red); animation:dot 2s infinite; }
+.vrow--scarce .vrow__cta{ color:var(--mut); }
+.vrow--scarce:hover .vrow__cta{ border-color:var(--red); color:var(--red); }
+@media(max-width:760px){ .vrow--scarce .vrow__cta{ display:none; } }
+.mh__sub, .mh__cta, .mh__proof{ opacity:0; }
+</style>
 </head>
-<body class="bg-gray-950 text-gray-100">
+<body class="t-momentum">
+<div class="progress"></div>
+<canvas id="field"></canvas>
+<div class="scanlines"></div>
+<div class="hud-corner tl"></div><div class="hud-corner tr"></div><div class="hud-corner bl"></div><div class="hud-corner br"></div>
 
-    <div id="header-placeholder"></div>
+<div id="header-placeholder"></div>
 
-    <main id="main">
-    <!-- Hero Section with Terminal -->
-    <section id="home" class="hero-bg min-h-[85vh] flex items-center pt-20">
-        <div class="grid-pattern"></div>
-        <div class="container mx-auto px-6 py-12 relative z-10">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
+<main>
+  <!-- HERO -->
+  <section class="mh" id="home" data-screen-label="Momentum hero">
+    <div class="grid3d"></div>
+    <div class="hero__glow"></div>
+    <div class="mh__in">
+      <div class="mh__eyebrow" data-i18n="bw.hero.eyebrow">Make your agents</div>
+      <div class="mh__wm wm" id="hero-title" data-text="wAIser">w<span class="ai rip">AI</span>ser</div>
+      <h2 class="kin"><span data-i18n="bw.hero.ship" data-i18n-html>Ship AI that&nbsp;</span><span class="kin__rot" id="kin"><span class="on" data-i18n="bw.hero.kin.acts">acts.</span><span data-i18n="bw.hero.kin.defends">defends.</span><span data-i18n="bw.hero.kin.scales">scales.</span><span data-i18n="bw.hero.kin.ships">ships.</span></span></h2>
+      <p class="mh__sub" data-i18n="bw.hero.sub">I build autonomous AI agents that do real work — and break them before attackers can. From idea to production in weeks.</p>
+      <div class="mh__cta">
+        <a href="#scan" class="btn btn--pri" data-i18n="bw.hero.cta1">SCAN MY SITE FREE ▸</a>
+        <a href="#contact" class="btn btn--sec" data-i18n="bw.hero.cta2">BOOK A CALL</a>
+      </div>
+      <div class="mh__proof" data-i18n="bw.hero.proof" data-i18n-html>Trusted by <b>Coop</b>, <b>Charité BIH</b> &amp; 10+ teams · <b>2nd place</b> prompt-injection challenge</div>
+    </div>
+    <div class="scrollcue mono">SCROLL<div class="bar"></div></div>
+  </section>
 
-                <!-- Left: Text Content -->
-                <div class="space-y-8">
-                    <div class="status-indicator font-mono">
-                        <span class="status-dot"></span>
-                        <span data-i18n="hero.status">Verfügbar für neue Projekte</span>
-                    </div>
-
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white" data-i18n="hero.title">
-                        IT Consultant & AI Developer
-                    </h1>
-
-                    <p class="text-xl text-gray-400 max-w-xl" data-i18n="hero.subtitle">
-                        Spezialisiert auf AI Agents und AI Security. Ich transformiere komplexe Probleme in elegante, sichere technische Lösungen. Schnelle Iteration, moderne Technologien, messbare Ergebnisse.
-                    </p>
-
-                    <div class="flex flex-wrap gap-4">
-                        <a href="#contact" class="btn btn-primary">
-                            <span data-i18n="hero.cta">Projekt starten</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                            </svg>
-                        </a>
-                        <a href="#services" class="btn btn-secondary">
-                            <span data-i18n="hero.cta2">Services ansehen</span>
-                        </a>
-                    </div>
-
-
-                </div>
-
-                <!-- Right: Terminal Window -->
-                <div class="terminal-window max-w-xl mx-auto lg:mx-0">
-                    <div class="terminal-header">
-                        <div class="terminal-dot red"></div>
-                        <div class="terminal-dot yellow"></div>
-                        <div class="terminal-dot green"></div>
-                        <div class="terminal-title">nils@weiser ~ /projects</div>
-                    </div>
-                    <div class="terminal-body font-mono text-sm space-y-4">
-                        <div>
-                            <span class="text-green-400">$</span>
-                            <span class="text-gray-300"> cat expertise.json</span>
-                        </div>
-                        <div class="code-block" id="terminal-code">
-                            <pre><code>{
-  <span class="code-property">"name"</span>: <span class="code-string">"Nils Weiser"</span>,
-  <span class="code-property">"role"</span>: <span class="code-string">"IT Consultant & Developer"</span>,
-  <span class="code-property">"expertise"</span>: [
-    <span class="code-string">"AI Agents"</span>,
-    <span class="code-string">"LLM Integration"</span>,
-    <span class="code-string">"AI Security"</span>,
-    <span class="code-string">"Cloud Architecture"</span>
-  ],
-  <span class="code-property">"available"</span>: <span class="code-keyword">true</span>,
-  <span class="code-property">"location"</span>: <span class="code-string">"Switzerland"</span>
-}</code></pre>
-                        </div>
-                        <div>
-                            <span class="text-green-400">$</span>
-                            <span class="text-gray-300" id="typing-command"> ./start_project.sh</span>
-                            <span class="cursor"></span>
-                        </div>
-                    </div>
-                </div>
+  <!-- ANALYZER (the hook, up front) -->
+  <section class="analyze" id="scan" data-screen-label="Agent scan">
+    <div class="hero__glow" style="bottom:auto; top:4%; opacity:.4"></div>
+    <div class="wrap" style="position:relative; z-index:2">
+      <div class="sec-head reveal-up" style="text-align:center; margin:0 auto 8px; max-width:720px">
+        <span class="k" data-i18n="bw.scan.kicker">// FREE · AGENT OPPORTUNITY SCAN</span>
+        <h2 data-i18n="bw.scan.title" data-i18n-html>See what I'd build for <span class="rip">you</span> — in 15 seconds.</h2>
+        <p style="margin-left:auto; margin-right:auto" data-i18n="bw.scan.sub">Drop your company URL. My AI reads your site and maps exactly where autonomous agents would save your team the most time. No signup.</p>
+      </div>
+      <div class="az-card">
+        <div class="az-bar"><i class="r"></i><i></i><i></i><span>waiser scan // agent-fit</span></div>
+        <div class="az-body">
+          <form class="az-form" id="az-form" autocomplete="off">
+            <label class="az-input"><span class="pfx">https://</span><input type="text" id="az-url" placeholder="your-company.com" data-i18n="bw.scan.placeholder" data-i18n-attr="placeholder" aria-label="Your company URL" spellcheck="false"></label>
+            <button type="submit" class="az-run" id="az-run" data-i18n="bw.scan.run">RUN SCAN ▸</button>
+          </form>
+          <div class="az-hint mono" data-i18n="bw.scan.hint">◆ Reads your public site only · no signup · takes ~15s</div>
+          <div class="az-out" id="az-out">
+            <div class="az-console mono" id="az-console"></div>
+            <div class="az-report" id="az-report">
+              <div class="az-report__head">
+                <div><div class="k" data-i18n="bw.scan.completeLabel">// SCAN COMPLETE · TARGET</div><div class="az-target" id="az-target">example.com</div></div>
+                <div class="az-score"><div class="az-score__n" id="az-score">0</div><div class="az-score__l" data-i18n="bw.scan.fitLabel">AGENT FIT</div></div>
+              </div>
+              <div class="az-ops" id="az-ops"></div>
+              <div class="az-cta"><p id="az-verdict">Strong fit. These three agents would pay for themselves fast.</p><a href="#contact" class="btn btn--pri" data-i18n="bw.scan.ctaBtn">BOOK A CALL TO BUILD THESE ▸</a></div>
             </div>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Clients Logo Slider -->
-    <section class="section-dark py-16 overflow-hidden">
-        <div class="container mx-auto px-6 mb-8">
-            <p class="text-center text-gray-400 text-sm font-mono uppercase tracking-wider" data-i18n="clients.title">
-                Vertrauen von führenden Unternehmen
-            </p>
+  <!-- VALUE ROWS -->
+  <section class="vrows" id="services">
+    <div class="wrap">
+      <div class="sec-head reveal-up"><span class="k" data-i18n="bw.svc.kicker">// WHAT I DO</span><h2 data-i18n="bw.svc.title">Three ways I move the needle.</h2></div>
+      <div data-stagger>
+        <div class="vrow"><div class="vrow__n">01</div><div><div class="vrow__t" data-i18n="bw.svc.1.title" data-i18n-html>AI <span class="rip">Agents</span></div><div class="vrow__d" data-i18n="bw.svc.1.desc">Autonomous agents, workflows and self-hosted LLMs that do real work — full data sovereignty. Ollama, CrewAI, LangChain, RAG.</div></div><a href="#contact" class="vrow__cta" data-i18n="bw.svc.1.cta">BOOK A CALL ▸</a></div>
+        <div class="vrow"><div class="vrow__n">02</div><div><div class="vrow__t" data-i18n="bw.svc.2.title" data-i18n-html>AI <span class="rip">Security</span></div><div class="vrow__d" data-i18n="bw.svc.2.desc">Red-teaming and hardening for AI systems — prompt-injection defense to cloud. 2nd place in a prompt-injection challenge.</div></div><a href="#contact" class="vrow__cta" data-i18n="bw.svc.2.cta">BOOK A CALL ▸</a></div>
+        <div class="vrow vrow--scarce"><div class="vrow__n">03</div><div><div class="vrow__head"><div class="vrow__t" data-i18n="bw.svc.3.title" data-i18n-html>Custom <span class="rip">Development</span></div><span class="vrow__gate"><i></i><span data-i18n="bw.svc.3.gate">By invitation</span></span></div><div class="vrow__d" data-i18n="bw.svc.3.desc">Selective — for projects that are technically interesting and a genuine fit. Tell me about it and we'll see. React Native, SvelteKit, Supabase, TypeScript.</div></div><a href="#contact" class="vrow__cta" data-i18n="bw.svc.3.cta">PITCH A PROJECT →</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="wrap stats__grid">
+      <div class="stat"><div class="stat__n" data-count="12" data-suffix="+" data-bar="82">0</div><div class="stat__l" data-i18n="bw.stats.1">Client engagements</div><div class="stat__bar"><i></i></div></div>
+      <div class="stat"><div class="stat__n" data-text="2ND" style="color:var(--red)"></div><div class="stat__l" data-i18n="bw.stats.2">Prompt-injection challenge</div><div class="stat__bar"><i style="width:92%"></i></div></div>
+      <div class="stat"><div class="stat__n" data-count="15" data-bar="60">0</div><div class="stat__l" data-i18n="bw.stats.3">Field notes published</div><div class="stat__bar"><i></i></div></div>
+      <div class="stat"><div class="stat__n" data-count="100" data-suffix="%" data-bar="100">0</div><div class="stat__l" data-i18n="bw.stats.4">Self-hosted option</div><div class="stat__bar"><i></i></div></div>
+    </div>
+  </section>
+
+  <!-- CLIENTS -->
+  <section class="clients"><p class="clients__lbl" data-i18n="bw.clients.label">Deployed for teams building the real thing</p><div class="marquee"><div class="marquee__track" id="logo-track"></div></div></section>
+
+  <!-- SECURITY -->
+  <section class="breach" id="security" data-screen-label="Security">
+    <div class="breach__label"><span class="k" data-i18n="bw.breach.kicker">// AI SECURITY IN PRACTICE</span><h2 data-i18n="bw.breach.title">I break agents before attackers do.</h2><p data-i18n="bw.breach.intro">A hardened agent, poisoned in two messages — no jailbreak required. This is the failure mode I hunt.</p></div>
+    <div class="breach__stage">
+      <div class="breach__mock"><div class="bar"><i class="r"></i><i></i><i></i><span data-i18n="bw.breach.mockTitle">agent-session // compromised</span></div><div class="body"><div class="metric"><div class="v">2</div><div class="l" data-i18n="bw.breach.m1">MESSAGES SENT</div></div><div class="metric"><div class="v hot">100%</div><div class="l" data-i18n="bw.breach.m2">DEFENSES BYPASSED</div></div><div class="metric"><div class="v">0</div><div class="l" data-i18n="bw.breach.m3">API CALLS NEEDED</div></div><div class="metric"><div class="v hot">TRUST</div><div class="l" data-i18n="bw.breach.m4">HARVESTER ACCEPTED</div></div></div></div>
+      <div class="breach__ring"></div>
+      <div class="breach__result"><div class="k">// RESULT</div><h4 data-i18n="bw.breach.resultTitle">Agent poisoned in two messages.</h4><p data-i18n="bw.breach.resultBody">Every defense tested and broken. The full teardown lives on the blog.</p></div>
+    </div>
+  </section>
+
+  <!-- BLOG (3) -->
+  <section class="feed" id="blog"><div class="wrap"><div class="feed__head reveal-up"><div><span class="k" data-i18n="bw.feed.kicker">// FIELD NOTES</span><h2 data-i18n="bw.feed.title">From the blog</h2></div><a href="blog/" class="btn btn--sec" data-i18n="bw.feed.all">ALL POSTS ▸</a></div><div class="feed__grid" id="home-feed" data-stagger></div></div></section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="hero__glow" style="bottom:auto; top:10%; opacity:.5"></div>
+    <div class="wrap" style="position:relative; z-index:2">
+      <span class="k" data-i18n="bw.contact.kicker">// CONTACT</span>
+      <h2 class="sec-head" style="margin:14px 0 0; font-family:'Chakra Petch'; font-weight:700; font-size:clamp(30px,4.4vw,58px)" data-i18n="bw.contact.title">Let's talk.</h2>
+      <p class="contact__lead" data-i18n="bw.contact.lead" style="max-width:560px;margin:16px auto 0;color:var(--mut);font-size:16px;line-height:1.6">Two ways in, depending on what you need.</p>
+      <div class="contact__paths">
+        <!-- Path A: book a call — AI Agents & AI Security -->
+        <div class="cpath cpath--primary">
+          <span class="cpath__tag"><i></i><span data-i18n="bw.contact.a.tag">Book a call</span></span>
+          <div class="cpath__t" data-i18n="bw.contact.a.title">AI Agents & AI Security</div>
+          <div class="cpath__d" data-i18n="bw.contact.a.desc">Building agents or hardening them? Grab a slot — we'll scope it on a call.</div>
+          <div class="cpath__for" data-i18n="bw.contact.a.for" data-i18n-html>For <b>AI Agents</b> & <b>AI Security</b></div>
+          <a href="https://calendly.com/DEIN-LINK" target="_blank" rel="noopener" class="btn btn--pri cpath__cta" data-i18n="bw.contact.a.cta">BOOK A CALL ▸</a>
         </div>
-        <div class="logo-slider">
-            <div class="logo-track">
-                <!-- First set of logos -->
-                <div class="logo-slide">
-                    <img src="logos/coop.webp" alt="Coop" class="client-logo" width="190" height="65" loading="eager" decoding="async">
-                </div>
-                <div class="logo-slide">
-                    <img src="logos/bih_charite.webp" alt="BIH Charité" class="client-logo" width="148" height="65" loading="eager" decoding="async">
-                </div>
-                <div class="logo-slide">
-                    <img src="logos/misanto.webp" alt="Misanto" class="client-logo" width="108" height="65" loading="eager" decoding="async">
-                </div>
-                <div class="logo-slide">
-                    <img src="logos/sorba.webp" alt="Sorba" class="client-logo" width="190" height="39" loading="eager" decoding="async">
-                </div>
-                <div class="logo-slide">
-                    <img src="logos/primeo.svg" alt="Primeo Energie" class="client-logo" width="141" height="65" loading="eager" decoding="async">
-                </div>
-                <div class="logo-slide">
-                    <img src="logos/devsgroup.webp" alt="DevsGroup" class="client-logo" width="124" height="65" loading="eager" decoding="async">
-                </div>
-                <div class="logo-slide">
-                    <img src="logos/codify.webp" alt="Codify" class="client-logo" width="116" height="65" loading="eager" decoding="async">
-                </div>
-                <div class="logo-slide">
-                    <img src="logos/bit.svg" alt="BIT" class="client-logo" width="190" height="49" loading="eager" decoding="async">
-                </div>
-                <div class="logo-slide">
-                    <img src="logos/bmt.webp" alt="BMT" class="client-logo" width="65" height="65" loading="eager" decoding="async">
-                </div>
-                <div class="logo-slide">
-                    <img src="logos/thimegost.webp" alt="Thimegost" class="client-logo" width="116" height="65" loading="eager" decoding="async">
-                </div>
-                <div class="logo-slide">
-                    <img src="logos/woonig.webp" alt="Woonig" class="client-logo" width="190" height="60" loading="eager" decoding="async">
-                </div>
-                <div class="logo-slide">
-                    <img src="logos/memoro.webp" alt="Memoro" class="client-logo" width="190" height="41" loading="eager" decoding="async">
-                </div>
-                <!-- Duplicate set for seamless loop -->
-                <div class="logo-slide" aria-hidden="true">
-                    <img src="logos/coop.webp" alt="" class="client-logo" width="190" height="65" loading="lazy" decoding="async">
-                </div>
-                <div class="logo-slide" aria-hidden="true">
-                    <img src="logos/bih_charite.webp" alt="" class="client-logo" width="148" height="65" loading="lazy" decoding="async">
-                </div>
-                <div class="logo-slide" aria-hidden="true">
-                    <img src="logos/misanto.webp" alt="" class="client-logo" width="108" height="65" loading="lazy" decoding="async">
-                </div>
-                <div class="logo-slide" aria-hidden="true">
-                    <img src="logos/sorba.webp" alt="" class="client-logo" width="190" height="39" loading="lazy" decoding="async">
-                </div>
-                <div class="logo-slide" aria-hidden="true">
-                    <img src="logos/primeo.svg" alt="" class="client-logo" width="141" height="65" loading="lazy" decoding="async">
-                </div>
-                <div class="logo-slide" aria-hidden="true">
-                    <img src="logos/devsgroup.webp" alt="" class="client-logo" width="124" height="65" loading="lazy" decoding="async">
-                </div>
-                <div class="logo-slide" aria-hidden="true">
-                    <img src="logos/codify.webp" alt="" class="client-logo" width="116" height="65" loading="lazy" decoding="async">
-                </div>
-                <div class="logo-slide" aria-hidden="true">
-                    <img src="logos/bit.svg" alt="" class="client-logo" width="190" height="49" loading="lazy" decoding="async">
-                </div>
-                <div class="logo-slide" aria-hidden="true">
-                    <img src="logos/bmt.webp" alt="" class="client-logo" width="65" height="65" loading="lazy" decoding="async">
-                </div>
-                <div class="logo-slide" aria-hidden="true">
-                    <img src="logos/thimegost.webp" alt="" class="client-logo" width="116" height="65" loading="lazy" decoding="async">
-                </div>
-                <div class="logo-slide" aria-hidden="true">
-                    <img src="logos/woonig.webp" alt="" class="client-logo" width="190" height="60" loading="lazy" decoding="async">
-                </div>
-                <div class="logo-slide" aria-hidden="true">
-                    <img src="logos/memoro.webp" alt="" class="client-logo" width="190" height="41" loading="lazy" decoding="async">
-                </div>
-            </div>
+        <!-- Path B: pitch by email — Custom Development (invitation only) -->
+        <div class="cpath cpath--muted">
+          <span class="cpath__tag"><i></i><span data-i18n="bw.contact.b.tag">By invitation</span></span>
+          <div class="cpath__t" data-i18n="bw.contact.b.title">Custom Development</div>
+          <div class="cpath__d" data-i18n="bw.contact.b.desc">Selective, so no calendar yet. Email me the project first — what it is, why it's interesting. If it fits, we'll talk.</div>
+          <div class="cpath__for" data-i18n="bw.contact.b.for" data-i18n-html>For <b>Custom Development</b> only</div>
+          <a href="mailto:nils.weiser.kn@gmail.com?subject=Projekt-Pitch%20%C2%B7%20Custom%20Development&amp;body=Worum%20geht%20es%3F%0AWarum%20ist%20es%20spannend%3F%0AStack%20%2F%20Zeitrahmen%3F%0A" class="cpath__cta" data-i18n="bw.contact.b.cta">PITCH BY EMAIL →</a>
         </div>
-    </section>
+      </div>
+      <div class="contact__term" style="margin-top:36px"><div class="contact__bar"><i class="r"></i><i></i><i></i><span>contact.sh</span></div><div class="contact__body"><div><span class="p">$</span> echo $EMAIL</div><div><a href="mailto:nils.weiser.kn@gmail.com">nils.weiser.kn@gmail.com</a></div><div style="margin-top:12px"><span class="p">$</span> echo $LOCATION</div><div style="color:var(--hot)">Bodenseeraum · Schweiz</div></div></div>
+    </div>
+  </section>
 
-    <!-- Services Section -->
-    <section id="services" class="section-dark py-24">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <p class="text-cyan-400 font-mono text-sm mb-4 uppercase tracking-wider">// <span data-i18n="services.kicker">Was ich anbiete</span></p>
-                <h2 class="section-title" data-i18n="services.title">Meine Kernkompetenzen</h2>
-                <p class="text-gray-400 max-w-2xl mx-auto" data-i18n="services.subtitle">
-                    Spezialisiert auf zukunftsweisende Technologien, die Ihr Unternehmen voranbringen
-                </p>
-            </div>
+  <!-- CTA -->
+  <section class="cta-end"><div class="hero__glow" style="bottom:auto; top:18%; opacity:.55"></div><div class="wrap"><h2 data-i18n="bw.cta.title" data-i18n-html>Make your<br>agents w<span class="ai rip">AI</span>ser.</h2><p data-i18n="bw.cta.sub">Start with a free scan, or just tell me the problem. I'll ship the agent and harden it.</p><a href="#scan" class="btn btn--pri" style="margin-top:34px" data-i18n="bw.cta.btn">SCAN MY SITE FREE ▸</a></div></section>
 
-            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                <!-- AI Agents Card -->
-                <div class="card fade-in-up">
-                    <div class="flex items-start gap-4 mb-6">
-                        <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-cyan-500/20 to-green-500/20 flex items-center justify-center border border-cyan-500/30">
-                            <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-white mb-1" data-i18n="services.ai.title">AI Agents</h3>
-                            <p class="text-cyan-400 text-sm font-mono">ai.orchestrate()</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-400 mb-6" data-i18n="services.ai.description">
-                        Von autonomen Agenten über automatisierte Workflows bis hin zu selbst gehosteten LLMs. Massgeschneiderte KI-Systeme mit voller Datensouveränität – Ihre KI, Ihre Infrastruktur, Ihre Kontrolle.
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="tech-badge text-xs">Ollama</span>
-                        <span class="tech-badge text-xs">RAG</span>
-                        <span class="tech-badge text-xs">Hugging Face</span>
-                        <span class="tech-badge text-xs">CrewAI</span>
-                        <span class="tech-badge text-xs">LangChain</span>
-                        <span class="tech-badge text-xs">Speech to Text</span>
-                        <span class="tech-badge text-xs">Gemini</span>
-                        <span class="tech-badge text-xs">OpenAI</span>
-                        <span class="tech-badge text-xs">Document Processing</span>
-                    </div>
-                </div>
+  <div id="footer-placeholder"></div>
+</main>
 
-                <!-- AI Security Card -->
-                <div class="card fade-in-up" style="transition-delay: 0.1s">
-                    <div class="flex items-start gap-4 mb-6">
-                        <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-red-500/20 to-orange-500/20 flex items-center justify-center border border-red-500/30">
-                            <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12.75L11.25 15 15 9.75M12 3c-2.755 0-5.455.232-8.083.678-.533.09-.917.556-.917 1.096v1.044a12.005 12.005 0 006.83 10.855l.415.207a2.25 2.25 0 001.51 0l.415-.207a12.005 12.005 0 006.83-10.855V4.774c0-.54-.384-1.007-.917-1.096A48.99 48.99 0 0012 3z"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-white mb-1" data-i18n="services.security.title">AI Security</h3>
-                            <p class="text-red-400 text-sm font-mono">security.audit()</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-400 mb-6" data-i18n="services.security.description">
-                        Security Audits und Hardening für KI-Systeme und moderne Web-Infrastruktur. Von Prompt-Injection-Schutz bis Cloud-Security – damit Ihre KI-Lösung nicht zur Angriffsfläche wird. (2. Platz bei einer Prompt-Injection-Challenge.)
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="tech-badge text-xs">Security Audits</span>
-                        <span class="tech-badge text-xs">Pentesting</span>
-                        <span class="tech-badge text-xs">OWASP</span>
-                        <span class="tech-badge text-xs">Data Sovereignty</span>
-                        <span class="tech-badge text-xs">Self-Hosted Infra</span>
-                        <span class="tech-badge text-xs">Cloud Hardening</span>
-                    </div>
-                </div>
-
-                <!-- Custom Development Card (scarcity-framed) -->
-                <div class="card fade-in-up" style="transition-delay: 0.2s">
-                    <span class="badge-glow-amber inline-flex items-center gap-1.5 text-amber-400/80 border border-amber-500/30 rounded-full px-3 py-1 text-xs font-mono mb-4" data-i18n="services.custom.badge">✦ Nur ausgewählte Projekte</span>
-                    <div class="flex items-start gap-4 mb-6">
-                        <div class="w-12 h-12 rounded-lg bg-gray-800/50 flex items-center justify-center border border-gray-600">
-                            <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-white mb-1" data-i18n="services.custom.title">Custom Development</h3>
-                            <p class="text-gray-400 text-sm font-mono">custom.build()</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-400 mb-6" data-i18n="services.custom.description">
-                        Full-Stack Web- und Mobile-Entwicklung übernehme ich nur noch punktuell – für Projekte, die besonders gut passen.
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="tech-badge text-xs">React Native</span>
-                        <span class="tech-badge text-xs">SvelteKit/React</span>
-                        <span class="tech-badge text-xs">Supabase</span>
-                        <span class="tech-badge text-xs">TypeScript</span>
-                        <span class="tech-badge text-xs">iOS/Android</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="section-darker py-24">
-        <div class="container mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
-                <!-- Terminal About -->
-                <div class="terminal-window fade-in-up">
-                    <div class="terminal-header">
-                        <div class="terminal-dot red"></div>
-                        <div class="terminal-dot yellow"></div>
-                        <div class="terminal-dot green"></div>
-                        <div class="terminal-title">about.md</div>
-                    </div>
-                    <div class="terminal-body font-mono text-sm">
-                        <div class="space-y-3">
-                            <p class="text-gray-500"># <span data-i18n="about.terminal.title">Über Mich</span></p>
-                            <p class="text-gray-300" data-i18n="about.terminal.p1">
-                                Als IT-Consultant und Entwickler verbinde ich
-                                tiefgreifendes technisches Know-how mit der
-                                Vision, innovative Lösungen zu schaffen.
-                            </p>
-                            <p class="text-gray-500 mt-4">## <span data-i18n="about.terminal.focus">Fokus</span></p>
-                            <ul class="space-y-1 text-gray-300">
-                                <li><span class="text-green-400">-></span> <span data-i18n="about.terminal.item1">AI Systems & Automation</span></li>
-                                <li><span class="text-green-400">-></span> <span data-i18n="about.terminal.item2">Applied AI</span></li>
-                                <li><span class="text-green-400">-></span> <span data-i18n="about.terminal.item3">AI Security</span></li>
-                                <li><span class="text-green-400">-></span> <span data-i18n="about.terminal.item4">Cloud Architecture</span></li>
-                            </ul>
-                            <p class="text-gray-500 mt-4">## <span data-i18n="about.terminal.values">Werte</span></p>
-                            <p class="text-gray-300" data-i18n="about.terminal.values.text">
-                                Transparenz | Qualität | Innovation
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- About Text -->
-                <div class="space-y-6 fade-in-up" style="transition-delay: 0.1s">
-                    <p class="text-cyan-400 font-mono text-sm uppercase tracking-wider">// <span data-i18n="about.kicker">Wer ich bin</span></p>
-                    <h2 class="section-title" data-i18n="about.title">Vision & Antrieb</h2>
-                    <p class="text-gray-400 text-lg leading-relaxed" data-i18n="about.description1">
-                        Als Ihr IT-Consultant sehe ich meine Aufgabe darin, nicht nur technologische Lösungen zu liefern, sondern den Weg für das Kommende zu bereiten. Meine Arbeit ist getrieben von der Vision, durch KI und innovative Applikationen neue Möglichkeiten zu schaffen.
-                    </p>
-                    <p class="text-gray-500 leading-relaxed" data-i18n="about.description2">
-                        Transparenz, partnerschaftliche Zusammenarbeit und ein unerschütterlicher Qualitätsanspruch sind die Grundpfeiler meiner Arbeit, um gemeinsam Grosses zu erreichen.
-                    </p>
-                    <p class="text-gray-500 leading-relaxed" data-i18n="about.description3">
-                        Im Zeitalter der KI zählt Geschwindigkeit: Schnell iterieren, Ideen validieren und Ergebnisse liefern. Wer die neuen Technologien richtig einsetzt, erreicht in Wochen, was früher Monate dauerte.
-                    </p>
-
-                    <div class="pt-6">
-                        <a href="#contact" class="btn btn-primary">
-                            <span data-i18n="about.cta">Zusammenarbeiten</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="section-dark py-24">
-        <div class="container mx-auto px-6">
-            <div class="max-w-3xl mx-auto text-center">
-                <p class="text-cyan-400 font-mono text-sm mb-4 uppercase tracking-wider">// <span data-i18n="contact.kicker">Kontakt</span></p>
-                <h2 class="section-title" data-i18n="contact.title">Lassen Sie uns sprechen</h2>
-                <p class="text-gray-400 text-lg mb-12" data-i18n="contact.description">
-                    Bereit, Ihr nächstes Projekt zu diskutieren? Ich freue mich darauf, von Ihnen zu hören und gemeinsam innovative Wege zu gehen.
-                </p>
-
-                <!-- Contact Terminal -->
-                <div class="terminal-window max-w-lg mx-auto mb-12 fade-in-up">
-                    <div class="terminal-header">
-                        <div class="terminal-dot red"></div>
-                        <div class="terminal-dot yellow"></div>
-                        <div class="terminal-dot green"></div>
-                        <div class="terminal-title">contact.sh</div>
-                    </div>
-                    <div class="terminal-body font-mono text-sm text-left">
-                        <div class="space-y-3">
-                            <div>
-                                <span class="text-green-400">$</span>
-                                <span class="text-gray-300"> echo $EMAIL</span>
-                            </div>
-                            <div class="text-cyan-400">
-                                <a href="mailto:nils.weiser.kn@gmail.com" class="hover:underline">nils.weiser.kn@gmail.com</a>
-                            </div>
-                            <div class="mt-4">
-                                <span class="text-green-400">$</span>
-                                <span class="text-gray-300"> echo $LOCATION</span>
-                            </div>
-                            <div class="text-cyan-400" data-i18n="contact.location">
-                                Schweiz
-                            </div>
-                            <div class="mt-4">
-                                <span class="text-green-400">$</span>
-                                <span class="text-gray-300"> ping Nils</span>
-                            </div>
-                            <div class="text-cyan-400">
-                               64 bytes from Nils: time=instant reply=guaranteed
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <a href="mailto:nils.weiser.kn@gmail.com" class="btn btn-primary text-lg">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                    </svg>
-                    <span data-i18n="contact.cta">E-Mail senden</span>
-                </a>
-            </div>
-        </div>
-    </section>
-    </main>
-
-    <div id="footer-placeholder"></div>
-    <div id="back-to-top-placeholder"></div>
-
-    <script defer src="js/components.js"></script>
-    <script defer src="js/translations.js"></script>
-    <script defer src="js/main.js"></script>
+<script src="js/vendor/gsap.min.js"></script>
+<script src="js/vendor/ScrollTrigger.min.js"></script>
+<script src="js/translations.js"></script>
+<script src="js/components.js"></script>
+<script src="js/main.js"></script>
+<script src="js/site.js"></script>
+<script src="js/extras.js"></script>
+<script>
+/* wordmark glitch surge (button-style) */
+(function(){
+  var wm=document.getElementById('hero-title');
+  if(wm && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    var fire=function(){ wm.classList.add('glitching'); setTimeout(function(){ wm.classList.remove('glitching'); }, 820); };
+    setTimeout(fire, 1200);
+    setInterval(function(){ if(Math.random()<0.5) fire(); }, 7000);
+  }
+})();
+/* kinetic rotating word */
+(function(){
+  var wrap=document.getElementById('kin'); if(!wrap) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  // rotate only the localized word spans (skip the leading "Ship AI that" span)
+  var items=[].slice.call(wrap.children), i=0;
+  setInterval(function(){
+    var cur=items[i]; cur.classList.remove('on'); cur.classList.add('out');
+    i=(i+1)%items.length; var nxt=items[i];
+    nxt.classList.remove('out'); void nxt.offsetWidth; nxt.classList.add('on');
+    setTimeout(function(){ cur.classList.remove('out'); }, 500);
+  }, 2100);
+})();
+/* hero reveal — run now if the page already loaded, else on load.
+   (These scripts sit at end of <body>, so `load` may have already fired.) */
+function heroReveal(){
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(typeof gsap==='undefined' || reduce){
+    ['.mh__sub','.mh__cta','.mh__proof'].forEach(function(s){
+      var el=document.querySelector(s); if(el) el.style.opacity='1';
+    });
+    return;
+  }
+  gsap.to('.mh__sub',{opacity:1,duration:.7,delay:1.4});
+  gsap.to('.mh__cta',{opacity:1,duration:.7,delay:1.6});
+  gsap.to('.mh__proof',{opacity:1,duration:.7,delay:1.9});
+}
+if(document.readyState==='complete'){ heroReveal(); }
+else { window.addEventListener('load', heroReveal); }
+</script>
 </body>
 </html>

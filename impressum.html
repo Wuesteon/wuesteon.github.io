@@ -13,9 +13,16 @@
     <meta property="og:url" content="https://waiser.dev/impressum.html">
     <meta property="og:image" content="https://waiser.dev/og-default.png">
     <meta name="twitter:card" content="summary">
-    <!-- TODO: replace with prebuilt static tailwind.css before scaling traffic; see CLAUDE.md -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta name="theme-color" content="#050507">
+    <link rel="preload" href="/fonts/ChakraPetch-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="css/tailwind.css">
+    <link rel="stylesheet" href="css/tokens.css">
+    <link rel="stylesheet" href="css/blackwall.css">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/blog-post.css">
     <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
 </head>
 <body class="bg-gray-950 text-gray-100 min-h-screen flex flex-col">
@@ -59,8 +66,9 @@
     <div id="footer-placeholder"></div>
     <div id="back-to-top-placeholder"></div>
 
-    <script defer src="js/components.js"></script>
     <script defer src="js/translations.js"></script>
+    <script defer src="js/components.js"></script>
     <script defer src="js/main.js"></script>
+    <script defer src="js/site.js"></script>
 </body>
 </html>

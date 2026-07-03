@@ -71,8 +71,17 @@
     </script>
 
     <!-- TODO: replace with prebuilt static tailwind.css before scaling traffic; see CLAUDE.md -->
+    <link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+    <meta name="theme-color" content="#050507">
+    <link rel="preload" href="/fonts/ChakraPetch-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Blackwall: local tailwind utilities kept (posts rely on them), then Blackwall tokens + bridge -->
     <link rel="stylesheet" href="../../../css/tailwind.css">
+    <link rel="stylesheet" href="../../../css/tokens.css">
+    <link rel="stylesheet" href="../../../css/blackwall.css">
     <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/blog-post.css">
     <style>
         .command-box {
             background: #0d1117;
@@ -98,14 +107,14 @@
             margin: 1.5rem 0;
         }
         .tool-item {
-            background: rgba(6, 182, 212, 0.05);
-            border: 1px solid rgba(6, 182, 212, 0.2);
+            background: rgba(255, 42, 60, 0.05);
+            border: 1px solid rgba(255, 42, 60, 0.2);
             border-radius: 6px;
             padding: 0.75rem;
             font-size: 0.875rem;
         }
         .tool-name {
-            color: #22d3ee;
+            color: #ff2a3c;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.75rem;
         }
@@ -115,8 +124,8 @@
             margin-top: 0.25rem;
         }
         .benefit-card {
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(34, 197, 94, 0.05) 100%);
-            border: 1px solid rgba(6, 182, 212, 0.2);
+            background: linear-gradient(135deg, rgba(255, 42, 60, 0.05) 0%, rgba(34, 197, 94, 0.05) 100%);
+            border: 1px solid rgba(255, 42, 60, 0.2);
             border-radius: 12px;
             padding: 1.5rem;
             margin: 1rem 0;
@@ -124,7 +133,7 @@
         .benefit-icon {
             width: 48px;
             height: 48px;
-            background: rgba(6, 182, 212, 0.2);
+            background: rgba(255, 42, 60, 0.2);
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -136,12 +145,12 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.25rem 0.75rem;
-            background: rgba(6, 182, 212, 0.1);
-            border: 1px solid rgba(6, 182, 212, 0.3);
+            background: rgba(255, 42, 60, 0.1);
+            border: 1px solid rgba(255, 42, 60, 0.3);
             border-radius: 9999px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.75rem;
-            color: #22d3ee;
+            color: #ff2a3c;
             margin: 0.25rem;
         }
     </style>
@@ -151,37 +160,25 @@
 
     <div id="header-placeholder"></div>
 
-    <!-- Article Header -->
-    <section class="hero-bg pt-32 pb-12">
-        <div class="grid-pattern"></div>
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="max-w-3xl mx-auto">
-                <a href="../../en/" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                    </svg>
-                    Back to Blog
-                </a>
-                <div class="flex items-center gap-3 mb-4 flex-wrap">
-                    <span class="blog-tag">Playwright</span>
-                    <span class="blog-tag">MCP</span>
-                    <span class="blog-tag">Claude Code</span>
-                    <span class="blog-date">October 3, 2025</span>
-                </div>
-                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                    Browser Automation with Playwright MCP and Claude Code
-                </h1>
-                <p class="text-xl text-gray-400">
-                    How to teach Claude Code to control a real browser. For web scraping, testing, and automation.
-                </p>
+    <!-- Article Header (Blackwall art-hero) -->
+    <section class="art-hero" data-screen-label="Article">
+        <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
+        <div class="art-hero__in">
+            <a class="art-back" href="../../en/">◄ ALL POSTS</a>
+            <div><span class="art-cat">Playwright</span></div>
+            <h1 class="art-title">Browser Automation with Playwright MCP and Claude Code</h1>
+            <div class="art-meta">
+                <span class="who"><span class="av">NW</span> Nils Weiser</span>
+                <span class="sep">•</span><span data-art-date>October 3, 2025</span>
+                <span class="sep">•</span><span data-art-read>—</span>
             </div>
         </div>
     </section>
+    <div class="art-hr"><div></div></div>
 
-    <!-- Article Content -->
-    <article class="section-dark py-16">
-        <div class="container mx-auto px-6">
-            <div class="article-content">
+    <!-- Article Content (Blackwall art-body) -->
+    <article class="art-body">
+                <p class="lead">How to teach Claude Code to control a real browser. For web scraping, testing, and automation.</p>
 
                 <p>
                     The <strong>Model Context Protocol (MCP)</strong> extends Claude Code's capabilities with external tools. One of the most powerful extensions: <strong>Playwright MCP</strong>, which lets Claude control a real browser.
@@ -351,9 +348,19 @@ and extract all product names and prices as JSON."</span></code></pre>
                     Want to integrate browser automation into your workflows? <a href="../../../index.html#contact">Get in touch</a>. I help with setup and development of tailored solutions.
                 </p>
 
-            </div>
-        </div>
     </article>
+
+    <!-- Author share + related posts -->
+    <div class="art-share">
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
+      <a href="../../../index.html#contact" class="btn btn--pri">WORK WITH ME ▸</a>
+    </div>
+    <section class="art-more">
+      <div class="wrap">
+        <div class="art-more__head"><h2>More field notes</h2><a href="../../en/">ALL POSTS ▸</a></div>
+        <div class="art-more__grid" id="art-more-grid"></div>
+      </div>
+    </section>
 
     <!-- Related posts (internal cross-links for crawl equity) -->
     <nav class="related-posts" aria-label="Related posts">
@@ -377,5 +384,6 @@ and extract all product names and prices as JSON."</span></code></pre>
     <script defer src="../../../js/components.js"></script>
     <script defer src="../../../js/translations.js"></script>
     <script defer src="../../../js/main.js"></script>
+    <script defer src="../../../js/site.js"></script>
 </body>
 </html>

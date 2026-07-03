@@ -71,12 +71,21 @@
     </script>
 
     <!-- TODO: replace with prebuilt static tailwind.css before scaling traffic; see CLAUDE.md -->
+    <link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+    <meta name="theme-color" content="#050507">
+    <link rel="preload" href="/fonts/ChakraPetch-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Blackwall: local tailwind utilities kept (posts rely on them), then Blackwall tokens + bridge -->
     <link rel="stylesheet" href="../../../css/tailwind.css">
+    <link rel="stylesheet" href="../../../css/tokens.css">
+    <link rel="stylesheet" href="../../../css/blackwall.css">
     <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/blog-post.css">
     <style>
         .principle-card {
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(34, 197, 94, 0.05) 100%);
-            border: 1px solid rgba(6, 182, 212, 0.2);
+            background: linear-gradient(135deg, rgba(255, 42, 60, 0.05) 0%, rgba(34, 197, 94, 0.05) 100%);
+            border: 1px solid rgba(255, 42, 60, 0.2);
             border-radius: 12px;
             padding: 1.5rem;
             margin: 1.5rem 0;
@@ -90,13 +99,13 @@
         .principle-number {
             width: 32px;
             height: 32px;
-            background: rgba(6, 182, 212, 0.2);
+            background: rgba(255, 42, 60, 0.2);
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'JetBrains Mono', monospace;
-            color: #22d3ee;
+            color: #ff2a3c;
             font-weight: 600;
         }
         .comparison-box {
@@ -111,13 +120,13 @@
             }
         }
         .comparison-item {
-            background: rgba(6, 182, 212, 0.05);
-            border: 1px solid rgba(6, 182, 212, 0.2);
+            background: rgba(255, 42, 60, 0.05);
+            border: 1px solid rgba(255, 42, 60, 0.2);
             border-radius: 8px;
             padding: 1.25rem;
         }
         .comparison-item h4 {
-            color: #22d3ee;
+            color: #ff2a3c;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.875rem;
             margin-bottom: 0.75rem;
@@ -127,12 +136,12 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.25rem 0.75rem;
-            background: rgba(6, 182, 212, 0.1);
-            border: 1px solid rgba(6, 182, 212, 0.3);
+            background: rgba(255, 42, 60, 0.1);
+            border: 1px solid rgba(255, 42, 60, 0.3);
             border-radius: 9999px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.75rem;
-            color: #22d3ee;
+            color: #ff2a3c;
             margin: 0.25rem;
         }
     </style>
@@ -142,37 +151,25 @@
 
     <div id="header-placeholder"></div>
 
-    <!-- Article Header -->
-    <section class="hero-bg pt-32 pb-12">
-        <div class="grid-pattern"></div>
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="max-w-3xl mx-auto">
-                <a href="../../" class="inline-flex items-center gap-2 text-cyan-400 font-mono text-sm mb-6 hover:underline" data-i18n="blog.backToList">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                    </svg>
-                    Zurück zum Blog
-                </a>
-                <div class="flex items-center gap-3 mb-4 flex-wrap">
-                    <span class="blog-tag">Claude Code</span>
-                    <span class="blog-tag">Prompt Engineering</span>
-                    <span class="blog-tag">CLAUDE.md</span>
-                    <span class="blog-date">14. Apr 2026</span>
-                </div>
-                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                    Ein CLAUDE.md mit 25.000 Sternen
-                </h1>
-                <p class="text-xl text-gray-400">
-                    Wie eine einzelne Markdown-Datei auf Basis von Andrej Karpathys Beobachtungen zum meistbeachteten Repo im Claude-Code-Ökosystem wurde – und was davon in der Praxis wirklich bleibt.
-                </p>
+    <!-- Article Header (Blackwall art-hero) -->
+    <section class="art-hero" data-screen-label="Article">
+        <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
+        <div class="art-hero__in">
+            <a class="art-back" href="../../">◄ ALLE POSTS</a>
+            <div><span class="art-cat">Claude Code</span></div>
+            <h1 class="art-title">Ein CLAUDE.md mit 25.000 Sternen</h1>
+            <div class="art-meta">
+                <span class="who"><span class="av">NW</span> Nils Weiser</span>
+                <span class="sep">•</span><span data-art-date>14. Apr 2026</span>
+                <span class="sep">•</span><span data-art-read>—</span>
             </div>
         </div>
     </section>
+    <div class="art-hr"><div></div></div>
 
-    <!-- Article Content -->
-    <article class="section-dark py-16">
-        <div class="container mx-auto px-6">
-            <div class="article-content">
+    <!-- Article Content (Blackwall art-body) -->
+    <article class="art-body">
+                <p class="lead">Wie eine einzelne Markdown-Datei auf Basis von Andrej Karpathys Beobachtungen zum meistbeachteten Repo im Claude-Code-Ökosystem wurde – und was davon in der Praxis wirklich bleibt.</p>
 
                 <p>
                     Ein GitHub-Repo, das nichts weiter enthält als eine einzige <code>CLAUDE.md</code>-Datei, steht aktuell bei über 25.000 Sternen. Kein Framework, keine CLI, kein Python-Paket. Nur Text. Das Projekt <a href="https://github.com/forrestchang/andrej-karpathy-skills" target="_blank" rel="noopener noreferrer">andrej-karpathy-skills</a> destilliert Andrej Karpathys öffentliche Beobachtungen zu typischen Fehlermustern von LLMs in vier Verhaltensregeln für Claude Code.
@@ -314,9 +311,19 @@
                     Arbeiten Sie an KI-gestützten Entwicklungs-Workflows und fragen sich, wie Sie das Verhalten Ihrer Agenten zuverlässig in den Griff bekommen? <a href="../../../index.html#contact">Lassen Sie uns sprechen</a>. Ich helfe beim Aufbau von CLAUDE.md- und Skill-Setups, die in echten Projekten funktionieren.
                 </p>
 
-            </div>
-        </div>
     </article>
+
+    <!-- Author share + related posts -->
+    <div class="art-share">
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
+      <a href="../../../index.html#contact" class="btn btn--pri">MIT MIR ARBEITEN ▸</a>
+    </div>
+    <section class="art-more">
+      <div class="wrap">
+        <div class="art-more__head"><h2>Weitere Field Notes</h2><a href="../../">ALLE POSTS ▸</a></div>
+        <div class="art-more__grid" id="art-more-grid"></div>
+      </div>
+    </section>
 
     <!-- Related posts (internal cross-links for crawl equity) -->
     <nav class="related-posts" aria-label="Weitere Artikel">
@@ -340,5 +347,6 @@
     <script defer src="../../../js/components.js"></script>
     <script defer src="../../../js/translations.js"></script>
     <script defer src="../../../js/main.js"></script>
+    <script defer src="../../../js/site.js"></script>
 </body>
 </html>
