@@ -117,16 +117,18 @@ its own.** A cold, uncached, content-ful scan runs all stages sequentially:
 | Stage | Cap | Notes |
 |---|---|---|
 | scrape (homepage + ≤3 internal pages) | **≤ 8s** | hard total for all fetches |
-| guard call #1 (injection/malice pre-score) | **≤ 6s** | `AbortController` |
-| analysis call #2 | **≤ 7s** | **single attempt, no retry** |
-| **backend worst case (sum)** | **≈ 21s** | what the server commits to |
-| **client-side `AbortController`** | **24s** | set *above* backend worst case so a genuine slow scan completes |
+| guard call #1 (injection/malice pre-score) | **≤ 6s** | `AbortController` (env `GUARD_TIMEOUT_MS`) |
+| analysis call #2 | **≤ 12s** | **single attempt, no retry** (env `ANALYSIS_TIMEOUT_MS`) |
+| **backend worst case (sum)** | **≈ 26s** | what the server commits to |
+| **client-side `AbortController`** | **≥ 28s** | set *above* backend worst case (~26s) so a genuine slow scan completes — recommend 28s |
 | **Caddy `reverse_proxy` timeout** | **30s** | set above both, so Caddy never cuts a valid response |
+
+The guard and analysis caps are now env-configurable (`GUARD_TIMEOUT_MS`, `ANALYSIS_TIMEOUT_MS`); the defaults above are the committed worst case.
 
 - **The "~15-second scan" marketing copy is dropped** — it is arithmetically impossible with
   two LLM calls. Perceived latency is covered by the existing typing animation; the honest
   worst case is ~20s. (Cache hits are still instant.)
-- Because the client abort (24s) sits **above** the backend worst case (21s), a legitimate
+- Because the client abort (≥28s) sits **above** the backend worst case (~26s), a legitimate
   slow scan returns the real result instead of silently falling back to the stub.
 - Even if the client aborts, the backend finishes and writes the cache, so the **second**
   scan of that domain is an instant cache hit — the feature self-heals on repeat.

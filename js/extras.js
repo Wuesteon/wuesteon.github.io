@@ -112,7 +112,7 @@
   var SCAN_ENDPOINT = 'https://scan.waiser.dev/api/scan';
   function fetchScan(domain){
     var ctrl = new AbortController();
-    var timer = setTimeout(function(){ ctrl.abort(); }, 24000); // Time budget: client abort 24s
+    var timer = setTimeout(function(){ ctrl.abort(); }, 28000); // Time budget: client abort 28s (above ~26s backend worst case: scrape 8 + guard 6 + analysis 12)
     return fetch(SCAN_ENDPOINT+'?url='+encodeURIComponent(domain)+'&lang='+lang(), { signal: ctrl.signal })
       .then(function(res){
         clearTimeout(timer);
