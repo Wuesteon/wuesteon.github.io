@@ -202,7 +202,7 @@ const translations = {
         'bw.hero.kin.acts': 'acts.',
         'bw.hero.kin.defends': 'defends.',
         'bw.hero.kin.scales': 'scales.',
-        'bw.hero.kin.ships': 'ships fast.',
+        'bw.hero.kin.ships': 'ships.',
         'bw.hero.sub': 'I build autonomous AI agents that do real work — and break them before attackers can. From idea to production in weeks.',
         'bw.hero.cta1': 'SCAN MY SITE FREE ▸',
         'bw.hero.cta2': 'BOOK A CALL',
