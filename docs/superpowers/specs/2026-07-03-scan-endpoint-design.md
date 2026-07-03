@@ -44,7 +44,7 @@ We want a real backend that:
 |---|---|---|
 | Scan engine | Real fetch + LLM analysis | User wants a genuine read of the visitor's site. |
 | Persistence | Local **SQLite** cache keyed by normalized domain | "Save the project in a local database cache; if already scraped, deliver it again." Doubles as the hard cost cap. |
-| LLM provider | **Google Gemini** (Flash tier) | User choice; already used across other projects; cheapest with a generous tier. |
+| LLM provider | **Google Gemini** — `gemini-3.5-flash` (stable GA, mid-2026) for both the injection pre-score and the analysis call | User choice. Flash is fast/cheap and fits the 15s-scan promise. Preview models (`gemini-3.1-pro-preview`, `gemini-3-flash-preview`) are deliberately **avoided on the hot path** — a preview model gating every scan adds instability. Exact ID pinned in env (`GEMINI_MODEL`) so it can be bumped without a code change. |
 | Exposure | `scan.waiser.dev` **A-record → Caddy** with Let's Encrypt TLS | waiser.dev DNS is on Namecheap, not Cloudflare. One DNS record, no provider migration. VPS IP becomes public; security rests on app-layer controls. |
 | Code location | **Dedicated git repo** (not the static site repo) | Keeps the GitHub Pages repo pure-static; isolates the Node service. |
 | Runtime | **Node 22** (already on openclaw_M), `systemd` service on `127.0.0.1:8790` | Loopback-only; Caddy is the only public entry. |
@@ -66,8 +66,9 @@ Node service "waiser-scan" (systemd)
    │        │ miss
    │        ▼
    ├── fetch public site, capped              (scrape.js)
-   ├── extract readable text
-   ├── Gemini → {score, verdict, ops[3], blocked?} (analyze.js — content gate) ──blocked──▶ 451
+   ├── extract readable text  +  injection pre-filter (scrape.js)
+   ├── Gemini call #1: injection/malice pre-score (guard.js) ──flagged──▶ 451 (no analysis)
+   ├── Gemini call #2: {score, verdict, ops[3], blocked?} (analyze.js) ──blocked──▶ 451
    ├── write to SQLite cache                  (cache.js)
    └── return JSON { score, verdict, ops:[{t,d,fit}], cached:false }
 ```
@@ -192,8 +193,10 @@ marker may be cached (keyed by domain) so the same junk domain isn't re-fetched 
   - **External blocklist feed:** a maintained public adult/malware domain list (e.g. a
     Steven Black / adult-hosts feed) loaded into a `Set` at startup and refreshed by a
     periodic job (see below). Exact-host and parent-domain match → hard block.
-- **Layer 2 — post-analysis LLM gate:** see `analyze.js` (the model returns a `blocked`
-  flag; costs no extra call). This catches sites whose domain looks innocent.
+- **Layer 2 — LLM gates:** the dedicated `guard.js` pre-score (Gemini call #1) is the primary
+  semantic filter for adult/illegal/injection/scam and short-circuits to 451 before analysis;
+  `analyze.js` also carries a redundant `blocked` flag as a cheap backstop inside call #2.
+  Together these catch sites whose domain looks innocent.
 
 **Blocklist refresh:** a small `systemd` timer (or cron) re-downloads the external feed
 (e.g. daily) into a local file; `policy.js` reloads it. If the download fails, keep the
@@ -239,7 +242,32 @@ seed list so the service is safe on first boot before the first refresh runs.
 - Returns `{ finalUrl, title, text }` or throws a typed error (`FETCH_FAILED`,
   `NOT_HTML`, `TOO_LARGE`, `BLOCKED_TARGET`, `THIN_CONTENT`).
 
-### `analyze.js`
+### `guard.js` — injection / maliciousness pre-score (Gemini call #1)
+A **dedicated Gemini classification call** on the scraped text, run **before** the analysis
+call. Deliberate design choice (accepted tradeoff): it **doubles the per-uncached-scan LLM
+cost and adds one round-trip of latency** vs. folding the check into a single call — in
+exchange for a clean separation where a flagged page never reaches the analysis prompt at all.
+- Model: `gemini-3.5-flash` (same stable Flash; classification is simpler than analysis, so
+  no Pro/preview needed). Own `AbortController` timeout (~6–8s), counted in the total budget.
+- Input: the scraped text passed as **delimited untrusted data** (identical framing to
+  `analyze.js` — never concatenated into the instruction).
+- Output (JSON schema): `{ injection_detected: bool, malicious: bool,
+  category: "adult"|"illegal"|"injection"|"scam"|null, confidence: 0..1 }`. The prompt asks
+  the model to judge whether the content (a) attempts to manipulate/instruct an AI reading it,
+  or (b) is itself malicious (adult/illegal/scam/malware).
+- If `injection_detected` or `malicious` is true above a confidence threshold → short-circuit:
+  return **451**, **skip the analysis call entirely** (saves call #2), write only a short-TTL
+  blocked marker. This is where the two-call design pays for itself — genuinely bad pages
+  cost one classification call, not a full analysis.
+- **This does not replace the structural defenses.** Even when the pre-score says "clean,"
+  `analyze.js` still passes content as delimited data and validates/clamps every output field.
+  The pre-score is an *added* filter, not the only line of defense (an LLM classifier can be
+  fooled by a cleverly-crafted page; the schema+clamp guarantees a safe *shape* regardless).
+- Costs count against `MAX_SCANS_PER_DAY` and single-flight like the analysis call (one
+  guard call per uncached key; the global daily cap now bounds *two* calls per miss — size
+  the cap accordingly).
+
+### `analyze.js`  (Gemini call #2)
 - Builds the Gemini prompt: system framing ("You analyze a company's public website and
   identify where autonomous AI agents would save the most time"), the scraped text, and a
   strict JSON-output instruction matching the response contract, in the requested language.
@@ -261,10 +289,13 @@ seed list so the service is safe on first boot before the first refresh runs.
 - Calls Gemini Flash via the current unified SDK **`@google/genai`** (the older
   `@google/generative-ai` is deprecated/archived — do not use it) with `responseMimeType:
   application/json` and a response schema.
-- **Per-call timeout** via `AbortController` (~10s per attempt). Total worst case
-  (scrape budget + 2 Gemini attempts) must stay under Caddy's proxy timeout **and** under
-  the client-side fetch timeout so browser and server agree on the outcome. On timeout →
-  throw `ANALYZE_FAILED` (→ 502) rather than hanging.
+- **Per-call timeout** via `AbortController` (~10s per attempt). **Total worst case now
+  spans three stages** — scrape budget + guard call (#1) + analysis call (#2, up to 2
+  attempts) — and must still fit under Caddy's proxy timeout **and** the client-side fetch
+  timeout. This is the real cost of the two-call design: **tighten each stage's budget**
+  (e.g. scrape ≤10s, guard ≤6s, analysis ≤8s/attempt with only 1 retry) so the sum stays
+  under ~20s, or the browser aborts to the stub before a legitimate scan finishes. On
+  timeout → throw `ANALYZE_FAILED` (→ 502) rather than hanging.
 - **Content gate (no extra call):** the JSON schema includes a `blocked` object
   `{ blocked: bool, category: "adult"|"illegal"|null }`. The prompt instructs the model to
   set `blocked:true` if the site is pornographic/adult or facilitates clearly illegal/harmful
@@ -346,10 +377,13 @@ single-instance/loopback. Bound the number of distinct in-flight keys.
 Root-only `/etc/waiser-scan/.env`:
 ```
 GEMINI_API_KEY=…
+GEMINI_MODEL=gemini-3.5-flash   # stable Flash; used for both guard + analysis calls
 PORT=8790
 ALLOWED_ORIGIN=https://waiser.dev
 RATE_LIMIT=20            # per-IP scans/hour
-MAX_SCANS_PER_DAY=300    # global uncached-scan ceiling (cost cap)
+MAX_SCANS_PER_DAY=300    # global uncached-scan ceiling — NOTE: each miss now = 2 Gemini
+                         # calls (guard + analysis), so this caps ~2×300 calls/day; size $ accordingly
+INJECTION_CONFIDENCE=0.6 # guard.js threshold above which a page is blocked (451)
 CACHE_TTL_DAYS=0         # 0 = never expire
 MIN_CONTENT_CHARS=500    # thin-content (SPA) threshold
 BLOCKLIST_URL=…          # external adult/malware domain feed
@@ -374,10 +408,18 @@ BLOCKED_TTL_HOURS=168    # how long a "blocked" marker suppresses re-scan
 - **Input validation**: only a bare hostname is accepted; paths/queries/emails/junk
   (`codify.ch/id=…`) are **rejected with 400, not silently stripped**, so no attacker-crafted
   string reaches the fetch target, cache key, or LLM.
-- **Prompt injection**: the scraped page body is untrusted and can carry "ignore instructions"
-  payloads. Made inert by passing it as delimited data (never as instruction), constraining
-  output to a JSON schema, validating/clamping every field after generation, and a scrape-side
-  pre-filter that drops hidden text and neutralizes known markers. The prompt holds no secrets.
+- **Prompt injection — and why the blast radius is small.** The scraped page body is
+  untrusted and can carry "ignore instructions" payloads. But the endpoint's *only* output is
+  three agent suggestions + a score rendered as text on the caller's own page — **no tool
+  calls, no writes, no secrets in the prompt, no money movement.** The worst a successful
+  injection achieves is a weird result in *one visitor's own scan*, on a page they triggered
+  themselves — a cosmetic annoyance, not a breach. Defenses are therefore layered but
+  proportionate: (1) a dedicated `guard.js` Gemini pre-score that flags injection/malice and
+  short-circuits to 451 before analysis; (2) scraped text passed as delimited data, never as
+  instruction; (3) JSON-schema-constrained output; (4) post-generation field validation/
+  clamping — so even a model fully "convinced" by an injection can only return a well-formed,
+  in-range result; (5) a scrape-side pre-filter dropping hidden text and neutralizing markers.
+  The prompt holds no secrets, so a "leak the prompt" attack exposes only benign framing.
 - **Content policy**: adult + illegal/harmful sites are refused (451), never analyzed into a
   branded result — a free pre-fetch domain denylist (keyword + adult TLDs + refreshed external
   feed) plus a no-extra-cost Gemini content gate. Blocked results aren't cached as normal scans.
@@ -491,6 +533,9 @@ care so the existing control flow and animations don't break:
     injection model, proving the schema+validation makes it inert).
   - `scrape.js` (injection pre-filter): hidden/`display:none` text and HTML comments are
     dropped; known injection markers in visible text are neutralized, not the whole page.
+  - `guard.js`: a page flagged `injection_detected`/`malicious` above `INJECTION_CONFIDENCE`
+    → 451 and **the analysis call is not made** (assert call #2 is never invoked); a clean
+    page passes through to analysis; low-confidence flag does not block (Gemini SDK mocked).
 - **Integration**: local `curl` against `127.0.0.1:8790` with `scrape.js`/Gemini mocked;
   assert response contract; 2nd call is a cache hit; `429` after per-IP limit; over-daily-cap
   returns stub; single-flight (2 concurrent misses for one key → 1 Gemini call).
@@ -524,9 +569,13 @@ Folded into the design above; listed here so the plan-writer sees they were cons
   Gemini content gate; 451/422 don't fall back to the fake stub.
 - **Strict domain verifier** (added on request): only a bare hostname accepted;
   `codify.ch/id=…`/emails/junk → 400, not silently stripped.
-- **Prompt-injection defense** (added on request): scraped body treated as untrusted data
-  (delimited, never instruction) + JSON-schema-constrained output + post-gen field validation
-  + scrape-side pre-filter (drop hidden text, neutralize known markers).
+- **Prompt-injection defense** (added on request): a dedicated `guard.js` Gemini pre-score
+  call (`gemini-3.5-flash`) flags injection/malice and short-circuits to 451 before analysis,
+  on top of delimited-data framing + JSON-schema output + post-gen validation + scrape-side
+  pre-filter. Two-call design is a deliberate cost/latency tradeoff (documented in guard.js).
+- **Model IDs** (web-researched mid-2026): stable Flash `gemini-3.5-flash` used for both
+  calls; preview models (`gemini-3.1-pro-preview`, `gemini-3-flash-preview`) avoided on the
+  hot path; pinned via `GEMINI_MODEL` env.
 
 ### Explicitly refuted by review (not changed)
 - CORS to `waiser.dev` does **not** break the real scan for GitHub Pages (the *server* makes
