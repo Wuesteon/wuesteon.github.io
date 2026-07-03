@@ -82,7 +82,7 @@
        const res = await fetch('/api/scan?url='+encodeURIComponent(domain));
        return await res.json();  // { score, verdict, ops:[{t,d,fit}] }
      For now it deterministically simulates a plausible result per domain. */
-  function analyzeCompany(domain){
+  function stubCompany(domain){
     var P=pool();
     var h=hash(domain), picks=[], used={}, i=0;
     while(picks.length<3 && i<40){ var idx=(h+i*7)%P.length; if(!used[idx]){ used[idx]=1; picks.push(P[idx]); } i++; }
@@ -109,6 +109,19 @@
     ];
   }
 
+  var SCAN_ENDPOINT = 'https://scan.waiser.dev/api/scan';
+  function fetchScan(domain){
+    var ctrl = new AbortController();
+    var timer = setTimeout(function(){ ctrl.abort(); }, 24000); // Time budget: client abort 24s
+    return fetch(SCAN_ENDPOINT+'?url='+encodeURIComponent(domain)+'&lang='+lang(), { signal: ctrl.signal })
+      .then(function(res){
+        clearTimeout(timer);
+        if(res.status===451||res.status===422){ return res.json().then(function(b){ var e=new Error('blocked'); e.soft=true; e.status=res.status; e.message=b.message; throw e; }); }
+        if(!res.ok){ var e=new Error('http '+res.status); e.status=res.status; throw e; }
+        return res.json();
+      });
+  }
+
   form.addEventListener('submit', function(e){
     e.preventDefault();
     var domain=cleanDomain(urlEl.value);
@@ -117,18 +130,38 @@
     var runLabel = (typeof getTranslation==='function') ? getTranslation('bw.scan.run') : 'RUN SCAN ▸';
     runBtn.disabled=true; runBtn.textContent=scanning;
     out.style.display='block'; report.style.display='none'; con.style.display='block'; con.innerHTML='';
-    var data=analyzeCompany(domain);
+    var scanP = fetchScan(domain).catch(function(err){
+      if(err && err.soft){ throw err; }              // 451/422 → show honest message, no stub
+      if(typeof umami!=='undefined'){ try{ umami.track('scan-fallback',{status:err&&err.status}); }catch(e){} }
+      console.warn('[scan] fallback', err && (err.status||err.message));
+      return stubCompany(domain);                     // network/other → graceful fake
+    });
     var doneMsg = lang()==='de' ? '✓ Analyse abgeschlossen' : '✓ analysis complete';
-    if(REDUCED){ con.innerHTML='<span class="g">'+doneMsg+'</span>'; return finish(domain,data,runLabel); }
-    var LINES=scanLines(domain), buf='', li=0, ci=0;
-    (function type(){
-      if(li>=LINES.length){ con.innerHTML=buf; return setTimeout(function(){ finish(domain,data,runLabel); }, 400); }
-      var L=LINES[li];
-      if(L.nl){ buf+='\n'; li++; ci=0; return setTimeout(type, 90); }
-      var txt=L.x;
-      if(ci<txt.length){ if(ci===0){ buf+='<span class="'+L.c+'">'; } buf+=txt[ci]; ci++; con.innerHTML=buf+'</span><span class="azcur"></span>'; setTimeout(type, txt[ci-1]==='.'?10:16); }
-      else { buf+='</span>'; li++; ci=0; setTimeout(type, 60); }
-    })();
+    var animP;
+    if(REDUCED){
+      con.innerHTML='<span class="c">'+(lang()==='de'?'Scanne…':'Scanning…')+'</span>';
+      animP=Promise.resolve();
+    } else {
+      animP=new Promise(function(resolve){
+        var LINES=scanLines(domain), buf='', li=0, ci=0;
+        (function type(){
+          if(li>=LINES.length){ con.innerHTML=buf; return setTimeout(resolve, 300); }
+          var L=LINES[li];
+          if(L.nl){ buf+='\n'; li++; ci=0; return setTimeout(type, 90); }
+          var txt=L.x;
+          if(ci<txt.length){ if(ci===0){ buf+='<span class="'+L.c+'">'; } buf+=txt[ci]; ci++; con.innerHTML=buf+'</span><span class="azcur"></span>'; setTimeout(type, txt[ci-1]==='.'?10:16); }
+          else { buf+='</span>'; li++; ci=0; setTimeout(type, 60); }
+        })();
+      });
+    }
+    Promise.all([scanP, animP]).then(function(r){
+      if(REDUCED){ con.innerHTML='<span class="g">'+doneMsg+'</span>'; }
+      finish(domain, r[0], runLabel);
+    }).catch(function(err){
+      // soft block (451/422): show honest message instead of a report
+      con.innerHTML='<span class="h">'+(err.message||(lang()==='de'?'Diese Seite kann nicht gescannt werden.':'This site can\'t be scanned.'))+'</span>';
+      runBtn.disabled=false; runBtn.textContent=runLabel;
+    });
   });
 
   function finish(domain, data, runLabel){
