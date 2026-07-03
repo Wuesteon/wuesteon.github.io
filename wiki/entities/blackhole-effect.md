@@ -40,5 +40,5 @@ Despite the project hint, this is **Canvas 2D**, not Three.js/WebGL. See [[canva
 
 - [[shared-components]] — `loadBlackHoleEffect()` lives in `components.js` and injects this lazily.
 - [[easter-egg]] — the one page where `components.js` deliberately skips loading this effect.
-- [[terminal-design-system]] — shares the cyan/green glow palette.
+- [[terminal-design-system]] — the site design system (now Blackwall); this standalone toy keeps its own particle palette (purple/cyan/orange), independent of the shipped red theme.
 - [[canvas-effects]] — the cross-cutting "vanilla Canvas 2D, no Three.js" concept.

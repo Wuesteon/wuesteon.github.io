@@ -47,6 +47,6 @@ from the main [[i18n-system]] (`PantherI18n`, not the global `translations` obje
 ## Related
 
 - [[blackhole-effect]] — the sibling Canvas-2D toy; this page is the lone exception to its injection.
-- [[terminal-design-system]] — reuses the shared `@font-face` rules and cyan/green aesthetic.
+- [[terminal-design-system]] — the site design system (now Blackwall); this standalone toy keeps its own self-contained palette rather than the shipped red theme.
 - [[i18n-system]] — the easter-egg has its OWN `PantherI18n` dictionary, separate from the site one.
 - [[canvas-effects]] — the "vanilla Canvas 2D, lazily loaded, noindexed" concept.
