@@ -116,10 +116,30 @@
     return fetch(SCAN_ENDPOINT+'?url='+encodeURIComponent(domain)+'&lang='+lang(), { signal: ctrl.signal })
       .then(function(res){
         clearTimeout(timer);
-        if(res.status===451||res.status===422){ return res.json().then(function(b){ var e=new Error('blocked'); e.soft=true; e.status=res.status; e.message=b.message; throw e; }); }
+        // 451 (blocked), 422 (thin), 429 (rate/daily limit) → soft: show an honest
+        // message instead of a report, and DON'T fall back to the fake stub.
+        if(res.status===451||res.status===422||res.status===429){
+          return res.json().then(function(b){
+            var e=new Error('soft'); e.soft=true; e.status=res.status; e.code=b.error; e.message=softMessage(res.status, b);
+            throw e;
+          });
+        }
         if(!res.ok){ var e=new Error('http '+res.status); e.status=res.status; throw e; }
         return res.json();
       });
+  }
+  // Honest, localized copy for the soft-error cases (block / thin / limits).
+  function softMessage(status, body){
+    var de = lang()==='de';
+    if(body && body.error==='DAILY_LIMIT') return de
+      ? 'Das kostenlose Tageslimit an Scans ist erreicht. Versuch es morgen wieder — oder buch direkt ein Gespräch.'
+      : "Today's free-scan limit is reached. Try again tomorrow — or just book a call.";
+    if(status===429) return de
+      ? 'Zu viele Scans in kurzer Zeit. Bitte einen Moment warten und erneut versuchen.'
+      : "Too many scans in a short time. Please wait a moment and try again.";
+    // 451/422 — trust the backend's fixed message, fall back to a localized default.
+    if(body && body.message) return body.message;
+    return de ? 'Diese Seite kann nicht gescannt werden.' : "This site can't be scanned.";
   }
 
   form.addEventListener('submit', function(e){
@@ -164,8 +184,15 @@
       if(REDUCED){ con.innerHTML='<span class="g">'+doneMsg+'</span>'; }
       finish(domain, r[0], runLabel);
     }).catch(function(err){
-      // soft block (451/422): show honest message instead of a report
-      con.innerHTML='<span class="h">'+(err.message||(lang()==='de'?'Diese Seite kann nicht gescannt werden.':'This site can\'t be scanned.'))+'</span>';
+      // soft cases (451 blocked / 422 thin / 429 rate or daily limit): show an honest
+      // message instead of a report; never render the fake stub here.
+      var msg=err.message||(lang()==='de'?'Diese Seite kann nicht gescannt werden.':'This site can\'t be scanned.');
+      var html='<span class="h">'+msg+'</span>';
+      if(err.code==='DAILY_LIMIT'){
+        var cta=lang()==='de'?'GESPRÄCH BUCHEN ▸':'BOOK A CALL ▸';
+        html+='<div style="margin-top:14px"><a href="#contact" class="btn btn--pri">'+cta+'</a></div>';
+      }
+      con.innerHTML=html;
       runBtn.disabled=false; runBtn.textContent=runLabel;
     });
   });
