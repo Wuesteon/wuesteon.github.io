@@ -307,7 +307,7 @@ function siteBase(){
 
 function tcardHTML(p){
   var lang = siteLang();
-  var L = p[lang] || p.de;
+  var L = p[lang] || p.en;
   var href = siteBase() + L.href;
   return `<a class="tcard" href="${href}" data-cat="${p.cat}">
     <div class="tcard__grid"></div>
@@ -341,7 +341,7 @@ function enhanceArticle(){
   });
   if(idx < 0) return;
   var post = POSTS[idx];
-  if(readEl){ readEl.textContent = (post[lang] || post.de).read; }
+  if(readEl){ readEl.textContent = (post[lang] || post.en).read; }
   if(grid){
     var more = [];
     for(var i=1;i<=3;i++){ more.push(POSTS[(idx+i) % POSTS.length]); }
