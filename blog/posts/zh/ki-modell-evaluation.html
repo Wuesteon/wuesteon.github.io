@@ -240,9 +240,9 @@
     <section class="art-hero" data-screen-label="Article">
         <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
         <div class="art-hero__in">
-            <a class="art-back" href="../../zh/">◄ ALL POSTS</a>
-            <div><span class="art-cat">AI Evaluation</span></div>
-            <h1 class="art-title">How We Found the Best AI Model for Legal Analysis</h1>
+            <a class="art-back" href="../../zh/">◄ 所有文章</a>
+            <div><span class="art-cat">AI 评估</span></div>
+            <h1 class="art-title">我们如何为法律分析找到最佳 AI 模型</h1>
             <div class="art-meta">
                 <span class="who"><span class="av">NW</span> Nils Weiser</span>
                 <span class="sep">•</span><span data-art-date>January 7, 2025</span>
@@ -254,39 +254,39 @@
 
     <!-- Article Content (Blackwall art-body) -->
     <article class="art-body">
-                <p class="lead">A three-tier evaluation approach: LLM-as-a-Judge, Crew-as-a-Judge, and human validation. Parallel, not sequential.</p>
+                <p class="lead">一套三层评估方法：LLM-as-a-Judge、Crew-as-a-Judge，以及人工验证。三者并行，而非串行。</p>
 
-                <h2>The Challenge: Making Quality Measurable</h2>
+                <h2>挑战：让质量变得可度量</h2>
 
                 <p>
-                    Which AI model delivers the best legal analyses? At <a href="https://erst-recht.com" target="_blank" rel="noopener noreferrer">Erst Recht</a>, this was the first question we faced. Gut feelings and marketing promises are not enough. We needed a systematic, data-driven approach.
+                    哪个 AI 模型能给出最好的法律分析？在 <a href="https://erst-recht.com" target="_blank" rel="noopener noreferrer">Erst Recht</a>，这是我们面对的第一个问题。凭直觉和听营销话术是不够的。我们需要一套系统化、数据驱动的方法。
                 </p>
 
                 <p>
-                    The result: A three-tier evaluation where AI assessment and human expertise work together. In this article, I show how we approached it.
+                    结果就是：一套三层评估，让 AI 打分与人类专业判断协同工作。在这篇文章里，我来讲讲我们是怎么做的。
                 </p>
 
-                <h2>The Problem: How Do You Measure "Good" Legal Analysis?</h2>
+                <h2>问题：你怎么度量一份法律分析“好不好”？</h2>
 
                 <p>
-                    With math problems, there is a clear ground truth: 40+2=42, done. (And no, we are not talking about JavaScript here, where <code>'1' + '1' = '11'</code>.) With legal analyses, this clarity is missing. The requirements are multifaceted:
+                    做数学题时，有明确的标准答案：40+2=42，搞定。（而且不，我们这里说的不是 JavaScript，那里 <code>'1' + '1' = '11'</code>。）而在法律分析里，这种明确性并不存在。要求是多方面的：
                 </p>
 
                 <ul>
-                    <li><strong>Factually correct:</strong> Correct laws, current case law</li>
-                    <li><strong>Complete:</strong> All relevant aspects, no missed deadlines</li>
-                    <li><strong>Understandable:</strong> Comprehensible even without a law degree</li>
-                    <li><strong>Action-oriented:</strong> Concrete next steps</li>
+                    <li><strong>事实正确：</strong>引用正确的法律、最新的判例</li>
+                    <li><strong>完整：</strong>覆盖所有相关方面，不漏掉任何期限</li>
+                    <li><strong>易懂：</strong>没有法学学位也能看明白</li>
+                    <li><strong>可操作：</strong>给出具体的下一步</li>
                 </ul>
 
                 <p>
-                    Manually evaluating each test case is time-consuming and subjective. We needed a scalable yet reliable approach.
+                    人工逐一评估每个测试用例既耗时又主观。我们需要一种既可扩展又可靠的方法。
                 </p>
 
-                <h2>Our Approach: Three Parallel Judges</h2>
+                <h2>我们的做法：三位并行的评判者</h2>
 
                 <p>
-                    <strong>Important:</strong> The three evaluation tiers work <em>in parallel</em>, not sequentially. Each judge evaluates the same outputs independently, and the results are aggregated at the end.
+                    <strong>重点：</strong>这三层评估是<em>并行</em>运行的，而不是串行。每位评判者独立评估同一批输出，最后再把结果汇总。
                 </p>
 
                 <!-- Parallel Pipeline Diagram -->
@@ -312,12 +312,12 @@
                         <!-- Left: Test Cases -->
                         <g transform="translate(20, 120)">
                             <rect width="130" height="200" rx="8" fill="url(#nodeGradient)" stroke="#6b7280" stroke-width="1.5" filter="url(#glow)"/>
-                            <text x="65" y="30" text-anchor="middle" fill="#9ca3af" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">TEST CASES</text>
-                            <text x="65" y="60" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">• Tenant protection</text>
+                            <text x="65" y="30" text-anchor="middle" fill="#9ca3af" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">测试用例</text>
+                            <text x="65" y="60" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">• 租客保护</text>
                             <text x="65" y="85" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">• Scrum Master</text>
-                            <text x="65" y="110" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">• Termination</text>
+                            <text x="65" y="110" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">• 解雇</text>
                             <text x="65" y="135" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">• ...</text>
-                            <text x="65" y="175" text-anchor="middle" fill="#6b7280" font-family="Inter, sans-serif" font-size="9">→ to all models</text>
+                            <text x="65" y="175" text-anchor="middle" fill="#6b7280" font-family="Inter, sans-serif" font-size="9">→ 送往所有模型</text>
                         </g>
 
                         <!-- Arrow to Models -->
@@ -326,7 +326,7 @@
                         <!-- Models Box -->
                         <g transform="translate(200, 140)">
                             <rect width="120" height="160" rx="8" fill="url(#nodeGradient)" stroke="#ff2a3c" stroke-width="1.5" filter="url(#glow)"/>
-                            <text x="60" y="25" text-anchor="middle" fill="#ff2a3c" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">MODELS</text>
+                            <text x="60" y="25" text-anchor="middle" fill="#ff2a3c" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">模型</text>
                             <text x="60" y="55" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">Model A</text>
                             <text x="60" y="80" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">Model B</text>
                             <text x="60" y="105" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">Model C</text>
@@ -335,12 +335,12 @@
 
                         <!-- Arrow to Outputs -->
                         <path d="M 325 220 L 365 220" fill="none" stroke="#ff2a3c" stroke-width="2" stroke-opacity="0.6" marker-end="url(#arrowhead)"/>
-                        <text x="345" y="205" text-anchor="middle" fill="#6b7280" font-family="Inter, sans-serif" font-size="9">generates</text>
+                        <text x="345" y="205" text-anchor="middle" fill="#6b7280" font-family="Inter, sans-serif" font-size="9">生成</text>
 
                         <!-- Outputs Box -->
                         <g transform="translate(370, 140)">
                             <rect width="120" height="160" rx="8" fill="url(#nodeGradient)" stroke="#4ade80" stroke-width="1.5" filter="url(#glow)"/>
-                            <text x="60" y="25" text-anchor="middle" fill="#4ade80" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">OUTPUTS</text>
+                            <text x="60" y="25" text-anchor="middle" fill="#4ade80" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">输出</text>
                             <text x="60" y="55" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">Output A</text>
                             <text x="60" y="80" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">Output B</text>
                             <text x="60" y="105" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="11">Output C</text>
@@ -356,27 +356,27 @@
                         <g transform="translate(575, 40)">
                             <rect width="150" height="100" rx="8" fill="url(#nodeGradient)" stroke="#ff2a3c" stroke-width="1.5" filter="url(#glow)"/>
                             <text x="75" y="25" text-anchor="middle" fill="#ff2a3c" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">LLM-as-a-Judge</text>
-                            <text x="75" y="50" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="10">Automated</text>
-                            <text x="75" y="68" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="9">One strong model</text>
-                            <text x="75" y="83" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="9">evaluates all outputs</text>
+                            <text x="75" y="50" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="10">自动化</text>
+                            <text x="75" y="68" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="9">一个强模型</text>
+                            <text x="75" y="83" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="9">评估所有输出</text>
                         </g>
 
                         <!-- Crew-as-a-Judge -->
                         <g transform="translate(575, 170)">
                             <rect width="150" height="100" rx="8" fill="url(#nodeGradient)" stroke="#4ade80" stroke-width="1.5" filter="url(#glow)"/>
                             <text x="75" y="25" text-anchor="middle" fill="#4ade80" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">Crew-as-a-Judge</text>
-                            <text x="75" y="50" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="10">Multi-Perspective</text>
-                            <text x="75" y="68" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="9">Multiple agents</text>
-                            <text x="75" y="83" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="9">review together</text>
+                            <text x="75" y="50" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="10">多视角</text>
+                            <text x="75" y="68" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="9">多个 agent</text>
+                            <text x="75" y="83" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="9">共同评审</text>
                         </g>
 
                         <!-- Human-as-a-Judge -->
                         <g transform="translate(575, 300)">
                             <rect width="150" height="100" rx="8" fill="url(#nodeGradient)" stroke="#c084fc" stroke-width="1.5" filter="url(#glow)"/>
                             <text x="75" y="25" text-anchor="middle" fill="#c084fc" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">Human-as-a-Judge</text>
-                            <text x="75" y="50" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="10">Expert Review</text>
-                            <text x="75" y="68" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="9">Lawyers validate</text>
-                            <text x="75" y="83" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="9">samples</text>
+                            <text x="75" y="50" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="10">专家评审</text>
+                            <text x="75" y="68" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="9">律师验证</text>
+                            <text x="75" y="83" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="9">抽样样本</text>
                         </g>
 
                         <!-- Arrows to aggregation -->
@@ -387,11 +387,11 @@
                         <!-- Winner Models -->
                         <g transform="translate(785, 160)">
                             <rect width="100" height="120" rx="8" fill="url(#nodeGradient)" stroke="#f59e0b" stroke-width="1.5" filter="url(#glow)"/>
-                            <text x="50" y="25" text-anchor="middle" fill="#f59e0b" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">WINNER</text>
+                            <text x="50" y="25" text-anchor="middle" fill="#f59e0b" font-family="JetBrains Mono, monospace" font-size="10" font-weight="600">获胜者</text>
                             <text x="50" y="55" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="10">Model A, C</text>
                             <text x="50" y="75" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="10">Model B</text>
                             <text x="50" y="95" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="10">Model A, D</text>
-                            <text x="50" y="112" text-anchor="middle" fill="#6b7280" font-family="Inter, sans-serif" font-size="8">per case</text>
+                            <text x="50" y="112" text-anchor="middle" fill="#6b7280" font-family="Inter, sans-serif" font-size="8">逐个用例</text>
                         </g>
 
                         <!-- Arrow to Final Winner -->
@@ -400,57 +400,57 @@
                         <!-- Final Winner -->
                         <g transform="translate(935, 185)">
                             <rect width="80" height="70" rx="8" fill="url(#nodeGradient)" stroke="#22c55e" stroke-width="2" filter="url(#glow)"/>
-                            <text x="40" y="25" text-anchor="middle" fill="#22c55e" font-family="JetBrains Mono, monospace" font-size="9" font-weight="600">OVERALL</text>
+                            <text x="40" y="25" text-anchor="middle" fill="#22c55e" font-family="JetBrains Mono, monospace" font-size="9" font-weight="600">总体</text>
                             <text x="40" y="45" text-anchor="middle" fill="#f3f4f6" font-family="Inter, sans-serif" font-size="12" font-weight="600">Model A</text>
-                            <text x="40" y="60" text-anchor="middle" fill="#6b7280" font-family="Inter, sans-serif" font-size="8">Overall</text>
+                            <text x="40" y="60" text-anchor="middle" fill="#6b7280" font-family="Inter, sans-serif" font-size="8">总体</text>
                         </g>
 
                         <!-- PARALLEL label -->
-                        <text x="650" y="25" text-anchor="middle" fill="#6b7280" font-family="JetBrains Mono, monospace" font-size="11">PARALLEL EVALUATION</text>
+                        <text x="650" y="25" text-anchor="middle" fill="#6b7280" font-family="JetBrains Mono, monospace" font-size="11">并行评估</text>
                     </svg>
                 </div>
 
                 <h3>1. LLM-as-a-Judge</h3>
 
                 <p>
-                    The concept: A powerful language model evaluates the outputs of all other models according to clearly defined criteria. Automated and scalable.
+                    思路是：让一个强大的语言模型，按照明确定义的标准去评估所有其他模型的输出。自动化，且可扩展。
                 </p>
 
                 <p>
-                    We evaluate each analysis across four specialized dimensions:
+                    我们从四个专门的维度来评估每一份分析：
                 </p>
 
                 <div class="dimension-grid">
                     <div class="dimension-card">
-                        <h4>Legal Accuracy</h4>
+                        <h4>法律准确性</h4>
                         <ul>
-                            <li>Correct laws cited?</li>
-                            <li>Current case law considered?</li>
-                            <li>No incorrect legal consequences?</li>
+                            <li>引用的法律条文正确吗？</li>
+                            <li>考虑了最新的判例吗？</li>
+                            <li>有没有得出错误的法律后果？</li>
                         </ul>
                     </div>
                     <div class="dimension-card">
-                        <h4>Layperson Comprehensibility</h4>
+                        <h4>外行可理解度</h4>
                         <ul>
-                            <li>1 = Incomprehensible, full of legal jargon</li>
-                            <li>3 = Generally understandable</li>
-                            <li>5 = Perfectly understandable</li>
+                            <li>1 = 看不懂，满是法律术语</li>
+                            <li>3 = 大体能理解</li>
+                            <li>5 = 完全能看懂</li>
                         </ul>
                     </div>
                     <div class="dimension-card">
-                        <h4>Completeness</h4>
+                        <h4>完整性</h4>
                         <ul>
-                            <li>All areas of law identified?</li>
-                            <li>Deadlines mentioned?</li>
-                            <li>Risks and counterarguments stated?</li>
+                            <li>识别出所有相关法律领域了吗？</li>
+                            <li>提到期限了吗？</li>
+                            <li>说明了风险和反驳论点吗？</li>
                         </ul>
                     </div>
                     <div class="dimension-card">
-                        <h4>Actionable Recommendations</h4>
+                        <h4>可操作的建议</h4>
                         <ul>
-                            <li>Concrete, actionable steps?</li>
-                            <li>Clear prioritization?</li>
-                            <li>Indication of when a lawyer is needed?</li>
+                            <li>给出了具体、可执行的步骤吗？</li>
+                            <li>优先级清晰吗？</li>
+                            <li>指出了什么时候需要找律师吗？</li>
                         </ul>
                     </div>
                 </div>
@@ -458,177 +458,177 @@
                 <h3>2. Crew-as-a-Judge</h3>
 
                 <p>
-                    A single judge has blind spots. The solution: Multiple specialized AI agents evaluate from different perspectives.
+                    单一评判者会有盲区。解决办法是：让多个专门化的 AI agent 从不同视角来评估。
                 </p>
 
                 <div class="agent-grid">
                     <div class="agent-card">
-                        <h4>Legal Reviewer</h4>
-                        <p>Statutory compliance and technical accuracy</p>
+                        <h4>法律审查员</h4>
+                        <p>合规性与专业准确性</p>
                     </div>
                     <div class="agent-card">
-                        <h4>Layperson Readability Tester</h4>
-                        <p>Perspective of a non-lawyer</p>
+                        <h4>外行可读性测试员</h4>
+                        <p>以非法律人士的视角</p>
                     </div>
                     <div class="agent-card">
-                        <h4>Completeness Checker</h4>
-                        <p>Identify missing aspects and gaps</p>
+                        <h4>完整性检查员</h4>
+                        <p>找出遗漏的方面和缺口</p>
                     </div>
                     <div class="agent-card">
-                        <h4>Practicality Evaluator</h4>
-                        <p>Assess feasibility of recommendations</p>
+                        <h4>可行性评估员</h4>
+                        <p>评估建议的可落地性</p>
                     </div>
                 </div>
 
                 <p>
-                    The key: The agents "discuss" and consolidate into an overall verdict. The result is more robust than any single evaluation.
+                    关键在于：这些 agent 会互相“讨论”，并汇聚成一个总体判断。这样得到的结果比任何单一评估都更稳健。
                 </p>
 
-                <h3>3. Human-as-a-Judge (Human Validation)</h3>
+                <h3>3. Human-as-a-Judge（人工验证）</h3>
 
                 <p>
-                    AI evaluation does not replace human expertise, but it also does not need to review every single case. Instead, an expert panel of lawyers and legal tech specialists validates a <strong>sample</strong> of the results:
-                </p>
-
-                <ul>
-                    <li><strong>Blind tests:</strong> Experts do not know which model produced which output</li>
-                    <li><strong>Edge cases:</strong> Targeted testing of borderline scenarios</li>
-                    <li><strong>Calibration:</strong> Do human judgments align with the AI evaluation?</li>
-                </ul>
-
-                <p>
-                    The goal: Ensure that the automated evaluation is reliable. The human sample serves as a sanity check, not a complete re-evaluation.
-                </p>
-
-                <h3>Result Aggregation</h3>
-
-                <p>
-                    All three judges evaluate <em>every case</em> for <em>every model</em>. The results are combined into:
+                    AI 评估并不能取代人类的专业判断，但它也不需要审查每一个案例。相反，一个由律师和法律科技专家组成的专家小组，只验证结果中的一个<strong>抽样样本</strong>：
                 </p>
 
                 <ul>
-                    <li><strong>Winner model per case:</strong> Which model performed best on this specific case?</li>
-                    <li><strong>Winner model overall:</strong> Overall winner across all cases</li>
+                    <li><strong>盲测：</strong>专家不知道哪个输出出自哪个模型</li>
+                    <li><strong>边界案例：</strong>有针对性地测试临界场景</li>
+                    <li><strong>校准：</strong>人类的判断和 AI 评估一致吗？</li>
                 </ul>
 
                 <p>
-                    Consensus among the judges increases confidence in the result. When judgments diverge, we analyze the case more deeply.
+                    目标是：确保自动化评估是可靠的。人工抽样起的是完整性检查（sanity check）的作用，而不是完整地重新评估一遍。
                 </p>
 
-                <h2>The Testing Process in Detail</h2>
+                <h3>结果汇总</h3>
 
                 <p>
-                    Systematic evaluation requires systematic tests:
+                    三位评判者都会对<em>每个模型</em>的<em>每个案例</em>进行评估。结果被合并成：
+                </p>
+
+                <ul>
+                    <li><strong>各案例的获胜模型：</strong>在这个具体案例上，哪个模型表现最好？</li>
+                    <li><strong>总体获胜模型：</strong>跨所有案例的整体赢家</li>
+                </ul>
+
+                <p>
+                    评判者之间达成共识，会提升我们对结果的信心。当判断出现分歧时，我们就更深入地分析那个案例。
+                </p>
+
+                <h2>测试流程详解</h2>
+
+                <p>
+                    系统化的评估需要系统化的测试：
                 </p>
 
                 <ol>
-                    <li><strong>Test case creation:</strong> Cases from all areas of law (employment law, tenancy law, family law, etc.)</li>
-                    <li><strong>Identical conditions:</strong> Exactly the same prompts for each model</li>
-                    <li><strong>Multiple runs:</strong> Consistency check per scenario</li>
-                    <li><strong>Parallel evaluation:</strong> Two judges evaluate simultaneously</li>
+                    <li><strong>创建测试用例：</strong>覆盖所有法律领域的案例（劳动法、租赁法、家庭法等）</li>
+                    <li><strong>相同条件：</strong>对每个模型使用完全相同的提示词</li>
+                    <li><strong>多次运行：</strong>逐场景检查一致性</li>
+                    <li><strong>并行评估：</strong>两位评判者同时评估</li>
                 </ol>
 
                 <div class="test-case-box">
-                    <h4>(Simplified illustration!)</h4>
-                    <h4>Example test case: Termination in employment law</h4>
+                    <h4>（简化示例！）</h4>
+                    <h4>示例测试用例：劳动法中的解雇</h4>
                     <div class="case-text">
-                        "I have been working at a company with 50 employees for 8 years. Yesterday I received a termination notice with a 4-week notice period effective at the end of the month. Is this lawful? What can I do?"
+                        “我在一家有 50 名员工的公司工作了 8 年。昨天我收到一份解雇通知，通知期为 4 周，于月底生效。这合法吗？我能做什么？”
                     </div>
                     <div class="requirements">
-                        <strong>A correct analysis must identify:</strong>
+                        <strong>一份正确的分析必须识别出：</strong>
                         <ul>
-                            <li>Notice period too short (Section 622(2) BGB: 3 months after 8 years)</li>
-                            <li>Dismissal protection applies (>10 employees)</li>
-                            <li>3-week deadline for filing an unfair dismissal claim is critical</li>
+                            <li>通知期过短（《德国民法典》第 622 条第 2 款：工作满 8 年应为 3 个月）</li>
+                            <li>适用解雇保护（员工数 >10）</li>
+                            <li>提起不当解雇之诉的 3 周期限至关重要</li>
                         </ul>
                         <p style="margin-top: 0.75rem;">
-                            <strong>Judges evaluate:</strong> All points identified? Clearly formulated? Concrete action steps?
+                            <strong>评判者评估：</strong>所有要点都识别到了吗？表述清晰吗？有具体的行动步骤吗？
                         </p>
                     </div>
                 </div>
 
-                <h2>Results and Insights</h2>
+                <h2>结果与洞见</h2>
 
                 <blockquote>
-                    "The AI judges rated Model A as the winner by majority. The human samples confirmed this result. A strong signal for the reliability of our automated evaluation."
+                    “AI 评判者以多数意见把 Model A 评为获胜者。人工抽样也证实了这一结果。这对我们自动化评估的可靠性来说，是一个强有力的信号。”
                 </blockquote>
 
                 <p>
-                    The evaluation delivered clear results: Both LLM-as-a-Judge and Crew-as-a-Judge consistently identified the same model as the winner. The human validation via sampling reached the same conclusion.
+                    这次评估给出了清晰的结论：LLM-as-a-Judge 和 Crew-as-a-Judge 都一致地把同一个模型评为获胜者。通过抽样进行的人工验证也得出了相同的结论。
                 </p>
 
                 <p>
-                    Key insights from the evaluation:
+                    这次评估的关键洞见：
                 </p>
 
                 <ul>
-                    <li><strong>Custom approaches pay off:</strong> Our specialized methods outperformed generic solutions (ChatGPT, Gemini)</li>
-                    <li><strong>Trade-offs exist:</strong> Some approaches are faster, others more precise. We optimized for quality</li>
-                    <li><strong>Consistency matters:</strong> Approaches with fluctuating quality were eliminated</li>
+                    <li><strong>定制化的方法值回票价：</strong>我们专门化的方法胜过了通用方案（ChatGPT、Gemini）</li>
+                    <li><strong>存在取舍：</strong>有些方法更快，有些更精确。我们选择为质量而优化</li>
+                    <li><strong>一致性很重要：</strong>质量忽高忽低的方法被淘汰了</li>
                 </ul>
 
-                <h2>What We Learned</h2>
+                <h2>我们学到了什么</h2>
 
                 <div class="pattern-box">
-                    <h4>Iteration is everything</h4>
-                    <p style="color: #9ca3af; margin: 0;">Initial evaluation criteria were too vague. "Is the analysis good?" does not work. Each iteration made the evaluation more precise.</p>
+                    <h4>迭代就是一切</h4>
+                    <p style="color: #9ca3af; margin: 0;">最初的评估标准太模糊了。“这份分析好不好？”这样问是行不通的。每一次迭代都让评估变得更精确。</p>
                 </div>
 
                 <div class="pattern-box">
-                    <h4>AI evaluation saves time but does not replace humans</h4>
-                    <p style="color: #9ca3af; margin: 0;">LLM-as-a-Judge: Efficiently evaluate hundreds of test cases. Final decisions and edge cases: Human expertise remains essential.</p>
+                    <h4>AI 评估省时间，但取代不了人</h4>
+                    <p style="color: #9ca3af; margin: 0;">LLM-as-a-Judge：能高效评估数百个测试用例。而最终决策和边界案例：人类的专业判断仍然不可或缺。</p>
                 </div>
 
                 <div class="pattern-box">
-                    <h4>Evaluation is not a one-time project</h4>
-                    <p style="color: #9ca3af; margin: 0;">New model versions are released regularly. Continuous re-evaluations ensure the best quality over the long term.</p>
+                    <h4>评估不是一次性的项目</h4>
+                    <p style="color: #9ca3af; margin: 0;">新的模型版本会不断发布。持续的重新评估才能长期保证最好的质量。</p>
                 </div>
 
 
                 <hr style="border-color: #374151; margin: 2rem 0;">
 
                 <p>
-                    <em><a href="https://erst-recht.com" target="_blank" rel="noopener noreferrer">Erst Recht</a> uses AI to make legal advice accessible. See the quality of our AI analysis for yourself.</em>
+                    <em><a href="https://erst-recht.com" target="_blank" rel="noopener noreferrer">Erst Recht</a> 用 AI 让法律咨询变得触手可及。我们 AI 分析的质量，欢迎你亲自来体验。</em>
                 </p>
 
                 <div style="margin: 2rem 0;">
                     <a href="https://erst-recht.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-                        Get Your Initial Assessment Now (From 9.99 EUR)
+                        立即获取你的初步评估（9.99 欧元起）
                     </a>
                 </div>
 
                 <hr style="border-color: #374151; margin: 2rem 0;">
 
                 <p>
-                    Planning your own LLM evaluation project? <a href="../../../index.html#contact">Get in touch</a>. I am happy to help with the concept and implementation.
+                    在筹划你自己的 LLM 评估项目吗？<a href="../../../index.html#contact">联系我</a>。我很乐意在方案设计和落地实施上帮上忙。
                 </p>
 
     </article>
 
     <!-- Author share + related posts -->
     <div class="art-share">
-      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
-      <a href="../../../index.html#contact" class="btn btn--pri">WORK WITH ME ▸</a>
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent 专家 · 博登湖区</span></div></div>
+      <a href="../../../index.html#contact" class="btn btn--pri">与我合作 ▸</a>
     </div>
     <section class="art-more">
       <div class="wrap">
-        <div class="art-more__head"><h2>More field notes</h2><a href="../../zh/">ALL POSTS ▸</a></div>
+        <div class="art-more__head"><h2>更多现场笔记</h2><a href="../../zh/">所有文章 ▸</a></div>
         <div class="art-more__grid" id="art-more-grid"></div>
       </div>
     </section>
 
     <!-- Related posts (internal cross-links for crawl equity) -->
     <nav class="related-posts" aria-label="Related posts">
-        <p class="related-posts__heading">// Related posts</p>
+        <p class="related-posts__heading">// 相关文章</p>
         <div class="related-posts__grid">
                 <a class="related-posts__card" href="legal-ai-knowledge-base-docling.html">
-                    <span class="related-posts__card-title">From PDF Chaos to Precise Legal AI: How We Structured 1000+ Documents with Docling</span>
+                    <span class="related-posts__card-title">从 PDF 混乱到精准的法律 AI：我们如何用 Docling 结构化 1000+ 份文档</span>
                 </a>
                 <a class="related-posts__card" href="multi-agent-ai-crewai.html">
-                    <span class="related-posts__card-title">Multi-Agent AI Systems with CrewAI: Teams Instead of Solo Players</span>
+                    <span class="related-posts__card-title">用 CrewAI 构建多智能体 AI 系统：团队协作，而非单打独斗</span>
                 </a>
                 <a class="related-posts__card" href="mit-ai-hallucinations.html">
-                    <span class="related-posts__card-title">Did MIT solve AI hallucinations?</span>
+                    <span class="related-posts__card-title">MIT 解决了 AI 幻觉问题吗？</span>
                 </a>
         </div>
     </nav>
