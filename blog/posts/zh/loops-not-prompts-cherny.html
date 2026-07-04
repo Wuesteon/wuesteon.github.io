@@ -192,12 +192,12 @@
     <section class="art-hero" data-screen-label="Article">
         <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
         <div class="art-hero__in">
-            <a class="art-back" href="../../zh/">◄ ALL POSTS</a>
+            <a class="art-back" href="../../zh/">◄ 全部文章</a>
             <div><span class="art-cat">Claude Code</span></div>
-            <h1 class="art-title">Loops, Not Prompts: Why the Head of Claude Code Stopped Prompting, and What I Built From It</h1>
+            <h1 class="art-title">用循环取代提示：Claude Code 负责人为何不再写提示，以及我据此搭建了什么</h1>
             <div class="art-meta">
                 <span class="who"><span class="av">NW</span> Nils Weiser</span>
-                <span class="sep">•</span><span data-art-date>June 11, 2026</span>
+                <span class="sep">•</span><span data-art-date>2026 年 6 月 11 日</span>
                 <span class="sep">•</span><span data-art-read>—</span>
             </div>
         </div>
@@ -206,182 +206,182 @@
 
     <!-- Article Content (Blackwall art-body) -->
     <article class="art-body">
-                <p class="lead">The person who built Claude Code doesn't write prompts anymore. He writes loops. That sounded like hype at first, so I went and tested it myself.</p>
+                <p class="lead">搭建 Claude Code 的那个人已经不再写提示词了。他写的是循环。这话乍听像是炒作，于是我亲自去验证了一番。</p>
 
                 <p>
-                    Boris Cherny is the creator and head of Claude Code at Anthropic, the very person who built the tool I use every day. In early June he sat down for <em>Acquired Unplugged</em> (hosted by WorkOS, June 2, 2026) and said one line that has been bouncing around every other dev feed since:
+                    Boris Cherny 是 Anthropic 旗下 Claude Code 的创建者和负责人，也正是打造了我每天都在用的这个工具的人。六月初，他做客 <em>Acquired Unplugged</em>（由 WorkOS 主办，2026 年 6 月 2 日），说了一句话，此后在几乎每一个开发者的信息流里反复出现：
                 </p>
 
                 <blockquote>
-                    "I don't prompt Claude anymore. I have loops that are running. They're the ones that are prompting Claude and figuring out what to do. My job is to write loops."
+                    "我不再给 Claude 写提示了。我有一堆正在运行的循环。是它们在给 Claude 写提示、在决定该做什么。我的工作，就是写循环。"
                 </blockquote>
 
                 <p>
-                    Put plainly: he no longer prompts Claude. He has loops running, and it's the loops that prompt Claude and decide what to do. His job is to write the loops. In the same conversation he mentioned that he had uninstalled his IDE back in November, because he hadn't opened it for a month. This isn't an anecdote pulled from a hype thread: the statement is verified across more than half a dozen outlets, and Fortune confirms the substance.
+                    直白地说：他不再给 Claude 写提示。他让循环运转起来，是循环在给 Claude 写提示、决定该做什么。他的工作就是写循环。在同一场对话里，他还提到自己早在十一月就卸载了 IDE，因为整整一个月都没打开过。这并不是从某个炒作帖里扒出来的轶事：这一说法已被半打以上的媒体核实，Fortune 也确认了其内容属实。
                 </p>
 
                 <p>
-                    My first reaction was skepticism. "I just write loops now" reads exactly like the kind of stage-line that lands online and falls apart in practice. So I didn't take it on faith. I built it. This piece is both things: what Cherny actually means, and the autonomous loop I genuinely put into one of my projects.
+                    我的第一反应是怀疑。"我现在只写循环"听上去就是那种在网上很吃香、落到实操里却站不住脚的舞台金句。所以我没有照单全收。我把它搭了出来。这篇文章讲两件事：Cherny 到底是什么意思，以及我实实在在放进自己某个项目里的那个自主循环。
                 </p>
 
-                <h2>What Cherny actually means (and what's paraphrase)</h2>
+                <h2>Cherny 到底是什么意思（哪些又是转述）</h2>
 
                 <p>
-                    A bit of honesty first: the core quote above is verbatim. But "Loop Author" and the "four-component checklist" that spread afterwards? Cherny never actually said those; that's other people's framing, not his quote.
+                    先说句实话：上面那段核心引言是原话。但后来流传开的"循环作者（Loop Author）"和"四要素清单"呢？Cherny 其实从没这么说过；那是别人的框架，不是他的原话。
                 </p>
 
                 <p>
-                    The real lesson sits underneath the quote, and it's robust. The bottleneck when working with a strong model is shifting. Typing the perfect prompt is no longer the scarce resource; <strong>building the system around the model</strong> is: the goal, the check, the guardrails, the review. Once you've got that, you don't need the buzzwords at all.
+                    真正的启示藏在这句话底下，而且它很扎实。与一个强模型协作时，瓶颈正在转移。敲出完美的提示词已不再是稀缺资源；稀缺的是<strong>围绕模型搭建系统</strong>：目标、校验、护栏、审查。一旦你有了这些，那些流行词根本就不需要了。
                 </p>
 
-                <h2>/loop vs /goal: the practical part</h2>
+                <h2>/loop vs /goal：实操的部分</h2>
 
                 <p>
-                    The nice thing is you don't have to argue about "loops" in the abstract, because Anthropic has already shipped two of them as real commands in Claude Code. Both are documented exactly as below in the official docs.
+                    好在你不必抽象地争论"循环"是什么，因为 Anthropic 已经把其中两种做成了 Claude Code 里真实的命令。二者在官方文档里都完全如下所述。
                 </p>
 
                 <table class="agent-table">
                     <thead>
-                        <tr><th>Command</th><th>What drives it</th><th>What it's for</th></tr>
+                        <tr><th>命令</th><th>由什么驱动</th><th>用来做什么</th></tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>/loop</td>
-                            <td>Interval-based: a fixed cadence (e.g. every 5 min) <em>or</em> an interval Claude picks itself, from 1&nbsp;min to 1&nbsp;hour.</td>
-                            <td>Watching and tending. Has a built-in maintenance mode. From version 2.1.72.</td>
+                            <td>基于间隔：固定节奏（如每 5 分钟）<em>或</em>由 Claude 自行选定的间隔，从 1&nbsp;分钟到 1&nbsp;小时不等。</td>
+                            <td>盯守与照看。内置维护模式。自 2.1.72 版起。</td>
                         </tr>
                         <tr>
                             <td>/goal</td>
-                            <td>Condition-driven: you set a completion condition; after each round a small fast model (Haiku) judges yes/no plus a reason for whether it holds.</td>
-                            <td>Getting done. Ends automatically once the goal is met. From version 2.1.139.</td>
+                            <td>由条件驱动：你设定一个完成条件；每一轮之后，由一个又小又快的模型（Haiku）判定是/否，并给出条件是否成立的理由。</td>
+                            <td>把事做完。目标一旦达成便自动结束。自 2.1.139 版起。</td>
                         </tr>
                     </tbody>
                 </table>
 
                 <p>
-                    The one-liner that stuck with me: <strong>/loop is for watching. /goal is for finishing.</strong> <code>/goal</code> is the more interesting of the two, because it's essentially a built-in self-check (an automated check, or "eval"): Claude works, a second model acts as the referee and decides whether the goal is met, then it's done or it keeps going.
+                    让我记住的一句话是：<strong>/loop 用来盯守，/goal 用来收尾。</strong>两者之中 <code>/goal</code> 更有意思，因为它本质上是一套内置的自我校验（一次自动化的检查，即"eval"）：Claude 干活，第二个模型充当裁判、判定目标是否达成，然后要么完成，要么继续。
                 </p>
 
                 <div class="insight-box">
-                    <h4>The single most important rule for good /goal conditions</h4>
+                    <h4>写好 /goal 条件的头号规则</h4>
                     <p class="text-gray-300 text-sm">
-                        The Haiku judge runs <strong>no</strong> commands and reads <strong>no</strong> files itself. It only judges what's in the conversation so far (the transcript). So your completion condition has to name three things: a <em>measurable end state</em>, the <em>check command</em> that proves it, and a boundary clause (a <em>scope fence</em>) that forbids shortcuts.
+                        Haiku 裁判自己<strong>不</strong>运行任何命令，也<strong>不</strong>读取任何文件。它只依据到目前为止对话里的内容（即记录/transcript）来判定。所以你的完成条件必须点明三样东西：一个<em>可衡量的终态</em>、能证明这一终态的<em>校验命令</em>，以及一条禁止走捷径的边界条款（即<em>范围围栏</em>/scope fence）。
                     </p>
                 </div>
 
                 <p>
-                    Why that matters shows up in the classic failure case. Set "all tests pass" as your goal, and the cheapest way to make it true is to delete the tests, and a judge that only sees the transcript waves it through. With a scope fence, the same condition looks very different:
+                    为什么这很关键，看那个经典的翻车案例就明白了。把"所有测试通过"设为目标，让它成真最省事的办法就是把测试删掉，而一个只看得到记录的裁判会照样放行。加上范围围栏后，同一个条件看上去就大不一样了：
                 </p>
 
                 <div class="code-block">
-                    <span class="label">Bad</span>
-                    <span class="bad">Condition: "all tests pass"</span>
-                    <span class="label">Good (with scope fence)</span>
-                    <span class="good">Condition: "npm test is green AND no test was deleted or
-  skipped with .skip (git diff shows no removed test cases)"</span>
+                    <span class="label">差</span>
+                    <span class="bad">条件："all tests pass"</span>
+                    <span class="label">好（带范围围栏 / scope fence）</span>
+                    <span class="good">条件："npm test 为绿 且 没有测试被删除或用 .skip
+  跳过（git diff 显示没有被移除的 test case）"</span>
                 </div>
 
-                <h2>What I built</h2>
+                <h2>我搭建了什么</h2>
 
                 <p>
-                    Enough theory. In one of my research projects, an autonomous multi-agent system searches scientific studies on dietary supplements, scores their evidence, and writes audited articles from them. Systems like that run regularly here in automated passes, and some fail. That's exactly where I built a classic loop: <strong>error logs → issue → fix → pull request</strong>. It comes in two halves. Loop A, the <strong>producer</strong>, turns failures into issues. Loop B, the <strong>consumer</strong>, turns those issues into fixes and pull requests. The first half is harmless, the second is the real test of nerve, so let's start with the harmless one.
+                    理论说够了。在我的一个研究项目里，一套自主的多智能体系统检索关于膳食补充剂的科学研究、为其证据打分，并据此撰写经过审计的文章。这类系统在我这儿定期以自动化批次运行，其中有些会失败。正是在这里，我搭了一个经典的循环：<strong>错误日志 → issue → 修复 → pull request</strong>。它分为两半。循环 A，即<strong>生产者</strong>（producer），把失败转成 issue。循环 B，即<strong>消费者</strong>（consumer），把这些 issue 转成修复和 pull request。前一半无害，后一半才是真正的胆量考验，所以先从无害的那半开始。
                 </p>
 
                 <div class="phase-card">
                     <div class="phase-header">
                         <span class="phase-number">LOOP A</span>
-                        <span class="phase-title">Logs → deduplicated GitHub issue (built, running)</span>
+                        <span class="phase-title">日志 → 去重后的 GitHub issue（已搭建，运行中）</span>
                     </div>
                     <p class="text-gray-400 text-sm">
-                        A Python script reads failed pipeline runs (status <code>failed</code>, <code>crashed</code>, <code>abandoned</code>) from the database, groups them by a <strong>normalized error signature</strong>, and collapses identical errors into one (this is called <strong>deduplication</strong>, "dedup" for short), so exactly <em>one</em> GitHub issue is created per signature. "Normalized" means changing details like IDs, numbers and timestamps are stripped out, so the same error type always gets the same stable fingerprint. The script uses <em>no</em> language model for this; it's pure, rule-based logic (the same input always yields the same result), so it's free.
+                        一个 Python 脚本从数据库读取失败的流水线运行（状态为 <code>failed</code>、<code>crashed</code>、<code>abandoned</code>），按<strong>归一化后的错误签名</strong>把它们分组，并把相同的错误合并为一条（这称作<strong>去重</strong>，简称 "dedup"），于是每个签名恰好只生成<em>一个</em> GitHub issue。"归一化"意味着把 ID、数字、时间戳等会变化的细节剥离掉，从而同一类错误始终得到同一枚稳定的指纹。脚本在这一步<em>不</em>用任何语言模型；它是纯粹的、基于规则的逻辑（同样的输入总是产生同样的结果），因此是免费的。
                     </p>
                 </div>
 
                 <p>
-                    The decisive test was the deduplication. I checked it against three failures, two of them with the same error: a timeout while loading studies from PubMed, differing only in their study IDs. That's exactly the kind of error that shows up constantly in real operation whenever an external API acts up, and it spawns a fresh run every time. Naively that's three separate issues, the start of an <em>issue storm</em> that floods your board with the same problem over and over. With the normalized signature the two identical errors were correctly merged into <strong>one</strong>: one issue, not three. That's exactly the difference between a useful loop and one that floods your issue board.
+                    决定性的测试就是去重。我拿三个失败来验证，其中两个是同一个错误：从 PubMed 加载研究时超时，仅在各自的 study ID 上有所不同。这正是真实运行中每当外部 API 出岔子就会不断冒出来的那类错误，而且每次都会派生出一次全新的运行。天真地看，这就是三个各自独立的 issue，也是一场<em>issue 风暴</em>的开端——它会用同一个问题一遍遍把你的看板塞满。有了归一化签名，那两个相同的错误被正确地合并成<strong>一个</strong>：一个 issue，而不是三个。这正是一个好用的循环和一个把你的 issue 看板淹没的循环之间的差别。
                 </p>
 
                 <p>
-                    The whole thing goes live through a scheduled GitHub Action that creates the issues, with a second safeguard against duplicates (does an open issue for the same error already exist?) and a dry-run mode for testing it safely. That's the producer. The exciting part comes now.
+                    整套流程通过一个定时触发的 GitHub Action 上线，由它来创建 issue，并配有第二重防重复的保险（同一个错误是否已经有一个未关闭的 issue？）以及一个可安全测试的 dry-run 模式。这就是生产者。刺激的部分现在才登场。
                 </p>
 
                 <div class="phase-card">
                     <div class="phase-header">
                         <span class="phase-number">LOOP B</span>
-                        <span class="phase-title">Issue → Claude fixes it → draft PR (built, with safeguards)</span>
+                        <span class="phase-title">Issue → Claude 修复它 → 草稿 PR（已搭建，带护栏）</span>
                     </div>
                     <p class="text-gray-400 text-sm">
-                        Loop B is the risky half: it reacts to the <code>auto-fix</code> label, lets Claude fix the issue, and opens a pull request. This is exactly where the system decides whether it's a useful tool or a hazard. Four safeguards make the difference. It <strong>locks the issue</strong> (<code>wip</code> label) before it starts, so no second run grabs the same one. It <strong>verifies every fix</strong> against the same signal as CI (ruff, mypy, pytest), and a PR is created only when everything is green. It <strong>may not touch critical files</strong> (cost limits, model configuration, DB migrations are off-limits). And the PR is always a <strong>draft</strong>: I merge, not the agent.
+                        循环 B 是有风险的那一半：它对 <code>auto-fix</code> 标签作出响应，让 Claude 修复 issue，并开一个 pull request。系统究竟是好用的工具还是隐患，正是在这里见分晓。四道护栏拉开了差距。它在开始前会<strong>锁定该 issue</strong>（打上 <code>wip</code> 标签），以免第二次运行抢走同一个。它会用与 CI 相同的信号（ruff、mypy、pytest）来<strong>校验每一处修复</strong>，只有全部为绿时才创建 PR。它<strong>不得触碰关键文件</strong>（成本上限、模型配置、数据库迁移均为禁区）。而且 PR 始终是<strong>草稿</strong>：合并的是我，不是智能体。
                     </p>
                 </div>
 
                 <p>
-                    The non-obvious point lives in that verification step, and it's the reason a loop like this works at all. Remember how the judge in <code>/goal</code> only sees the conversation (the transcript)? That's the Achilles' heel: a working agent can simply <em>claim</em> "all tests green" without ever running them, and a judge that only reads the text believes it. The fix isn't magic, it's discipline: the condition demands that the <strong>real command output be in the transcript</strong>. Not "the tests pass," but "<code>pytest</code> was run and its output shows 0 failures." The agent can only fool its own referee if you leave it the gap, so you don't.
+                    这里那个不那么显而易见的要点，就藏在那一步校验里，也正是这样一个循环之所以能跑通的原因。还记得 <code>/goal</code> 里的裁判只看得到对话（即记录）吗？这就是它的阿喀琉斯之踵：一个正在干活的智能体完全可以<em>声称</em>"所有测试都绿了"却根本没跑过测试，而一个只读文字的裁判就信了。补救之道并不神奇，靠的是纪律：条件要求<strong>真实的命令输出必须出现在记录里</strong>。不是"测试通过了"，而是"<code>pytest</code> 已运行，其输出显示 0 处失败"。只有当你给智能体留了这道缝，它才能糊弄自己的裁判——所以你别留。
                 </p>
 
-                <h2>I tested it for real</h2>
+                <h2>我动真格地测了一遍</h2>
 
                 <p>
-                    Theory is cheap, so I tested Loop B against a real, controlled bug. I deliberately slipped a small fault into the code, an off-by-one in the circuit breaker, opened an issue for it, and set the <code>auto-fix</code> label. From there I did nothing but watch.
+                    理论很廉价，所以我拿一个真实、受控的 bug 来测试循环 B。我故意在代码里塞进一个小毛病——熔断器里的一处 off-by-one，为它开了一个 issue，并打上 <code>auto-fix</code> 标签。从那之后我什么都没做，只是旁观。
                 </p>
 
                 <div class="insight-box">
-                    <h4>What the agent did autonomously</h4>
+                    <h4>智能体自主完成了什么</h4>
                     <p class="text-gray-300 text-sm">
-                        It locked the issue, found the faulty line, and changed exactly that one, without touching any off-limits file. It ran the tests and waited until they were green. Then it pushed its own branch and opened a draft PR that closes the issue. From the moment I set the label to the finished pull request, not a single keystroke came from me.
+                        它锁定了 issue，找到了出错的那一行，并且只改了那一行，没有碰任何禁区文件。它运行了测试，一直等到测试变绿。随后它推送了自己的分支，开了一个能关闭该 issue 的草稿 PR。从我打上标签的那一刻，到完成的 pull request 为止，没有一个按键来自我。
                     </p>
                 </div>
 
                 <p>
-                    What mattered wasn't that the fix worked, but how much discipline sits in the safeguards. The agent touched only the one allowed file. It cleared the eval gate only once the real <code>pytest</code> output was in the transcript, not on a bare claim. And the result was a <em>draft</em>, not a finished merge. The last step was mine, by design.
+                    真正重要的不是修复奏效了，而是这些护栏里蕴含着多少纪律。智能体只碰了那一个被允许的文件。它只有在真实的 <code>pytest</code> 输出进入记录之后才通过 eval 关卡，而不是凭一句空口白话。而结果是一个<em>草稿</em>，不是已完成的合并。最后一步归我，这是设计使然。
                 </p>
 
                 <p>
-                    That's not a glossy result, it's an honest one: an agent that does the boring, verifiable work autonomously, and a human who keeps the last call. And a loop isn't good when it impresses you, but when you can trust it in failure as much as in success. When a run fails, this one releases its lock again, leaves an honest comment, and touches no code. That cleanup discipline is exactly the difference between a useful tool and a hazard.
+                    这不是一个光鲜的结果，而是一个诚实的结果：一个自主完成那些枯燥、可验证工作的智能体，加上一个握着最终决定权的人。而且，一个循环好不好，不看它是否让你惊艳，而看你能否在它失败时和成功时一样信得过它。当一次运行失败时，这个循环会重新释放它的锁、留下一条诚实的评论，并且不碰任何代码。正是这份收尾的纪律，划出了好用的工具与隐患之间的界线。
                 </p>
 
-                <h2>What's proven, and what's still aspiration</h2>
+                <h2>哪些已被证实，哪些仍是愿景</h2>
 
                 <p>
-                    This is where serious framing parts ways with hype. More is proven than you'd think: Cherny's quotes are verified, <code>/loop</code> and <code>/goal</code> are real products, GitHub's Copilot Coding Agent really does turn an issue into a pull request, and "ralph" (a well-known loop method) works for new, from-scratch projects (greenfield). But the limits are just as real.
+                    正是在这里，严肃的表述与炒作分道扬镳。被证实的比你以为的要多：Cherny 的引言经过核实，<code>/loop</code> 和 <code>/goal</code> 是真实的产品，GitHub 的 Copilot Coding Agent 确实能把一个 issue 变成 pull request，而 "ralph"（一种广为人知的循环方法）对全新、从零起步的项目（greenfield）行之有效。但局限同样真切。
                 </p>
 
                 <ul>
-                    <li><strong>Agents detect well and prioritize badly.</strong> A widely-cited test run by the software firm EPAM made this plain: 15 AI agents had to find one real, deliberately-hidden security vulnerability in roughly 350,000 lines of production code. They often found it, but one agent buried it under 46 more inflated "Critical" false alarms. The flaw was found, just unfindable in the noise. <em>Detecting</em> is the strength, <em>ranking by importance</em> the weakness.</li>
-                    <li><strong>Mature codebases are not loop terrain.</strong> Geoffrey Huntley, the creator of the ralph method, puts it bluntly himself: <em>"There's no way in heck would I use Ralph in an existing code base."</em> Loops shine on new projects and well-checkable routine work, not in a grown production system.</li>
-                    <li><strong>There are no reliable cost numbers.</strong> No verified figures exist for how many tokens (and therefore how much money) loops like these burn through. So: set caps, watch spend, and never let one run unattended against a metered (pay-per-use) API.</li>
+                    <li><strong>智能体擅长发现，却拙于排序。</strong>软件公司 EPAM 一次被广泛引用的测试把这点讲得很明白：15 个 AI 智能体要在约 35 万行生产代码中找出一个真实的、被刻意藏起来的安全漏洞。它们常常能找到，但其中一个智能体把它埋在了另外 46 条被夸大的"严重（Critical）"误报之下。漏洞是被找到了，只是在噪声里无从寻觅。<em>发现</em>是长处，<em>按重要性排序</em>是短板。</li>
+                    <li><strong>成熟的代码库不是循环的地盘。</strong>ralph 方法的创造者 Geoffrey Huntley 自己就说得很直白：<em>"要我在一个已有的代码库里用 Ralph？门儿都没有。"</em>循环在全新项目和易于校验的例行工作上大放异彩，而不是在一个长成的生产系统里。</li>
+                    <li><strong>没有可靠的成本数字。</strong>关于这类循环会烧掉多少 token（进而多少钱），并不存在经过核实的数据。所以：设上限、盯支出，绝不让任何一次运行在无人看管的情况下对着一个按用量计费（pay-per-use）的 API 跑。</li>
                 </ul>
 
-                <h2>The five guardrails that made the difference in my producer/consumer case</h2>
+                <h2>在我的生产者/消费者案例中拉开差距的五道护栏</h2>
 
                 <p>
-                    These five aren't a universal law, they're what made my specific logs-to-PR loop safe. A different loop needs different guardrails. What stays is the principle behind them: before you arm a loop, think about where it could do damage, and build a brake for each of those spots.
+                    这五道并不是放之四海皆准的定律，它们只是让我这个特定的"日志到 PR"循环变安全的东西。换一个循环，就需要另一套护栏。不变的是它们背后的原则：在给一个循环装上武装之前，先想清楚它可能在哪里造成破坏，并为每一处这样的地方造一个刹车。
                 </p>
 
                 <div class="insight-box">
-                    <h4>The five guardrails that made the difference in my producer/consumer case</h4>
+                    <h4>在我的生产者/消费者案例中拉开差距的五道护栏</h4>
                     <ol class="text-gray-300 text-sm" style="list-style: decimal; padding-left: 1.25rem; margin-top: 0.5rem;">
-                        <li><strong>Collapse duplicates</strong> (dedup) in the producer, so no issue storm builds up.</li>
-                        <li><strong>Lock a task the moment it's picked up</strong>, so two helpers (workers) don't work the same task at once.</li>
-                        <li><strong>A check gate via <code>/goal</code> with a scope fence</strong>, so the agent can't game the goal (e.g. deleting tests instead of making them pass).</li>
-                        <li><strong>Agent may only read; it writes only through an allowlist</strong> (a list of explicitly permitted actions), so the worst-case damage stays small.</li>
-                        <li><strong>A human decides the merge</strong> (the merge gate), always.</li>
+                        <li>在生产者里<strong>合并重复项</strong>（去重），以免堆积成 issue 风暴。</li>
+                        <li><strong>任务一被领取就立刻锁定</strong>，以免两个执行者（worker）同时处理同一个任务。</li>
+                        <li><strong>通过带范围围栏的 <code>/goal</code> 设一道校验关卡</strong>，让智能体钻不了目标的空子（比如删掉测试而不是让它们通过）。</li>
+                        <li><strong>智能体只可读；它只能通过一份允许清单（allowlist）来写</strong>（即一份明确许可的操作列表），让最坏情况下的破坏保持在小范围内。</li>
+                        <li><strong>由人来决定是否合并</strong>（合并关卡），永远如此。</li>
                     </ol>
                 </div>
 
-                <h2>Takeaway</h2>
+                <h2>要点</h2>
 
                 <p>
-                    Cherny is right, directionally. But the lesson isn't "stop thinking." It's that the leverage now lives in the system around the model: the goal, the automatic check (eval), the guardrails, the review. That's exactly what I felt building this loop in <em>supplement</em>. The hard part wasn't telling Claude something. The work was in the error signature that doesn't spam the board, the verification gate the agent can't game, and the cleanup behavior that rolls back cleanly on every failure.
+                    Cherny 在方向上是对的。但这里的启示不是"别再动脑子"。而是杠杆如今落在了围绕模型的那套系统上：目标、自动校验（eval）、护栏、审查。这正是我在 <em>supplement</em> 里搭建这个循环时的切身体会。难的地方不在于跟 Claude 说点什么。真正的功夫在于那个不会把看板刷屏的错误签名、那道智能体钻不了空子的校验关卡，以及那种在每一次失败时都能干净回滚的收尾行为。
                 </p>
 
                 <p>
-                    My advice if you want to start: begin small, with a <code>/goal</code> on a convergent, zero-risk task. Climb the ladder only as far as you've cleanly built the guardrails. And keep the merge gate in human hands forever.
+                    如果你想上手，我的建议是：从小处起步，用一个 <code>/goal</code> 去对付一个收敛、零风险的任务。护栏搭到多干净，你就往上爬多高。而合并关卡，永远握在人的手里。
                 </p>
 
                 <hr style="border-color: #374151; margin: 2rem 0;">
 
-                <p><strong>Tools used:</strong></p>
+                <p><strong>所用工具：</strong></p>
                 <div style="margin: 1rem 0;">
                     <a href="https://claude.ai/code" target="_blank" rel="noopener noreferrer" class="tool-badge">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
@@ -394,35 +394,35 @@
                 </div>
 
                 <p>
-                    Building a system like this (goal, eval, guardrails, review) is exactly the kind of work I do as an AI consultant. Wondering how an autonomous loop could take real, recurring work off your team's plate without becoming a liability? <a href="../../../index.html#contact">Get in touch</a>.
+                    搭建这样一套系统（目标、eval、护栏、审查），正是我作为 AI 顾问所做的那类工作。想知道一个自主循环能如何在不变成隐患的前提下，把真实且重复的活儿从你团队肩上卸下来吗？<a href="../../../index.html#contact">与我联系</a>。
                 </p>
 
     </article>
 
     <!-- Author share + related posts -->
     <div class="art-share">
-      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
-      <a href="../../../index.html#contact" class="btn btn--pri">WORK WITH ME ▸</a>
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI 智能体专家 · 博登湖区</span></div></div>
+      <a href="../../../index.html#contact" class="btn btn--pri">与我合作 ▸</a>
     </div>
     <section class="art-more">
       <div class="wrap">
-        <div class="art-more__head"><h2>More field notes</h2><a href="../../zh/">ALL POSTS ▸</a></div>
+        <div class="art-more__head"><h2>更多现场笔记</h2><a href="../../zh/">全部文章 ▸</a></div>
         <div class="art-more__grid" id="art-more-grid"></div>
       </div>
     </section>
 
     <!-- Related posts (internal cross-links for crawl equity) -->
     <nav class="related-posts" aria-label="More articles">
-        <p class="related-posts__heading">// More articles</p>
+        <p class="related-posts__heading">// 更多文章</p>
         <div class="related-posts__grid">
                 <a class="related-posts__card" href="opus-4-8-dynamic-workflows-erst-recht-audit.html">
-                    <span class="related-posts__card-title">Opus 4.8 & Dynamic Workflows: How 7 Agents Audited My Legal-Tech Platform in 5 Minutes</span>
+                    <span class="related-posts__card-title">Opus 4.8 与动态工作流：7 个智能体如何在 5 分钟内审计了我的法律科技平台</span>
                 </a>
                 <a class="related-posts__card" href="ki-agenten-workflows-superpowers.html">
-                    <span class="related-posts__card-title">Superpowers: How AI Agents Learn to Work Like Real Teams</span>
+                    <span class="related-posts__card-title">Superpowers：AI 智能体如何学会像真正的团队一样协作</span>
                 </a>
                 <a class="related-posts__card" href="multi-agent-ai-crewai.html">
-                    <span class="related-posts__card-title">Multi-Agent AI Systems with CrewAI: Teams Instead of Lone Wolves</span>
+                    <span class="related-posts__card-title">用 CrewAI 打造多智能体 AI 系统：以团队取代独行侠</span>
                 </a>
         </div>
     </nav>
