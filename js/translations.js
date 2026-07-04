@@ -419,6 +419,7 @@ const translations = {
 // Language switching - detect from URL for blog pages, otherwise from localStorage
 let currentLang = (function() {
     const path = window.location.pathname;
+    if (path.includes('/blog/zh/') || path.includes('/posts/zh/')) return 'zh';
     if (path.includes('/blog/en/') || path.includes('/posts/en/')) return 'en';
     return localStorage.getItem('lang') || 'de';
 })();
@@ -442,29 +443,54 @@ function setLanguage(lang) {
             'ambient-ai-the-next-ai-generation.html': 'ambient-ai-die-naechste-ki-generation.html',
             'loops-not-prompts-cherny.html': 'loops-statt-prompts-cherny.html',
             'opus-4-8-dynamic-workflows-erst-recht-audit.html': 'opus-4-8-dynamische-workflows-erst-recht-audit.html'
-        }
+        },
+        // zh reuses EN filenames
+        deToZh: {
+            'mit-ai-halluzinationen.html': 'mit-ai-hallucinations.html',
+            'ambient-ai-die-naechste-ki-generation.html': 'ambient-ai-the-next-ai-generation.html',
+            'loops-statt-prompts-cherny.html': 'loops-not-prompts-cherny.html',
+            'opus-4-8-dynamische-workflows-erst-recht-audit.html': 'opus-4-8-dynamic-workflows-erst-recht-audit.html'
+        },
+        enToZh: {}, // en and zh share filenames — identity
+        zhToDe: {
+            'mit-ai-hallucinations.html': 'mit-ai-halluzinationen.html',
+            'ambient-ai-the-next-ai-generation.html': 'ambient-ai-die-naechste-ki-generation.html',
+            'loops-not-prompts-cherny.html': 'loops-statt-prompts-cherny.html',
+            'opus-4-8-dynamic-workflows-erst-recht-audit.html': 'opus-4-8-dynamische-workflows-erst-recht-audit.html'
+        },
+        zhToEn: {} // identity
     };
+    // Map the current post filename from one language tree to another.
+    function mapSlug(file, from, to) {
+        if (from === to) return file;
+        const table = slugMap[from + 'To' + to.charAt(0).toUpperCase() + to.slice(1)];
+        return (table && table[file]) || file;
+    }
     if (path.includes('/blog/')) {
-        // Blog post pages: /blog/posts/de/ <-> /blog/posts/en/
-        if (path.includes('/posts/de/') && lang === 'en') {
-            const file = path.split('/').pop();
-            const mapped = slugMap.deToEn[file] || file;
-            window.location.href = path.replace('/posts/de/', '/posts/en/').replace(/[^/]+$/, mapped);
-            return;
-        } else if (path.includes('/posts/en/') && lang === 'de') {
-            const file = path.split('/').pop();
-            const mapped = slugMap.enToDe[file] || file;
-            window.location.href = path.replace('/posts/en/', '/posts/de/').replace(/[^/]+$/, mapped);
-            return;
-        }
-        // Blog index: /blog/ <-> /blog/en/
-        const isEnglishIndex = path.includes('/blog/en/');
-        if (lang === 'en' && !isEnglishIndex && !path.includes('/posts/')) {
-            window.location.href = path.replace('/blog/', '/blog/en/');
-            return;
-        } else if (lang === 'de' && isEnglishIndex) {
-            window.location.href = path.replace('/blog/en/', '/blog/');
-            return;
+        // Determine current tree
+        let fromTree = 'de';
+        if (path.includes('/posts/en/') || path.includes('/blog/en/')) fromTree = 'en';
+        else if (path.includes('/posts/zh/') || path.includes('/blog/zh/')) fromTree = 'zh';
+
+        // Post pages: /blog/posts/{de,en,zh}/
+        if (path.includes('/posts/')) {
+            if (lang !== fromTree) {
+                const file = path.split('/').pop();
+                const mapped = mapSlug(file, fromTree, lang);
+                const targetDir = '/posts/' + lang + '/';
+                window.location.href = path
+                    .replace('/posts/' + fromTree + '/', targetDir)
+                    .replace(/[^/]+$/, mapped);
+                return;
+            }
+        } else {
+            // Blog index: /blog/  (de)  <->  /blog/en/  <->  /blog/zh/
+            if (lang !== fromTree) {
+                const fromSeg = fromTree === 'de' ? '/blog/' : '/blog/' + fromTree + '/';
+                const toSeg = lang === 'de' ? '/blog/' : '/blog/' + lang + '/';
+                window.location.href = path.replace(fromSeg, toSeg);
+                return;
+            }
         }
     }
 
@@ -506,6 +532,9 @@ function setLanguage(lang) {
     });
     document.querySelectorAll('#lang-en, .lang-en-indicator').forEach(el => {
         el.classList.toggle('active', lang === 'en');
+    });
+    document.querySelectorAll('#lang-zh, .lang-zh-indicator').forEach(el => {
+        el.classList.toggle('active', lang === 'zh');
     });
 
     // Let JS-rendered content (blog feed, scan tool) re-render in the new language.
