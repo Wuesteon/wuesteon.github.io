@@ -13,6 +13,7 @@
 - [Home (DE/EN)](https://waiser.dev/): Portfolio — autonomous AI agents, AI security hardening, and custom development. Includes a free "Agent Opportunity Scan" tool.
 - [Blog — German](https://waiser.dev/blog/): Field notes on AI agents, AI security and development.
 - [Blog — English](https://waiser.dev/blog/en/): English translations of the blog.
+- [Blog — Chinese](https://waiser.dev/blog/zh/): Chinese (中文) translations of the blog.
 - [Impressum](https://waiser.dev/impressum.html): Legal notice (German).
 - [Datenschutz](https://waiser.dev/datenschutz.html): Privacy policy (German).
 
@@ -49,3 +50,20 @@
 - [Legal AI Knowledge Base mit Docling](https://waiser.dev/blog/posts/de/legal-ai-knowledge-base-docling.html): Wie wir 1000+ juristische PDF-Dokumente mit Docling in eine durchsuchbare Wissensbasis für unsere KI-gestützte Rechtsberatungsplattform verwandelt haben.
 - [Multi-Agent AI Systeme mit CrewAI](https://waiser.dev/blog/posts/de/multi-agent-ai-crewai.html): Wie man spezialisierte KI-Agenten orchestriert, die wie ein echtes Team zusammenarbeiten. Ein praktischer Leitfaden zu CrewAI mit realen Anwendungsfällen.
 - [Genetische Algorithmen verstehen](https://waiser.dev/blog/posts/de/genetische-algorithmen-java.html): Evolution als Algorithmus: Wie genetische Algorithmen Optimierungsprobleme lösen. Eine praktische Einführung mit Java-Implementierung.
+
+## Blog posts (Chinese)
+
+- [Opus 4.8 与动态工作流：5 分钟内 7 个智能体](https://waiser.dev/blog/posts/zh/opus-4-8-dynamic-workflows-erst-recht-audit.html): 七个智能体、一个真实的法律科技平台、五分钟。Claude 如今能把计划铸成脚本并让智能体群并行运行意味着什么——以及为何验证改变了一切。
+- [环境 AI：为何下一代 AI 不是回答，而是察觉](https://waiser.dev/blog/posts/zh/ambient-ai-the-next-ai-generation.html): 只要我们还按次为 AI 付费，就只能造出它的一种形态。更有意思的是那个会自己发现异常的门房——而 2026 年正是它在经济上变得可行的一年。
+- [Anthropic 关于 Claude Skills 的 33 页蓝图](https://waiser.dev/blog/posts/zh/anthropic-skills-guide.html): 一份官方指南，展示如何在不写一行代码的情况下教会 Claude 如何工作。里面真正讲了什么，以及为何 Skills 正在悄然取代提示工程。
+- [MIT 解决了 AI 幻觉？](https://waiser.dev/blog/posts/zh/mit-ai-hallucinations.html): 剑桥的一项新研究，声称通过校准的奖励信号带来更可靠的模型。它究竟证明了什么——以及对今天的开发者意味着什么。
+- [Claude 在预览中发现的零日漏洞](https://waiser.dev/blog/posts/zh/claude-mythos-preview-zero-days.html): Anthropic 让 Claude 直面真实代码库。它发现的漏洞——以及这对 AI 辅助安全研究意味着什么。
+- [Karpathy 的 CLAUDE.md：把上下文当作一等公民](https://waiser.dev/blog/posts/zh/karpathy-claude-md.html): Andrej Karpathy 如何用 CLAUDE.md 引导智能体编码——以及为何一份精心编写的上下文文件胜过更聪明的提示。
+- [用 Superpowers 打造 AI 智能体工作流](https://waiser.dev/blog/posts/zh/ki-agenten-workflows-superpowers.html): Skills、计划与子智能体如何组合成可靠的自主工作流——以及让它们不至失控的模式。
+- [Claude Code Skills：Claude 学会新技能的方式](https://waiser.dev/blog/posts/zh/claude-code-skills.html): Skills 让 Claude Code 按需加载领域知识与工作流。它们如何运作、何时使用，以及如何编写自己的技能。
+- [用 Playwright MCP 实现浏览器自动化](https://waiser.dev/blog/posts/zh/playwright-mcp-browser-automatisierung.html): 通过 MCP 把 Playwright 交到智能体手中——让 AI 能像人一样导航、点击并读取真实网页。
+- [OpenClaw 对比 NemoClaw：两种智能体框架](https://waiser.dev/blog/posts/zh/openclaw-vs-nemoclaw.html): 两种智能体编排方式，正面对比。架构、取舍，以及各自何时更合适。
+- [如何真正评估 AI 模型](https://waiser.dev/blog/posts/zh/ki-modell-evaluation.html): 基准分数会骗人。什么才真正重要、如何为你的用例搭建评估，以及为何"感觉更好"不是一种度量。
+- [用 Docling 为法律 AI 构建知识库](https://waiser.dev/blog/posts/zh/legal-ai-knowledge-base-docling.html): 把杂乱的法律 PDF 转化为可供 RAG 检索的干净结构化知识——用 Docling 完成解析、分块与嵌入。
+- [用 CrewAI 构建多智能体 AI 系统](https://waiser.dev/blog/posts/zh/multi-agent-ai-crewai.html): 智能体、任务与流程——如何用 CrewAI 编排一支协作的 AI 智能体团队来完成真实工作。
+- [Java 中的遗传算法：从零进化出解](https://waiser.dev/blog/posts/zh/genetische-algorithmen-java.html): 选择、交叉、变异——用 Java 从头实现一个遗传算法，并看它如何逼近最优解。
