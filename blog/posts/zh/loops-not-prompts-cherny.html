@@ -1,31 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" id="html-root">
+<html lang="zh" id="html-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loops, Not Prompts: Why the Head of Claude Code Stopped Prompting</title>
-    <meta name="description" content="Boris Cherny stopped prompting Claude; he writes loops. What that means, how /loop and /goal differ, and the autonomous triage loop I tested myself.">
-    <link rel="canonical" href="https://waiser.dev/blog/posts/en/loops-not-prompts-cherny.html">
+    <title>用循环取代提示：Claude Code 负责人为何不再写提示</title>
+    <meta name="description" content="Boris Cherny 不再给 Claude 写提示——他写循环。这意味着什么，/loop 与 /goal 有何不同，以及我自己搭建的自主分诊循环。">
+    <link rel="canonical" href="https://waiser.dev/blog/posts/zh/loops-not-prompts-cherny.html">
     <link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/loops-statt-prompts-cherny.html">
     <link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/loops-not-prompts-cherny.html">
     <link rel="alternate" hreflang="zh" href="https://waiser.dev/blog/posts/zh/loops-not-prompts-cherny.html">
     <link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/loops-statt-prompts-cherny.html">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Loops, Not Prompts: Why the Head of Claude Code Stopped Prompting">
-    <meta property="og:description" content="Boris Cherny stopped prompting Claude; he writes loops. What that means, how /loop and /goal differ, and the autonomous triage loop I tested myself.">
-    <meta property="og:url" content="https://waiser.dev/blog/posts/en/loops-not-prompts-cherny.html">
+    <meta property="og:title" content="用循环取代提示：Claude Code 负责人为何不再写提示">
+    <meta property="og:description" content="Boris Cherny 不再给 Claude 写提示——他写循环。这意味着什么，/loop 与 /goal 有何不同，以及我自己搭建的自主分诊循环。">
+    <meta property="og:url" content="https://waiser.dev/blog/posts/zh/loops-not-prompts-cherny.html">
     <meta property="og:image" content="https://waiser.dev/og-default.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Loops, Not Prompts: Why the Head of Claude Code Stopped Prompting">
-    <meta name="twitter:description" content="Boris Cherny stopped prompting Claude; he writes loops. What that means, how /loop and /goal differ, and the autonomous triage loop I tested myself.">
+    <meta name="twitter:title" content="用循环取代提示：Claude Code 负责人为何不再写提示">
+    <meta name="twitter:description" content="Boris Cherny 不再给 Claude 写提示——他写循环。这意味着什么，/loop 与 /goal 有何不同，以及我自己搭建的自主分诊循环。">
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "BlogPosting",
-      "headline": "Loops, Not Prompts: Why the Head of Claude Code Stopped Prompting, and What I Built From It",
-      "description": "Boris Cherny stopped prompting Claude; he writes loops. What that means, how /loop and /goal differ, and the autonomous triage loop I tested myself.",
+      "headline": "用循环取代提示：Claude Code 负责人为何不再写提示, and What I Built From It",
+      "description": "Boris Cherny 不再给 Claude 写提示——他写循环。这意味着什么，/loop 与 /goal 有何不同，以及我自己搭建的自主分诊循环。",
       "datePublished": "2026-06-11",
       "author": {
         "@type": "Person",
@@ -35,10 +35,10 @@
       "image": "https://waiser.dev/og-default.png",
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://waiser.dev/blog/posts/en/loops-not-prompts-cherny.html"
+        "@id": "https://waiser.dev/blog/posts/zh/loops-not-prompts-cherny.html"
       },
-      "inLanguage": "en",
-      "@id": "https://waiser.dev/blog/posts/en/loops-not-prompts-cherny.html#article",
+      "inLanguage": "zh",
+      "@id": "https://waiser.dev/blog/posts/zh/loops-not-prompts-cherny.html#article",
       "publisher": {
         "@id": "https://waiser.dev/#person"
       },
@@ -57,13 +57,13 @@
           "@type": "ListItem",
           "position": 2,
           "name": "Blog",
-          "item": "https://waiser.dev/blog/en/"
+          "item": "https://waiser.dev/blog/zh/"
         },
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "Loops, Not Prompts: Why the Head of Claude Code Stopped Prompting",
-          "item": "https://waiser.dev/blog/posts/en/loops-not-prompts-cherny.html"
+          "name": "用循环取代提示：Claude Code 负责人为何不再写提示",
+          "item": "https://waiser.dev/blog/posts/zh/loops-not-prompts-cherny.html"
         }
       ]
     }
