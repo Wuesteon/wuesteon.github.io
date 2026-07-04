@@ -167,15 +167,15 @@
 
     <!-- Article Content (Blackwall art-body) -->
     <article class="art-body">
-                <p class="lead">How Skills are changing the way we work with AI coding assistants. And why MCP is already losing relevance for me.</p>
+                <p class="lead">Skills 正在改变我们与 AI 编程助手协作的方式。以及为什么在我看来 MCP 已经开始失去意义。</p>
 
                 <p>
-                    Anthropic has introduced <strong>Claude Code Skills</strong>, a new system that fundamentally changes how we interact with AI agents. Skills are reusable capabilities that Claude learns and applies consistently. Like a developer who has internalized best practices.
+                    Anthropic 推出了 <strong>Claude Code Skills</strong>，这是一套从根本上改变我们与 AI 智能体交互方式的新系统。技能是可复用的能力，Claude 会学习它们并始终如一地加以运用。就像一位把最佳实践内化于心的开发者。
                 </p>
 
-                <h2>What Are Skills?</h2>
+                <h2>什么是技能？</h2>
                 <p>
-                    Skills are Markdown files with metadata and optional executable scripts. Once created, Claude loads them automatically when they match the task at hand.
+                    技能就是带有元数据、并可选附带可执行脚本的 Markdown 文件。一旦创建好，Claude 就会在它们与当前任务相匹配时自动加载。
                 </p>
 
                 <div class="skill-card">
@@ -185,43 +185,43 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                             </svg>
                         </div>
-                        <span class="text-white font-semibold">The key advantage</span>
+                        <span class="text-white font-semibold">关键优势</span>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Skills are token-efficient: each Skill only requires a few dozen extra tokens in the context. The full details are only loaded when they are actually needed. This makes Skills scalable. You can define hundreds without overloading the context.
+                        技能在 token 上很高效：每个技能在上下文中只需多占用几十个 token。完整细节只有在真正需要时才会加载。这让技能具备了可扩展性。你可以定义成百上千个，而不会让上下文过载。
                     </p>
                 </div>
 
-                <h2>Skills vs. MCP: A Paradigm Shift</h2>
+                <h2>技能 vs. MCP：一次范式转变</h2>
                 <p>
-                    The Model Context Protocol (MCP) has received a lot of attention. But Skills solve the problem more elegantly:
+                    Model Context Protocol（MCP）已经受到了大量关注。但技能以更优雅的方式解决了这个问题：
                 </p>
 
                 <div class="comparison-box">
                     <div class="comparison-item">
                         <h4>MCP</h4>
                         <ul class="text-gray-400 text-sm space-y-2">
-                            <li>• Complex protocol specifications</li>
-                            <li>• Can consume tens of thousands of tokens</li>
-                            <li>• Requires server implementation</li>
-                            <li>• Steep learning curve</li>
+                            <li>• 复杂的协议规范</li>
+                            <li>• 可能消耗数万个 token</li>
+                            <li>• 需要实现服务器</li>
+                            <li>• 陡峭的学习曲线</li>
                         </ul>
                     </div>
                     <div class="comparison-item">
-                        <h4>Skills</h4>
+                        <h4>技能</h4>
                         <ul class="text-gray-400 text-sm space-y-2">
-                            <li>• Simple Markdown files</li>
-                            <li>• Minimal token overhead</li>
-                            <li>• No server required</li>
-                            <li>• Created in minutes</li>
+                            <li>• 简单的 Markdown 文件</li>
+                            <li>• 极小的 token 开销</li>
+                            <li>• 无需服务器</li>
+                            <li>• 几分钟即可创建</li>
                         </ul>
                     </div>
                 </div>
 
 
-                <h2>Practical Example: PDF Processing</h2>
+                <h2>实战示例：PDF 处理</h2>
                 <p>
-                    A concrete example demonstrates the elegance of the system: the <code>pdf</code> Skill from the official <a href="https://github.com/anthropics/skills" target="_blank" rel="noopener noreferrer">Anthropic Skills collection</a> provides a comprehensive toolkit for PDF manipulation. From text extraction to filling out forms.
+                    一个具体的例子就能展现这套系统的优雅之处：来自官方 <a href="https://github.com/anthropics/skills" target="_blank" rel="noopener noreferrer">Anthropic Skills 合集</a>的 <code>pdf</code> 技能，提供了一整套用于操作 PDF 的工具集。从提取文本到填写表单，无所不包。
                 </p>
 
                 <pre><code><span class="code-comment"># pdf/SKILL.md</span>
@@ -246,53 +246,53 @@
 4. Generate completed PDF</code></pre>
 
                 <p>
-                    What makes this special: the Skill contains Python scripts for various workflows. For fillable PDFs, fields are automatically detected. For non-fillable forms, there is an annotation-based approach with visual validation.
+                    它的特别之处在于：这个技能内含针对各种工作流的 Python 脚本。对于可填写的 PDF，字段会被自动识别。对于不可填写的表单，则采用一种基于标注、并带有视觉校验的方式。
                 </p>
 
                 <p>
-                    The same thing with MCP? Then I would need my own server, would have to define tool schemas, implement error handling, and host the whole thing somewhere. The Skill is a Markdown file with a few Python scripts. Done.
+                    换成 MCP 来做同样的事呢？那我就得自己搭一个服务器，得定义工具 schema、实现错误处理，还要把这一整套东西部署到某个地方。而这个技能只是一个 Markdown 文件加上几个 Python 脚本。搞定。
                 </p>
 
-                <h2>The Superpowers Library</h2>
+                <h2>Superpowers 技能库</h2>
                 <p>
-                    The developer community is already sharing ready-made Skills on GitHub. Jesse Vincent's <a href="https://github.com/obra/superpowers" target="_blank" rel="noopener noreferrer">"Superpowers" library</a> is a good example, battle-tested Skills for everyday development:
+                    开发者社区已经在 GitHub 上分享现成的技能了。Jesse Vincent 的 <a href="https://github.com/obra/superpowers" target="_blank" rel="noopener noreferrer">「Superpowers」库</a>就是一个很好的例子，里面都是经过实战检验、用于日常开发的技能：
                 </p>
 
                 <ul>
-                    <li><strong>Self-improving Skills:</strong> A Skill that creates new Skills</li>
-                    <li><strong>Git worktrees for parallel work:</strong> Claude works on multiple features simultaneously</li>
-                    <li><strong>Automatic code reviews:</strong> Sub-agents review code according to best practices</li>
-                    <li><strong>Community sharing:</strong> Skills can be shared via GitHub</li>
+                    <li><strong>自我改进的技能：</strong>一个能创建新技能的技能</li>
+                    <li><strong>用于并行工作的 Git worktree：</strong>让 Claude 同时处理多个功能</li>
+                    <li><strong>自动代码审查：</strong>子智能体按照最佳实践审查代码</li>
+                    <li><strong>社区共享：</strong>技能可以通过 GitHub 分享</li>
                 </ul>
 
                 <blockquote>
-                    "Skills give your agents superpowers. They are documented best practices that Claude learns and applies consistently."
+                    「技能赋予你的智能体超能力。它们是有文档记录的最佳实践，Claude 会学习它们并始终如一地加以运用。」
                 </blockquote>
 
-                <h2>Why This Matters</h2>
+                <h2>为什么这很重要</h2>
                 <p>
-                    The implications for software development are enormous:
+                    这对软件开发的意义是巨大的：
                 </p>
 
                 <ol>
-                    <li><strong>Knowledge becomes portable:</strong> Once-defined workflows work everywhere</li>
-                    <li><strong>Consistency:</strong> The agent no longer makes "I forgot" mistakes</li>
-                    <li><strong>Scaling:</strong> Teams can codify their best practices as Skills</li>
-                    <li><strong>Specialization:</strong> Domain-specific Skills for law, medicine, finance...</li>
+                    <li><strong>知识变得可移植：</strong>一次定义好的工作流可以在任何地方使用</li>
+                    <li><strong>一致性：</strong>智能体不会再犯「我忘了」这类错误</li>
+                    <li><strong>规模化：</strong>团队可以把自己的最佳实践固化为技能</li>
+                    <li><strong>专业化：</strong>面向法律、医疗、金融等领域的专属技能……</li>
                 </ol>
 
-                <h2>The Future: An Explosion of New Possibilities</h2>
+                <h2>未来：新可能性的爆发</h2>
                 <p>
-                    We are at the beginning of a rapid evolution. The simplicity of the format lowers the barrier to entry to a minimum. Essentially, they are just structured Markdown files.
+                    我们正处在一场快速演进的开端。这种格式的简单，把入门门槛降到了最低。本质上，它们就只是结构化的 Markdown 文件。
                 </p>
 
                 <p>
-                    An example: the controlling team creates monthly financial reports. With the right Skill combination, this runs automatically. Pull data from the ERP system, analyze deviations, generate charts, and export as PDF. What used to take half a day, the agent handles in minutes.
+                    举个例子：财务管控团队每月都要编制财务报表。搭配合适的技能组合，这件事就能自动完成。从 ERP 系统拉取数据、分析偏差、生成图表，再导出为 PDF。过去要花上半天的工作，智能体几分钟就搞定了。
                 </p>
 
                 <hr style="border-color: #374151; margin: 2rem 0;">
 
-                <p><strong>Tools used:</strong></p>
+                <p><strong>所用工具：</strong></p>
                 <div style="margin: 1rem 0;">
                     <a href="https://claude.ai/code" target="_blank" rel="noopener noreferrer" class="tool-badge">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
@@ -301,7 +301,7 @@
                 </div>
 
                 <p>
-                    Working on AI-powered automations? <a href="../../../index.html#contact">Let's talk</a>. I help develop custom Skills for your workflows.
+                    正在做 AI 驱动的自动化？<a href="../../../index.html#contact">聊聊吧</a>。我可以帮你为自己的工作流开发定制技能。
                 </p>
 
     </article>
