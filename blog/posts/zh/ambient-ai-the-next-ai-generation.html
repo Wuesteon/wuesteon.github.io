@@ -155,7 +155,7 @@
         <div class="art-hero__in">
             <a class="art-back" href="../../zh/">◄ ALL POSTS</a>
             <div><span class="art-cat">Ambient AI</span></div>
-            <h1 class="art-title">Ambient AI: Why the Next Generation Doesn't Answer – It Notices</h1>
+            <h1 class="art-title">环境 AI：为什么下一代 AI 不回答，而是留意</h1>
             <div class="art-meta">
                 <span class="who"><span class="av">NW</span> Nils Weiser</span>
                 <span class="sep">•</span><span data-art-date>May 21, 2026</span>
@@ -167,32 +167,32 @@
 
     <!-- Article Content (Blackwall art-body) -->
     <article class="art-body">
-                <p class="lead">As long as we pay AI per request, we only build one shape of it: vending machines that react to a coin drop. The interesting shape is the janitor who notices on his own when something is off. What changes when the unit of compute flips.</p>
+                <p class="lead">只要我们还按请求为 AI 付费，就只会造出它的一种形态：对投币做出反应的自动售货机。而真正有意思的形态，是那个会自己留意到哪里不对劲的看门人。当算力的计费单位翻转时，会发生什么变化。</p>
 
                 <div class="pullquote">
-                    Today's AI is a vending machine: you drop in a coin (prompt), you get a coffee (response). Paid per cup. The next generation is a janitor: he makes his rounds, checks things, only speaks up when something is off. The per-token economy can't represent that second shape – and that's precisely why almost nobody is building it today.
+                    今天的 AI 是一台自动售货机：你投进一枚硬币（提示词），拿到一杯咖啡（回应）。按杯计费。下一代则是一个看门人：他四处巡视、逐项检查，只有在发现哪里不对劲时才开口。按 token 计费的经济模式无法表达第二种形态——而这恰恰是今天几乎没人去做它的原因。
                 </div>
 
                 <p>
-                    For eleven days a language model has been running on a GCP VM with a single NVIDIA L4 GPU – doing nothing I ask it to do in the moment. At 06:00 UTC it scrapes three competitors, at 07:00 UTC it writes a blog draft in our house voice, twice a week it clusters my product portfolio into themed worlds and publishes them. In the evening it sends me a Telegram report. It costs <strong>~€220–255 per month</strong> – a predictable flat fee, not a token counter. And it makes me realize that I've been building the wrong kind of AI for the last two years.
+                    有十一天，一个语言模型一直运行在一台配了单块 NVIDIA L4 GPU 的 GCP 虚拟机上——它当下并不做任何我临时吩咐的事。06:00 UTC，它抓取三家竞争对手；07:00 UTC，它用我们的品牌语气写一篇博客草稿；每周两次，它把我的产品组合聚成主题世界并发布出去。晚上，它给我发一份 Telegram 报告。它每月花费 <strong>约 €220–255</strong>——一笔可预测的固定费用，而不是一个 token 计数器。它让我意识到，过去两年我一直在构建错误的那一类 AI。
                 </p>
 
                 <p>
-                    This piece is an attempt to give the right kind a name – and to explain why 2026 is the year it becomes economical.
+                    这篇文章想为正确的那一类命名——并解释为什么 2026 年正是它变得划算的一年。
                 </p>
 
-                <h2>The Invisible Corset</h2>
+                <h2>看不见的束身衣</h2>
 
                 <p>
-                    Every developer who has worked seriously with the OpenAI API knows this moment: you have an idea for an agent that <em>continuously</em> does something – checks a few logs every five minutes, runs through a few feeds every hour, briefly thinks about whether an incoming email matters. You do the napkin math on token cost per day and decide: <em>doesn't make economic sense</em>. The agent never gets built. The use case dissolves. It shows up in no statistic, because it never existed.
-                </p>
-
-                <p>
-                    That's the most invisible, most important consequence of the per-token economy: not that the things we build are too expensive – but that an entire class of things <strong>never gets thought of in the first place</strong>. We've internalized the mental filter to the point where Always-On architectures simply don't occur to us.
+                    每一个认真用过 OpenAI API 的开发者都熟悉这个瞬间：你想到一个能<em>持续</em>做点什么的智能体——每五分钟查看几条日志，每小时过一遍几个信息源，简单判断一封进来的邮件是否要紧。你在草稿纸上算了算每天的 token 成本，然后得出结论：<em>在经济上不划算</em>。这个智能体从来没被造出来。这个用例烟消云散。它不会出现在任何统计里，因为它从未存在过。
                 </p>
 
                 <p>
-                    Concretely, using GPT-4o list prices ($2.50/1M input, $10/1M output) and a watcher with 500 input + 100 output tokens per call:
+                    这是按 token 计费的经济模式最隐蔽、也最重要的后果：不是我们造出来的东西太贵——而是一整类东西<strong>从一开始就压根没被想到</strong>。我们把这层心理过滤器内化得太深，以至于「常开」（Always-On）架构根本不会在我们脑中冒出来。
+                </p>
+
+                <p>
+                    具体来说，用 GPT-4o 的标价（输入 $2.50/1M，输出 $10/1M）、外加一个每次调用 500 输入 + 100 输出 token 的观察器来算：
                 </p>
 
                 <pre class="code-block">Per call:      500 × $2.50/1M + 100 × $10/1M  =  $0.00225  (~0.2 ¢)
@@ -202,102 +202,102 @@ Per month:     720,000 calls × $0.00225        =  $1,620   ≈ €1,380
 Five watchers: 5 × €1,380                      ≈ €6,900 / month</pre>
 
                 <p>
-                    <strong>Just under €1,400 per watcher, ~€7,000 for five components</strong> – before the agent has produced anything usable. Every developer runs this calculation once in their head, sees the number, and the use case dies right there.
+                    <strong>每个观察器将近 €1,400，五个组件约 €7,000</strong>——而这还是在智能体产出任何有用东西之前。每个开发者都会在脑子里把这笔账算一遍，看到这个数字，然后用例就地夭折。
                 </p>
 
                 <p>
-                    With engineering, that number comes down. Batching (100 items per call instead of one), prompt caching (90% off on the fixed prefix), a pre-filter that drops 95% as irrelevant, GPT-4o-<em>mini</em> instead of 4o – the same watcher now sits at <strong>€30–80/month</strong>, five components at <strong>€200–500</strong>. Competitive with your own GPU. But you've spent a week optimizing, you have a brittle pipeline across three models and a cache layer, and every new idea has to defend itself against the token budget.
+                    做些工程优化，这个数字会降下来。批处理（每次调用 100 条而不是一条）、提示词缓存（固定前缀便宜 90%）、一个能过滤掉 95% 无关内容的前置筛选器、用 GPT-4o-<em>mini</em> 而不是 4o——同一个观察器现在落在 <strong>€30–80/月</strong>，五个组件 <strong>€200–500</strong>。已经能和你自己的 GPU 一较高下。但你为此花了一周做优化，得到的是一条横跨三个模型加一层缓存的脆弱流水线，而且每个新点子都得先在 token 预算面前为自己辩护。
                 </p>
 
                 <p>
-                    This is the actual point: not the absolute price. The point is that the cost question <strong>disappears entirely</strong>. With a flat fee, nobody asks "is this worth it?" before adding a new cron job – just as nobody asks before adding a new <code>cron</code> entry or another Prometheus target. That mental frictionlessness is the real asset, not the margin.
+                    这才是真正的关键：不在于绝对价格。关键在于成本这个问题<strong>彻底消失了</strong>。有了固定费用，没人会在加一个新 cron 任务之前问「这值得吗？」——就像没人会在加一条新的 <code>cron</code> 条目或者再挂一个 Prometheus 采集目标之前发问一样。那种心理上的无摩擦感才是真正的资产，而不是利润率。
                 </p>
 
                 <p>
-                    This self-censorship is new. We don't have it in classical software. Nobody asks themselves whether it's "worth it" to run a cron job every five minutes to check disk usage. Cron jobs are free. So free that an entire generation of infrastructure tooling rests on the assumption that <em>continuously observing</em> costs nothing. Prometheus, Datadog, Sentry, every log pipeline of the last 15 years. Imagine if every Prometheus scrape cost €0.003. There would be no monitoring.
+                    这种自我审查是个新东西。在经典软件里我们没有它。没人会问自己每五分钟跑一个 cron 任务去检查磁盘用量「值不值」。cron 任务是免费的。免费到整整一代基础设施工具都建立在这样一个前提之上：<em>持续观察</em>不花钱。Prometheus、Datadog、Sentry，过去 15 年里的每一条日志流水线。想象一下，如果每次 Prometheus 采集都要花 €0.003，那就根本不会有监控这回事。
                 </p>
 
                 <p>
-                    That's exactly the state AI is in today.
+                    这正是今天 AI 所处的状态。
                 </p>
 
-                <h2>The Three Product Classes That Only Make Sense Always-On</h2>
+                <h2>只有在「常开」下才成立的三类产品</h2>
 
                 <p>
-                    Three application families become economically and psychologically possible only when AI runs as a flat fee instead of per request:
+                    只有当 AI 以固定费用、而不是按请求运行时，以下三类应用才在经济上、也在心理上变得可行：
                 </p>
 
                 <div class="principle-card">
                     <div class="principle-header">
                         <div class="principle-number">1</div>
-                        <span class="text-white font-semibold">Watchers</span>
+                        <span class="text-white font-semibold">观察器（Watchers）</span>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Agents that continuously observe external sources and only react when something specific happens. A watcher for competitor price changes. One for regulatory updates in a niche market. One for reviews that adopt a particular tone. Today people build this with keyword filters and regex, because semantic understanding per check would be too expensive. Once understanding is free, the watcher becomes smarter than the person it informs.
+                        持续观察外部信息源、只有在特定事件发生时才做出反应的智能体。一个盯着竞争对手价格变动的观察器。一个盯着小众市场监管更新的观察器。一个盯着出现某种特定语气的评价的观察器。今天人们用关键词过滤和正则来做这些事，因为每次检查都做语义理解太贵了。一旦理解变得免费，观察器就会比它所通知的那个人更聪明。
                     </p>
                 </div>
 
                 <div class="principle-card">
                     <div class="principle-header">
                         <div class="principle-number">2</div>
-                        <span class="text-white font-semibold">Drift Detectors</span>
+                        <span class="text-white font-semibold">漂移检测器（Drift Detectors）</span>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Watch your own data and flag when something shifts that isn't explained by a code change. An agent that reads 100 random customer conversations every night and reports when the complaint pattern moves. One that walks through the SEO copy on your own site each week and points out which claims are no longer true. One that watches your codebase and flags when architectural assumptions are being undermined. Absurdly expensive per token, transformative in effect – because it finds problems before they become tickets.
+                        盯着你自己的数据，当某些东西发生了无法由代码改动解释的变化时就发出提示。一个每晚随机读 100 段客户对话、并在投诉模式发生位移时报告的智能体。一个每周走查你自己网站上的 SEO 文案、指出哪些说法已不再属实的智能体。一个盯着你代码库、在架构假设被逐渐侵蚀时发出提示的智能体。按 token 算贵得离谱，但效果是颠覆性的——因为它能在问题变成工单之前就把它找出来。
                     </p>
                 </div>
 
                 <div class="principle-card">
                     <div class="principle-header">
                         <div class="principle-number">3</div>
-                        <span class="text-white font-semibold">Autonomous Pipelines</span>
+                        <span class="text-white font-semibold">自主流水线（Autonomous Pipelines）</span>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        The most radical shape: agents that work without human approval in a part of the product where you accept fault tolerance. My own bot does this. Twice a week it groups the offer portfolio into themed worlds, generates descriptions, metadata, tags, picks a hero image and publishes directly to the production database. Status: <code>live</code>. No review. If something goes wrong, a lifecycle job archives the world two days later anyway. This works not because the model is perfect – it works because the cost structure lets it run <em>often enough</em> for errors to self-heal.
+                        最激进的形态：在产品中你能接受容错的那一部分，让智能体无需人工审批就直接干活。我自己的机器人就是这么做的。每周两次，它把产品组合归成主题世界，生成描述、元数据、标签，挑一张主图，然后直接发布到生产数据库。状态：<code>live</code>。没有人工审核。万一出了岔子，一个生命周期任务反正会在两天后把这个世界归档掉。它之所以行得通，不是因为模型完美——而是因为成本结构让它能<em>足够频繁地</em>运行，使得错误能够自我修复。
                     </p>
                 </div>
 
                 <p>
-                    What ties these three families together: they're not "better than today's AI". They're a <strong>different kind of AI</strong>. It doesn't answer, it notices. It isn't called, it runs. It produces no output per input, but an output per <em>change in the state of the world</em>. That's the difference between a call center and a janitor.
+                    把这三类串在一起的，是这一点：它们并不是「比今天的 AI 更好」。它们是<strong>另一种 AI</strong>。它不回答，它留意。它不被调用，它自己运行。它产出的不是每份输入对应一份输出，而是每一次<em>世界状态的变化</em>对应一份输出。这就是呼叫中心和看门人之间的区别。
                 </p>
 
                 <p>
-                    I call this class <strong>Ambient AI</strong> – by analogy to Mark Weiser's <em>Ubiquitous Computing</em> (Xerox PARC, 1988/1991), the idea that computers should recede into the background rather than demand attention in the foreground. The point is the same: technology gets more useful when it stops constantly reminding you that it's there.
+                    我把这一类称为<strong>环境 AI</strong>——类比自 Mark Weiser 的<em>普适计算（Ubiquitous Computing）</em>（Xerox PARC，1988/1991），也就是计算机应该退到背景里、而不是在前台索取注意力这一理念。要点是一样的：当技术不再时时刻刻提醒你它的存在时，它反而更有用。
                 </p>
 
-                <h2>Why 2026 – And Not Already 2024</h2>
+                <h2>为什么是 2026——而不是早在 2024</h2>
 
                 <p>
-                    Three things had to converge for Ambient AI to become economical. All three happened in the last twelve months, and the timing isn't a coincidence.
-                </p>
-
-                <p>
-                    <strong>First: Mixture-of-Experts on consumer GPUs.</strong> Until early 2025, "local LLM" meant either "noticeably worse than GPT-4" or "needs an H100 you don't have". With <strong>Gemma 4 26B-A4B</strong> that changed: 26 billion parameters total, but thanks to MoE architecture <strong>only ~3.8 billion active per forward pass</strong>. The model feels like a 4B dense – but answers at the quality of something much larger. With Q4 quantization it fits into the 24 GB of an <strong>NVIDIA L4</strong> – a GPU available on every hyperscaler cloud for under a euro an hour. That's the hardware threshold.
+                    要让环境 AI 变得划算，有三件事必须同时到位。这三件事都发生在过去十二个月里，而这个时间点并非巧合。
                 </p>
 
                 <p>
-                    <strong>Second: agentic runtimes with MCP.</strong> Until mid-2025, anyone building an agent had to solve the wiring themselves: tool calling, conversation state, retry logic, auth, logging. With the <strong>Model Context Protocol</strong> (Anthropic, late 2024) and runtimes like OpenClaw that speak MCP natively, what used to be a weekend project became an hours job. You register your tool, describe it in a JSON schema, the agent can use it. That's the engineering threshold.
+                    <strong>第一：消费级 GPU 上的混合专家（Mixture-of-Experts）。</strong>直到 2025 年初，「本地 LLM」要么意味着「明显不如 GPT-4」，要么意味着「需要一块你没有的 H100」。<strong>Gemma 4 26B-A4B</strong> 改变了这一点：总参数 260 亿，但得益于 MoE 架构，<strong>每次前向传播只激活约 38 亿</strong>。这个模型用起来像一个 4B 稠密模型——回答的质量却接近一个大得多的模型。用 Q4 量化后，它能塞进一块 <strong>NVIDIA L4</strong> 的 24 GB 里——而这块 GPU 在每一家超大规模云上，每小时不到一欧元就能用上。这是硬件门槛。
                 </p>
 
                 <p>
-                    <strong>Third: the cost curve has opened up.</strong> On a single L4 with moderate utilization, effective inference cost for Gemma 4 26B-A4B sits in the <strong>low single-digit cents per million tokens</strong>. Via OpenRouter the same model runs around $0.06 per million input and $0.33 per million output tokens. The point isn't the absolute price advantage over an optimized API pipeline – depending on how hard you optimize, that gap isn't huge. The point is the <em>billing logic</em>: from the moment the GPU is already burning, every additional request is free. No batch tuning, no cache layer, no tier routing. That's the economic threshold – less about margin, more about friction.
+                    <strong>第二：带 MCP 的智能体运行时。</strong>直到 2025 年中，任何构建智能体的人都得自己解决那些连线工作：工具调用、对话状态、重试逻辑、鉴权、日志。有了 <strong>Model Context Protocol</strong>（Anthropic，2024 年末），以及像 OpenClaw 这类原生支持 MCP 的运行时，过去一个周末项目量级的活儿，如今几个小时就能搞定。你注册你的工具，用一份 JSON schema 描述它，智能体就能使用它。这是工程门槛。
                 </p>
 
                 <p>
-                    All three thresholds fell in 2026, at the same time. Before that, Ambient AI was an idea. Now it's a configuration detail.
-                </p>
-
-                <h2>Existence Proof from the Machine Room</h2>
-
-                <p>
-                    Concrete example from my own setup, because abstract arguments prove nothing:
+                    <strong>第三：成本曲线已经打开。</strong>在一块利用率适中的 L4 上，Gemma 4 26B-A4B 的有效推理成本落在<strong>每百万 token 个位数低位美分</strong>的区间。通过 OpenRouter，同一个模型的价格大约是每百万输入 token $0.06、每百万输出 token $0.33。关键不在于相对于一条优化过的 API 流水线的绝对价格优势——取决于你优化得多狠，这个差距其实并不大。关键在于<em>计费逻辑</em>：从 GPU 已经在烧着的那一刻起，每一个额外请求都是免费的。不用调批处理，不用加缓存层，不用做分级路由。这是经济门槛——重点不在利润率，而在摩擦。
                 </p>
 
                 <p>
-                    The setup described here was built in cooperation with <a href="https://codify.ch" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline">Codify.ch</a> – a Swiss GCP consultancy that provided the GPU hardware and set up the cloud side. Without their access to L4 capacity (especially during the May 2026 Europe-wide stockout), getting this bot to production in eleven days wouldn't have worked.
+                    这三道门槛都在 2026 年、同时被跨过。在此之前，环境 AI 是一个想法。如今，它是一个配置细节。
                 </p>
 
-                <p>The actual hardware:</p>
+                <h2>来自机房的存在性证明</h2>
+
+                <p>
+                    来一个我自己搭建的具体例子，因为抽象的论证什么都证明不了：
+                </p>
+
+                <p>
+                    这里描述的这套系统，是与 <a href="https://codify.ch" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline">Codify.ch</a> 合作搭建的——一家瑞士的 GCP 咨询公司，他们提供了 GPU 硬件并搭好了云这一侧。要不是他们能拿到 L4 产能（尤其是在 2026 年 5 月那次全欧断货期间），要在十一天里把这个机器人推上生产是不可能的。
+                </p>
+
+                <p>实际的硬件：</p>
 
                 <pre class="code-block">Machine Type   g2-standard-16  (16 vCPU, 64 GB RAM)
 GPU            1× NVIDIA L4    (24 GB VRAM)
@@ -312,30 +312,30 @@ Context        32k  (capped; model supports 256k natively, VRAM limit)
 Runtime        OpenClaw v2026.5.7</pre>
 
                 <p>
-                    To be precise: this is Google's original model, in the <a href="https://huggingface.co/ggml-org/gemma-4-26B-A4B-it-GGUF" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline">GGUF conversion</a> maintained by the llama.cpp community with Q4_K_M quantization – ~16 GB instead of ~52 GB BF16, identical behavior on German text and tool calls, a measurable but small quality drop on pure math. Without this quantization, Gemma 4 26B-A4B simply doesn't fit on a single 24 GB L4.
+                    说得更精确些：这是 Google 的原始模型，采用由 llama.cpp 社区维护的 <a href="https://huggingface.co/ggml-org/gemma-4-26B-A4B-it-GGUF" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline">GGUF 转换</a>、并做了 Q4_K_M 量化——约 16 GB 而不是 BF16 的约 52 GB，在德语文本和工具调用上的表现完全一致，只有在纯数学上有一处可测量但很小的质量下降。没有这道量化，Gemma 4 26B-A4B 根本塞不进单块 24 GB 的 L4。
                 </p>
 
-                <p>The cost picture (with SUD/CUD discount stack via Codify):</p>
+                <p>成本全貌（通过 Codify 叠加 SUD/CUD 折扣）：</p>
 
                 <div style="overflow-x:auto; margin:1.5rem 0;">
                 <table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
                     <thead>
                         <tr style="border-bottom:1px solid rgba(255, 42, 60, 0.3);">
-                            <th style="text-align:left; padding:0.6rem 0.75rem; color:#ff2a3c; font-family:'JetBrains Mono',monospace; font-size:0.8rem;">Mode</th>
-                            <th style="text-align:right; padding:0.6rem 0.75rem; color:#ff2a3c; font-family:'JetBrains Mono',monospace; font-size:0.8rem;">€ / month</th>
+                            <th style="text-align:left; padding:0.6rem 0.75rem; color:#ff2a3c; font-family:'JetBrains Mono',monospace; font-size:0.8rem;">方案</th>
+                            <th style="text-align:right; padding:0.6rem 0.75rem; color:#ff2a3c; font-family:'JetBrains Mono',monospace; font-size:0.8rem;">€ / 月</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr style="border-bottom:1px solid rgba(75,85,99,0.3);">
-                            <td style="padding:0.6rem 0.75rem;">GCP g2-standard-16 + L4, <strong>Spot</strong> (europe-west4)</td>
+                            <td style="padding:0.6rem 0.75rem;">GCP g2-standard-16 + L4，<strong>Spot</strong>（europe-west4）</td>
                             <td style="text-align:right; padding:0.6rem 0.75rem; font-family:'JetBrains Mono',monospace;">~220</td>
                         </tr>
                         <tr style="border-bottom:1px solid rgba(75,85,99,0.3);">
-                            <td style="padding:0.6rem 0.75rem;">GCP <strong>on-demand with SUD + 1y CUD</strong> (via Codify)</td>
+                            <td style="padding:0.6rem 0.75rem;">GCP <strong>按需，含 SUD + 1 年 CUD</strong>（通过 Codify）</td>
                             <td style="text-align:right; padding:0.6rem 0.75rem; font-family:'JetBrains Mono',monospace;">~255</td>
                         </tr>
                         <tr>
-                            <td style="padding:0.6rem 0.75rem;">GCP <strong>on-demand list price</strong> (worst case, no discounts)</td>
+                            <td style="padding:0.6rem 0.75rem;">GCP <strong>按需标价</strong>（最坏情况，无折扣）</td>
                             <td style="text-align:right; padding:0.6rem 0.75rem; font-family:'JetBrains Mono',monospace;">~770</td>
                         </tr>
                     </tbody>
@@ -343,22 +343,22 @@ Runtime        OpenClaw v2026.5.7</pre>
                 </div>
 
                 <p>
-                    The €255 number is <strong>not raw on-demand list price</strong> – without Sustained-Use Discount and Committed-Use Discount you're at roughly €770/month. The Codify rate matters here, and that belongs in the open.
+                    €255 这个数字<strong>并不是纯按需标价</strong>——没有持续使用折扣（Sustained-Use Discount）和承诺使用折扣（Committed-Use Discount），你会落在每月约 €770。这里 Codify 的费率起了作用，而这一点该摆到台面上说。
                 </p>
 
                 <p>
-                    For comparison: a dedicated <strong>Hetzner</strong> GPU box (GEX44) with an RTX 4000 SFF Ada (20 GB VRAM) runs at <strong>~€184 per month</strong> – plus a one-off ~€310 setup fee in month one. For Gemma 4 26B-A4B Q4_K_M, 20 GB is borderline; with a full 32k context it gets tight, OOM under load is possible. If you want EU-resident hardware with margin to spare, a dedicated L4 or RTX-A5000 box (~24 GB) at an EU host lands in the <strong>~€250–350/month</strong> range.
+                    作个对比：一台专用的 <strong>Hetzner</strong> GPU 主机（GEX44），配一块 RTX 4000 SFF Ada（20 GB 显存），每月 <strong>约 €184</strong>——外加首月一次性约 €310 的安装费。对 Gemma 4 26B-A4B Q4_K_M 来说，20 GB 是勉强够用的边缘；上满 32k 上下文就会吃紧，在负载下有可能 OOM。如果你想要数据留在欧盟境内、又有余量的硬件，一台放在欧盟主机商的专用 L4 或 RTX-A5000 主机（约 24 GB）落在 <strong>约 €250–350/月</strong> 的区间。
                 </p>
 
                 <p>
-                    Honest accounting: once GCP runs <em>without</em> discounts, the raw price advantage disappears. Optimized API pipelines (€200–500/month) and self-hosting across the spectrum (Hetzner amortized over 12 months ≈ €210, up to GCP list price ≈ €770) sit in the same corridor. The pitch for self-hosting doesn't carry on margin – it carries on what comes in the next section: that <em>token bookkeeping</em> goes away.
+                    诚实地算这笔账：一旦 GCP 在<em>没有</em>折扣的情况下运行，纯价格优势就消失了。优化过的 API 流水线（€200–500/月）和各种自托管方案（Hetzner 摊到 12 个月约 €210，一直到 GCP 标价约 €770）都落在同一个走廊里。自托管的卖点不靠利润率撑起来——它靠的是下一节要讲的东西：<em>token 记账</em>消失了。
                 </p>
 
                 <p>
-                    On top sits <strong>OpenClaw</strong> as the agent runtime, bound to a Telegram bot token. Next to it runs a custom <strong>MCP server</strong> in Python, exposing nine typed tools to the agent – all tools talk to my Firestore database. Data belonging to real users is <strong>pseudonymized before it leaves the MCP process</strong> (SHA-256, first 8 chars, stable per user). The agent never sees a real auth UID, but can still reason about "user A vs. user B".
+                    最上面跑着 <strong>OpenClaw</strong> 作为智能体运行时，绑定到一个 Telegram 机器人 token。旁边跑着一个用 Python 写的自定义 <strong>MCP 服务器</strong>，向智能体暴露九个带类型的工具——所有工具都与我的 Firestore 数据库对话。属于真实用户的数据在<strong>离开 MCP 进程之前就会被假名化</strong>（SHA-256，取前 8 位，对每个用户稳定不变）。智能体永远看不到真实的鉴权 UID，但仍然能就「用户 A vs. 用户 B」进行推理。
                 </p>
 
-                <p>Three systemd timers do the rest:</p>
+                <p>剩下的活儿由三个 systemd 定时器完成：</p>
 
                 <pre class="code-block">06:00 UTC  →  scraper pulls 3 competitor feeds           [Watcher]
 07:00 UTC  →  blog draft in house voice, status: 'draft' [Pipeline + Approval]
@@ -367,83 +367,83 @@ Mon + Thu 07:30 UTC  →  cluster portfolio into 5–10     [Pipeline, no review
                          hero image, publish → Firestore</pre>
 
                 <p>
-                    The remarkable thing isn't the pipeline. The remarkable thing is that it has been running since the May 12 region switch <strong>without further intervention</strong> – and that this allows me, psychologically, to ask a question I couldn't ask before: <em>what should my bot actually do next?</em> Once the answer is no longer "costs money per attempt" but "costs maybe an hour of engineering, runs for free after that", the playing field changes. I've spent the last week thinking about tasks I'd never have considered: read my inbox every hour and classify spam signals. Each evening check whether new pull requests in the open-source libraries my products depend on look regression-prone. Every Sunday draft my own weekly standup from the git commits.
+                    真正值得注意的不是这条流水线。真正值得注意的是，自 5 月 12 日切换区域以来，它一直<strong>无需进一步干预</strong>地运行着——而这让我在心理上得以问一个以前问不出口的问题：<em>我的机器人接下来到底该做什么？</em>一旦答案不再是「每尝试一次都要花钱」，而是「也许花一小时做工程，之后就免费运行」，整个局面就变了。过去一周我一直在琢磨那些我原本压根不会考虑的任务：每小时读一遍我的收件箱、把垃圾邮件信号分类。每晚检查一下我产品所依赖的开源库里新的 pull request 看起来是否容易引入回归。每个周日从 git 提交里替我起草每周站会。
                 </p>
 
                 <p>
-                    None of these tasks is innovative. All three would be absurd on a per-token bill. As an Ambient-AI function they're trivial.
+                    这些任务没有一个是创新的。放在按 token 计费的账单上，这三件事都很荒谬。而作为一个环境 AI 功能，它们都不值一提。
                 </p>
 
                 <p>
-                    <strong>What honestly didn't work</strong>, because I don't want to give the impression this all went smoothly:
-                </p>
-
-                <ul>
-                    <li><strong>Telegram approval workflow.</strong> Inline buttons for each new themed world. Telegram only allows one long poller per bot token, and the agent holds it. Result: no UI button flow possible. Three hours lost; I now handle exceptions via the database console.</li>
-                    <li><strong>Europe-wide L4 stockout.</strong> On a Wednesday in May 2026, all eleven European GCP zones offering L4 had <strong>zero</strong> capacity. Fallback to <code>us-east4-a</code>. A plan B in another region is mandatory if you take Always-On seriously – and yes, that contradicts the "no friction" promise to a degree.</li>
-                    <li><strong>CUDA upgrade risk.</strong> A casual <code>apt upgrade</code> on the VM can pull an NVIDIA driver version that's incompatible with the current <code>llama.cpp</code> build. Workaround so far: pinned drivers, <code>apt-mark hold</code> on NVIDIA packages, manual upgrade window every 2–3 months.</li>
-                    <li><strong>Spot preemption.</strong> The €220 option can be terminated by GCP at any time. For async drafting jobs that's fine – for a watcher mid-way through a 30-second cluster call, it's a data-loss risk. A systemd restart catches it, but "Always-On" here really means "Always-On with the occasional 2-minute hole".</li>
-                </ul>
-
-                <p>
-                    Self-hosting isn't friction-free. It's a <em>different</em> friction – drivers instead of token budgets, OOM instead of rate limits, region failover instead of API outages. Anyone who claims this is maintenance-free hasn't run it in production yet.
-                </p>
-
-                <h2>What This Means for Companies Still Thinking Per-Request</h2>
-
-                <p>
-                    When a company plans AI integration today, the answer is almost always the same: a chat widget, a copilot, a search. All request-response. All scaling per request. All trapped in the kind of AI that stands in the foreground and waits for attention.
-                </p>
-
-                <p>
-                    The uncomfortable question I keep asking clients: <em>what would your product do if AI no longer cost €0.01 per request but ~€250 per month as a fixed flat fee – no matter how often it runs?</em> The answers I get back are never another chat feature. They're always the things people have wanted for years but never planned, because it made no economic sense:
+                    <strong>说句实话，哪些没跑通</strong>，因为我不想给人留下这一切都顺风顺水的印象：
                 </p>
 
                 <ul>
-                    <li>"We would categorize every incoming lead into our CRM taxonomy within five seconds, instead of guessing at quarter-end which campaigns produced the good ones."</li>
-                    <li>"We would enrich every customer email before it reaches support, so the agent can respond in 30 seconds instead of 8 minutes."</li>
-                    <li>"We would continuously diff our own product descriptions against competitors and flag drift."</li>
-                    <li>"We would scan our Excel sheets for anomalies, every night, on every tab."</li>
+                    <li><strong>Telegram 审批工作流。</strong>本想给每个新的主题世界配内联按钮。可 Telegram 每个机器人 token 只允许一个长轮询器，而智能体占着它。结果：做不出按钮式的 UI 流程。白白搭进去三个小时；现在我通过数据库控制台来处理这些例外情况。</li>
+                    <li><strong>全欧 L4 断货。</strong>2026 年 5 月的某个周三，所有十一个提供 L4 的欧洲 GCP 区域，产能全都是<strong>零</strong>。回退到 <code>us-east4-a</code>。如果你认真对待「常开」，那么在另一个区域备一个 plan B 就是必须的——是的，这在某种程度上和「零摩擦」的承诺相矛盾。</li>
+                    <li><strong>CUDA 升级风险。</strong>在虚拟机上随手一个 <code>apt upgrade</code>，可能会拉来一个和当前 <code>llama.cpp</code> 构建不兼容的 NVIDIA 驱动版本。目前的应对办法：固定驱动、对 NVIDIA 软件包 <code>apt-mark hold</code>、每 2–3 个月开一个手动升级窗口。</li>
+                    <li><strong>Spot 抢占。</strong>那个 €220 的方案可能被 GCP 在任何时候终止。对异步的草稿任务来说这没问题——但对一个正在做 30 秒聚类调用、跑到一半的观察器来说，这是丢数据的风险。一个 systemd 重启能兜住它，但这里的「常开」其实意味着「偶尔会有 2 分钟窟窿的常开」。</li>
                 </ul>
 
                 <p>
-                    None of this is rocket science. None of it is economical without an Always-On architecture. And none of it gets built today, because the pricing model of the major providers kills the use case in the concept stage.
+                    自托管并非没有摩擦。它是一种<em>不一样的</em>摩擦——是驱动而不是 token 预算，是 OOM 而不是速率限制，是区域故障切换而不是 API 宕机。任何声称这玩意儿免维护的人，都还没在生产里真正跑过它。
                 </p>
 
-                <h2>What You Can Build This Week</h2>
+                <h2>这对那些仍在按请求思考的公司意味着什么</h2>
 
                 <p>
-                    If the thought is starting to itch, here's an honest 80/20 recommendation:
+                    今天一家公司在规划 AI 集成时，答案几乎总是同一套：一个聊天小组件、一个 copilot、一个搜索。全都是请求-响应。全都按请求扩展。全都困在那种站在前台、等着被注意的 AI 里。
+                </p>
+
+                <p>
+                    我一直向客户抛出的那个让人不太舒服的问题：<em>如果 AI 不再是每次请求花 €0.01，而是每月约 €250 的固定包月费——无论它运行多频繁——你的产品会去做什么？</em>我得到的回答，从来不是又一个聊天功能。它们永远是那些人们盼了好多年、却从未真正规划的东西，因为在经济上说不通：
+                </p>
+
+                <ul>
+                    <li>「我们会在五秒内把每一个进来的线索归入我们的 CRM 分类体系，而不是等到季末才去猜是哪些营销活动带来了好线索。」</li>
+                    <li>「我们会在每一封客户邮件到达客服之前就为它做信息富集，好让客服能在 30 秒内回复，而不是 8 分钟。」</li>
+                    <li>「我们会持续地把自己的产品描述和竞争对手做比对，并对漂移发出提示。」</li>
+                    <li>「我们会每天晚上、在每一个标签页上，把我们的 Excel 表扫一遍找异常。」</li>
+                </ul>
+
+                <p>
+                    这些都不是什么高深的火箭科学。但没有一个在缺少「常开」架构的前提下是划算的。而且今天没有一个会被真正造出来，因为主流厂商的定价模型在概念阶段就把用例扼杀了。
+                </p>
+
+                <h2>这一周你就能造出来的东西</h2>
+
+                <p>
+                    如果这个念头开始让你手痒，这里有一份诚实的 80/20 建议：
                 </p>
 
                 <ol>
-                    <li><strong>Rent an L4 or L40S for a week</strong> on any hyperscaler. Costs less than a decent dinner. Provision <code>llama.cpp</code> with CUDA, pull <code>gemma-4-26b-a4b-q4_k_m</code>, start the server. One hour of work.</li>
-                    <li><strong>Drop an agent runtime next to it</strong> (OpenClaw, or your own Python scripts with an MCP client). Bind it to Telegram, Slack, or Signal. Two hours.</li>
-                    <li><strong>Write a single cron job</strong> that checks something interesting once an hour and only sends you a message when it finds something. One hour.</li>
-                    <li><strong>Observe yourself.</strong> Within two weeks you'll lose the reflex of thinking about AI per request. That's the real change.</li>
+                    <li><strong>在任意一家超大规模云上租一块 L4 或 L40S 用一周。</strong>花的钱比一顿像样的晚餐还少。装好带 CUDA 的 <code>llama.cpp</code>，拉下 <code>gemma-4-26b-a4b-q4_k_m</code>，启动服务器。一小时的活儿。</li>
+                    <li><strong>在它旁边放一个智能体运行时</strong>（OpenClaw，或者你自己带 MCP 客户端的 Python 脚本）。把它绑到 Telegram、Slack 或 Signal。两小时。</li>
+                    <li><strong>写一个 cron 任务</strong>，让它每小时检查一件有意思的事，只有在有发现时才给你发消息。一小时。</li>
+                    <li><strong>观察你自己。</strong>不出两周，你就会丢掉那个按请求去思考 AI 的反射。这才是真正的改变。</li>
                 </ol>
 
                 <p>
-                    Ambient AI is not a technology. The technology has become trivial. Ambient AI is a <strong>way of thinking</strong>, and it becomes accessible the moment the economic barrier falls. That barrier fell in 2026. Whoever uses it early has a two-year head start on building products that feel like they <em>think for you</em> – instead of waiting for you to ask.
+                    环境 AI 不是一项技术。技术本身已经变得微不足道。环境 AI 是一种<strong>思维方式</strong>，而当经济壁垒倒下的那一刻，它就变得触手可及。那道壁垒在 2026 年倒下了。谁早一步用上它，谁就在构建那种「感觉会替你思考」、而不是干等着你发问的产品上，抢先了两年。
                 </p>
 
                 <hr style="border-color: #374151; margin: 2rem 0;">
 
-                <p><strong>Partner &amp; Sources:</strong></p>
+                <p><strong>合作方与来源：</strong></p>
                 <div style="margin: 1rem 0;">
-                    <a href="https://codify.ch" target="_blank" rel="noopener noreferrer" class="tool-badge">Codify.ch – GCP setup &amp; hardware</a>
-                    <a href="https://ai.google.dev/gemma/docs/core" target="_blank" rel="noopener noreferrer" class="tool-badge">Google – Gemma 4 Docs</a>
-                    <a href="https://huggingface.co/google/gemma-4-26B-A4B-it" target="_blank" rel="noopener noreferrer" class="tool-badge">Google – Gemma 4 26B-A4B (original)</a>
+                    <a href="https://codify.ch" target="_blank" rel="noopener noreferrer" class="tool-badge">Codify.ch – GCP 搭建与硬件</a>
+                    <a href="https://ai.google.dev/gemma/docs/core" target="_blank" rel="noopener noreferrer" class="tool-badge">Google – Gemma 4 文档</a>
+                    <a href="https://huggingface.co/google/gemma-4-26B-A4B-it" target="_blank" rel="noopener noreferrer" class="tool-badge">Google – Gemma 4 26B-A4B（原始模型）</a>
                     <a href="https://huggingface.co/ggml-org/gemma-4-26B-A4B-it-GGUF" target="_blank" rel="noopener noreferrer" class="tool-badge">ggml-org – Gemma 4 26B-A4B GGUF</a>
-                    <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener noreferrer" class="tool-badge">Anthropic – MCP Spec</a>
-                    <a href="https://cloud.google.com/compute/gpus-pricing" target="_blank" rel="noopener noreferrer" class="tool-badge">GCP – GPU Pricing</a>
-                    <a href="https://www.hetzner.com/dedicated-rootserver/gex44/" target="_blank" rel="noopener noreferrer" class="tool-badge">Hetzner GEX44 (RTX 4000 SFF Ada)</a>
-                    <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener noreferrer" class="tool-badge">OpenAI – API Pricing</a>
-                    <a href="https://en.wikipedia.org/wiki/Ubiquitous_computing" target="_blank" rel="noopener noreferrer" class="tool-badge">Mark Weiser – Ubiquitous Computing</a>
+                    <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener noreferrer" class="tool-badge">Anthropic – MCP 规范</a>
+                    <a href="https://cloud.google.com/compute/gpus-pricing" target="_blank" rel="noopener noreferrer" class="tool-badge">GCP – GPU 定价</a>
+                    <a href="https://www.hetzner.com/dedicated-rootserver/gex44/" target="_blank" rel="noopener noreferrer" class="tool-badge">Hetzner GEX44（RTX 4000 SFF Ada）</a>
+                    <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener noreferrer" class="tool-badge">OpenAI – API 定价</a>
+                    <a href="https://en.wikipedia.org/wiki/Ubiquitous_computing" target="_blank" rel="noopener noreferrer" class="tool-badge">Mark Weiser – 普适计算</a>
                 </div>
 
                 <p>
-                    Wondering where the line between "decent cron job" and "genuinely useful Always-On agent" runs for your product – and what an honest effort estimate looks like? <a href="../../../index.html#contact">Let's talk</a>. I help build Ambient-AI setups that run in real projects, not just demos.
+                    想知道对你的产品来说，「一个还不错的 cron 任务」和「一个真正有用的常开智能体」之间的界线落在哪里——以及一个诚实的工作量估算长什么样？<a href="../../../index.html#contact">我们聊聊</a>。我帮人搭建能在真实项目里跑起来、而不只是做 demo 的环境 AI 系统。
                 </p>
 
     </article>
