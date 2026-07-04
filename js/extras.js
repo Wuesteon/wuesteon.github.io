@@ -60,15 +60,30 @@
     {t:'Content- & SEO-Agent', d:'Entwirft und optimiert Seiten in deiner Markenstimme — direkt von deiner Website gelernt.', fit:'md'},
     {t:'Ops-Monitoring-Agent', d:'Überwacht deine Systeme und meldet sich, sobald etwas abweicht — bevor Nutzer es merken.', fit:'md'}
   ];
-  function pool(){ return lang()==='de' ? POOL_DE : POOL_EN; }
+  var POOL_ZH=[
+    {t:'客户支持智能体', d:'拦截重复性工单，7×24 小时基于你自己的文档作答，只把真正要紧的升级给你。', fit:'hi'},
+    {t:'线索资格评估智能体', d:'读取每一条进线咨询，评估意向，并把热门线索即时转给你。', fit:'hi'},
+    {t:'文档处理', d:'提取、总结并归档合同、发票与表单——无需手动录入。', fit:'md'},
+    {t:'内部知识智能体', d:'团队用日常语言提问，智能体基于你们的内部文档与 Wiki 作答。', fit:'md'},
+    {t:'入职引导智能体', d:'自动带领新客户或新员工完成设置，逐步适配每一步。', fit:'hi'},
+    {t:'内容与 SEO 智能体', d:'以你的品牌口吻起草并优化页面——直接从你的网站学习而来。', fit:'md'},
+    {t:'运维监控智能体', d:'监视你的系统，一旦有异常立即提醒你——在用户察觉之前。', fit:'md'}
+  ];
+  function pool(){ var l=lang(); return l==='de' ? POOL_DE : (l==='zh' ? POOL_ZH : POOL_EN); }
   function label(fit){
-    if(lang()==='de') return fit==='hi' ? 'HOHER IMPACT' : 'MITTLERER IMPACT';
+    var l=lang();
+    if(l==='de') return fit==='hi' ? 'HOHER IMPACT' : 'MITTLERER IMPACT';
+    if(l==='zh') return fit==='hi' ? '高影响' : '中等影响';
     return fit==='hi' ? 'HIGH IMPACT' : 'MEDIUM IMPACT';
   }
   function verdictText(score){
-    if(lang()==='de') return score>=88
+    var l=lang();
+    if(l==='de') return score>=88
       ? 'Starker Fit. Diese drei Agenten würden sich schnell bezahlt machen.'
       : 'Guter Fit. Hier würden Agenten den größten Hebel schaffen.';
+    if(l==='zh') return score>=88
+      ? '高度契合。这三个智能体会很快收回成本。'
+      : '契合良好。智能体在这里能创造最大杠杆。';
     return score>=88
       ? 'Strong fit. These three agents would pay for themselves fast.'
       : 'Good fit. Here’s where agents would create the most leverage.';
@@ -98,6 +113,14 @@
       {c:'c',x:'  Stack & Workflows erkennen .... '},{c:'g',x:'ok'},{nl:1},
       {c:'c',x:'  Agent-Chancen kartieren ....... '},{c:'h',x:'3 gefunden'},{nl:1},
       {c:'g',x:'✓ Analyse abgeschlossen'}
+    ];
+    if(lang()==='zh') return [
+      {c:'p',x:'$ waiser scan '},{c:'w',x:domain},{nl:1},
+      {c:'c',x:'  加载公开页面 ............. '},{c:'g',x:'ok'},{nl:1},
+      {c:'c',x:'  解析内容与结构 ........... '},{c:'g',x:'ok'},{nl:1},
+      {c:'c',x:'  识别技术栈与工作流 ....... '},{c:'g',x:'ok'},{nl:1},
+      {c:'c',x:'  梳理智能体机会 ........... '},{c:'h',x:'找到 3 个'},{nl:1},
+      {c:'g',x:'✓ 分析完成'}
     ];
     return [
       {c:'p',x:'$ waiser scan '},{c:'w',x:domain},{nl:1},
@@ -130,23 +153,29 @@
   }
   // Honest, localized copy for the soft-error cases (block / thin / limits).
   function softMessage(status, body){
-    var de = lang()==='de';
-    if(body && body.error==='DAILY_LIMIT') return de
-      ? 'Das kostenlose Tageslimit an Scans ist erreicht. Versuch es morgen wieder — oder buch direkt ein Gespräch.'
-      : "Today's free-scan limit is reached. Try again tomorrow — or just book a call.";
-    if(status===429) return de
-      ? 'Zu viele Scans in kurzer Zeit. Bitte einen Moment warten und erneut versuchen.'
-      : "Too many scans in a short time. Please wait a moment and try again.";
+    var l=lang();
+    if(body && body.error==='DAILY_LIMIT'){
+      if(l==='de') return 'Das kostenlose Tageslimit an Scans ist erreicht. Versuch es morgen wieder — oder buch direkt ein Gespräch.';
+      if(l==='zh') return '今日的免费扫描额度已用完。明天再试——或直接预约一次通话。';
+      return "Today's free-scan limit is reached. Try again tomorrow — or just book a call.";
+    }
+    if(status===429){
+      if(l==='de') return 'Zu viele Scans in kurzer Zeit. Bitte einen Moment warten und erneut versuchen.';
+      if(l==='zh') return '短时间内扫描次数过多。请稍候片刻再试。';
+      return "Too many scans in a short time. Please wait a moment and try again.";
+    }
     // 451/422 — trust the backend's fixed message, fall back to a localized default.
     if(body && body.message) return body.message;
-    return de ? 'Diese Seite kann nicht gescannt werden.' : "This site can't be scanned.";
+    if(l==='de') return 'Diese Seite kann nicht gescannt werden.';
+    if(l==='zh') return '该网站无法被扫描。';
+    return "This site can't be scanned.";
   }
 
   form.addEventListener('submit', function(e){
     e.preventDefault();
     var domain=cleanDomain(urlEl.value);
     if(!domain || domain.indexOf('.')<1){ urlEl.focus(); return; }
-    var scanning = lang()==='de' ? 'SCANNE…' : 'SCANNING…';
+    var scanning = lang()==='de' ? 'SCANNE…' : (lang()==='zh' ? '扫描中…' : 'SCANNING…');
     var runLabel = (typeof getTranslation==='function') ? getTranslation('bw.scan.run') : 'RUN SCAN ▸';
     runBtn.disabled=true; runBtn.textContent=scanning;
     out.style.display='block'; report.style.display='none'; con.style.display='block'; con.innerHTML='';
@@ -156,10 +185,10 @@
       console.warn('[scan] fallback', err && (err.status||err.message));
       return stubCompany(domain);                     // network/other → graceful fake
     });
-    var doneMsg = lang()==='de' ? '✓ Analyse abgeschlossen' : '✓ analysis complete';
+    var doneMsg = lang()==='de' ? '✓ Analyse abgeschlossen' : (lang()==='zh' ? '✓ 分析完成' : '✓ analysis complete');
     var animP;
     if(REDUCED){
-      con.innerHTML='<span class="c">'+(lang()==='de'?'Scanne…':'Scanning…')+'</span>';
+      con.innerHTML='<span class="c">'+(lang()==='de'?'Scanne…':(lang()==='zh'?'扫描中…':'Scanning…'))+'</span>';
       animP=Promise.resolve();
     } else {
       // The typing animation is cosmetic. It resolves either when it finishes
@@ -186,10 +215,10 @@
     }).catch(function(err){
       // soft cases (451 blocked / 422 thin / 429 rate or daily limit): show an honest
       // message instead of a report; never render the fake stub here.
-      var msg=err.message||(lang()==='de'?'Diese Seite kann nicht gescannt werden.':'This site can\'t be scanned.');
+      var msg=err.message||(lang()==='de'?'Diese Seite kann nicht gescannt werden.':(lang()==='zh'?'该网站无法被扫描。':'This site can\'t be scanned.'));
       var html='<span class="h">'+msg+'</span>';
       if(err.code==='DAILY_LIMIT'){
-        var cta=lang()==='de'?'GESPRÄCH BUCHEN ▸':'BOOK A CALL ▸';
+        var cta=lang()==='de'?'GESPRÄCH BUCHEN ▸':(lang()==='zh'?'预约通话 ▸':'BOOK A CALL ▸');
         html+='<div style="margin-top:14px"><a href="#contact" class="btn btn--pri">'+cta+'</a></div>';
       }
       con.innerHTML=html;
