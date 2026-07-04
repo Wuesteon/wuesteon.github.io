@@ -165,9 +165,9 @@
     <section class="art-hero" data-screen-label="Article">
         <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
         <div class="art-hero__in">
-            <a class="art-back" href="../../zh/">◄ ALL POSTS</a>
+            <a class="art-back" href="../../zh/">◄ 全部文章</a>
             <div><span class="art-cat">Playwright</span></div>
-            <h1 class="art-title">Browser Automation with Playwright MCP and Claude Code</h1>
+            <h1 class="art-title">用 Playwright MCP 和 Claude Code 实现浏览器自动化</h1>
             <div class="art-meta">
                 <span class="who"><span class="av">NW</span> Nils Weiser</span>
                 <span class="sep">•</span><span data-art-date>October 3, 2025</span>
@@ -179,15 +179,15 @@
 
     <!-- Article Content (Blackwall art-body) -->
     <article class="art-body">
-                <p class="lead">How to teach Claude Code to control a real browser. For web scraping, testing, and automation.</p>
+                <p class="lead">如何教会 Claude Code 操控一个真实的浏览器——用于网页抓取、测试和自动化。</p>
 
                 <p>
-                    The <strong>Model Context Protocol (MCP)</strong> extends Claude Code's capabilities with external tools. One of the most powerful extensions: <strong>Playwright MCP</strong>, which lets Claude control a real browser.
+                    <strong>Model Context Protocol（MCP）</strong> 用外部工具扩展了 Claude Code 的能力。其中最强大的扩展之一，就是 <strong>Playwright MCP</strong>，它让 Claude 能够操控一个真实的浏览器。
                 </p>
 
-                <h2>Setup in One Minute</h2>
+                <h2>一分钟完成配置</h2>
                 <p>
-                    The installation is remarkably simple. A single command before starting Claude:
+                    安装过程简单得出奇。启动 Claude 之前，只需一条命令：
                 </p>
 
                 <div class="command-box">
@@ -196,16 +196,16 @@
                 </div>
 
                 <p>
-                    That's it. The configuration is stored in <code>~/.claude.json</code> and persists for future sessions.
+                    就这么简单。配置会保存在 <code>~/.claude.json</code> 中，并在后续会话里持续生效。
                 </p>
 
-                <h2>How It Works</h2>
+                <h2>它是如何工作的</h2>
                 <p>
-                    After setup, Claude can control a visible Chrome window. You see in real time what the agent is doing. Loading pages, filling out forms, clicking buttons.
+                    配置完成后，Claude 就能操控一个可见的 Chrome 窗口。你可以实时看到智能体在做什么：加载页面、填写表单、点击按钮。
                 </p>
 
                 <p>
-                    A practical tip: Explicitly mention "Playwright MCP" in your requests. This way Claude selects the right tool and doesn't try to use regular Bash commands.
+                    一个实用的小技巧：在请求中明确提到 “Playwright MCP”。这样 Claude 就会选对工具，而不会试图去用普通的 Bash 命令。
                 </p>
 
                 <div class="benefit-card">
@@ -214,126 +214,126 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
                         </svg>
                     </div>
-                    <h4 class="text-white font-semibold mb-2">Authentication Made Easy</h4>
+                    <h4 class="text-white font-semibold mb-2">身份验证轻松搞定</h4>
                     <p class="text-gray-400 text-sm">
-                        A major advantage: Claude displays login pages while you authenticate manually. Session cookies are preserved throughout the entire interaction. No need to pass credentials to the AI.
+                        一个重要优势：Claude 会显示登录页面，由你亲手完成身份验证。会话 Cookie 在整个交互过程中都会被保留下来。你无需把凭据交给 AI。
                     </p>
                 </div>
 
-                <h2>Available Browser Tools</h2>
+                <h2>可用的浏览器工具</h2>
                 <p>
-                    Playwright MCP provides 25 browser functions. You don't need to memorize the names. Claude automatically selects the right function for your task:
+                    Playwright MCP 提供了 25 个浏览器功能。你不需要记住这些名字，Claude 会根据你的任务自动选对功能：
                 </p>
 
                 <div class="tools-grid">
                     <div class="tool-item">
                         <div class="tool-name">browser_navigate</div>
-                        <div class="tool-desc">Open URLs</div>
+                        <div class="tool-desc">打开 URL</div>
                     </div>
                     <div class="tool-item">
                         <div class="tool-name">browser_click</div>
-                        <div class="tool-desc">Click elements</div>
+                        <div class="tool-desc">点击元素</div>
                     </div>
                     <div class="tool-item">
                         <div class="tool-name">browser_type</div>
-                        <div class="tool-desc">Enter text</div>
+                        <div class="tool-desc">输入文本</div>
                     </div>
                     <div class="tool-item">
                         <div class="tool-name">browser_screenshot</div>
-                        <div class="tool-desc">Take screenshots</div>
+                        <div class="tool-desc">截取屏幕截图</div>
                     </div>
                     <div class="tool-item">
                         <div class="tool-name">browser_snapshot</div>
-                        <div class="tool-desc">Capture DOM structure</div>
+                        <div class="tool-desc">捕获 DOM 结构</div>
                     </div>
                     <div class="tool-item">
                         <div class="tool-name">browser_tabs</div>
-                        <div class="tool-desc">Manage tabs</div>
+                        <div class="tool-desc">管理标签页</div>
                     </div>
                     <div class="tool-item">
                         <div class="tool-name">browser_drag</div>
-                        <div class="tool-desc">Drag & Drop</div>
+                        <div class="tool-desc">拖放操作</div>
                     </div>
                     <div class="tool-item">
                         <div class="tool-name">browser_hover</div>
-                        <div class="tool-desc">Hover effects</div>
+                        <div class="tool-desc">悬停效果</div>
                     </div>
                     <div class="tool-item">
                         <div class="tool-name">browser_select_option</div>
-                        <div class="tool-desc">Operate dropdowns</div>
+                        <div class="tool-desc">操作下拉菜单</div>
                     </div>
                     <div class="tool-item">
                         <div class="tool-name">browser_file_upload</div>
-                        <div class="tool-desc">Upload files</div>
+                        <div class="tool-desc">上传文件</div>
                     </div>
                     <div class="tool-item">
                         <div class="tool-name">browser_pdf_save</div>
-                        <div class="tool-desc">Generate PDFs</div>
+                        <div class="tool-desc">生成 PDF</div>
                     </div>
                     <div class="tool-item">
                         <div class="tool-name">browser_network</div>
-                        <div class="tool-desc">Monitor network</div>
+                        <div class="tool-desc">监控网络请求</div>
                     </div>
                 </div>
 
-                <h2>Practical Use Cases</h2>
+                <h2>实际应用场景</h2>
 
-                <h3>1. Web Scraping with JavaScript Rendering</h3>
+                <h3>1. 抓取需要 JavaScript 渲染的网页</h3>
                 <p>
-                    Many modern websites only render content with JavaScript. Playwright automatically waits for complete rendering before extracting data.
+                    许多现代网站只有在 JavaScript 执行后才会渲染出内容。Playwright 会自动等待页面完全渲染，然后再提取数据。
                 </p>
 
                 <pre><code><span class="code-comment"># Prompt for Claude:</span>
 <span class="code-string">"Use Playwright MCP to open the page example.com/products
 and extract all product names and prices as JSON."</span></code></pre>
 
-                <h3>2. Automated Testing</h3>
+                <h3>2. 自动化测试</h3>
                 <p>
-                    Claude can perform end-to-end tests and even generate Playwright test scripts that you can later integrate into your CI/CD pipeline.
+                    Claude 可以执行端到端测试，甚至能生成 Playwright 测试脚本，供你之后集成到自己的 CI/CD 流水线中。
                 </p>
 
-                <h3>3. Form Automation</h3>
+                <h3>3. 表单自动化</h3>
                 <p>
-                    Repetitive form entries? Claude fills them out while you validate the final values.
+                    重复性的表单填写？让 Claude 来填，由你来核对最终的取值。
                 </p>
 
-                <h3>4. Screenshot Documentation</h3>
+                <h3>4. 截图存档</h3>
                 <p>
-                    Automatic screenshots of websites for documentation or monitoring, with annotations if desired.
+                    自动截取网站截图，用于文档记录或监控，需要的话还能加上标注。
                 </p>
 
-                <h2>Best Practices</h2>
+                <h2>最佳实践</h2>
 
                 <ol>
                     <li>
-                        <strong>Explicit tool naming:</strong> Say "with Playwright MCP" so Claude selects the right tool
+                        <strong>明确点名工具：</strong>说 “用 Playwright MCP”，好让 Claude 选对工具
                     </li>
                     <li>
-                        <strong>Step-by-step instructions:</strong> Break down tasks for complex workflows
+                        <strong>分步下达指令：</strong>对于复杂的工作流，把任务拆解开来
                     </li>
                     <li>
-                        <strong>Snapshots over screenshots:</strong> <code>browser_snapshot</code> provides structured data that Claude can process more effectively
+                        <strong>快照优于截图：</strong><code>browser_snapshot</code> 提供的是结构化数据，Claude 处理起来更高效
                     </li>
                     <li>
-                        <strong>Monitor authentication:</strong> You can intervene manually on login pages
+                        <strong>盯住身份验证：</strong>在登录页面你可以亲手介入
                     </li>
                 </ol>
 
-                <h2>Security Considerations</h2>
+                <h2>安全方面的考量</h2>
                 <p>
-                    Since Claude controls a real browser, some precautions apply:
+                    由于 Claude 操控的是一个真实的浏览器，有几点需要注意：
                 </p>
 
                 <ul>
-                    <li>Do not work with sensitive production data without review</li>
-                    <li>Use test accounts for automation experiments</li>
-                    <li>Watch the browser actions - you can see everything live</li>
-                    <li>Never pass sensitive credentials directly to Claude</li>
+                    <li>未经审查，不要用敏感的生产数据来操作</li>
+                    <li>做自动化实验时使用测试账号</li>
+                    <li>盯着浏览器的每一步操作——一切都在你眼前实时进行</li>
+                    <li>永远不要把敏感凭据直接交给 Claude</li>
                 </ul>
 
                 <hr style="border-color: #374151; margin: 2rem 0;">
 
-                <p><strong>Tools used:</strong></p>
+                <p><strong>用到的工具：</strong></p>
                 <div style="margin: 1rem 0;">
                     <a href="https://playwright.dev" target="_blank" rel="noopener noreferrer" class="tool-badge">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
@@ -346,35 +346,35 @@ and extract all product names and prices as JSON."</span></code></pre>
                 </div>
 
                 <p>
-                    Want to integrate browser automation into your workflows? <a href="../../../index.html#contact">Get in touch</a>. I help with setup and development of tailored solutions.
+                    想把浏览器自动化集成进你的工作流吗？<a href="../../../index.html#contact">联系我</a>。我可以帮你搭建配置，并开发量身定制的解决方案。
                 </p>
 
     </article>
 
     <!-- Author share + related posts -->
     <div class="art-share">
-      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
-      <a href="../../../index.html#contact" class="btn btn--pri">WORK WITH ME ▸</a>
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI 智能体专家 · 博登湖区</span></div></div>
+      <a href="../../../index.html#contact" class="btn btn--pri">与我合作 ▸</a>
     </div>
     <section class="art-more">
       <div class="wrap">
-        <div class="art-more__head"><h2>More field notes</h2><a href="../../zh/">ALL POSTS ▸</a></div>
+        <div class="art-more__head"><h2>更多现场笔记</h2><a href="../../zh/">全部文章 ▸</a></div>
         <div class="art-more__grid" id="art-more-grid"></div>
       </div>
     </section>
 
     <!-- Related posts (internal cross-links for crawl equity) -->
     <nav class="related-posts" aria-label="Related posts">
-        <p class="related-posts__heading">// Related posts</p>
+        <p class="related-posts__heading">// 相关文章</p>
         <div class="related-posts__grid">
                 <a class="related-posts__card" href="ki-agenten-workflows-superpowers.html">
-                    <span class="related-posts__card-title">Superpowers: How AI Agents Learn to Work Like Real Teams</span>
+                    <span class="related-posts__card-title">Superpowers：AI 智能体如何学会像真正的团队一样协作</span>
                 </a>
                 <a class="related-posts__card" href="multi-agent-ai-crewai.html">
-                    <span class="related-posts__card-title">Multi-Agent AI Systems with CrewAI: Teams Instead of Solo Players</span>
+                    <span class="related-posts__card-title">用 CrewAI 打造多智能体 AI 系统：团队协作而非单打独斗</span>
                 </a>
                 <a class="related-posts__card" href="claude-code-skills.html">
-                    <span class="related-posts__card-title">Claude Code Skills: The MCP Killer?</span>
+                    <span class="related-posts__card-title">Claude Code Skills：MCP 的终结者？</span>
                 </a>
         </div>
     </nav>
