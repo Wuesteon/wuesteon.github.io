@@ -19,6 +19,13 @@ const POSTS = [
       excerpt: "No API access, no jailbreak — just 2 chat messages that made a hardened AI agent trust a credential harvester. Four experiments on Mem0 memory poisoning, with every defense tested and broken.",
       date: "27 JUN 2026",
       read: "8 MIN"
+    },
+    zh: {
+      href: "blog/posts/zh/agent-memory-poisoning-mem0.html",
+      title: "我们用 2 条消息给一个\"有安全意识\"的 AI 智能体投毒",
+      excerpt: "无需 API 访问、无需越狱——仅 2 条聊天消息，就让一个已加固的 AI 智能体信任了一个凭据收集器。围绕 Mem0 记忆投毒的四项实验，每一道防御都被测试并攻破。",
+      date: "27 JUN 2026",
+      read: "8 MIN"
     }
   },
   {
@@ -35,6 +42,13 @@ const POSTS = [
       href: "blog/posts/en/loops-not-prompts-cherny.html",
       title: "Loops, Not Prompts: Why the Head of Claude Code Stopped Prompting",
       excerpt: "Boris Cherny stopped prompting Claude – he writes loops. What that means, how /loop and /goal differ, and the autonomous triage loop I built myself.",
+      date: "11 JUN 2026",
+      read: "10 MIN"
+    },
+    zh: {
+      href: "blog/posts/zh/loops-not-prompts-cherny.html",
+      title: "用循环取代提示：Claude Code 负责人为何不再写提示",
+      excerpt: "Boris Cherny 不再给 Claude 写提示——他写循环。这意味着什么，/loop 与 /goal 有何不同，以及我自己搭建的自主分诊循环。",
       date: "11 JUN 2026",
       read: "10 MIN"
     }
@@ -55,6 +69,13 @@ const POSTS = [
       excerpt: "Seven agents, a real legal-tech platform, five minutes. What it means that Claude can now turn a plan into a script and run a swarm in parallel — and why verification changes everything.",
       date: "31 MAY 2026",
       read: "6 MIN"
+    },
+    zh: {
+      href: "blog/posts/zh/opus-4-8-dynamic-workflows-erst-recht-audit.html",
+      title: "Opus 4.8 与动态工作流：5 分钟内 7 个智能体",
+      excerpt: "七个智能体、一个真实的法律科技平台、五分钟。Claude 如今能把计划铸成脚本并让智能体群并行运行意味着什么——以及为何验证改变了一切。",
+      date: "31 MAY 2026",
+      read: "6 MIN"
     }
   },
   {
@@ -71,6 +92,13 @@ const POSTS = [
       href: "blog/posts/en/ambient-ai-the-next-ai-generation.html",
       title: "Ambient AI: Why the Next Generation Doesn't Answer – It Notices",
       excerpt: "As long as we pay AI per request, we only build one shape of it. The interesting shape is the janitor who notices on his own when something is off – and 2026 is the year it becomes economical.",
+      date: "21 MAY 2026",
+      read: "13 MIN"
+    },
+    zh: {
+      href: "blog/posts/zh/ambient-ai-the-next-ai-generation.html",
+      title: "环境 AI：为何下一代 AI 不是回答，而是察觉",
+      excerpt: "只要我们还按次为 AI 付费，就只能造出它的一种形态。更有意思的是那个会自己发现异常的门房——而 2026 年正是它在经济上变得可行的一年。",
       date: "21 MAY 2026",
       read: "13 MIN"
     }
@@ -91,6 +119,13 @@ const POSTS = [
       excerpt: "An official guide showing how to teach Claude the way you work – without writing a single line of code. What's actually in it, and why skills quietly retire prompt engineering.",
       date: "15 MAY 2026",
       read: "6 MIN"
+    },
+    zh: {
+      href: "blog/posts/zh/anthropic-skills-guide.html",
+      title: "Anthropic 关于 Claude Skills 的 33 页蓝图",
+      excerpt: "一份官方指南，展示如何在不写一行代码的情况下教会 Claude 如何工作。里面真正讲了什么，以及为何 Skills 正在悄然取代提示工程。",
+      date: "15 MAY 2026",
+      read: "6 MIN"
     }
   },
   {
@@ -107,6 +142,13 @@ const POSTS = [
       href: "blog/posts/en/mit-ai-hallucinations.html",
       title: "Did MIT solve AI hallucinations?",
       excerpt: "A new study from Cambridge promises more reliable models through calibrated reward signals. What it actually shows – and what it means for developers today.",
+      date: "30 APR 2026",
+      read: "6 MIN"
+    },
+    zh: {
+      href: "blog/posts/zh/mit-ai-hallucinations.html",
+      title: "与 AI 幻觉共处：为何模型会编造，以及如何应对",
+      excerpt: "幻觉不是 bug，而是 LLM 工作方式的产物。它们从何而来、何时重要，以及在生产中遏制它们的实用模式。",
       date: "30 APR 2026",
       read: "6 MIN"
     }
@@ -127,6 +169,13 @@ const POSTS = [
       excerpt: "181 Firefox exploits, a 27-year-old OpenBSD bug, a full FreeBSD RCE with a ROP chain. Why the offense-defense balance is shifting right now.",
       date: "15 APR 2026",
       read: "5 MIN"
+    },
+    zh: {
+      href: "blog/posts/zh/claude-mythos-preview-zero-days.html",
+      title: "Claude 在预览中发现的零日漏洞",
+      excerpt: "Anthropic 让 Claude 直面真实代码库。它发现的漏洞——以及这对 AI 辅助安全研究意味着什么。",
+      date: "15 APR 2026",
+      read: "5 MIN"
     }
   },
   {
@@ -143,6 +192,13 @@ const POSTS = [
       href: "blog/posts/en/karpathy-claude-md.html",
       title: "A CLAUDE.md With 25,000 Stars",
       excerpt: "How a single Markdown file built from Karpathy's observations became the most-starred repo in the Claude Code ecosystem – and what actually holds up in practice.",
+      date: "10 APR 2026",
+      read: "4 MIN"
+    },
+    zh: {
+      href: "blog/posts/zh/karpathy-claude-md.html",
+      title: "Karpathy 的 CLAUDE.md：把上下文当作一等公民",
+      excerpt: "Andrej Karpathy 如何用 CLAUDE.md 引导智能体编码——以及为何一份精心编写的上下文文件胜过更聪明的提示。",
       date: "10 APR 2026",
       read: "4 MIN"
     }
@@ -163,6 +219,13 @@ const POSTS = [
       excerpt: "A framework that teaches Claude Code reusable skills and orchestrates multi-step development workflows.",
       date: "25 MAR 2026",
       read: "3 MIN"
+    },
+    zh: {
+      href: "blog/posts/zh/ki-agenten-workflows-superpowers.html",
+      title: "用 Superpowers 打造 AI 智能体工作流",
+      excerpt: "Skills、计划与子智能体如何组合成可靠的自主工作流——以及让它们不至失控的模式。",
+      date: "25 MAR 2026",
+      read: "3 MIN"
     }
   },
   {
@@ -179,6 +242,13 @@ const POSTS = [
       href: "blog/posts/en/claude-code-skills.html",
       title: "Claude Code Skills: The MCP Killer?",
       excerpt: "How skills revolutionize the interaction with AI agents. Reusable capabilities that Claude learns and consistently applies.",
+      date: "15 MAR 2026",
+      read: "3 MIN"
+    },
+    zh: {
+      href: "blog/posts/zh/claude-code-skills.html",
+      title: "Claude Code Skills：Claude 学会新技能的方式",
+      excerpt: "Skills 让 Claude Code 按需加载领域知识与工作流。它们如何运作、何时使用，以及如何编写自己的技能。",
       date: "15 MAR 2026",
       read: "3 MIN"
     }
@@ -199,6 +269,13 @@ const POSTS = [
       excerpt: "How to teach Claude Code to control a real browser for web scraping, testing, and automation.",
       date: "05 MAR 2026",
       read: "3 MIN"
+    },
+    zh: {
+      href: "blog/posts/zh/playwright-mcp-browser-automatisierung.html",
+      title: "用 Playwright MCP 实现浏览器自动化",
+      excerpt: "通过 MCP 把 Playwright 交到智能体手中——让 AI 能像人一样导航、点击并读取真实网页。",
+      date: "05 MAR 2026",
+      read: "3 MIN"
     }
   },
   {
@@ -215,6 +292,13 @@ const POSTS = [
       href: "blog/posts/en/openclaw-vs-nemoclaw.html",
       title: "OpenClaw vs. NemoClaw: Why the Question Is Wrong",
       excerpt: "NemoClaw is not a replacement for OpenClaw, but a security wrapper for enterprise-ready AI agents. An analysis of the differences and use cases.",
+      date: "20 FEB 2026",
+      read: "4 MIN"
+    },
+    zh: {
+      href: "blog/posts/zh/openclaw-vs-nemoclaw.html",
+      title: "OpenClaw 对比 NemoClaw：两种智能体框架",
+      excerpt: "两种智能体编排方式，正面对比。架构、取舍，以及各自何时更合适。",
       date: "20 FEB 2026",
       read: "4 MIN"
     }
@@ -235,6 +319,13 @@ const POSTS = [
       excerpt: "With LLM-as-a-Judge, Crew-as-a-Judge, and human validation. A look behind the scenes of our systematic model selection.",
       date: "10 FEB 2026",
       read: "4 MIN"
+    },
+    zh: {
+      href: "blog/posts/zh/ki-modell-evaluation.html",
+      title: "如何真正评估 AI 模型",
+      excerpt: "基准分数会骗人。什么才真正重要、如何为你的用例搭建评估，以及为何\"感觉更好\"不是一种度量。",
+      date: "10 FEB 2026",
+      read: "4 MIN"
     }
   },
   {
@@ -251,6 +342,13 @@ const POSTS = [
       href: "blog/posts/en/legal-ai-knowledge-base-docling.html",
       title: "Legal AI Knowledge Base with 1000+ PDFs",
       excerpt: "How we transformed legal PDF documents with Docling into a searchable knowledge base for AI-powered legal consulting.",
+      date: "25 JAN 2026",
+      read: "4 MIN"
+    },
+    zh: {
+      href: "blog/posts/zh/legal-ai-knowledge-base-docling.html",
+      title: "用 Docling 为法律 AI 构建知识库",
+      excerpt: "把杂乱的法律 PDF 转化为可供 RAG 检索的干净结构化知识——用 Docling 完成解析、分块与嵌入。",
       date: "25 JAN 2026",
       read: "4 MIN"
     }
@@ -271,6 +369,13 @@ const POSTS = [
       excerpt: "How to orchestrate specialized AI agents that collaborate like a real team. A practical guide with code examples.",
       date: "15 JAN 2026",
       read: "4 MIN"
+    },
+    zh: {
+      href: "blog/posts/zh/multi-agent-ai-crewai.html",
+      title: "用 CrewAI 构建多智能体 AI 系统",
+      excerpt: "智能体、任务与流程——如何用 CrewAI 编排一支协作的 AI 智能体团队来完成真实工作。",
+      date: "15 JAN 2026",
+      read: "4 MIN"
     }
   },
   {
@@ -287,6 +392,13 @@ const POSTS = [
       href: "blog/posts/en/genetische-algorithmen-java.html",
       title: "Understanding Genetic Algorithms",
       excerpt: "Evolution as an optimization tool: How genetic algorithms solve complex problems. A practical introduction with Java.",
+      date: "20 DEC 2025",
+      read: "5 MIN"
+    },
+    zh: {
+      href: "blog/posts/zh/genetische-algorithmen-java.html",
+      title: "Java 中的遗传算法：从零进化出解",
+      excerpt: "选择、交叉、变异——用 Java 从头实现一个遗传算法，并看它如何逼近最优解。",
       date: "20 DEC 2025",
       read: "5 MIN"
     }
