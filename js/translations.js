@@ -115,9 +115,9 @@ const translations = {
     "bw.stats.4": "Self-Hosted möglich",
     "bw.clients.label": "Im Einsatz für Teams, die das Echte bauen",
     "bw.breach.kicker": "// AI SECURITY IN DER PRAXIS",
-    "bw.breach.title": "Ich breche Agenten, bevor Angreifer es tun.",
+    "bw.breach.title": "Ich knacke Agenten, bevor Angreifer es tun.",
     "bw.breach.intro":
-      "Ein gehärteter Agent, vergiftet in zwei Nachrichten — kein Jailbreak nötig. Das ist die Schwachstelle, die ich jage.",
+      "Ein gehärteter Agent, in zwei Nachrichten vergiftet — ganz ohne Jailbreak. Genau solche Schwachstellen suche ich.",
     "bw.breach.mockTitle": "agent-session // kompromittiert",
     "bw.breach.m1": "NACHRICHTEN GESENDET",
     "bw.breach.m2": "ABWEHR UMGANGEN",
