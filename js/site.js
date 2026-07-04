@@ -147,8 +147,8 @@ const POSTS = [
     },
     zh: {
       href: "blog/posts/zh/mit-ai-hallucinations.html",
-      title: "与 AI 幻觉共处：为何模型会编造，以及如何应对",
-      excerpt: "幻觉不是 bug，而是 LLM 工作方式的产物。它们从何而来、何时重要，以及在生产中遏制它们的实用模式。",
+      title: "MIT 解决了 AI 幻觉？",
+      excerpt: "剑桥的一项新研究，声称通过校准的奖励信号带来更可靠的模型。它究竟证明了什么——以及对今天的开发者意味着什么。",
       date: "30 APR 2026",
       read: "6 MIN"
     }
