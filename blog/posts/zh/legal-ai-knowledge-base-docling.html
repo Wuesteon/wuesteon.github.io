@@ -172,9 +172,9 @@
     <section class="art-hero" data-screen-label="Article">
         <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
         <div class="art-hero__in">
-            <a class="art-back" href="../../zh/">◄ ALL POSTS</a>
+            <a class="art-back" href="../../zh/">◄ 所有文章</a>
             <div><span class="art-cat">Docling</span></div>
-            <h1 class="art-title">From PDF Chaos to Precise Legal AI: How We Structured 1000+ Documents with Docling</h1>
+            <h1 class="art-title">从 PDF 混乱到精准的法律 AI：我们如何用 Docling 结构化 1000+ 份文档</h1>
             <div class="art-meta">
                 <span class="who"><span class="av">NW</span> Nils Weiser</span>
                 <span class="sep">•</span><span data-art-date>December 30, 2025</span>
@@ -186,69 +186,69 @@
 
     <!-- Article Content (Blackwall art-body) -->
     <article class="art-body">
-                <p class="lead">How we transformed legal study materials with Docling into a searchable knowledge base for our AI-powered legal advisory platform.</p>
+                <p class="lead">我们如何用 Docling 把法律学习资料转化为可检索的知识库，服务于我们那套 AI 驱动的法律咨询平台。</p>
 
                 <p>
-                    At <a href="https://erst-recht.com" target="_blank" rel="noopener noreferrer">Erst Recht</a>, we are building an AI-powered legal advisory platform for German law. One of our biggest challenges? Turning thousands of legal PDF documents into a searchable knowledge base that our AI agents can actually use.
+                    在 <a href="https://erst-recht.com" target="_blank" rel="noopener noreferrer">Erst Recht</a>，我们正在为德国法律打造一套 AI 驱动的法律咨询平台。我们最大的挑战之一？把成千上万份法律 PDF 文档转化为我们的 AI 智能体真正用得上的可检索知识库。
                 </p>
 
                 <p>
-                    The solution: <strong>Docling</strong>, an open-source document processing toolkit from IBM Research.
+                    解决方案：<strong>Docling</strong>，一款来自 IBM Research 的开源文档处理工具包。
                 </p>
 
-                <h2>The Challenge</h2>
+                <h2>挑战</h2>
                 <p>
-                    We had access to comprehensive legal study materials covering everything from labor law to inheritance law. These PDFs contained:
+                    我们拿到了一批全面的法律学习资料，涵盖从劳动法到继承法的方方面面。这些 PDF 包含：
                 </p>
                 <ul>
-                    <li><strong>Complex legal content</strong> with various document types</li>
-                    <li><strong>Different structures</strong> depending on the area of law</li>
-                    <li><strong>22 different areas of law</strong>, each with its own requirements</li>
+                    <li><strong>复杂的法律内容</strong>，夹杂着各种文档类型</li>
+                    <li><strong>不同的结构</strong>，取决于具体的法律领域</li>
+                    <li><strong>22 个不同的法律领域</strong>，每个都有各自的要求</li>
                 </ul>
 
                 <p>
-                    The problem: Anyone who has ever tried to extract text from a PDF knows the result. Headings end up in the middle of body text, tables turn into garbled characters, multi-column layouts are read line by line instead of column by column. You cannot simply dump this raw text into a vector database and expect good results. Structure is critical, and legal documents rely on connections that are lost with naive text extraction.
+                    问题在于：任何试过从 PDF 里提取文本的人都知道结果会是什么样。标题跑到正文中间，表格变成一堆乱码，多栏排版被逐行读取而不是逐栏读取。你没法简单地把这种原始文本一股脑塞进向量数据库还指望能有好结果。结构至关重要，而法律文档依赖的那些关联，在朴素的文本提取中会全部丢失。
                 </p>
 
-                <h2>Why Not Just Use OCR?</h2>
+                <h2>为什么不直接用 OCR？</h2>
                 <p>
-                    Our first instinct was to use traditional OCR (Optical Character Recognition). But we quickly realized that OCR solves the wrong problem:
+                    我们最初的直觉是用传统的 OCR（光学字符识别）。但我们很快意识到，OCR 解决的是错误的问题：
                 </p>
 
                 <table class="comparison-table">
                     <thead>
                         <tr>
-                            <th>Traditional OCR</th>
+                            <th>传统 OCR</th>
                             <th>Docling</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Converts images → text</td>
-                            <td>Converts documents → structured data</td>
+                            <td>把图像 → 转成文本</td>
+                            <td>把文档 → 转成结构化数据</td>
                         </tr>
                         <tr>
-                            <td>Loses document structure</td>
-                            <td>Preserves headings, lists, hierarchy</td>
+                            <td>丢失文档结构</td>
+                            <td>保留标题、列表、层级</td>
                         </tr>
                         <tr>
-                            <td>Treats every page as flat text</td>
-                            <td>Understands reading order</td>
+                            <td>把每一页都当作扁平文本</td>
+                            <td>理解阅读顺序</td>
                         </tr>
                         <tr>
-                            <td>Tables become garbled text</td>
-                            <td>Tables remain as tables</td>
+                            <td>表格变成乱码文本</td>
+                            <td>表格依然是表格</td>
                         </tr>
                     </tbody>
                 </table>
 
                 <p>
-                    Docling is not "just better OCR" but a document understanding pipeline. It outputs clean Markdown with the logical structure of the document.
+                    Docling 不是「更好用的 OCR」，而是一条文档理解流水线。它输出干净的 Markdown，并保留文档的逻辑结构。
                 </p>
 
-                <h2>Our Pipeline</h2>
+                <h2>我们的流水线</h2>
                 <p>
-                    Here is how we process a legal PDF:
+                    下面是我们处理一份法律 PDF 的方式：
                 </p>
 
                 <!-- Pipeline Diagram -->
@@ -331,14 +331,14 @@
                     </svg>
                 </div>
 
-                <h3>Step 1: Classification</h3>
+                <h3>第 1 步：分类</h3>
                 <p>
-                    Before processing, we classify each document by type and area of law.
+                    在处理之前，我们先按文档类型和法律领域对每份文档进行分类。
                 </p>
 
-                <h3>Step 2: Docling Conversion</h3>
+                <h3>第 2 步：Docling 转换</h3>
                 <p>
-                    Docling converts PDFs into structured Markdown. For our digital PDFs (which already have text layers), we disable OCR for speed:
+                    Docling 把 PDF 转换成结构化的 Markdown。对于我们那些数字版 PDF（本身已带文本层），我们关闭 OCR 以提升速度：
                 </p>
 
                 <pre><code><span class="code-keyword">from</span> docling.document_converter <span class="code-keyword">import</span> DocumentConverter
@@ -348,7 +348,7 @@ result = converter.<span class="code-function">convert</span>(<span class="code-
 markdown = result.document.<span class="code-function">export_to_markdown</span>()</code></pre>
 
                 <p>
-                    The output preserves headings, lists, and structure:
+                    输出结果保留了标题、列表和结构：
                 </p>
 
                 <pre><code><span class="code-comment">## Anspruchsgrundlagen</span>
@@ -361,86 +361,86 @@ markdown = result.document.<span class="code-function">export_to_markdown</span>
 - Deliktsrecht
 - Bereicherungsrecht</code></pre>
 
-                <h3>Step 3: Intelligent Processing</h3>
+                <h3>第 3 步：智能处理</h3>
                 <p>
-                    We developed domain-specific processing logic that understands legal document structures. The exact methodology is our secret sauce, but the result is clear: the AI does not just receive isolated text fragments but understands connections.
+                    我们开发了一套面向领域的处理逻辑，能够理解法律文档的结构。具体的方法论是我们的独门秘方，但结果很清楚：AI 拿到的不再是孤立的文本碎片，而是能理解其中的关联。
                 </p>
                 <p>
-                    The key point: Context makes the difference between "I found something" and "I understood the answer."
+                    关键在于：上下文决定了「我找到了点东西」和「我理解了答案」之间的差别。
                 </p>
 
-                <h3>Step 4: Embeddings & Vector Storage</h3>
+                <h3>第 4 步：嵌入与向量存储</h3>
                 <p>
-                    We generate embeddings with an LLM embedding model and store everything in a vector database, which enables filtered search:
+                    我们用一个 LLM 嵌入模型生成嵌入，并把所有内容存入向量数据库，从而实现带过滤的检索：
                 </p>
                 <ul>
-                    <li>Search only within specific areas of law</li>
-                    <li>Filter by document type and relevance</li>
-                    <li>Intelligently retrieve related content</li>
+                    <li>只在特定法律领域内检索</li>
+                    <li>按文档类型和相关性过滤</li>
+                    <li>智能地召回相关内容</li>
                 </ul>
 
-                <h2>The Results</h2>
+                <h2>成果</h2>
                 <p>
-                    We processed <strong>22 areas of law</strong> and over 1,000 PDF documents. But the numbers are not the decisive factor. The difference in response quality is.
+                    我们处理了 <strong>22 个法律领域</strong>、超过 1000 份 PDF 文档。但数字并不是决定性因素，回答质量的差别才是。
                 </p>
 
                 <p>
-                    <strong>Before:</strong> The AI delivered superficial results. It found relevant text passages, but without the necessary context. For complex legal questions, it drew incorrect conclusions because isolated information is not enough.
+                    <strong>之前：</strong>AI 给出的结果流于表面。它能找到相关的文本段落，却缺少必要的上下文。面对复杂的法律问题，它会得出错误的结论，因为孤立的信息远远不够。
                 </p>
 
                 <p>
-                    <strong>After:</strong> Through intelligent document processing, the AI now understands connections. The results are precise and reliable. This moved the product from "interesting prototype" to "production-ready."
+                    <strong>之后：</strong>借助智能的文档处理，AI 如今能够理解其中的关联。结果既精准又可靠。这让产品从「有意思的原型」跃升到「可投入生产」。
                 </p>
 
                 <p>
-                    Specifically, the system can now:
+                    具体来说，系统现在能够：
                 </p>
                 <ol>
-                    <li><strong>Find relevant precedents</strong> even for complex questions</li>
-                    <li><strong>Deliver complete answers</strong> with the necessary context for informed decisions</li>
-                    <li><strong>Search by area of law</strong> for maximum relevance</li>
+                    <li><strong>找到相关的判例</strong>，哪怕面对复杂的问题</li>
+                    <li><strong>给出完整的答案</strong>，附带作出明智决策所需的上下文</li>
+                    <li><strong>按法律领域检索</strong>，以获得最大的相关性</li>
                 </ol>
 
-                <h2>Key Learnings</h2>
+                <h2>关键收获</h2>
 
                 <blockquote>
-                    "Docling makes it possible to preserve the full structure of documents. This fundamentally improved our RAG quality."
+                    「Docling 让我们得以保留文档的完整结构。这从根本上改善了我们的 RAG 质量。」
                 </blockquote>
 
-                <h3>1. Structure > Raw Text</h3>
+                <h3>1. 结构 > 原始文本</h3>
                 <p>
-                    Preserving document structure made our RAG system significantly more accurate. Headings become natural chunk boundaries. Lists remain as lists.
+                    保留文档结构让我们的 RAG 系统精准了许多。标题成了天然的分块边界。列表依然是列表。
                 </p>
 
-                <h3>2. Context Beats Keyword Matching</h3>
+                <h3>2. 上下文胜过关键词匹配</h3>
                 <p>
-                    A match alone is useless. Only context makes it valuable. Our processing ensures that the AI does not just find, but also understands.
+                    单纯的匹配毫无用处。只有上下文才让它有价值。我们的处理确保 AI 不只是找到，而是真正理解。
                 </p>
 
-                <h3>3. Skip OCR When Possible</h3>
+                <h3>3. 能跳过 OCR 就跳过</h3>
                 <p>
-                    Our PDFs had text layers. Disabling OCR made processing 10x faster with no loss in quality.
+                    我们的 PDF 都带文本层。关闭 OCR 让处理速度快了 10 倍，且质量毫无损失。
                 </p>
 
-                <h3>4. Domain-Specific Post-Processing</h3>
+                <h3>4. 面向领域的后处理</h3>
                 <p>
-                    Docling produces clean Markdown. What comes next depends on the domain. For legal documents, we developed post-processing tailored to the specifics of legal argumentation. In other domains such as technical documentation, compliance, or contract management, different approaches would be relevant.
+                    Docling 产出干净的 Markdown。接下来该做什么，取决于具体领域。对于法律文档，我们开发了针对法律论证特点量身定制的后处理。在技术文档、合规或合同管理等其他领域，相关的做法会有所不同。
                 </p>
 
-                <h2>What Comes Next</h2>
+                <h2>接下来做什么</h2>
                 <p>
-                    We are continuously working on improving our pipeline. Our focus: advanced chunking strategies and opening up additional document types such as court decisions and statutory texts.
-                </p>
-
-                <hr style="border-color: #374151; margin: 2rem 0;">
-
-                <p>
-                    <em><a href="https://erst-recht.com" target="_blank" rel="noopener noreferrer">Erst Recht</a> uses AI to make legal advice accessible. Our multi-agent system analyzes your legal situation and provides actionable recommendations.</em>
+                    我们在持续改进这条流水线。当前的重点是：更先进的分块策略，以及打通判决书、法条原文等更多文档类型。
                 </p>
 
                 <hr style="border-color: #374151; margin: 2rem 0;">
 
-                <p><strong>Tools Used:</strong></p>
+                <p>
+                    <em><a href="https://erst-recht.com" target="_blank" rel="noopener noreferrer">Erst Recht</a> 用 AI 让法律咨询触手可及。我们的多智能体系统会分析你的法律处境，并给出可落地的建议。</em>
+                </p>
+
+                <hr style="border-color: #374151; margin: 2rem 0;">
+
+                <p><strong>所用工具：</strong></p>
                 <div style="margin: 1rem 0;">
                     <a href="https://github.com/docling-project/docling" target="_blank" rel="noopener noreferrer" class="tool-badge">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
@@ -449,35 +449,35 @@ markdown = result.document.<span class="code-function">export_to_markdown</span>
                 </div>
 
                 <p>
-                    Working on a similar problem? Preparing large document collections for RAG? <a href="../../../index.html#contact">Get in touch</a>, I am happy to help with architecture or implementation.
+                    在处理类似的问题？正在为 RAG 准备大批文档？<a href="../../../index.html#contact">联系我</a>，我很乐意在架构或实现上帮上忙。
                 </p>
 
     </article>
 
     <!-- Author share + related posts -->
     <div class="art-share">
-      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
-      <a href="../../../index.html#contact" class="btn btn--pri">WORK WITH ME ▸</a>
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI 智能体专家 · 博登湖地区</span></div></div>
+      <a href="../../../index.html#contact" class="btn btn--pri">与我合作 ▸</a>
     </div>
     <section class="art-more">
       <div class="wrap">
-        <div class="art-more__head"><h2>More field notes</h2><a href="../../zh/">ALL POSTS ▸</a></div>
+        <div class="art-more__head"><h2>更多现场笔记</h2><a href="../../zh/">所有文章 ▸</a></div>
         <div class="art-more__grid" id="art-more-grid"></div>
       </div>
     </section>
 
     <!-- Related posts (internal cross-links for crawl equity) -->
     <nav class="related-posts" aria-label="Related posts">
-        <p class="related-posts__heading">// Related posts</p>
+        <p class="related-posts__heading">// 相关文章</p>
         <div class="related-posts__grid">
                 <a class="related-posts__card" href="ki-modell-evaluation.html">
-                    <span class="related-posts__card-title">How We Found the Best AI Model for Legal Analysis</span>
+                    <span class="related-posts__card-title">我们如何找到最适合法律分析的 AI 模型</span>
                 </a>
                 <a class="related-posts__card" href="multi-agent-ai-crewai.html">
-                    <span class="related-posts__card-title">Multi-Agent AI Systems with CrewAI: Teams Instead of Solo Players</span>
+                    <span class="related-posts__card-title">用 CrewAI 打造多智能体 AI 系统：团队协作而非单打独斗</span>
                 </a>
                 <a class="related-posts__card" href="ki-agenten-workflows-superpowers.html">
-                    <span class="related-posts__card-title">Superpowers: How AI Agents Learn to Work Like Real Teams</span>
+                    <span class="related-posts__card-title">Superpowers：AI 智能体如何学会像真正的团队一样协作</span>
                 </a>
         </div>
     </nav>
