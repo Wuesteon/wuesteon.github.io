@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anthropic 关于 Claude Skills 的 33 页蓝图</title>
+    <meta name="description" content="一份官方指南，展示如何在不写一行代码的情况下教会 Claude 如何工作。里面真正讲了什么，以及为何 Skills 正在悄然取代提示工程。">
+    <link rel="canonical" href="https://waiser.dev/blog/posts/zh/anthropic-skills-guide.html">
+    <link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/anthropic-skills-guide.html">
+    <link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/anthropic-skills-guide.html">
+    <link rel="alternate" hreflang="zh" href="https://waiser.dev/blog/posts/zh/anthropic-skills-guide.html">
+    <link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/anthropic-skills-guide.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Anthropic 关于 Claude Skills 的 33 页蓝图">
+    <meta property="og:description" content="一份官方指南，展示如何在不写一行代码的情况下教会 Claude 如何工作。里面真正讲了什么，以及为何 Skills 正在悄然取代提示工程。">
+    <meta property="og:url" content="https://waiser.dev/blog/posts/zh/anthropic-skills-guide.html">
+    <meta property="og:image" content="https://waiser.dev/og-default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Anthropic 关于 Claude Skills 的 33 页蓝图">
+    <meta name="twitter:description" content="一份官方指南，展示如何在不写一行代码的情况下教会 Claude 如何工作。里面真正讲了什么，以及为何 Skills 正在悄然取代提示工程。">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Anthropic 关于 Claude Skills 的 33 页蓝图",
+      "description": "一份官方指南，展示如何在不写一行代码的情况下教会 Claude 如何工作。里面真正讲了什么，以及为何 Skills 正在悄然取代提示工程。",
+      "datePublished": "2026-05-15",
+      "author": {
+        "@type": "Person",
+        "name": "Nils Weiser",
+        "@id": "https://waiser.dev/#person"
+      },
+      "image": "https://waiser.dev/og-default.png",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://waiser.dev/blog/posts/zh/anthropic-skills-guide.html"
+      },
+      "inLanguage": "zh",
+      "@id": "https://waiser.dev/blog/posts/zh/anthropic-skills-guide.html#article",
+      "publisher": {
+        "@id": "https://waiser.dev/#person"
+      },
+      "dateModified": "2026-05-15"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://waiser.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://waiser.dev/blog/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Anthropic 关于 Claude Skills 的 33 页蓝图",
+          "item": "https://waiser.dev/blog/posts/zh/anthropic-skills-guide.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+
+    <!-- TODO: replace with prebuilt static tailwind.css before scaling traffic; see CLAUDE.md -->
+    <link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+    <meta name="theme-color" content="#050507">
+    <link rel="preload" href="/fonts/ChakraPetch-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Blackwall: local tailwind utilities kept (posts rely on them), then Blackwall tokens + bridge -->
+    <link rel="stylesheet" href="../../../css/tailwind.css">
+    <link rel="stylesheet" href="../../../css/tokens.css">
+    <link rel="stylesheet" href="../../../css/blackwall.css">
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/blog-post.css">
+    <style>
+        .principle-card {
+            background: linear-gradient(135deg, rgba(255, 42, 60, 0.05) 0%, rgba(34, 197, 94, 0.05) 100%);
+            border: 1px solid rgba(255, 42, 60, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .principle-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .principle-number {
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 42, 60, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            color: #ff2a3c;
+            font-weight: 600;
+        }
+        .comparison-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        @media (max-width: 768px) {
+            .comparison-box {
+                grid-template-columns: 1fr;
+            }
+        }
+        .comparison-item {
+            background: rgba(255, 42, 60, 0.05);
+            border: 1px solid rgba(255, 42, 60, 0.2);
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+        .comparison-item h4 {
+            color: #ff2a3c;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+        .tool-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(255, 42, 60, 0.1);
+            border: 1px solid rgba(255, 42, 60, 0.3);
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #ff2a3c;
+            margin: 0.25rem;
+        }
+        pre.code-block {
+            background: #0b1220;
+            border: 1px solid rgba(255, 42, 60, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: #d1d5db;
+            margin: 1.25rem 0;
+        }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header (Blackwall art-hero) -->
+    <section class="art-hero" data-screen-label="Article">
+        <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
+        <div class="art-hero__in">
+            <a class="art-back" href="../../zh/">◄ 所有文章</a>
+            <div><span class="art-cat">Claude</span></div>
+            <h1 class="art-title">Anthropic 关于 Claude Skills 的 33 页蓝图</h1>
+            <div class="art-meta">
+                <span class="who"><span class="av">NW</span> Nils Weiser</span>
+                <span class="sep">•</span><span data-art-date>May 15, 2026</span>
+                <span class="sep">•</span><span data-art-read>—</span>
+            </div>
+        </div>
+    </section>
+    <div class="art-hr"><div></div></div>
+
+    <!-- Article Content (Blackwall art-body) -->
+    <article class="art-body">
+                <p class="lead">一份官方指南，展示如何在不写一行代码的情况下，教会 Claude 按你的方式工作。它里面究竟讲了什么，以及为什么 Skills 正在悄悄让"提示工程"这个词退场。</p>
+
+                <p>
+                    Anthropic 发布了一份 33 页的文档，标题是 <em>《The Complete Guide to Building Skills for Claude》</em>（《构建 Claude Skills 的完整指南》）。初读，它像是技术文档。再读，它其实是一份宣言：专业人士与 Claude 协作的方式，正在从"找一个更聪明的提示"转向"把可复用的工作流当作代码产物来做版本管理"。
+                </p>
+
+                <p>
+                    Skills 不是一个新模型。它就是一个文件夹。更准确地说：一个文件夹，里面有一个必需的文件——<code>SKILL.md</code>——以及一小段 YAML 头部，告诉 Claude <em>何时</em>激活这个技能。核心就是这些。而这种简洁，正是它的关键所在。
+                </p>
+
+                <h2>技能是什么——精简到最小</h2>
+
+                <p>一个技能就是一个具有如下结构的目录：</p>
+
+                <pre class="code-block">your-skill-name/
+├── SKILL.md          # Required: Markdown with YAML frontmatter
+├── scripts/          # Optional: executable code
+├── references/       # Optional: additional docs loaded as needed
+└── assets/           # Optional: templates, fonts, icons</pre>
+
+                <p>
+                    <code>SKILL.md</code> 以一段 YAML 块开头，其中有两个必填字段：<code>name</code> 和 <code>description</code>。<code>description</code> 是整个技能里最重要的字段，因为它决定了 Claude 到底会不会加载这个技能。
+                </p>
+
+                <pre class="code-block">---
+name: contract-risk-review
+description: Reviews B2B contracts for typical liability,
+  termination, and IP-assignment clauses. Use when the
+  user says "contract review", "risk check", "AGB review",
+  or uploads .pdf/.docx contracts.
+---</pre>
+
+                <h2>真正精妙的部分叫做"渐进式披露"</h2>
+
+                <p>
+                    真正的创新不在于格式——而在于 Claude 如何加载这些内容。Anthropic 把它称为<em>渐进式披露（progressive disclosure）</em>：分三个层级，只有当前需要的那一层才会被加载。
+                </p>
+
+                <div class="principle-card">
+                    <div class="principle-header">
+                        <div class="principle-number">1</div>
+                        <span class="text-white font-semibold">YAML frontmatter</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        始终在系统提示里。每个技能只占几行。刚好足够让 Claude 判断这个技能是否相关——而无需加载其余内容。
+                    </p>
+                </div>
+
+                <div class="principle-card">
+                    <div class="principle-header">
+                        <div class="principle-number">2</div>
+                        <span class="text-white font-semibold">SKILL.md 正文</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        只有当 Claude 判断该技能与当前任务匹配时才会加载。包含真正的指令、示例和错误场景。
+                    </p>
+                </div>
+
+                <div class="principle-card">
+                    <div class="principle-header">
+                        <div class="principle-number">3</div>
+                        <span class="text-white font-semibold">链接文件</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        参考资料、脚本、模板。只有当技能真正需要时才会被拉进来。一个技能可以携带数百页文档，而其中没有一个 token 会触及默认上下文。
+                    </p>
+                </div>
+
+                <p>
+                    实际后果是：你可以同时启用十个甚至二十个技能，而不会撑爆你的上下文。你只为 Claude 真正为手头任务拉进来的那部分内容付出 token。
+                </p>
+
+                <h2>Skills 不是 MCP——这是整份指南里最重要的区分</h2>
+
+                <p>
+                    Anthropic 用了一个很到位的厨房比喻：
+                </p>
+
+                <div class="comparison-box">
+                    <div class="comparison-item">
+                        <h4>MCP</h4>
+                        <ul class="text-gray-400 text-sm space-y-2">
+                            <li>• 提供工具</li>
+                            <li>• 把 Claude 连接到各种服务（Linear、Notion、Stripe……）</li>
+                            <li>• 提供实时数据和 API 访问</li>
+                            <li>• 回答：<em>Claude 能做什么？</em></li>
+                        </ul>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>Skill</h4>
+                        <ul class="text-gray-400 text-sm space-y-2">
+                            <li>• 提供菜谱</li>
+                            <li>• 一步一步描述工作流</li>
+                            <li>• 嵌入领域知识和最佳实践</li>
+                            <li>• 回答：<em>Claude 该怎么做？</em></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p>
+                    有 MCP 却没有技能，意味着用户手握 30 个工具，却在每隔一句提示时就搞不清该按什么顺序把它们组合起来。而有 MCP <em>又有</em>技能，意味着用户只描述想要的结果，技能就会按正确的顺序编排出正确的 MCP 调用——而且每次都一样。
+                </p>
+
+                <h2>三大类别，几乎涵盖一切</h2>
+
+                <p>
+                    指南把富有成效的技能用例归为三类，这三类在实践中都相当站得住脚：
+                </p>
+
+                <ol>
+                    <li>
+                        <strong>文档与素材创建。</strong> 那些按固定标准产出一致结果的技能——符合企业设计规范的演示文稿、遵循风格指南的代码、对照模板撰写的技术报告。指南里的例子：<code>frontend-design</code> 技能，它能明显提升 Claude 的设计输出。
+                    </li>
+                    <li>
+                        <strong>工作流自动化。</strong> 带有明确验证关卡的多步流程。冲刺规划、客户上手、基于 schema 的代码审查。当顺序很重要、各步骤彼此依赖时，这套工作流就该放进一个技能里。
+                    </li>
+                    <li>
+                        <strong>MCP 增强。</strong> 那些叠加在已有 MCP 集成之上、充当知识层的技能。Sentry 就公开做过这件事：一个 <code>sentry-code-review</code> 技能，按正确顺序调用 Sentry MCP 服务器的工具，在拉取请求里根据生产数据自动修复 bug。
+                    </li>
+                </ol>
+
+                <h2>description 字段是整个技能里最重要的一句话</h2>
+
+                <p>
+                    Anthropic 用了好几页篇幅来讲 <code>description</code> 字段——这是有充分理由的。就是这一行，决定了 Claude 会不会为某个特定的用户请求考虑这个技能。规则很简单：<strong>技能做什么</strong> + <strong>何时触发它</strong>。
+                </p>
+
+                <div class="comparison-box">
+                    <div class="comparison-item">
+                        <h4>糟糕</h4>
+                        <pre class="code-block" style="margin: 0;">description: Helps with projects.</pre>
+                        <p class="text-gray-400 text-sm mt-2">太笼统。没有触发条件。Claude 没有任何信号知道何时该加载。</p>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>优秀</h4>
+                        <pre class="code-block" style="margin: 0;">description: End-to-end onboarding
+flow for PayFlow customers including
+account creation and subscription setup.
+Use when the user says "onboard new
+customer", "create PayFlow account",
+or "set up subscription".</pre>
+                        <p class="text-gray-400 text-sm mt-2">具体。聚焦结果。有真实的触发短语。</p>
+                    </div>
+                </div>
+
+                <h2>技能正文里真正重要的是什么</h2>
+
+                <p>
+                    这份指南采取了一种令人耳目一新的务实态度：要具体，要可检验，能自动化的就交给代码去检查。
+                </p>
+
+                <p>
+                    与其写"仔细校验输入"——这句话每个模型的理解都不一样——不如写："运行 <code>python scripts/validate.py --input {filename}</code>。出错时检查：缺失的必填字段、日期格式 YYYY-MM-DD"。脚本是确定的，语言不是。凡是正确性至关重要的地方，脚本更胜一筹。
+                </p>
+
+                <p>
+                    Anthropic 建议正文采用一个简单的结构：把工作流步骤写成编号列表，为最常见的场景配上示例，再加一个针对那两三个真正反复出现的错误的排错小节。很少需要更多。
+                </p>
+
+                <h2>没有测试框架，也能测试</h2>
+
+                <p>
+                    这份指南提出了三层测试——全都无需复杂的基础设施就能做到：
+                </p>
+
+                <ol>
+                    <li><strong>触发测试。</strong> 二十个真实的查询，检查技能什么时候会加载、什么时候不会。加入一些边缘情况（"旧金山的天气怎么样"），确保它不会到处乱触发。</li>
+                    <li><strong>功能测试。</strong> 跑一遍工作流，检查输出。工单创建出来了吗？属性对不对？有没有哪个 API 调用失败？</li>
+                    <li><strong>前后对比。</strong> 同一个任务，有技能和没技能各做一遍。要多少轮澄清？花多少 token？重试几次？价值就体现在这里。</li>
+                </ol>
+
+                <p>
+                    Anthropic 为这套循环专门提供了一个 <code>skill-creator</code> 技能——一个元技能，带着你走完定义、YAML、示例和验证的全过程。如果你有一个 MCP 服务器，又清楚自己那两三个最主要的工作流，你可以在 15 到 30 分钟内做出一个能用的技能。
+                </p>
+
+                <h2>技能在实践中改变了什么</h2>
+
+                <p>
+                    没有技能时，一个熟悉的模式会反复上演：每次冲刺，每个团队成员都要重新向 Claude 解释一遍冲刺规划流程。来回十五条消息。同事之间产出不一致。还有一堆"我到底该怎么正确使用你们的连接器"这类支持工单。
+                </p>
+
+                <p>
+                    有了技能，知识被存放的位置就发生了转移。它不再只装在个别高级用户的脑子里，而是存在仓库里——有版本、可评审、可在全团队范围内启用。Anthropic 在 2025 年 12 月推出了组织级的技能部署。管理员可以把技能下发到整个工作区。更新会集中落地。新成员上手不再意味着"去读一读我们的提示词"，而是"启用这个技能包"。
+                </p>
+
+                <h2>技能到哪里为止——CLAUDE.md 从哪里接手</h2>
+
+                <p>
+                    技能并不是万能工具。通用的行为准则——"拿不准就先问"、"别覆盖你还没读懂的代码"、"要贴合仓库的风格"——仍然属于 <a href="karpathy-claude-md.html">CLAUDE.md</a>，因为它们适用于每一项任务，而不只是某些特定工作流。
+                </p>
+
+                <p>
+                    我目前在项目里采用的清晰分工是：<strong>CLAUDE.md</strong> 负责纪律和风格。<strong>Skills</strong> 负责具体、反复出现的工作流。<strong>MCP</strong> 负责工具访问。三层互不重叠，却共同构成了指南所说的"编码后的工作流（encoded workflows）"。
+                </p>
+
+                <h2>更大的图景</h2>
+
+                <p>
+                    这份指南不只是文档。它标记着一个已经显现了几个月的转变。"聪明提示"的时代正在收尾。"编码后的工作流"的时代正在开启。任何每天都用 Claude、却还没做过哪怕一个技能的人，相比之下都还在手工作业——每次对话都从零开始，每个结果都取决于当天的提示心情。
+                </p>
+
+                <p>
+                    技能用一个简单到近乎令人尴尬的想法解决了这个问题：一个文件夹，里面放一个 Markdown 文件。但正是这种平凡，恰恰是这个概念会站稳脚跟的原因。它不需要新的技术栈，不需要框架，不需要专门的 SDK。一个文本编辑器加上一个小时，就足以做出第一个有产出的技能。从第二个技能开始，这种改变就变得显而易见了。
+                </p>
+
+                <hr style="border-color: #374151; margin: 2rem 0;">
+
+                <p><strong>来源：</strong></p>
+                <div style="margin: 1rem 0;">
+                    <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        Anthropic Engineering Blog
+                    </a>
+                    <a href="https://github.com/anthropics/skills" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        anthropics/skills
+                    </a>
+                    <a href="https://agentskills.io/home" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        agentskills.io
+                    </a>
+                </div>
+
+                <p>
+                    在琢磨技能能在哪里给你的团队带来最大的杠杆——上手流程、代码审查，还是某个多步骤的合规工作流？<a href="../../../index.html#contact">我们聊聊</a>。我帮忙搭建那些能在真实项目里跑起来、而不只是在演示里好看的技能库。
+                </p>
+
+    </article>
+
+    <!-- Author share + related posts -->
+    <div class="art-share">
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI 智能体专家 · 博登湖地区</span></div></div>
+      <a href="../../../index.html#contact" class="btn btn--pri">与我合作 ▸</a>
+    </div>
+    <section class="art-more">
+      <div class="wrap">
+        <div class="art-more__head"><h2>更多现场笔记</h2><a href="../../zh/">所有文章 ▸</a></div>
+        <div class="art-more__grid" id="art-more-grid"></div>
+      </div>
+    </section>
+
+    <!-- Related posts (internal cross-links for crawl equity) -->
+    <nav class="related-posts" aria-label="Related posts">
+        <p class="related-posts__heading">// 相关文章</p>
+        <div class="related-posts__grid">
+                <a class="related-posts__card" href="claude-code-skills.html">
+                    <span class="related-posts__card-title">Claude Code Skills：MCP 终结者？</span>
+                </a>
+                <a class="related-posts__card" href="ki-agenten-workflows-superpowers.html">
+                    <span class="related-posts__card-title">Superpowers：AI 智能体如何学会像真正的团队那样协作</span>
+                </a>
+                <a class="related-posts__card" href="karpathy-claude-md.html">
+                    <span class="related-posts__card-title">一份收获 25,000 星标的 CLAUDE.md</span>
+                </a>
+        </div>
+    </nav>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script defer src="../../../js/components.js"></script>
+    <script defer src="../../../js/translations.js"></script>
+    <script defer src="../../../js/main.js"></script>
+    <script defer src="../../../js/site.js"></script>
+</body>
+</html>

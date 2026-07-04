@@ -25,10 +25,12 @@ function getHeader(basePath = '', activePage = '', useAnchorLinks = false) {
             <a href="${blogLink}" class="${blogOn}" data-i18n="nav.blog">Blog</a>
             <a href="${contactLink}" data-i18n="nav.contact">Contact</a>
             <a href="${scanLink}" class="btn btn--pri nav-cta" style="padding:10px 18px" data-i18n="nav.cta">Scan my site</a>
-            <button id="lang-toggle" class="lang-toggle" aria-label="Toggle language" style="margin-left:6px">
-                <span id="lang-de" class="active">DE</span>
+            <button id="lang-toggle" class="lang-toggle" aria-label="Select language" style="margin-left:6px">
+                <span id="lang-de" class="active" data-lang="de">DE</span>
                 <span style="color:var(--mut)">|</span>
-                <span id="lang-en">EN</span>
+                <span id="lang-en" data-lang="en">EN</span>
+                <span style="color:var(--mut)">|</span>
+                <span id="lang-zh" data-lang="zh">中文</span>
             </button>
         </div>
     </nav>`;

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>环境 AI：为何下一代 AI 不是回答，而是察觉</title>
+    <meta name="description" content="只要我们还按次为 AI 付费，就只能造出它的一种形态。更有意思的是那个会自己发现异常的门房——而 2026 年正是它在经济上变得可行的一年。">
+    <link rel="canonical" href="https://waiser.dev/blog/posts/zh/ambient-ai-the-next-ai-generation.html">
+    <link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/ambient-ai-die-naechste-ki-generation.html">
+    <link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/ambient-ai-the-next-ai-generation.html">
+    <link rel="alternate" hreflang="zh" href="https://waiser.dev/blog/posts/zh/ambient-ai-the-next-ai-generation.html">
+    <link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/ambient-ai-die-naechste-ki-generation.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="环境 AI：为何下一代 AI 不是回答，而是察觉">
+    <meta property="og:description" content="只要我们还按次为 AI 付费，就只能造出它的一种形态。更有意思的是那个会自己发现异常的门房——而 2026 年正是它在经济上变得可行的一年。">
+    <meta property="og:url" content="https://waiser.dev/blog/posts/zh/ambient-ai-the-next-ai-generation.html">
+    <meta property="og:image" content="https://waiser.dev/og-default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="环境 AI：为何下一代 AI 不是回答，而是察觉">
+    <meta name="twitter:description" content="只要我们还按次为 AI 付费，就只能造出它的一种形态。更有意思的是那个会自己发现异常的门房——而 2026 年正是它在经济上变得可行的一年。">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "环境 AI：为何下一代 AI 不是回答，而是察觉",
+      "description": "只要我们还按次为 AI 付费，就只能造出它的一种形态。更有意思的是那个会自己发现异常的门房——而 2026 年正是它在经济上变得可行的一年。",
+      "datePublished": "2026-05-21",
+      "author": {
+        "@type": "Person",
+        "name": "Nils Weiser",
+        "@id": "https://waiser.dev/#person"
+      },
+      "image": "https://waiser.dev/og-default.png",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://waiser.dev/blog/posts/zh/ambient-ai-the-next-ai-generation.html"
+      },
+      "inLanguage": "zh",
+      "@id": "https://waiser.dev/blog/posts/zh/ambient-ai-the-next-ai-generation.html#article",
+      "publisher": {
+        "@id": "https://waiser.dev/#person"
+      },
+      "dateModified": "2026-05-21"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://waiser.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://waiser.dev/blog/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "环境 AI：为何下一代 AI 不是回答，而是察觉",
+          "item": "https://waiser.dev/blog/posts/zh/ambient-ai-the-next-ai-generation.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+
+    <!-- TODO: replace with prebuilt static tailwind.css before scaling traffic; see CLAUDE.md -->
+    <link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+    <meta name="theme-color" content="#050507">
+    <link rel="preload" href="/fonts/ChakraPetch-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Blackwall: local tailwind utilities kept (posts rely on them), then Blackwall tokens + bridge -->
+    <link rel="stylesheet" href="../../../css/tailwind.css">
+    <link rel="stylesheet" href="../../../css/tokens.css">
+    <link rel="stylesheet" href="../../../css/blackwall.css">
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/blog-post.css">
+    <style>
+        .pullquote {
+            background: linear-gradient(135deg, rgba(255, 42, 60, 0.06) 0%, rgba(34, 197, 94, 0.06) 100%);
+            border-left: 3px solid #ff2a3c;
+            border-radius: 8px;
+            padding: 1.25rem 1.5rem;
+            margin: 1.75rem 0;
+            font-style: italic;
+            color: #d1d5db;
+        }
+        .principle-card {
+            background: linear-gradient(135deg, rgba(255, 42, 60, 0.05) 0%, rgba(34, 197, 94, 0.05) 100%);
+            border: 1px solid rgba(255, 42, 60, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .principle-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        .principle-number {
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 42, 60, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            color: #ff2a3c;
+            font-weight: 600;
+        }
+        .tool-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(255, 42, 60, 0.1);
+            border: 1px solid rgba(255, 42, 60, 0.3);
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #ff2a3c;
+            margin: 0.25rem;
+        }
+        pre.code-block {
+            background: #0b1220;
+            border: 1px solid rgba(255, 42, 60, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: #d1d5db;
+            margin: 1.25rem 0;
+        }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header (Blackwall art-hero) -->
+    <section class="art-hero" data-screen-label="Article">
+        <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
+        <div class="art-hero__in">
+            <a class="art-back" href="../../zh/">◄ 所有文章</a>
+            <div><span class="art-cat">Ambient AI</span></div>
+            <h1 class="art-title">环境 AI：为什么下一代 AI 不回答，而是留意</h1>
+            <div class="art-meta">
+                <span class="who"><span class="av">NW</span> Nils Weiser</span>
+                <span class="sep">•</span><span data-art-date>May 21, 2026</span>
+                <span class="sep">•</span><span data-art-read>—</span>
+            </div>
+        </div>
+    </section>
+    <div class="art-hr"><div></div></div>
+
+    <!-- Article Content (Blackwall art-body) -->
+    <article class="art-body">
+                <p class="lead">只要我们还按请求为 AI 付费，就只会造出它的一种形态：对投币做出反应的自动售货机。而真正有意思的形态，是那个会自己留意到哪里不对劲的看门人。当算力的计费单位翻转时，会发生什么变化。</p>
+
+                <div class="pullquote">
+                    今天的 AI 是一台自动售货机：你投进一枚硬币（提示词），拿到一杯咖啡（回应）。按杯计费。下一代则是一个看门人：他四处巡视、逐项检查，只有在发现哪里不对劲时才开口。按 token 计费的经济模式无法表达第二种形态——而这恰恰是今天几乎没人去做它的原因。
+                </div>
+
+                <p>
+                    有十一天，一个语言模型一直运行在一台配了单块 NVIDIA L4 GPU 的 GCP 虚拟机上——它当下并不做任何我临时吩咐的事。06:00 UTC，它抓取三家竞争对手；07:00 UTC，它用我们的品牌语气写一篇博客草稿；每周两次，它把我的产品组合聚成主题世界并发布出去。晚上，它给我发一份 Telegram 报告。它每月花费 <strong>约 €220–255</strong>——一笔可预测的固定费用，而不是一个 token 计数器。它让我意识到，过去两年我一直在构建错误的那一类 AI。
+                </p>
+
+                <p>
+                    这篇文章想为正确的那一类命名——并解释为什么 2026 年正是它变得划算的一年。
+                </p>
+
+                <h2>看不见的束身衣</h2>
+
+                <p>
+                    每一个认真用过 OpenAI API 的开发者都熟悉这个瞬间：你想到一个能<em>持续</em>做点什么的智能体——每五分钟查看几条日志，每小时过一遍几个信息源，简单判断一封进来的邮件是否要紧。你在草稿纸上算了算每天的 token 成本，然后得出结论：<em>在经济上不划算</em>。这个智能体从来没被造出来。这个用例烟消云散。它不会出现在任何统计里，因为它从未存在过。
+                </p>
+
+                <p>
+                    这是按 token 计费的经济模式最隐蔽、也最重要的后果：不是我们造出来的东西太贵——而是一整类东西<strong>从一开始就压根没被想到</strong>。我们把这层心理过滤器内化得太深，以至于「常开」（Always-On）架构根本不会在我们脑中冒出来。
+                </p>
+
+                <p>
+                    具体来说，用 GPT-4o 的标价（输入 $2.50/1M，输出 $10/1M）、外加一个每次调用 500 输入 + 100 输出 token 的观察器来算：
+                </p>
+
+                <pre class="code-block">Per call:      500 × $2.50/1M + 100 × $10/1M  =  $0.00225  (~0.2 ¢)
+Per hour:      1,000 calls × $0.00225          =  $2.25
+Per month:     720,000 calls × $0.00225        =  $1,620   ≈ €1,380
+
+Five watchers: 5 × €1,380                      ≈ €6,900 / month</pre>
+
+                <p>
+                    <strong>每个观察器将近 €1,400，五个组件约 €7,000</strong>——而这还是在智能体产出任何有用东西之前。每个开发者都会在脑子里把这笔账算一遍，看到这个数字，然后用例就地夭折。
+                </p>
+
+                <p>
+                    做些工程优化，这个数字会降下来。批处理（每次调用 100 条而不是一条）、提示词缓存（固定前缀便宜 90%）、一个能过滤掉 95% 无关内容的前置筛选器、用 GPT-4o-<em>mini</em> 而不是 4o——同一个观察器现在落在 <strong>€30–80/月</strong>，五个组件 <strong>€200–500</strong>。已经能和你自己的 GPU 一较高下。但你为此花了一周做优化，得到的是一条横跨三个模型加一层缓存的脆弱流水线，而且每个新点子都得先在 token 预算面前为自己辩护。
+                </p>
+
+                <p>
+                    这才是真正的关键：不在于绝对价格。关键在于成本这个问题<strong>彻底消失了</strong>。有了固定费用，没人会在加一个新 cron 任务之前问「这值得吗？」——就像没人会在加一条新的 <code>cron</code> 条目或者再挂一个 Prometheus 采集目标之前发问一样。那种心理上的无摩擦感才是真正的资产，而不是利润率。
+                </p>
+
+                <p>
+                    这种自我审查是个新东西。在经典软件里我们没有它。没人会问自己每五分钟跑一个 cron 任务去检查磁盘用量「值不值」。cron 任务是免费的。免费到整整一代基础设施工具都建立在这样一个前提之上：<em>持续观察</em>不花钱。Prometheus、Datadog、Sentry，过去 15 年里的每一条日志流水线。想象一下，如果每次 Prometheus 采集都要花 €0.003，那就根本不会有监控这回事。
+                </p>
+
+                <p>
+                    这正是今天 AI 所处的状态。
+                </p>
+
+                <h2>只有在「常开」下才成立的三类产品</h2>
+
+                <p>
+                    只有当 AI 以固定费用、而不是按请求运行时，以下三类应用才在经济上、也在心理上变得可行：
+                </p>
+
+                <div class="principle-card">
+                    <div class="principle-header">
+                        <div class="principle-number">1</div>
+                        <span class="text-white font-semibold">观察器（Watchers）</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        持续观察外部信息源、只有在特定事件发生时才做出反应的智能体。一个盯着竞争对手价格变动的观察器。一个盯着小众市场监管更新的观察器。一个盯着出现某种特定语气的评价的观察器。今天人们用关键词过滤和正则来做这些事，因为每次检查都做语义理解太贵了。一旦理解变得免费，观察器就会比它所通知的那个人更聪明。
+                    </p>
+                </div>
+
+                <div class="principle-card">
+                    <div class="principle-header">
+                        <div class="principle-number">2</div>
+                        <span class="text-white font-semibold">漂移检测器（Drift Detectors）</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        盯着你自己的数据，当某些东西发生了无法由代码改动解释的变化时就发出提示。一个每晚随机读 100 段客户对话、并在投诉模式发生位移时报告的智能体。一个每周走查你自己网站上的 SEO 文案、指出哪些说法已不再属实的智能体。一个盯着你代码库、在架构假设被逐渐侵蚀时发出提示的智能体。按 token 算贵得离谱，但效果是颠覆性的——因为它能在问题变成工单之前就把它找出来。
+                    </p>
+                </div>
+
+                <div class="principle-card">
+                    <div class="principle-header">
+                        <div class="principle-number">3</div>
+                        <span class="text-white font-semibold">自主流水线（Autonomous Pipelines）</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">
+                        最激进的形态：在产品中你能接受容错的那一部分，让智能体无需人工审批就直接干活。我自己的机器人就是这么做的。每周两次，它把产品组合归成主题世界，生成描述、元数据、标签，挑一张主图，然后直接发布到生产数据库。状态：<code>live</code>。没有人工审核。万一出了岔子，一个生命周期任务反正会在两天后把这个世界归档掉。它之所以行得通，不是因为模型完美——而是因为成本结构让它能<em>足够频繁地</em>运行，使得错误能够自我修复。
+                    </p>
+                </div>
+
+                <p>
+                    把这三类串在一起的，是这一点：它们并不是「比今天的 AI 更好」。它们是<strong>另一种 AI</strong>。它不回答，它留意。它不被调用，它自己运行。它产出的不是每份输入对应一份输出，而是每一次<em>世界状态的变化</em>对应一份输出。这就是呼叫中心和看门人之间的区别。
+                </p>
+
+                <p>
+                    我把这一类称为<strong>环境 AI</strong>——类比自 Mark Weiser 的<em>普适计算（Ubiquitous Computing）</em>（Xerox PARC，1988/1991），也就是计算机应该退到背景里、而不是在前台索取注意力这一理念。要点是一样的：当技术不再时时刻刻提醒你它的存在时，它反而更有用。
+                </p>
+
+                <h2>为什么是 2026——而不是早在 2024</h2>
+
+                <p>
+                    要让环境 AI 变得划算，有三件事必须同时到位。这三件事都发生在过去十二个月里，而这个时间点并非巧合。
+                </p>
+
+                <p>
+                    <strong>第一：消费级 GPU 上的混合专家（Mixture-of-Experts）。</strong>直到 2025 年初，「本地 LLM」要么意味着「明显不如 GPT-4」，要么意味着「需要一块你没有的 H100」。<strong>Gemma 4 26B-A4B</strong> 改变了这一点：总参数 260 亿，但得益于 MoE 架构，<strong>每次前向传播只激活约 38 亿</strong>。这个模型用起来像一个 4B 稠密模型——回答的质量却接近一个大得多的模型。用 Q4 量化后，它能塞进一块 <strong>NVIDIA L4</strong> 的 24 GB 里——而这块 GPU 在每一家超大规模云上，每小时不到一欧元就能用上。这是硬件门槛。
+                </p>
+
+                <p>
+                    <strong>第二：带 MCP 的智能体运行时。</strong>直到 2025 年中，任何构建智能体的人都得自己解决那些连线工作：工具调用、对话状态、重试逻辑、鉴权、日志。有了 <strong>Model Context Protocol</strong>（Anthropic，2024 年末），以及像 OpenClaw 这类原生支持 MCP 的运行时，过去一个周末项目量级的活儿，如今几个小时就能搞定。你注册你的工具，用一份 JSON schema 描述它，智能体就能使用它。这是工程门槛。
+                </p>
+
+                <p>
+                    <strong>第三：成本曲线已经打开。</strong>在一块利用率适中的 L4 上，Gemma 4 26B-A4B 的有效推理成本落在<strong>每百万 token 个位数低位美分</strong>的区间。通过 OpenRouter，同一个模型的价格大约是每百万输入 token $0.06、每百万输出 token $0.33。关键不在于相对于一条优化过的 API 流水线的绝对价格优势——取决于你优化得多狠，这个差距其实并不大。关键在于<em>计费逻辑</em>：从 GPU 已经在烧着的那一刻起，每一个额外请求都是免费的。不用调批处理，不用加缓存层，不用做分级路由。这是经济门槛——重点不在利润率，而在摩擦。
+                </p>
+
+                <p>
+                    这三道门槛都在 2026 年、同时被跨过。在此之前，环境 AI 是一个想法。如今，它是一个配置细节。
+                </p>
+
+                <h2>来自机房的存在性证明</h2>
+
+                <p>
+                    来一个我自己搭建的具体例子，因为抽象的论证什么都证明不了：
+                </p>
+
+                <p>
+                    这里描述的这套系统，是与 <a href="https://codify.ch" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline">Codify.ch</a> 合作搭建的——一家瑞士的 GCP 咨询公司，他们提供了 GPU 硬件并搭好了云这一侧。要不是他们能拿到 L4 产能（尤其是在 2026 年 5 月那次全欧断货期间），要在十一天里把这个机器人推上生产是不可能的。
+                </p>
+
+                <p>实际的硬件：</p>
+
+                <pre class="code-block">Machine Type   g2-standard-16  (16 vCPU, 64 GB RAM)
+GPU            1× NVIDIA L4    (24 GB VRAM)
+Disk           200 GB balanced persistent disk
+OS             Ubuntu 22.04 LTS
+Zone           us-east4-a   (fallback after EU-wide L4 stockout 2026-05-12)
+Driver / CUDA  550.127.08 / 12.4.1
+llama.cpp      master @ d13540be… (built with CUDA)
+Model          gemma-4-26B-A4B-it-Q4_K_M.gguf  (26B total / 3.8B active)
+Source         ggml-org/gemma-4-26B-A4B-it-GGUF  (official llama.cpp conversion)
+Context        32k  (capped; model supports 256k natively, VRAM limit)
+Runtime        OpenClaw v2026.5.7</pre>
+
+                <p>
+                    说得更精确些：这是 Google 的原始模型，采用由 llama.cpp 社区维护的 <a href="https://huggingface.co/ggml-org/gemma-4-26B-A4B-it-GGUF" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline">GGUF 转换</a>、并做了 Q4_K_M 量化——约 16 GB 而不是 BF16 的约 52 GB，在德语文本和工具调用上的表现完全一致，只有在纯数学上有一处可测量但很小的质量下降。没有这道量化，Gemma 4 26B-A4B 根本塞不进单块 24 GB 的 L4。
+                </p>
+
+                <p>成本全貌（通过 Codify 叠加 SUD/CUD 折扣）：</p>
+
+                <div style="overflow-x:auto; margin:1.5rem 0;">
+                <table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
+                    <thead>
+                        <tr style="border-bottom:1px solid rgba(255, 42, 60, 0.3);">
+                            <th style="text-align:left; padding:0.6rem 0.75rem; color:#ff2a3c; font-family:'JetBrains Mono',monospace; font-size:0.8rem;">方案</th>
+                            <th style="text-align:right; padding:0.6rem 0.75rem; color:#ff2a3c; font-family:'JetBrains Mono',monospace; font-size:0.8rem;">€ / 月</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom:1px solid rgba(75,85,99,0.3);">
+                            <td style="padding:0.6rem 0.75rem;">GCP g2-standard-16 + L4，<strong>Spot</strong>（europe-west4）</td>
+                            <td style="text-align:right; padding:0.6rem 0.75rem; font-family:'JetBrains Mono',monospace;">~220</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(75,85,99,0.3);">
+                            <td style="padding:0.6rem 0.75rem;">GCP <strong>按需，含 SUD + 1 年 CUD</strong>（通过 Codify）</td>
+                            <td style="text-align:right; padding:0.6rem 0.75rem; font-family:'JetBrains Mono',monospace;">~255</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:0.6rem 0.75rem;">GCP <strong>按需标价</strong>（最坏情况，无折扣）</td>
+                            <td style="text-align:right; padding:0.6rem 0.75rem; font-family:'JetBrains Mono',monospace;">~770</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+
+                <p>
+                    €255 这个数字<strong>并不是纯按需标价</strong>——没有持续使用折扣（Sustained-Use Discount）和承诺使用折扣（Committed-Use Discount），你会落在每月约 €770。这里 Codify 的费率起了作用，而这一点该摆到台面上说。
+                </p>
+
+                <p>
+                    作个对比：一台专用的 <strong>Hetzner</strong> GPU 主机（GEX44），配一块 RTX 4000 SFF Ada（20 GB 显存），每月 <strong>约 €184</strong>——外加首月一次性约 €310 的安装费。对 Gemma 4 26B-A4B Q4_K_M 来说，20 GB 是勉强够用的边缘；上满 32k 上下文就会吃紧，在负载下有可能 OOM。如果你想要数据留在欧盟境内、又有余量的硬件，一台放在欧盟主机商的专用 L4 或 RTX-A5000 主机（约 24 GB）落在 <strong>约 €250–350/月</strong> 的区间。
+                </p>
+
+                <p>
+                    诚实地算这笔账：一旦 GCP 在<em>没有</em>折扣的情况下运行，纯价格优势就消失了。优化过的 API 流水线（€200–500/月）和各种自托管方案（Hetzner 摊到 12 个月约 €210，一直到 GCP 标价约 €770）都落在同一个走廊里。自托管的卖点不靠利润率撑起来——它靠的是下一节要讲的东西：<em>token 记账</em>消失了。
+                </p>
+
+                <p>
+                    最上面跑着 <strong>OpenClaw</strong> 作为智能体运行时，绑定到一个 Telegram 机器人 token。旁边跑着一个用 Python 写的自定义 <strong>MCP 服务器</strong>，向智能体暴露九个带类型的工具——所有工具都与我的 Firestore 数据库对话。属于真实用户的数据在<strong>离开 MCP 进程之前就会被假名化</strong>（SHA-256，取前 8 位，对每个用户稳定不变）。智能体永远看不到真实的鉴权 UID，但仍然能就「用户 A vs. 用户 B」进行推理。
+                </p>
+
+                <p>剩下的活儿由三个 systemd 定时器完成：</p>
+
+                <pre class="code-block">06:00 UTC  →  scraper pulls 3 competitor feeds           [Watcher]
+07:00 UTC  →  blog draft in house voice, status: 'draft' [Pipeline + Approval]
+Mon + Thu 07:30 UTC  →  cluster portfolio into 5–10     [Pipeline, no review]
+                         themed worlds, SEO metadata,
+                         hero image, publish → Firestore</pre>
+
+                <p>
+                    真正值得注意的不是这条流水线。真正值得注意的是，自 5 月 12 日切换区域以来，它一直<strong>无需进一步干预</strong>地运行着——而这让我在心理上得以问一个以前问不出口的问题：<em>我的机器人接下来到底该做什么？</em>一旦答案不再是「每尝试一次都要花钱」，而是「也许花一小时做工程，之后就免费运行」，整个局面就变了。过去一周我一直在琢磨那些我原本压根不会考虑的任务：每小时读一遍我的收件箱、把垃圾邮件信号分类。每晚检查一下我产品所依赖的开源库里新的 pull request 看起来是否容易引入回归。每个周日从 git 提交里替我起草每周站会。
+                </p>
+
+                <p>
+                    这些任务没有一个是创新的。放在按 token 计费的账单上，这三件事都很荒谬。而作为一个环境 AI 功能，它们都不值一提。
+                </p>
+
+                <p>
+                    <strong>说句实话，哪些没跑通</strong>，因为我不想给人留下这一切都顺风顺水的印象：
+                </p>
+
+                <ul>
+                    <li><strong>Telegram 审批工作流。</strong>本想给每个新的主题世界配内联按钮。可 Telegram 每个机器人 token 只允许一个长轮询器，而智能体占着它。结果：做不出按钮式的 UI 流程。白白搭进去三个小时；现在我通过数据库控制台来处理这些例外情况。</li>
+                    <li><strong>全欧 L4 断货。</strong>2026 年 5 月的某个周三，所有十一个提供 L4 的欧洲 GCP 区域，产能全都是<strong>零</strong>。回退到 <code>us-east4-a</code>。如果你认真对待「常开」，那么在另一个区域备一个 plan B 就是必须的——是的，这在某种程度上和「零摩擦」的承诺相矛盾。</li>
+                    <li><strong>CUDA 升级风险。</strong>在虚拟机上随手一个 <code>apt upgrade</code>，可能会拉来一个和当前 <code>llama.cpp</code> 构建不兼容的 NVIDIA 驱动版本。目前的应对办法：固定驱动、对 NVIDIA 软件包 <code>apt-mark hold</code>、每 2–3 个月开一个手动升级窗口。</li>
+                    <li><strong>Spot 抢占。</strong>那个 €220 的方案可能被 GCP 在任何时候终止。对异步的草稿任务来说这没问题——但对一个正在做 30 秒聚类调用、跑到一半的观察器来说，这是丢数据的风险。一个 systemd 重启能兜住它，但这里的「常开」其实意味着「偶尔会有 2 分钟窟窿的常开」。</li>
+                </ul>
+
+                <p>
+                    自托管并非没有摩擦。它是一种<em>不一样的</em>摩擦——是驱动而不是 token 预算，是 OOM 而不是速率限制，是区域故障切换而不是 API 宕机。任何声称这玩意儿免维护的人，都还没在生产里真正跑过它。
+                </p>
+
+                <h2>这对那些仍在按请求思考的公司意味着什么</h2>
+
+                <p>
+                    今天一家公司在规划 AI 集成时，答案几乎总是同一套：一个聊天小组件、一个 copilot、一个搜索。全都是请求-响应。全都按请求扩展。全都困在那种站在前台、等着被注意的 AI 里。
+                </p>
+
+                <p>
+                    我一直向客户抛出的那个让人不太舒服的问题：<em>如果 AI 不再是每次请求花 €0.01，而是每月约 €250 的固定包月费——无论它运行多频繁——你的产品会去做什么？</em>我得到的回答，从来不是又一个聊天功能。它们永远是那些人们盼了好多年、却从未真正规划的东西，因为在经济上说不通：
+                </p>
+
+                <ul>
+                    <li>「我们会在五秒内把每一个进来的线索归入我们的 CRM 分类体系，而不是等到季末才去猜是哪些营销活动带来了好线索。」</li>
+                    <li>「我们会在每一封客户邮件到达客服之前就为它做信息富集，好让客服能在 30 秒内回复，而不是 8 分钟。」</li>
+                    <li>「我们会持续地把自己的产品描述和竞争对手做比对，并对漂移发出提示。」</li>
+                    <li>「我们会每天晚上、在每一个标签页上，把我们的 Excel 表扫一遍找异常。」</li>
+                </ul>
+
+                <p>
+                    这些都不是什么高深的火箭科学。但没有一个在缺少「常开」架构的前提下是划算的。而且今天没有一个会被真正造出来，因为主流厂商的定价模型在概念阶段就把用例扼杀了。
+                </p>
+
+                <h2>这一周你就能造出来的东西</h2>
+
+                <p>
+                    如果这个念头开始让你手痒，这里有一份诚实的 80/20 建议：
+                </p>
+
+                <ol>
+                    <li><strong>在任意一家超大规模云上租一块 L4 或 L40S 用一周。</strong>花的钱比一顿像样的晚餐还少。装好带 CUDA 的 <code>llama.cpp</code>，拉下 <code>gemma-4-26b-a4b-q4_k_m</code>，启动服务器。一小时的活儿。</li>
+                    <li><strong>在它旁边放一个智能体运行时</strong>（OpenClaw，或者你自己带 MCP 客户端的 Python 脚本）。把它绑到 Telegram、Slack 或 Signal。两小时。</li>
+                    <li><strong>写一个 cron 任务</strong>，让它每小时检查一件有意思的事，只有在有发现时才给你发消息。一小时。</li>
+                    <li><strong>观察你自己。</strong>不出两周，你就会丢掉那个按请求去思考 AI 的反射。这才是真正的改变。</li>
+                </ol>
+
+                <p>
+                    环境 AI 不是一项技术。技术本身已经变得微不足道。环境 AI 是一种<strong>思维方式</strong>，而当经济壁垒倒下的那一刻，它就变得触手可及。那道壁垒在 2026 年倒下了。谁早一步用上它，谁就在构建那种「感觉会替你思考」、而不是干等着你发问的产品上，抢先了两年。
+                </p>
+
+                <hr style="border-color: #374151; margin: 2rem 0;">
+
+                <p><strong>合作方与来源：</strong></p>
+                <div style="margin: 1rem 0;">
+                    <a href="https://codify.ch" target="_blank" rel="noopener noreferrer" class="tool-badge">Codify.ch – GCP 搭建与硬件</a>
+                    <a href="https://ai.google.dev/gemma/docs/core" target="_blank" rel="noopener noreferrer" class="tool-badge">Google – Gemma 4 文档</a>
+                    <a href="https://huggingface.co/google/gemma-4-26B-A4B-it" target="_blank" rel="noopener noreferrer" class="tool-badge">Google – Gemma 4 26B-A4B（原始模型）</a>
+                    <a href="https://huggingface.co/ggml-org/gemma-4-26B-A4B-it-GGUF" target="_blank" rel="noopener noreferrer" class="tool-badge">ggml-org – Gemma 4 26B-A4B GGUF</a>
+                    <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener noreferrer" class="tool-badge">Anthropic – MCP 规范</a>
+                    <a href="https://cloud.google.com/compute/gpus-pricing" target="_blank" rel="noopener noreferrer" class="tool-badge">GCP – GPU 定价</a>
+                    <a href="https://www.hetzner.com/dedicated-rootserver/gex44/" target="_blank" rel="noopener noreferrer" class="tool-badge">Hetzner GEX44（RTX 4000 SFF Ada）</a>
+                    <a href="https://openai.com/api/pricing/" target="_blank" rel="noopener noreferrer" class="tool-badge">OpenAI – API 定价</a>
+                    <a href="https://en.wikipedia.org/wiki/Ubiquitous_computing" target="_blank" rel="noopener noreferrer" class="tool-badge">Mark Weiser – 普适计算</a>
+                </div>
+
+                <p>
+                    想知道对你的产品来说，「一个还不错的 cron 任务」和「一个真正有用的常开智能体」之间的界线落在哪里——以及一个诚实的工作量估算长什么样？<a href="../../../index.html#contact">我们聊聊</a>。我帮人搭建能在真实项目里跑起来、而不只是做 demo 的环境 AI 系统。
+                </p>
+
+    </article>
+
+    <!-- Author share + related posts -->
+    <div class="art-share">
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI 智能体专家 · 博登湖地区</span></div></div>
+      <a href="../../../index.html#contact" class="btn btn--pri">与我合作 ▸</a>
+    </div>
+    <section class="art-more">
+      <div class="wrap">
+        <div class="art-more__head"><h2>更多现场笔记</h2><a href="../../zh/">所有文章 ▸</a></div>
+        <div class="art-more__grid" id="art-more-grid"></div>
+      </div>
+    </section>
+
+    <!-- Related posts (internal cross-links for crawl equity) -->
+    <nav class="related-posts" aria-label="Related posts">
+        <p class="related-posts__heading">// 相关文章</p>
+        <div class="related-posts__grid">
+                <a class="related-posts__card" href="mit-ai-hallucinations.html">
+                    <span class="related-posts__card-title">Did MIT solve AI hallucinations?</span>
+                </a>
+                <a class="related-posts__card" href="claude-mythos-preview-zero-days.html">
+                    <span class="related-posts__card-title">Claude Mythos Preview: When AI Finds Zero-Days on Its Own</span>
+                </a>
+                <a class="related-posts__card" href="ki-modell-evaluation.html">
+                    <span class="related-posts__card-title">How We Found the Best AI Model for Legal Analysis</span>
+                </a>
+        </div>
+    </nav>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script defer src="../../../js/components.js"></script>
+    <script defer src="../../../js/translations.js"></script>
+    <script defer src="../../../js/main.js"></script>
+    <script defer src="../../../js/site.js"></script>
+</body>
+</html>

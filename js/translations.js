@@ -275,12 +275,151 @@ const translations = {
         'bw.404.body': 'The trace didn\'t resolve — the page you\'re after doesn\'t exist, moved, or was never here. Let\'s get you back to something real.',
         'bw.404.home': '◄ BACK TO HOME',
         'bw.404.blog': 'READ THE BLOG'
+    },
+    zh: {
+        'nav.services': '服务',
+        'nav.about': '关于',
+        'nav.contact': '联系',
+        'nav.blog': '博客',
+        'hero.status': '可承接新项目',
+        'hero.title': 'IT 顾问 & AI 开发者',
+        'hero.subtitle': '专注于 AI 智能体与 AI 安全。我把复杂问题转化为优雅、安全的技术方案。快速迭代、现代技术、可衡量的成果。',
+        'hero.cta': '启动项目',
+        'hero.cta2': '查看服务',
+        'hero.techStack': '技术栈',
+        'stats.projects': '已完成项目',
+        'stats.years': '年经验',
+        'stats.satisfaction': '% 满意度',
+        'stats.response': '小时响应时间',
+        'services.kicker': '我提供什么',
+        'services.title': '我的核心能力',
+        'services.subtitle': '专注于推动您业务前进的前瞻性技术',
+        'services.ai.title': 'AI 智能体',
+        'services.ai.description': '从自主智能体到自动化工作流，再到自托管 LLM。定制化 AI 系统，完全掌控数据主权——您的 AI、您的基础设施、您的掌控。',
+        'services.security.title': 'AI 安全',
+        'services.security.description': '面向 AI 系统与现代 Web 基础设施的安全审计与加固。从提示注入防护到云安全——让您的 AI 方案不致沦为攻击面。（提示注入挑战赛第 2 名。）',
+        'services.custom.badge': '✦ 仅限精选项目',
+        'services.custom.title': '定制开发',
+        'services.custom.description': '全栈 Web 与移动开发我如今只选择性承接——面向格外契合的项目。',
+        'about.kicker': '我是谁',
+        'about.title': '愿景与驱动力',
+        'about.description1': '作为您的 IT 顾问，我的职责不仅是交付技术方案，更是为即将到来的未来铺路。我的工作由一个愿景驱动：通过 AI 与创新应用创造新的可能。',
+        'about.description2': '透明、伙伴式协作，以及对品质毫不动摇的追求，是我工作的基石——以共同成就非凡。',
+        'about.description3': '在 AI 时代，速度至关重要：快速迭代、快速验证、真实成果。正确运用新技术者，能在数周内完成过去需要数月的事。',
+        'about.cta': '一起合作',
+        'about.terminal.title': '关于我',
+        'about.terminal.p1': '作为 IT 顾问与开发者，我将深厚的技术功底与创造创新方案的愿景结合在一起。',
+        'about.terminal.focus': '专注',
+        'about.terminal.item1': 'AI 系统与自动化',
+        'about.terminal.item2': '应用 AI',
+        'about.terminal.item3': 'AI 安全',
+        'about.terminal.item4': '云架构',
+        'about.terminal.values': '价值观',
+        'about.terminal.values.text': '透明 | 品质 | 创新',
+        'contact.kicker': '联系',
+        'contact.title': '让我们聊聊',
+        'contact.description': '准备好讨论您的下一个项目了吗？期待收到您的消息，一起探索创新之路。',
+        'contact.location': '瑞士',
+        'contact.cta': '发送邮件',
+        'footer.rights': '版权所有。',
+        'footer.status': '在线',
+        'blog.title': '博客',
+        'blog.subtitle': '关于 AI、开发与技术的思考与洞见',
+        'blog.kicker': '最新文章',
+        'blog.readMore': '阅读更多',
+        'blog.backToList': '返回博客',
+        'blog.publishedOn': '发布于',
+        'clients.title': '受行业领先企业信赖',
+
+        /* ===== Blackwall redesign ===== */
+        'nav.freeScan': '免费扫描',
+        'nav.security': '安全',
+        'nav.cta': '扫描我的网站',
+        'bw.hero.eyebrow': '让你的智能体',
+        'bw.hero.ship': '打造会&nbsp;',
+        'bw.hero.kin.acts': '行动的 AI。',
+        'bw.hero.kin.defends': '防御的 AI。',
+        'bw.hero.kin.scales': '扩展的 AI。',
+        'bw.hero.kin.ships': '快速交付的 AI。',
+        'bw.hero.sub': '我打造能真正干活的自主 AI 智能体——并在攻击者之前把它们攻破。从想法到上线，只需数周。',
+        'bw.hero.cta1': '免费扫描我的网站 ▸',
+        'bw.hero.cta2': '预约通话',
+        'bw.hero.proof': '受 <b>Coop</b>、<b>Charité BIH</b> 及 10+ 团队信赖 · 提示注入挑战赛 <b>第 2 名</b>',
+        'bw.scan.kicker': '// 免费 · 智能体机会扫描',
+        'bw.scan.title': '看看我会为<span class="rip">你</span>打造什么——只需 15 秒。',
+        'bw.scan.sub': '输入你的公司网址。我的 AI 会读取你的网站，精准定位自主智能体最能为你的团队省时的环节。无需注册。',
+        'bw.scan.placeholder': 'your-company.com',
+        'bw.scan.run': '开始扫描 ▸',
+        'bw.scan.hint': '◆ 仅读取你的公开网站 · 无需注册 · 约需 15 秒',
+        'bw.scan.completeLabel': '// 扫描完成 · 目标',
+        'bw.scan.fitLabel': '智能体契合度',
+        'bw.scan.ctaBtn': '预约通话来打造这些 ▸',
+        'bw.svc.kicker': '// 我做什么',
+        'bw.svc.title': '我发挥价值的三种方式。',
+        'bw.svc.1.title': 'AI <span class="rip">智能体</span>',
+        'bw.svc.1.desc': '能真正干活的自主智能体、工作流与自托管 LLM——完全的数据主权。Ollama、CrewAI、LangChain、RAG。',
+        'bw.svc.1.cta': '预约通话 ▸',
+        'bw.svc.2.title': 'AI <span class="rip">安全</span>',
+        'bw.svc.2.desc': '面向 AI 系统的红队与加固——从提示注入防护到云端。提示注入挑战赛第 2 名。',
+        'bw.svc.2.cta': '预约通话 ▸',
+        'bw.svc.3.title': '定制<span class="rip">开发</span>',
+        'bw.svc.3.gate': '受邀制',
+        'bw.svc.3.desc': '选择性承接——面向技术上有趣且真正契合的项目。跟我说说，我们再看。React Native、SvelteKit、Supabase、TypeScript。',
+        'bw.svc.3.cta': '介绍项目 →',
+        'bw.stats.1': '客户合作',
+        'bw.stats.2': '提示注入挑战赛',
+        'bw.stats.3': '已发布实战笔记',
+        'bw.stats.4': '可自托管',
+        'bw.clients.label': '为真正在造东西的团队部署',
+        'bw.breach.kicker': '// 实战中的 AI 安全',
+        'bw.breach.title': '我在攻击者之前攻破智能体。',
+        'bw.breach.intro': '一个已加固的智能体，两条消息即被投毒——无需越狱。这正是我猎捕的失效模式。',
+        'bw.breach.mockTitle': 'agent-session // 已入侵',
+        'bw.breach.m1': '已发送消息',
+        'bw.breach.m2': '已绕过防御',
+        'bw.breach.m3': '所需 API 调用',
+        'bw.breach.m4': '收集器被接受',
+        'bw.breach.resultTitle': '两条消息投毒智能体。',
+        'bw.breach.resultBody': '每一道防御都被测试并攻破。完整拆解见博客。',
+        'bw.feed.kicker': '// 实战笔记',
+        'bw.feed.title': '来自博客',
+        'bw.feed.all': '全部文章 ▸',
+        'bw.contact.kicker': '// 联系',
+        'bw.contact.title': '让我们聊聊。',
+        'bw.contact.send': '发送邮件 ▸',
+        'bw.contact.lead': '两种入口，取决于你的需求。',
+        'bw.contact.a.tag': '预约通话',
+        'bw.contact.a.title': 'AI 智能体 & AI 安全',
+        'bw.contact.a.desc': '要打造智能体还是加固它们？选个时段——我们在通话里理清范围。',
+        'bw.contact.a.for': '面向 <b>AI 智能体</b> & <b>AI 安全</b>',
+        'bw.contact.a.cta': '预约通话 ▸',
+        'bw.contact.b.tag': '受邀制',
+        'bw.contact.b.title': '定制开发',
+        'bw.contact.b.desc': '选择性承接，所以暂无日历。先把项目邮件给我——是什么、为什么有趣。若契合，我们再谈。',
+        'bw.contact.b.for': '仅面向 <b>定制开发</b>',
+        'bw.contact.b.cta': '邮件介绍项目 →',
+        'bw.cta.title': '让你的<br>智能体更 w<span class="ai rip">AI</span>ser。',
+        'bw.cta.sub': '从免费扫描开始，或直接把问题告诉我。我来打造智能体并将其加固。',
+        'bw.cta.btn': '免费扫描我的网站 ▸',
+        'bw.foot.tagline': 'w<span class="ai">AI</span>ser<span class="tld">.dev</span> · Nils Weiser',
+        'bw.blog.kicker': '// 来自另一侧的实战笔记',
+        'bw.blog.title': '<span class="rip">博客</span>',
+        'bw.blog.sub': '关于 AI 智能体、AI 安全，以及正在学会脱离我们而行动的机器——原始记录，在踪迹消散前发布。',
+        'bw.blog.ctaTitle': '有个棘手的<br><span class="rip">AI 难题？</span>',
+        'bw.blog.ctaSub': '无论是打造智能体还是攻破它们——只要有趣，我都想听听。',
+        'bw.blog.ctaBtn': '启动项目 ▸',
+        'bw.404.kicker': '// 信号丢失',
+        'bw.404.title': '此页已熄灭。',
+        'bw.404.body': '踪迹未能解析——你要找的页面不存在、已移动，或从未在此。让我们回到真实的东西。',
+        'bw.404.home': '◄ 返回首页',
+        'bw.404.blog': '阅读博客'
     }
 };
 
 // Language switching - detect from URL for blog pages, otherwise from localStorage
 let currentLang = (function() {
     const path = window.location.pathname;
+    if (path.includes('/blog/zh/') || path.includes('/posts/zh/')) return 'zh';
     if (path.includes('/blog/en/') || path.includes('/posts/en/')) return 'en';
     return localStorage.getItem('lang') || 'de';
 })();
@@ -304,29 +443,54 @@ function setLanguage(lang) {
             'ambient-ai-the-next-ai-generation.html': 'ambient-ai-die-naechste-ki-generation.html',
             'loops-not-prompts-cherny.html': 'loops-statt-prompts-cherny.html',
             'opus-4-8-dynamic-workflows-erst-recht-audit.html': 'opus-4-8-dynamische-workflows-erst-recht-audit.html'
-        }
+        },
+        // zh reuses EN filenames
+        deToZh: {
+            'mit-ai-halluzinationen.html': 'mit-ai-hallucinations.html',
+            'ambient-ai-die-naechste-ki-generation.html': 'ambient-ai-the-next-ai-generation.html',
+            'loops-statt-prompts-cherny.html': 'loops-not-prompts-cherny.html',
+            'opus-4-8-dynamische-workflows-erst-recht-audit.html': 'opus-4-8-dynamic-workflows-erst-recht-audit.html'
+        },
+        enToZh: {}, // en and zh share filenames — identity
+        zhToDe: {
+            'mit-ai-hallucinations.html': 'mit-ai-halluzinationen.html',
+            'ambient-ai-the-next-ai-generation.html': 'ambient-ai-die-naechste-ki-generation.html',
+            'loops-not-prompts-cherny.html': 'loops-statt-prompts-cherny.html',
+            'opus-4-8-dynamic-workflows-erst-recht-audit.html': 'opus-4-8-dynamische-workflows-erst-recht-audit.html'
+        },
+        zhToEn: {} // identity
     };
+    // Map the current post filename from one language tree to another.
+    function mapSlug(file, from, to) {
+        if (from === to) return file;
+        const table = slugMap[from + 'To' + to.charAt(0).toUpperCase() + to.slice(1)];
+        return (table && table[file]) || file;
+    }
     if (path.includes('/blog/')) {
-        // Blog post pages: /blog/posts/de/ <-> /blog/posts/en/
-        if (path.includes('/posts/de/') && lang === 'en') {
-            const file = path.split('/').pop();
-            const mapped = slugMap.deToEn[file] || file;
-            window.location.href = path.replace('/posts/de/', '/posts/en/').replace(/[^/]+$/, mapped);
-            return;
-        } else if (path.includes('/posts/en/') && lang === 'de') {
-            const file = path.split('/').pop();
-            const mapped = slugMap.enToDe[file] || file;
-            window.location.href = path.replace('/posts/en/', '/posts/de/').replace(/[^/]+$/, mapped);
-            return;
-        }
-        // Blog index: /blog/ <-> /blog/en/
-        const isEnglishIndex = path.includes('/blog/en/');
-        if (lang === 'en' && !isEnglishIndex && !path.includes('/posts/')) {
-            window.location.href = path.replace('/blog/', '/blog/en/');
-            return;
-        } else if (lang === 'de' && isEnglishIndex) {
-            window.location.href = path.replace('/blog/en/', '/blog/');
-            return;
+        // Determine current tree
+        let fromTree = 'de';
+        if (path.includes('/posts/en/') || path.includes('/blog/en/')) fromTree = 'en';
+        else if (path.includes('/posts/zh/') || path.includes('/blog/zh/')) fromTree = 'zh';
+
+        // Post pages: /blog/posts/{de,en,zh}/
+        if (path.includes('/posts/')) {
+            if (lang !== fromTree) {
+                const file = path.split('/').pop();
+                const mapped = mapSlug(file, fromTree, lang);
+                const targetDir = '/posts/' + lang + '/';
+                window.location.href = path
+                    .replace('/posts/' + fromTree + '/', targetDir)
+                    .replace(/[^/]+$/, mapped);
+                return;
+            }
+        } else {
+            // Blog index: /blog/  (de)  <->  /blog/en/  <->  /blog/zh/
+            if (lang !== fromTree) {
+                const fromSeg = fromTree === 'de' ? '/blog/' : '/blog/' + fromTree + '/';
+                const toSeg = lang === 'de' ? '/blog/' : '/blog/' + lang + '/';
+                window.location.href = path.replace(fromSeg, toSeg);
+                return;
+            }
         }
     }
 
@@ -369,6 +533,9 @@ function setLanguage(lang) {
     document.querySelectorAll('#lang-en, .lang-en-indicator').forEach(el => {
         el.classList.toggle('active', lang === 'en');
     });
+    document.querySelectorAll('#lang-zh, .lang-zh-indicator').forEach(el => {
+        el.classList.toggle('active', lang === 'zh');
+    });
 
     // Let JS-rendered content (blog feed, scan tool) re-render in the new language.
     // Scripts register a callback via window.onLanguageChange.
@@ -382,5 +549,7 @@ function getCurrentLang() {
 }
 
 function getTranslation(key) {
-    return translations[currentLang][key] || key;
+    return translations[currentLang][key]
+        || (translations.en && translations.en[key])
+        || key;
 }

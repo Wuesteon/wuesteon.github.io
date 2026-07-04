@@ -119,3 +119,16 @@ schema, content map, performance posture, Calendly TODO), [[marketing-doc]] (sum
   `TODO-GO-LIVE.md`.
 
 (These wiki content pages were flagged, not yet rewritten — they are owned by other agents this pass.)
+
+## 2026-07-04 — Chinese (中文) added as third site language
+
+Full trilingual expansion (DE/EN/中文). Updated `[[i18n-system]]` and `[[blog-system]]` + index:
+- `js/translations.js`: complete `zh` dictionary (134 keys, EN-fallback in `getTranslation`), 3-way
+  `currentLang` init + `setLanguage` routing + `slugMap` zh mappings (zh reuses EN filename).
+- 3-way DE/EN/中文 selector (`components.js` nav + `site.js` mobile drawer + `main.js` `data-lang` click wiring).
+- JS-rendered zh: `POSTS[].zh` for all 16 posts (`site.js`), Agent Scan `POOL_ZH`/labels/verdict/scanLines/
+  softMessage (`extras.js`). Blog feed/enhancer fall back to `en` (was `de`).
+- `blog/zh/index.html` + 16 `blog/posts/zh/*.html` (zh head/JSON-LD `inLanguage:"zh"`, bodies translated),
+  reciprocal `hreflang` across de/en/zh (+ x-default→DE), sitemap.xml + llms.txt zh entries.
+- Bugfix: `siteBase()` now handles `/blog/zh/` + `/blog/posts/zh/` depth (was mis-resolving to double `/blog/`).
+- Deferred: `llms-full.txt` zh section (full bodies) — add post-launch if wanted.

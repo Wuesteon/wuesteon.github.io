@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude 在预览中发现的零日漏洞</title>
+    <meta name="description" content="Anthropic 让 Claude 直面真实代码库。它发现的漏洞——以及这对 AI 辅助安全研究意味着什么。">
+    <link rel="canonical" href="https://waiser.dev/blog/posts/zh/claude-mythos-preview-zero-days.html">
+    <link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/claude-mythos-preview-zero-days.html">
+    <link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/claude-mythos-preview-zero-days.html">
+    <link rel="alternate" hreflang="zh" href="https://waiser.dev/blog/posts/zh/claude-mythos-preview-zero-days.html">
+    <link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/claude-mythos-preview-zero-days.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Claude 在预览中发现的零日漏洞">
+    <meta property="og:description" content="Anthropic 让 Claude 直面真实代码库。它发现的漏洞——以及这对 AI 辅助安全研究意味着什么。">
+    <meta property="og:url" content="https://waiser.dev/blog/posts/zh/claude-mythos-preview-zero-days.html">
+    <meta property="og:image" content="https://waiser.dev/og-default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Claude 在预览中发现的零日漏洞">
+    <meta name="twitter:description" content="Anthropic 让 Claude 直面真实代码库。它发现的漏洞——以及这对 AI 辅助安全研究意味着什么。">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Claude 在预览中发现的零日漏洞",
+      "description": "Anthropic 让 Claude 直面真实代码库。它发现的漏洞——以及这对 AI 辅助安全研究意味着什么。",
+      "datePublished": "2026-04-15",
+      "author": {
+        "@type": "Person",
+        "name": "Nils Weiser",
+        "@id": "https://waiser.dev/#person"
+      },
+      "image": "https://waiser.dev/og-default.png",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://waiser.dev/blog/posts/zh/claude-mythos-preview-zero-days.html"
+      },
+      "inLanguage": "zh",
+      "@id": "https://waiser.dev/blog/posts/zh/claude-mythos-preview-zero-days.html#article",
+      "publisher": {
+        "@id": "https://waiser.dev/#person"
+      },
+      "dateModified": "2026-04-15"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://waiser.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://waiser.dev/blog/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Claude 在预览中发现的零日漏洞",
+          "item": "https://waiser.dev/blog/posts/zh/claude-mythos-preview-zero-days.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+
+    <!-- TODO: replace with prebuilt static tailwind.css before scaling traffic; see CLAUDE.md -->
+    <link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+    <meta name="theme-color" content="#050507">
+    <link rel="preload" href="/fonts/ChakraPetch-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Blackwall: local tailwind utilities kept (posts rely on them), then Blackwall tokens + bridge -->
+    <link rel="stylesheet" href="../../../css/tailwind.css">
+    <link rel="stylesheet" href="../../../css/tokens.css">
+    <link rel="stylesheet" href="../../../css/blackwall.css">
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/blog-post.css">
+    <style>
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .stat-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 42, 60, 0.3);
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+        .stat-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ff2a3c;
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            color: #9ca3af;
+            margin-top: 0.5rem;
+        }
+        .finding-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 42, 60, 0.3);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+        .finding-card h4 {
+            color: #ff2a3c;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        .age-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.15rem 0.6rem;
+            background: rgba(251, 191, 36, 0.15);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: #fbbf24;
+            margin-left: 0.5rem;
+        }
+        .warning-box {
+            background: rgba(251, 191, 36, 0.1);
+            border-left: 3px solid #fbbf24;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .warning-box h4 {
+            color: #fbbf24;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .action-box {
+            background: rgba(255, 42, 60, 0.08);
+            border: 1px solid rgba(255, 42, 60, 0.25);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .action-box h4 {
+            color: #ff2a3c;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        .action-box ul {
+            margin: 0;
+            padding-left: 1.25rem;
+        }
+        .action-box li {
+            margin: 0.4rem 0;
+            color: #d1d5db;
+        }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header (Blackwall art-hero) -->
+    <section class="art-hero" data-screen-label="Article">
+        <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
+        <div class="art-hero__in">
+            <a class="art-back" href="../../zh/">◄ 所有文章</a>
+            <div><span class="art-cat">AI 安全</span></div>
+            <h1 class="art-title">Claude Mythos Preview：当 AI 自己发现零日漏洞</h1>
+            <div class="art-meta">
+                <span class="who"><span class="av">NW</span> Nils Weiser</span>
+                <span class="sep">•</span><span data-art-date>2026 年 4 月 8 日</span>
+                <span class="sep">•</span><span data-art-read>—</span>
+            </div>
+        </div>
+    </section>
+    <div class="art-hr"><div></div></div>
+
+    <!-- Article Content (Blackwall art-body) -->
+    <article class="art-body">
+                <p class="lead">181 个 Firefox 漏洞利用、一个已存在 27 年的 OpenBSD 漏洞、一次完整的带 ROP 链的 FreeBSD RCE。为什么安全社区的攻防平衡正在此刻发生倾斜。</p>
+
+                <p>
+                    2026 年 4 月 7 日，Anthropic 发布了对全新 <strong>Claude Mythos Preview</strong> 网络安全能力的评估。对于一家平时措辞谨慎的实验室来说，这次的语气异常直白：该模型在很大程度上无需人工引导，就能在生产软件中发现并利用零日漏洞，其规模在一个月前听起来还像是天方夜谭。
+                </p>
+
+                <blockquote>
+                    “不到一个月前，我们还写道 Opus 4.6 更擅长识别和修复漏洞，而非利用漏洞。这些能力出现得非常之快。” —— Anthropic 红队
+                </blockquote>
+
+                <h2>用数字看这次跃升</h2>
+
+                <p>
+                    报告中最重要的数据点不是某一个具体漏洞——而是一个比值。从 Opus 4.6 到 Mythos Preview，中间隔着的不是几周的工程投入，而是一个数量级的能力差距：
+                </p>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">181</div>
+                        <div class="stat-label">可用的 Firefox 漏洞利用（Mythos Preview）</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">可用的 Firefox 漏洞利用（Opus 4.6）</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">10</div>
+                        <div class="stat-label">OSS-Fuzz 上的 Tier-5 案例（完全代码控制）</div>
+                    </div>
+                </div>
+
+                <p>
+                    Firefox 上 90 倍的跃升还不是最有意思的地方。更要紧的是：在最初的一次提示之后，Mythos Preview <strong>不再需要任何人工干预</strong>。一名没有专门安全训练的工程师，可以在晚上提交一个任务，第二天一早醒来就能拿到一个可用的漏洞利用。
+                </p>
+
+                <h2>模型究竟发现了什么</h2>
+
+                <div class="finding-card">
+                    <h4>OpenBSD SACK 实现 <span class="age-badge">已存在 27 年</span></h4>
+                    <p>
+                        Mythos Preview 在选择性确认（Selective Acknowledgement）逻辑中发现了一处缺陷，可以通过 TCP 序列号触发有符号整数溢出。其后果是：针对一个被广泛视为安全网络栈标杆的操作系统，发起基于 TCP 的拒绝服务攻击。
+                    </p>
+                </div>
+
+                <div class="finding-card">
+                    <h4>FFmpeg H.264 编解码器 <span class="age-badge">已存在 16 年</span></h4>
+                    <p>
+                        一次 65,536 个分片的碰撞触发了越界写入。真正引人注目的不是漏洞本身，而是它竟然能在全球被模糊测试得最彻底的代码库之一里存活这么久。
+                    </p>
+                </div>
+
+                <div class="finding-card">
+                    <h4>FreeBSD 远程代码执行 <span class="age-badge">已存在 17 年</span></h4>
+                    <p>
+                        报告中最令人瞠目的案例。模型在六次 RPC 请求中自主构建出漏洞利用，绕过了身份验证，考虑了 KASLR 随机化，并拼装出一条分布在多个数据包之间、由 20 个 gadget 组成的 ROP 链——没有后续提示，也没有人工修正。
+                    </p>
+                </div>
+
+                <div class="finding-card">
+                    <h4>Linux 内核提权</h4>
+                    <p>
+                        Mythos Preview 将三到四个各自独立的漏洞串联起来，绕过 KASLR 并获得 root 权限，其中包括微妙的竞态条件和复杂的堆喷射。把多个漏洞串成一条完整的攻击路径，过去一直是“自动化漏洞发现器”和“人类漏洞利用作者”之间最清晰的分界线之一。
+                    </p>
+                </div>
+
+                <h2>为什么这不只是“更好的模糊测试器”</h2>
+
+                <p>
+                    模糊测试工具发现漏洞已经有很多年了。这里有两点是新的。第一，<strong>搜索的可扩展性</strong>：模型可以在每一个相关文件里并行地寻找漏洞，包括那些人类审阅者凭直觉认定“肯定早就有人查过”的文件。而那 16 年、17 年和 27 年前埋下的漏洞，恰恰就藏在这些地方。
+                </p>
+
+                <p>
+                    第二，<strong>串联</strong>。发现一个释放后使用（use-after-free）是一回事。把它和信息泄露结合起来、击败 KASLR、构建一条 ROP 链，并让这一切在多个网络数据包之间保持稳定，过去一直是一门极度依赖人的手艺。Mythos Preview 在一次连续运行中就把两者都做到了。
+                </p>
+
+                <blockquote>
+                    “在两个十年的稳定均衡之后，语言模型可能会打破这种岌岌可危的平衡。”
+                </blockquote>
+
+                <h2>这对防御方意味着什么</h2>
+
+                <p>
+                    这份报告明确地不是一则产品公告，而是一次预警。Anthropic 同时推出了一项名为 <em>Project Glasswing</em> 的计划，意在趁具备同等能力的模型尚未广泛可用之前，加固关键软件。落到操作层面，可以归纳成一份简短的清单：
+                </p>
+
+                <div class="action-box">
+                    <h4>致安全与 IT 团队</h4>
+                    <ul>
+                        <li><strong>缩短补丁窗口。</strong>30 天的周期，假设的是一个手里工具比本报告中模型更老旧的攻击者。</li>
+                        <li>在你能承受这一取舍的地方，<strong>强制启用自动更新</strong>。旧的成本收益账已经变了。</li>
+                        <li><strong>认真对待纵深防御。</strong>KASLR、StackProtector、W^X、沙箱都依然有效——恰恰是因为模型攻破的正是那些缺少它们的系统。</li>
+                        <li><strong>现在就部署 AI 辅助的漏洞发现。</strong>像 Opus 4.6 这样已经可用的模型，已经能够扫描你自己的代码库——赶在攻击者用一个 Mythos 级别的模型做同样的事之前。</li>
+                        <li><strong>审视披露流程。</strong>一旦上报漏洞的数量激增，分诊就会成为瓶颈。</li>
+                    </ul>
+                </div>
+
+                <h2>这对使用 AI 的公司意味着什么</h2>
+
+                <p>
+                    我的客户经常问我，他们是否应该在生产环境中运行 AI 智能体。Mythos Preview 报告并没有改变这个答案，但它改变了优先级清单。任何在生产环境中运行 AI 的人，都应该在接下来几周内检查三件事：
+                </p>
+
+                <ol>
+                    <li><strong>供应链暴露面。</strong>哪些开源组件深深嵌在你的 AI 工作流里？你的依赖扫描器是最新的吗？一个已存在 17 年的 FreeBSD RCE 不禁让人发问：在那些你从未直接碰过的库里，究竟还埋着多少类似的漏洞。</li>
+                    <li><strong>沙箱架构。</strong>会执行代码、读取文件或打开网络连接的智能体，需要真正的隔离。我在 <a href="openclaw-vs-nemoclaw.html">OpenClaw vs. NemoClaw 一文</a>中谈过这一点。Mythos Preview 只会让它更紧迫，而不是相反。</li>
+                    <li><strong>事件响应流水线。</strong>当补丁在周五下午 5 点发布时，是谁去部署它？从披露到被利用之间的窗口越短，这套流程对人工步骤的容错就越低。</li>
+                </ol>
+
+                <div class="warning-box">
+                    <h4>报告没有说什么</h4>
+                    <p style="color: #d1d5db; margin: 0;">
+                        Mythos Preview 并未普遍开放。测试是在受控环境中、在 Anthropic 自己的防护措施下进行的。这个模型不是一个在互联网上四处游荡的自主攻击者。但能力已经存在，而安全社区的历史再清楚不过：今天能在实验室里跑通的东西，往往不久之后就能在实验室之外跑通。
+                    </p>
+                </div>
+
+                <h2>核心结论</h2>
+
+                <p>
+                    这份报告真正的发现，并不是“AI 能发现零日漏洞”——在有限的意义上，这在此之前就已成立。它真正的发现是这项能力叠加复利的速度。从“辅助分析”到“在六次 RPC 中用一条 ROP 链自主完成漏洞利用”，中间隔着的是不到一个月的模型开发。如果你正在规划安全架构，就要假设这一趋势会继续下去。
+                </p>
+
+                <p>
+                    这不是一则恐慌信息。它是一份邀请：请诚实地审视你自己的打补丁、漏洞披露和隔离流程——并像一个具备 Mythos 级别能力的攻击者已经在房间里那样，去构建这些流程。
+                </p>
+
+                <hr style="border-color: #374151; margin: 2rem 0;">
+
+                <p>
+                    <strong>来源：</strong><a href="https://red.anthropic.com/2026/mythos-preview/" target="_blank" rel="noopener">Assessing Claude Mythos Preview's cybersecurity capabilities</a>（Anthropic 红队，2026 年 4 月 7 日）
+                </p>
+
+                <p>
+                    你正在生产环境中运行 AI，想知道自己的供应链和智能体架构究竟处于什么状态？<a href="../../../index.html#contact">与我联系</a>——我可以协助评估与加固。
+                </p>
+
+    </article>
+
+    <!-- Author share + related posts -->
+    <div class="art-share">
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI 智能体专家 · 博登湖地区</span></div></div>
+      <a href="../../../index.html#contact" class="btn btn--pri">与我合作 ▸</a>
+    </div>
+    <section class="art-more">
+      <div class="wrap">
+        <div class="art-more__head"><h2>更多现场笔记</h2><a href="../../zh/">所有文章 ▸</a></div>
+        <div class="art-more__grid" id="art-more-grid"></div>
+      </div>
+    </section>
+
+    <!-- Related posts (internal cross-links for crawl equity) -->
+    <nav class="related-posts" aria-label="Related posts">
+        <p class="related-posts__heading">// 相关文章</p>
+        <div class="related-posts__grid">
+                <a class="related-posts__card" href="mit-ai-hallucinations.html">
+                    <span class="related-posts__card-title">MIT 解决了 AI 幻觉问题吗？</span>
+                </a>
+                <a class="related-posts__card" href="openclaw-vs-nemoclaw.html">
+                    <span class="related-posts__card-title">OpenClaw vs. NemoClaw：为什么这个问题本身就错了</span>
+                </a>
+                <a class="related-posts__card" href="ambient-ai-the-next-ai-generation.html">
+                    <span class="related-posts__card-title">环境 AI：为什么下一代不再回答——而是察觉</span>
+                </a>
+        </div>
+    </nav>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script defer src="../../../js/components.js"></script>
+    <script defer src="../../../js/translations.js"></script>
+    <script defer src="../../../js/main.js"></script>
+    <script defer src="../../../js/site.js"></script>
+</body>
+</html>

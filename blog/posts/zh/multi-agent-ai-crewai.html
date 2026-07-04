@@ -1,31 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" id="html-root">
+<html lang="zh" id="html-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi-Agent AI Systems with CrewAI | Nils Weiser</title>
-    <meta name="description" content="How to orchestrate specialized AI agents that collaborate like a real team. A practical guide to CrewAI with real-world use cases.">
-    <link rel="canonical" href="https://waiser.dev/blog/posts/en/multi-agent-ai-crewai.html">
+    <title>用 CrewAI 构建多智能体 AI 系统</title>
+    <meta name="description" content="智能体、任务与流程——如何用 CrewAI 编排一支协作的 AI 智能体团队来完成真实工作。">
+    <link rel="canonical" href="https://waiser.dev/blog/posts/zh/multi-agent-ai-crewai.html">
     <link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/multi-agent-ai-crewai.html">
     <link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/multi-agent-ai-crewai.html">
     <link rel="alternate" hreflang="zh" href="https://waiser.dev/blog/posts/zh/multi-agent-ai-crewai.html">
     <link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/multi-agent-ai-crewai.html">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Multi-Agent AI Systems with CrewAI">
-    <meta property="og:description" content="How to orchestrate specialized AI agents that collaborate like a real team. A practical guide to CrewAI with real-world use cases.">
-    <meta property="og:url" content="https://waiser.dev/blog/posts/en/multi-agent-ai-crewai.html">
+    <meta property="og:title" content="用 CrewAI 构建多智能体 AI 系统">
+    <meta property="og:description" content="智能体、任务与流程——如何用 CrewAI 编排一支协作的 AI 智能体团队来完成真实工作。">
+    <meta property="og:url" content="https://waiser.dev/blog/posts/zh/multi-agent-ai-crewai.html">
     <meta property="og:image" content="https://waiser.dev/og-default.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Multi-Agent AI Systems with CrewAI">
-    <meta name="twitter:description" content="How to orchestrate specialized AI agents that collaborate like a real team. A practical guide to CrewAI with real-world use cases.">
+    <meta name="twitter:title" content="用 CrewAI 构建多智能体 AI 系统">
+    <meta name="twitter:description" content="智能体、任务与流程——如何用 CrewAI 编排一支协作的 AI 智能体团队来完成真实工作。">
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "BlogPosting",
-      "headline": "Multi-Agent AI Systems with CrewAI",
-      "description": "How to orchestrate specialized AI agents that collaborate like a real team. A practical guide to CrewAI with real-world use cases.",
+      "headline": "用 CrewAI 构建多智能体 AI 系统",
+      "description": "智能体、任务与流程——如何用 CrewAI 编排一支协作的 AI 智能体团队来完成真实工作。",
       "datePublished": "2026-01-15",
       "author": {
         "@type": "Person",
@@ -35,10 +35,10 @@
       "image": "https://waiser.dev/og-default.png",
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://waiser.dev/blog/posts/en/multi-agent-ai-crewai.html"
+        "@id": "https://waiser.dev/blog/posts/zh/multi-agent-ai-crewai.html"
       },
-      "inLanguage": "en",
-      "@id": "https://waiser.dev/blog/posts/en/multi-agent-ai-crewai.html#article",
+      "inLanguage": "zh",
+      "@id": "https://waiser.dev/blog/posts/zh/multi-agent-ai-crewai.html#article",
       "publisher": {
         "@id": "https://waiser.dev/#person"
       },
@@ -57,13 +57,13 @@
           "@type": "ListItem",
           "position": 2,
           "name": "Blog",
-          "item": "https://waiser.dev/blog/en/"
+          "item": "https://waiser.dev/blog/zh/"
         },
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "Multi-Agent AI Systems with CrewAI: Teams Instead of Solo Players",
-          "item": "https://waiser.dev/blog/posts/en/multi-agent-ai-crewai.html"
+          "name": "用 CrewAI 构建多智能体 AI 系统: Teams Instead of Solo Players",
+          "item": "https://waiser.dev/blog/posts/zh/multi-agent-ai-crewai.html"
         }
       ]
     }
@@ -169,9 +169,9 @@
     <section class="art-hero" data-screen-label="Article">
         <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
         <div class="art-hero__in">
-            <a class="art-back" href="../../en/">◄ ALL POSTS</a>
+            <a class="art-back" href="../../zh/">◄ 所有文章</a>
             <div><span class="art-cat">CrewAI</span></div>
-            <h1 class="art-title">Multi-Agent AI Systems with CrewAI: Teams Instead of Solo Players</h1>
+            <h1 class="art-title">用 CrewAI 构建多智能体 AI 系统：团队协作，而非单打独斗</h1>
             <div class="art-meta">
                 <span class="who"><span class="av">NW</span> Nils Weiser</span>
                 <span class="sep">•</span><span data-art-date>November 15, 2024</span>
@@ -183,36 +183,36 @@
 
     <!-- Article Content (Blackwall art-body) -->
     <article class="art-body">
-                <p class="lead">How to orchestrate specialized AI agents that collaborate like a real team. A practical guide with code examples.</p>
+                <p class="lead">如何编排一批专业化的 AI 智能体，让它们像真正的团队一样协作。一份配有代码示例的实战指南。</p>
 
                 <p>
-                    A single AI agent can accomplish impressive things. But for complex, multi-step tasks, it quickly reaches its limits. The solution? Multiple specialized agents that work together like a real team.
+                    单个 AI 智能体已经能完成一些相当出色的工作。但面对复杂的多步骤任务时，它很快就会力不从心。解法是什么？让多个专业化的智能体像一支真正的团队那样协同工作。
                 </p>
 
                 <p>
-                    <strong>CrewAI</strong> is a Python framework that enables exactly that: orchestrating AI agents into a crew where each agent takes on a specific role.
+                    <strong>CrewAI</strong> 就是一个专门实现这一点的 Python 框架：把多个 AI 智能体编排成一支 crew，其中每个智能体承担一个特定的角色。
                 </p>
 
-                <h2>The Concept: Think Like a Manager</h2>
+                <h2>核心理念：像管理者一样思考</h2>
                 <p>
-                    CrewAI is based on a simple idea: Instead of building one agent that can do everything, assemble a team. The questions you should ask yourself:
+                    CrewAI 建立在一个简单的想法之上：与其打造一个无所不能的智能体，不如组建一支团队。你应该问自己以下几个问题：
                 </p>
 
                 <ol>
-                    <li><strong>What is the goal?</strong> What should be achieved in the end?</li>
-                    <li><strong>What steps are needed?</strong> Which subtasks lead to the goal?</li>
-                    <li><strong>Who can do it best?</strong> Which specialists do you need?</li>
+                    <li><strong>目标是什么？</strong>最终要达成什么结果？</li>
+                    <li><strong>需要哪些步骤？</strong>哪些子任务能通向目标？</li>
+                    <li><strong>谁最擅长做这件事？</strong>你需要哪些专家？</li>
                 </ol>
 
                 <p>
-                    Just like a manager assembling a team, you define roles, responsibilities, and workflows.
+                    就像一位管理者组建团队一样，你要定义角色、职责和工作流程。
                 </p>
 
-                <h2>The Three Core Concepts</h2>
+                <h2>三个核心概念</h2>
 
-                <h3>1. Agents: The Specialists</h3>
+                <h3>1. 智能体（Agents）：专家</h3>
                 <p>
-                    Each agent has a specific role, a goal, and a backstory. The more precisely you define these, the better the results.
+                    每个智能体都有一个特定的角色（role）、一个目标（goal）和一段背景故事（backstory）。你把这些定义得越精确，结果就越好。
                 </p>
 
                 <pre><code><span class="code-keyword">from</span> crewai <span class="code-keyword">import</span> Agent
@@ -229,13 +229,13 @@ content_planner = Agent(
 )</code></pre>
 
                 <div class="pattern-box">
-                    <h4>Best Practice: Specific Roles</h4>
-                    <p style="color: #9ca3af; margin: 0;">Instead of "Researcher," use "FINRA-certified financial analyst" or "HR specialist focused on German labor law." The more specific the role, the more focused the agent works.</p>
+                    <h4>最佳实践：具体的角色</h4>
+                    <p style="color: #9ca3af; margin: 0;">不要只写"研究员"，而要写"持有 FINRA 认证的金融分析师"或"专注于德国劳动法的 HR 专家"。角色越具体，智能体的工作就越聚焦。</p>
                 </div>
 
-                <h3>2. Tasks: The Assignments</h3>
+                <h3>2. 任务（Tasks）：具体的委派</h3>
                 <p>
-                    Tasks define what needs to be done. Each task has a description, expected output, and an assigned agent.
+                    任务定义了需要做什么。每个任务都有一段描述、预期产出，以及一个指派给它的智能体。
                 </p>
 
                 <pre><code><span class="code-keyword">from</span> crewai <span class="code-keyword">import</span> Task
@@ -250,9 +250,9 @@ plan_task = Task(
     <span class="code-string">agent</span>=content_planner
 )</code></pre>
 
-                <h3>3. Crew: The Team</h3>
+                <h3>3. Crew：团队</h3>
                 <p>
-                    The crew brings agents and tasks together and defines how they collaborate.
+                    crew 把智能体和任务组合到一起，并定义它们如何协作。
                 </p>
 
                 <pre><code><span class="code-keyword">from</span> crewai <span class="code-keyword">import</span> Crew, Process
@@ -266,38 +266,38 @@ crew = Crew(
 
 result = crew.<span class="code-function">kickoff</span>(inputs={<span class="code-string">"topic"</span>: <span class="code-string">"AI in Healthcare"</span>})</code></pre>
 
-                <h2>Practical Example: Content Creation</h2>
+                <h2>实战示例：内容创作</h2>
                 <p>
-                    A classic use case: automated blog articles. Three agents work together:
+                    一个经典的用例：自动撰写博客文章。三个智能体协同工作：
                 </p>
 
                 <div class="use-case-grid">
                     <div class="agent-card">
-                        <h4>Content Strategist</h4>
-                        <p>Researches the topic, identifies key points, creates the article structure</p>
+                        <h4>内容策略师</h4>
+                        <p>调研主题、提炼要点、搭建文章结构</p>
                     </div>
                     <div class="agent-card">
-                        <h4>Content Writer</h4>
-                        <p>Writes the article based on the plan, focuses on style and readability</p>
+                        <h4>内容撰稿人</h4>
+                        <p>基于大纲撰写文章，专注于文风与可读性</p>
                     </div>
                     <div class="agent-card">
-                        <h4>Editor</h4>
-                        <p>Checks for errors, improves phrasing, ensures brand consistency</p>
+                        <h4>编辑</h4>
+                        <p>检查错误、润色措辞、确保品牌调性一致</p>
                     </div>
                 </div>
 
                 <p>
-                    The crucial point: Each agent receives the output of the previous agent as context. The writer sees the strategist's plan. The editor sees the finished article. This creates a natural workflow.
+                    关键之处在于：每个智能体都会把上一个智能体的产出作为上下文接收下来。撰稿人能看到策略师的大纲，编辑能看到写好的文章。这样就自然形成了一条工作流程。
                 </p>
 
-                <h2>Sequential vs. Hierarchical</h2>
+                <h2>顺序式 vs. 层级式</h2>
                 <p>
-                    CrewAI supports two process types:
+                    CrewAI 支持两种流程类型：
                 </p>
 
-                <h3>Sequential Process</h3>
+                <h3>顺序式流程（Sequential）</h3>
                 <p>
-                    Tasks are processed one after another. Agent A delivers to Agent B, who delivers to Agent C. Ideal for linear workflows like content creation or data processing.
+                    任务被逐个依次处理。智能体 A 把结果交给智能体 B，B 再交给智能体 C。非常适合内容创作或数据处理这类线性工作流程。
                 </p>
 
                 <pre><code>crew = Crew(
@@ -305,9 +305,9 @@ result = crew.<span class="code-function">kickoff</span>(inputs={<span class="co
     ...
 )</code></pre>
 
-                <h3>Hierarchical Process</h3>
+                <h3>层级式流程（Hierarchical）</h3>
                 <p>
-                    A manager LLM coordinates the agents dynamically. It decides on its own which agent to deploy and when. Ideal for complex tasks with dependencies.
+                    由一个管理者 LLM 动态地协调各个智能体。它自行决定何时调用哪个智能体。非常适合存在依赖关系的复杂任务。
                 </p>
 
                 <pre><code><span class="code-keyword">from</span> langchain_openai <span class="code-keyword">import</span> ChatOpenAI
@@ -318,9 +318,9 @@ crew = Crew(
     ...
 )</code></pre>
 
-                <h2>Tools: The Agents' Toolbox</h2>
+                <h2>工具（Tools）：智能体的工具箱</h2>
                 <p>
-                    Agents become powerful through their tools. CrewAI offers built-in tools and allows custom ones:
+                    智能体正是靠工具变得强大。CrewAI 既提供内置工具，也允许你自定义工具：
                 </p>
 
                 <pre><code><span class="code-keyword">from</span> crewai_tools <span class="code-keyword">import</span> SerperDevTool, ScrapeWebsiteTool
@@ -341,37 +341,37 @@ scrape_tool = ScrapeWebsiteTool()  <span class="code-comment"># Extract website 
         <span class="code-keyword">return</span> <span class="code-string">"positive"</span></code></pre>
 
                 <div class="pattern-box">
-                    <h4>Tool Design Principles</h4>
-                    <p style="color: #9ca3af; margin: 0;">Tools should be versatile (covering multiple scenarios), fault-tolerant (handling errors gracefully), and efficient (caching for repeated calls).</p>
+                    <h4>工具设计原则</h4>
+                    <p style="color: #9ca3af; margin: 0;">工具应当具备通用性（覆盖多种场景）、容错性（优雅地处理错误），以及高效性（对重复调用进行缓存）。</p>
                 </div>
 
-                <h2>Real-World Use Cases</h2>
+                <h2>真实世界的用例</h2>
                 <p>
-                    Multi-agent systems are particularly well-suited for tasks that require different perspectives or expertise:
+                    多智能体系统尤其适合那些需要不同视角或不同专业能力的任务：
                 </p>
 
                 <div class="use-case-grid">
                     <div class="use-case-card">
-                        <h4>Sales Automation</h4>
-                        <p>Lead research, profile analysis, personalized email campaigns</p>
+                        <h4>销售自动化</h4>
+                        <p>线索调研、画像分析、个性化邮件触达</p>
                     </div>
                     <div class="use-case-card">
-                        <h4>Financial Analysis</h4>
-                        <p>Collecting market data, developing strategy, assessing risk</p>
+                        <h4>金融分析</h4>
+                        <p>采集市场数据、制定策略、评估风险</p>
                     </div>
                     <div class="use-case-card">
-                        <h4>Customer Support</h4>
-                        <p>Ticket analysis, solution proposals, quality control</p>
+                        <h4>客户支持</h4>
+                        <p>工单分析、解决方案建议、质量把控</p>
                     </div>
                     <div class="use-case-card">
-                        <h4>Event Planning</h4>
-                        <p>Venue coordination, logistics, marketing</p>
+                        <h4>活动策划</h4>
+                        <p>场地协调、后勤保障、市场推广</p>
                     </div>
                 </div>
 
-                <h2>Structured Outputs with Pydantic</h2>
+                <h2>用 Pydantic 得到结构化产出</h2>
                 <p>
-                    For consistent results, you can define the output format with Pydantic:
+                    为了得到稳定一致的结果，你可以用 Pydantic 来定义产出的格式：
                 </p>
 
                 <pre><code><span class="code-keyword">from</span> pydantic <span class="code-keyword">import</span> BaseModel
@@ -389,40 +389,40 @@ plan_task = Task(
     <span class="code-string">agent</span>=planner
 )</code></pre>
 
-                <h2>Key Learnings</h2>
+                <h2>关键心得</h2>
 
                 <blockquote>
-                    "A well-assembled agent team significantly outperforms a single 'super agent' on complex tasks."
+                    "在复杂任务上，一支精心组建的智能体团队会明显胜过单个'超级智能体'。"
                 </blockquote>
 
-                <h3>1. Define Specific Roles</h3>
+                <h3>1. 定义具体的角色</h3>
                 <p>
-                    Generic roles like "Researcher" lead to generic results. "Senior Financial Analyst focused on tech startups" delivers significantly better outputs.
+                    像"研究员"这样宽泛的角色只会带来宽泛的结果。"专注于科技初创公司的高级金融分析师"则能给出好得多的产出。
                 </p>
 
-                <h3>2. Clearly Delineate Tasks</h3>
+                <h3>2. 清晰地划分任务</h3>
                 <p>
-                    Each task should have a clear goal and a defined output. Overlaps lead to duplicates and inconsistencies.
+                    每个任务都应当有明确的目标和确定的产出。任务之间的重叠会导致重复和不一致。
                 </p>
 
-                <h3>3. Assign Tools Deliberately</h3>
+                <h3>3. 有意识地分配工具</h3>
                 <p>
-                    Not every agent needs all tools. An editor doesn't need web search. A researcher doesn't need file writing. Less is often more.
+                    并非每个智能体都需要所有工具。编辑不需要网页搜索，研究员不需要写文件。往往越少反而越好。
                 </p>
 
-                <h3>4. Plan for Iteration</h3>
+                <h3>4. 为迭代留出空间</h3>
                 <p>
-                    Multi-agent systems require tuning. Start with a simple setup and expand gradually based on the results.
+                    多智能体系统需要不断调优。先从一个简单的配置起步，再根据结果逐步扩展。
                 </p>
 
-                <h2>Conclusion</h2>
+                <h2>结语</h2>
                 <p>
-                    CrewAI makes it easy to transition from individual agents to collaborative teams. The key lies in carefully defining roles, tasks, and workflows. Think like a manager assembling a team, and you will build AI systems that reliably solve complex tasks.
+                    CrewAI 让你能轻松地从单个智能体过渡到协作团队。关键在于用心去定义角色、任务和工作流程。像一位组建团队的管理者那样思考，你就能构建出可靠解决复杂任务的 AI 系统。
                 </p>
 
                 <hr style="border-color: #374151; margin: 2rem 0;">
 
-                <p><strong>Tools used:</strong></p>
+                <p><strong>用到的工具：</strong></p>
                 <div style="margin: 1rem 0;">
                     <a href="https://github.com/crewAIInc/crewAI" target="_blank" rel="noopener noreferrer" class="tool-badge">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
@@ -434,35 +434,35 @@ plan_task = Task(
                 </div>
 
                 <p>
-                    Planning a multi-agent system? <a href="../../../index.html#contact">Get in touch</a>, I'm happy to help with architecture and implementation.
+                    正在规划一套多智能体系统？<a href="../../../index.html#contact">联系我</a>，我很乐意在架构设计和落地实现上帮上忙。
                 </p>
 
     </article>
 
     <!-- Author share + related posts -->
     <div class="art-share">
-      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
-      <a href="../../../index.html#contact" class="btn btn--pri">WORK WITH ME ▸</a>
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI 智能体专家 · 博登湖地区</span></div></div>
+      <a href="../../../index.html#contact" class="btn btn--pri">与我合作 ▸</a>
     </div>
     <section class="art-more">
       <div class="wrap">
-        <div class="art-more__head"><h2>More field notes</h2><a href="../../en/">ALL POSTS ▸</a></div>
+        <div class="art-more__head"><h2>更多现场笔记</h2><a href="../../zh/">所有文章 ▸</a></div>
         <div class="art-more__grid" id="art-more-grid"></div>
       </div>
     </section>
 
     <!-- Related posts (internal cross-links for crawl equity) -->
     <nav class="related-posts" aria-label="Related posts">
-        <p class="related-posts__heading">// Related posts</p>
+        <p class="related-posts__heading">// 相关文章</p>
         <div class="related-posts__grid">
                 <a class="related-posts__card" href="ki-agenten-workflows-superpowers.html">
-                    <span class="related-posts__card-title">Superpowers: How AI Agents Learn to Work Like Real Teams</span>
+                    <span class="related-posts__card-title">Superpowers：AI 智能体如何学会像真正的团队一样工作</span>
                 </a>
                 <a class="related-posts__card" href="openclaw-vs-nemoclaw.html">
-                    <span class="related-posts__card-title">OpenClaw vs. NemoClaw: Why the Question Is Wrong</span>
+                    <span class="related-posts__card-title">OpenClaw vs. NemoClaw：为什么这个问题本身就问错了</span>
                 </a>
                 <a class="related-posts__card" href="legal-ai-knowledge-base-docling.html">
-                    <span class="related-posts__card-title">From PDF Chaos to Precise Legal AI: How We Structured 1000+ Documents with Docling</span>
+                    <span class="related-posts__card-title">从 PDF 乱局到精准的法律 AI：我们如何用 Docling 结构化了 1000+ 份文档</span>
                 </a>
         </div>
     </nav>

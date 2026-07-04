@@ -1,31 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" id="html-root">
+<html lang="zh" id="html-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLAUDE.md With 25,000 Stars: Karpathy's AI Rules</title>
-    <meta name="description" content="How a single Markdown file distilling Andrej Karpathy's observations about LLM failure modes became the most-starred repository in the Claude Code ecosystem – and what holds up in practice.">
-    <link rel="canonical" href="https://waiser.dev/blog/posts/en/karpathy-claude-md.html">
+    <title>Karpathy 的 CLAUDE.md：把上下文当作一等公民</title>
+    <meta name="description" content="Andrej Karpathy 如何用 CLAUDE.md 引导智能体编码——以及为何一份精心编写的上下文文件胜过更聪明的提示。">
+    <link rel="canonical" href="https://waiser.dev/blog/posts/zh/karpathy-claude-md.html">
     <link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/karpathy-claude-md.html">
     <link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/karpathy-claude-md.html">
     <link rel="alternate" hreflang="zh" href="https://waiser.dev/blog/posts/zh/karpathy-claude-md.html">
     <link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/karpathy-claude-md.html">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="A CLAUDE.md With 25,000 Stars: Karpathy's Coding Rules for AI Agents">
-    <meta property="og:description" content="How a single Markdown file distilling Andrej Karpathy's observations about LLM failure modes became the most-starred repository in the Claude Code ecosystem – and what holds up in practice.">
-    <meta property="og:url" content="https://waiser.dev/blog/posts/en/karpathy-claude-md.html">
+    <meta property="og:title" content="Karpathy 的 CLAUDE.md：把上下文当作一等公民">
+    <meta property="og:description" content="Andrej Karpathy 如何用 CLAUDE.md 引导智能体编码——以及为何一份精心编写的上下文文件胜过更聪明的提示。">
+    <meta property="og:url" content="https://waiser.dev/blog/posts/zh/karpathy-claude-md.html">
     <meta property="og:image" content="https://waiser.dev/og-default.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="A CLAUDE.md With 25,000 Stars: Karpathy's Coding Rules for AI Agents">
-    <meta name="twitter:description" content="How a single Markdown file distilling Andrej Karpathy's observations about LLM failure modes became the most-starred repository in the Claude Code ecosystem – and what holds up in practice.">
+    <meta name="twitter:title" content="Karpathy 的 CLAUDE.md：把上下文当作一等公民">
+    <meta name="twitter:description" content="Andrej Karpathy 如何用 CLAUDE.md 引导智能体编码——以及为何一份精心编写的上下文文件胜过更聪明的提示。">
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "BlogPosting",
-      "headline": "A CLAUDE.md With 25,000 Stars: Karpathy's Coding Rules for AI Agents",
-      "description": "How a single Markdown file distilling Andrej Karpathy's observations about LLM failure modes became the most-starred repository in the Claude Code ecosystem – and what holds up in practice.",
+      "headline": "Karpathy 的 CLAUDE.md：把上下文当作一等公民",
+      "description": "Andrej Karpathy 如何用 CLAUDE.md 引导智能体编码——以及为何一份精心编写的上下文文件胜过更聪明的提示。",
       "datePublished": "2026-04-10",
       "author": {
         "@type": "Person",
@@ -35,10 +35,10 @@
       "image": "https://waiser.dev/og-default.png",
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://waiser.dev/blog/posts/en/karpathy-claude-md.html"
+        "@id": "https://waiser.dev/blog/posts/zh/karpathy-claude-md.html"
       },
-      "inLanguage": "en",
-      "@id": "https://waiser.dev/blog/posts/en/karpathy-claude-md.html#article",
+      "inLanguage": "zh",
+      "@id": "https://waiser.dev/blog/posts/zh/karpathy-claude-md.html#article",
       "publisher": {
         "@id": "https://waiser.dev/#person"
       },
@@ -57,13 +57,13 @@
           "@type": "ListItem",
           "position": 2,
           "name": "Blog",
-          "item": "https://waiser.dev/blog/en/"
+          "item": "https://waiser.dev/blog/zh/"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "A CLAUDE.md With 25,000 Stars",
-          "item": "https://waiser.dev/blog/posts/en/karpathy-claude-md.html"
+          "item": "https://waiser.dev/blog/posts/zh/karpathy-claude-md.html"
         }
       ]
     }
@@ -156,12 +156,12 @@
     <section class="art-hero" data-screen-label="Article">
         <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
         <div class="art-hero__in">
-            <a class="art-back" href="../../en/">◄ ALL POSTS</a>
+            <a class="art-back" href="../../zh/">◄ 所有文章</a>
             <div><span class="art-cat">Claude Code</span></div>
-            <h1 class="art-title">A CLAUDE.md With 25,000 Stars</h1>
+            <h1 class="art-title">一份收获 25,000 星标的 CLAUDE.md</h1>
             <div class="art-meta">
                 <span class="who"><span class="av">NW</span> Nils Weiser</span>
-                <span class="sep">•</span><span data-art-date>Apr 14, 2026</span>
+                <span class="sep">•</span><span data-art-date>2026 年 4 月 14 日</span>
                 <span class="sep">•</span><span data-art-read>—</span>
             </div>
         </div>
@@ -170,133 +170,133 @@
 
     <!-- Article Content (Blackwall art-body) -->
     <article class="art-body">
-                <p class="lead">How a single Markdown file built from Andrej Karpathy's observations became the most-starred repo in the Claude Code ecosystem – and what actually holds up in practice.</p>
+                <p class="lead">一份仅由 Andrej Karpathy 的观察凝练而成的 Markdown 文件，如何成为 Claude Code 生态里星标最多的仓库——以及它在实践中真正站得住脚的部分。</p>
 
                 <p>
-                    A GitHub repo that contains nothing but a single <code>CLAUDE.md</code> file currently sits at over 25,000 stars. No framework, no CLI, no Python package. Just text. The project <a href="https://github.com/forrestchang/andrej-karpathy-skills" target="_blank" rel="noopener noreferrer">andrej-karpathy-skills</a> distills Andrej Karpathy's public observations on recurring LLM failure modes into four behavioral rules for Claude Code.
+                    一个除了单个 <code>CLAUDE.md</code> 文件之外什么都没有的 GitHub 仓库，目前已经斩获超过 25,000 个星标。没有框架，没有 CLI，没有 Python 包。只有文本。项目 <a href="https://github.com/forrestchang/andrej-karpathy-skills" target="_blank" rel="noopener noreferrer">andrej-karpathy-skills</a> 把 Andrej Karpathy 对反复出现的 LLM 失败模式的公开观察，提炼成给 Claude Code 的四条行为准则。
                 </p>
 
                 <p>
-                    That a Markdown file of all things gets this level of attention is no accident. It's a signal about where the real work with AI coding assistants is happening right now: not in whether the model can write code, but in how you shape its behavior so the code is actually usable.
+                    偏偏是一份 Markdown 文件获得了这样的关注度，这绝非偶然。它是一个信号，标示出当下与 AI 编码助手打交道的真正难点所在：不在于模型能不能写代码，而在于你如何塑造它的行为，让写出来的代码真正可用。
                 </p>
 
-                <h2>Karpathy's Diagnosis</h2>
+                <h2>Karpathy 的诊断</h2>
                 <p>
-                    The file picks up three observations Karpathy has made in his posts on LLM coding:
+                    这份文件承接了 Karpathy 在其关于 LLM 编码的帖子中作出的三条观察：
                 </p>
 
                 <blockquote>
-                    "The models make wrong assumptions on your behalf and just run along with them without checking. They don't manage their confusion, don't seek clarifications, don't surface inconsistencies, don't present tradeoffs, don't push back when they should."
+                    "模型会替你做出错误的假设，然后不加核实地一路照做下去。它们不去管理自己的困惑，不主动寻求澄清，不指出前后矛盾，不呈现取舍，该反驳的时候也不反驳。"
                 </blockquote>
 
                 <blockquote>
-                    "They really like to overcomplicate code and APIs, bloat abstractions, don't clean up dead code... implement a bloated construction over 1000 lines when 100 would do."
+                    "它们特别喜欢把代码和 API 搞得过于复杂，把抽象层堆得臃肿，不清理死代码……本可以用 100 行搞定，却写出一套一千多行的臃肿架构。"
                 </blockquote>
 
                 <blockquote>
-                    "They still sometimes change/remove comments and code they don't sufficiently understand as side effects, even if orthogonal to the task."
+                    "它们有时仍会作为副作用去改动或删除自己并未充分理解的注释和代码，哪怕这些与当前任务毫不相干。"
                 </blockquote>
 
                 <p>
-                    Anyone using AI assistants in production recognizes these patterns. The interesting claim the repo makes: if the mistakes are predictable, you can prevent them with the right instructions.
+                    任何在生产环境中使用 AI 助手的人都会认出这些模式。这个仓库提出的有趣论断是：如果错误是可预测的，那么用对指令就能防患于未然。
                 </p>
 
-                <h2>The Four Principles</h2>
+                <h2>四条原则</h2>
 
                 <div class="principle-card">
                     <div class="principle-header">
                         <div class="principle-number">1</div>
-                        <span class="text-white font-semibold">Think Before Coding</span>
+                        <span class="text-white font-semibold">先思考，后编码</span>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Make assumptions explicit. When something is ambiguous, name multiple interpretations instead of silently picking one. Push back if a simpler path exists. Stop and ask when unclear. The antidote to silent misinterpretation.
+                        把假设摆到明面上。遇到含糊之处，列出多种解读，而不是默不作声地挑一个。如果有更简单的路径，就提出反对。不清楚时就停下来发问。这是对付「悄无声息误读」的解药。
                     </p>
                 </div>
 
                 <div class="principle-card">
                     <div class="principle-header">
                         <div class="principle-number">2</div>
-                        <span class="text-white font-semibold">Simplicity First</span>
+                        <span class="text-white font-semibold">简单优先</span>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Only the code that solves the problem. No features that weren't asked for. No abstractions for single-use code. No "flexibility" on speculation. No error handling for impossible cases. If 200 lines could be 50, rewrite it.
+                        只写能解决问题的代码。不添加没人要求的功能。不为一次性代码搞抽象。不为臆想的场景预留「灵活性」。不为不可能发生的情况写错误处理。如果 200 行能压缩成 50 行，就重写它。
                     </p>
                 </div>
 
                 <div class="principle-card">
                     <div class="principle-header">
                         <div class="principle-number">3</div>
-                        <span class="text-white font-semibold">Surgical Changes</span>
+                        <span class="text-white font-semibold">外科手术式改动</span>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Touch only what you must. Match the existing style even if you'd do it differently. No "cleanup" at the edges of the task. Every changed line must trace back to the user's request.
+                        只碰非改不可的地方。即便你会用别的写法，也要匹配现有风格。不要在任务边缘顺手「清理」。每一行改动都必须能追溯回用户的请求。
                     </p>
                 </div>
 
                 <div class="principle-card">
                     <div class="principle-header">
                         <div class="principle-number">4</div>
-                        <span class="text-white font-semibold">Goal-Driven Execution</span>
+                        <span class="text-white font-semibold">目标驱动的执行</span>
                     </div>
                     <p class="text-gray-300 text-sm">
-                        Success criteria before code. "Fix the bug" becomes "write a test that reproduces it, then make it pass". Strong criteria let the model iterate on its own. Weak criteria ("make it work") force constant back-and-forth.
+                        先定义成功标准，再写代码。「修复这个 bug」要变成「先写一个能复现它的测试，再让它通过」。强标准让模型能自行迭代。弱标准（「让它跑起来」）则逼得你来回反复沟通。
                     </p>
                 </div>
 
-                <h2>What the File Actually Solves – and What It Doesn't</h2>
+                <h2>这份文件真正解决了什么——又没能解决什么</h2>
 
                 <p>
-                    The principles address real, recurring failure modes. Rule 3 alone saves significant time in practice: once you've watched an agent fix a typo and "improve" half the file's formatting in passing, you understand why surgical precision needs to be a principle.
+                    这些原则针对的是真实、反复出现的失败模式。仅第 3 条在实践中就能省下大量时间：一旦你亲眼见过智能体修一个错别字、顺手把半个文件的格式「优化」了一遍，你就会明白为什么外科手术般的精准需要被立为一条原则。
                 </p>
 
                 <p>
-                    At the same time, a <code>CLAUDE.md</code> is not a cure-all. The rules are generic. They know nothing about your architecture, your tests, your deployment pipeline. For more complex tasks – PDF processing, browser automation, domain-specific workflows – four abstract principles aren't enough. That's where the more structured <a href="claude-code-skills.html">Claude Code Skills</a> come in, loaded on demand with concrete tools and scripts.
+                    与此同时，一份 <code>CLAUDE.md</code> 并非包治百病。这些规则是通用的。它们对你的架构、你的测试、你的部署流水线一无所知。对于更复杂的任务——PDF 处理、浏览器自动化、特定领域的工作流——四条抽象原则远远不够。这正是结构更完整的 <a href="claude-code-skills.html">Claude Code Skills</a> 登场的地方：按需加载，配有具体的工具和脚本。
                 </p>
 
-                <h2>CLAUDE.md vs. Skills: When to Use Which</h2>
+                <h2>CLAUDE.md 与 Skills：何时用哪个</h2>
 
                 <div class="comparison-box">
                     <div class="comparison-item">
                         <h4>CLAUDE.md</h4>
                         <ul class="text-gray-400 text-sm space-y-2">
-                            <li>• Always in context</li>
-                            <li>• General behavior</li>
-                            <li>• Project-wide</li>
-                            <li>• Best for style, discipline, do's and don'ts</li>
+                            <li>• 始终在上下文中</li>
+                            <li>• 通用行为</li>
+                            <li>• 覆盖整个项目</li>
+                            <li>• 最适合风格、纪律、该做与不该做的事</li>
                         </ul>
                     </div>
                     <div class="comparison-item">
                         <h4>Skills</h4>
                         <ul class="text-gray-400 text-sm space-y-2">
-                            <li>• Loaded on demand</li>
-                            <li>• Concrete workflows</li>
-                            <li>• Task-specific</li>
-                            <li>• Best for tools, scripts, specific domains</li>
+                            <li>• 按需加载</li>
+                            <li>• 具体的工作流</li>
+                            <li>• 针对特定任务</li>
+                            <li>• 最适合工具、脚本、特定领域</li>
                         </ul>
                     </div>
                 </div>
 
                 <p>
-                    The two mechanisms aren't mutually exclusive. The opposite: a lean <code>CLAUDE.md</code> with behavioral rules plus a set of Skills for the actual tooling is the setup that has been working most reliably in my projects. The file keeps the agent from overstepping. The Skills give it the concrete capabilities it needs for each task.
+                    这两种机制并不互斥。恰恰相反：一份精简、只写行为准则的 <code>CLAUDE.md</code>，再加上一组负责实际工具能力的 Skills，正是在我的项目中运行得最稳定可靠的搭配。文件让智能体不越界，Skills 则为它提供每项任务所需的具体能力。
                 </p>
 
-                <h2>Why 25,000 Stars</h2>
+                <h2>为什么是 25,000 星标</h2>
 
                 <p>
-                    The success of this repo tells a story bigger than the file itself. Developers are shifting focus. "Use AI to write code" was the phase of the last two years. "Shape the AI's behavior so the code is actually good" is the phase we're entering now.
-                </p>
-
-                <p>
-                    The tool for that turns out to be surprisingly plain: text. A clear instruction, a well-formulated principle, an explicit success test often do more than the next framework. The best tools in the Claude Code ecosystem right now aren't software. They're well-crafted instructions.
+                    这个仓库的成功，讲述的是一个比文件本身更大的故事。开发者们正在转移重心。「用 AI 来写代码」是过去两年的阶段。「塑造 AI 的行为，让代码真正过硬」则是我们正在步入的阶段。
                 </p>
 
                 <p>
-                    If you work with AI agents in production, don't treat <code>CLAUDE.md</code> as optional docs. Treat it as part of the architecture. What goes into it co-decides what ends up in the repository.
+                    而实现这一点的工具，结果出人意料地朴素：文本。一条清晰的指令、一条措辞得当的原则、一项明确的成功检验，往往胜过下一个框架。眼下 Claude Code 生态里最好的工具并不是软件，而是精心打磨的指令。
+                </p>
+
+                <p>
+                    如果你在生产环境中与 AI 智能体协作，别把 <code>CLAUDE.md</code> 当作可有可无的文档。要把它当作架构的一部分。写进它里面的内容，共同决定了最终会落进仓库里的东西。
                 </p>
 
                 <hr style="border-color: #374151; margin: 2rem 0;">
 
-                <p><strong>Tools used:</strong></p>
+                <p><strong>使用的工具：</strong></p>
                 <div style="margin: 1rem 0;">
                     <a href="https://claude.ai/code" target="_blank" rel="noopener noreferrer" class="tool-badge">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
@@ -304,40 +304,40 @@
                     </a>
                     <a href="https://github.com/forrestchang/andrej-karpathy-skills" target="_blank" rel="noopener noreferrer" class="tool-badge">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-                        GitHub Repo
+                        GitHub 仓库
                     </a>
                 </div>
 
                 <p>
-                    Working on AI-assisted development workflows and wondering how to get your agents' behavior reliably under control? <a href="../../../index.html#contact">Let's talk</a>. I help build CLAUDE.md and Skill setups that actually work in real projects.
+                    正在打磨 AI 辅助的开发工作流，却苦于不知如何把智能体的行为稳稳地掌控起来？<a href="../../../index.html#contact">聊聊吧</a>。我帮你搭建在真实项目中真正管用的 CLAUDE.md 与 Skill 配置。
                 </p>
 
     </article>
 
     <!-- Author share + related posts -->
     <div class="art-share">
-      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
-      <a href="../../../index.html#contact" class="btn btn--pri">WORK WITH ME ▸</a>
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI 智能体专家 · 博登湖地区</span></div></div>
+      <a href="../../../index.html#contact" class="btn btn--pri">与我合作 ▸</a>
     </div>
     <section class="art-more">
       <div class="wrap">
-        <div class="art-more__head"><h2>More field notes</h2><a href="../../en/">ALL POSTS ▸</a></div>
+        <div class="art-more__head"><h2>更多现场笔记</h2><a href="../../zh/">所有文章 ▸</a></div>
         <div class="art-more__grid" id="art-more-grid"></div>
       </div>
     </section>
 
     <!-- Related posts (internal cross-links for crawl equity) -->
     <nav class="related-posts" aria-label="Related posts">
-        <p class="related-posts__heading">// Related posts</p>
+        <p class="related-posts__heading">// 相关文章</p>
         <div class="related-posts__grid">
                 <a class="related-posts__card" href="anthropic-skills-guide.html">
-                    <span class="related-posts__card-title">Anthropic&#x27;s 33-Page Blueprint for Claude Skills</span>
+                    <span class="related-posts__card-title">Anthropic 为 Claude Skills 打造的 33 页蓝图</span>
                 </a>
                 <a class="related-posts__card" href="claude-code-skills.html">
-                    <span class="related-posts__card-title">Claude Code Skills: The MCP Killer?</span>
+                    <span class="related-posts__card-title">Claude Code Skills：MCP 杀手？</span>
                 </a>
                 <a class="related-posts__card" href="ki-agenten-workflows-superpowers.html">
-                    <span class="related-posts__card-title">Superpowers: How AI Agents Learn to Work Like Real Teams</span>
+                    <span class="related-posts__card-title">Superpowers：AI 智能体如何学会像真正的团队一样协作</span>
                 </a>
         </div>
     </nav>

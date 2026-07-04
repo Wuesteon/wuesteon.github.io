@@ -41,7 +41,7 @@ schema and the Ingest/Query/Lint workflows.
   Tailwind compile (posts/legal only).
 - [[runtime-component-injection]] — Header/footer/back-to-top are placeholders swapped on
   `DOMContentLoaded` with Blackwall `.nav`/`.foot` markup, link paths derived from URL depth.
-- [[i18n]] — Bilingual DE/EN: in-place `data-i18n` swaps (+ `data-i18n-html`/`data-i18n-attr`) for
+- [[i18n]] — Trilingual DE/EN/中文: in-place `data-i18n` swaps (+ `data-i18n-html`/`data-i18n-attr`) for
   UI, mirrored file trees + redirects (with a 4-entry `slugMap`) for the blog.
 - [[geo-ai-citation]] — `llms.txt` + `llms-full.txt` + per-post JSON-LD for AI-assistant citation
   (repositioned to AI Agent / AI Security), distinct from Google SEO.
@@ -57,14 +57,14 @@ schema and the Ingest/Query/Lint workflows.
   (`index.html`).
 - [[shared-components]] — Runtime-injected Blackwall `.nav`/`.foot`/back-to-top with the
   red-umbrella mark and auto base-path detection (`js/components.js`).
-- [[i18n-system]] — DE/EN translation dictionary (~70 new `bw.*` keys) + language toggle +
+- [[i18n-system]] — DE/EN/中文 translation dictionary (~70 `bw.*` keys, zh added 2026-07-04, EN fallback) + 3-way language selector +
   `onLanguageChange` hook + cross-language blog redirects/`slugMap` (`js/translations.js`).
 - [[main-interactions]] — The Blackwall behavioral layer across three files: `js/site.js` (the
   `POSTS` array, card/feed rendering, client marquee + AI scan beam, GSAP choreography, mobile
   drawer, living-button upgrader), `js/extras.js` (hero terminal typer + the client-side simulated
   Agent Opportunity Scan, bilingual, `// BACKEND HOOK`), and a thin `js/main.js` (i18n init +
   delegated lang-toggle wiring).
-- [[blog-system]] — Bilingual blog: parallel DE/EN index pages + 16 posts per language (32 total)
+- [[blog-system]] — Trilingual blog: parallel DE/EN/中文 index pages + 16 posts per language (48 total)
   in the `.art-*` article layout (`blog/`).
 - [[blackhole-effect]] — Canvas-2D "page destruction" particle singularity (`blackhole/`).
 - [[easter-egg]] — Standalone Rilke "Der Panther" experience, noindexed (`easter-egg/`).

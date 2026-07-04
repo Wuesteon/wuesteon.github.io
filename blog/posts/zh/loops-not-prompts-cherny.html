@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用循环取代提示：Claude Code 负责人为何不再写提示</title>
+    <meta name="description" content="Boris Cherny 不再给 Claude 写提示——他写循环。这意味着什么，/loop 与 /goal 有何不同，以及我自己搭建的自主分诊循环。">
+    <link rel="canonical" href="https://waiser.dev/blog/posts/zh/loops-not-prompts-cherny.html">
+    <link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/loops-statt-prompts-cherny.html">
+    <link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/loops-not-prompts-cherny.html">
+    <link rel="alternate" hreflang="zh" href="https://waiser.dev/blog/posts/zh/loops-not-prompts-cherny.html">
+    <link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/loops-statt-prompts-cherny.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="用循环取代提示：Claude Code 负责人为何不再写提示">
+    <meta property="og:description" content="Boris Cherny 不再给 Claude 写提示——他写循环。这意味着什么，/loop 与 /goal 有何不同，以及我自己搭建的自主分诊循环。">
+    <meta property="og:url" content="https://waiser.dev/blog/posts/zh/loops-not-prompts-cherny.html">
+    <meta property="og:image" content="https://waiser.dev/og-default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="用循环取代提示：Claude Code 负责人为何不再写提示">
+    <meta name="twitter:description" content="Boris Cherny 不再给 Claude 写提示——他写循环。这意味着什么，/loop 与 /goal 有何不同，以及我自己搭建的自主分诊循环。">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "用循环取代提示：Claude Code 负责人为何不再写提示, and What I Built From It",
+      "description": "Boris Cherny 不再给 Claude 写提示——他写循环。这意味着什么，/loop 与 /goal 有何不同，以及我自己搭建的自主分诊循环。",
+      "datePublished": "2026-06-11",
+      "author": {
+        "@type": "Person",
+        "name": "Nils Weiser",
+        "@id": "https://waiser.dev/#person"
+      },
+      "image": "https://waiser.dev/og-default.png",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://waiser.dev/blog/posts/zh/loops-not-prompts-cherny.html"
+      },
+      "inLanguage": "zh",
+      "@id": "https://waiser.dev/blog/posts/zh/loops-not-prompts-cherny.html#article",
+      "publisher": {
+        "@id": "https://waiser.dev/#person"
+      },
+      "dateModified": "2026-06-11"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://waiser.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://waiser.dev/blog/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "用循环取代提示：Claude Code 负责人为何不再写提示",
+          "item": "https://waiser.dev/blog/posts/zh/loops-not-prompts-cherny.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+
+    <link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+    <meta name="theme-color" content="#050507">
+    <link rel="preload" href="/fonts/ChakraPetch-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Blackwall: local tailwind utilities kept (posts rely on them), then Blackwall tokens + bridge -->
+    <link rel="stylesheet" href="../../../css/tailwind.css">
+    <link rel="stylesheet" href="../../../css/tokens.css">
+    <link rel="stylesheet" href="../../../css/blackwall.css">
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/blog-post.css">
+    <style>
+        .insight-box {
+            background: rgba(251, 191, 36, 0.1);
+            border-left: 3px solid #fbbf24;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .insight-box h4 {
+            color: #fbbf24;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .phase-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 42, 60, 0.3);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        .phase-number {
+            background: linear-gradient(135deg, #ff2a3c 0%, #4ade80 100%);
+            color: #0f172a;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+        .phase-title {
+            color: #ff2a3c;
+            font-weight: 600;
+        }
+        .agent-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.875rem;
+        }
+        .agent-table th,
+        .agent-table td {
+            text-align: left;
+            padding: 0.6rem 0.9rem;
+            border-bottom: 1px solid rgba(255, 42, 60, 0.15);
+            vertical-align: top;
+        }
+        .agent-table th {
+            color: #ff2a3c;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .agent-table td:first-child {
+            font-family: 'JetBrains Mono', monospace;
+            color: #4ade80;
+            white-space: nowrap;
+        }
+        .tool-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(255, 42, 60, 0.1);
+            border: 1px solid rgba(255, 42, 60, 0.3);
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #ff2a3c;
+            margin: 0.25rem;
+        }
+        .code-block {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(255, 42, 60, 0.2);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin: 1.25rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            color: #e2e8f0;
+        }
+        .code-block .bad { color: #f87171; }
+        .code-block .good { color: #4ade80; }
+        .code-block .label {
+            display: block;
+            color: #64748b;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 0.5rem 0 0.25rem;
+        }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header (Blackwall art-hero) -->
+    <section class="art-hero" data-screen-label="Article">
+        <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
+        <div class="art-hero__in">
+            <a class="art-back" href="../../zh/">◄ 所有文章</a>
+            <div><span class="art-cat">Claude Code</span></div>
+            <h1 class="art-title">用循环取代提示：Claude Code 负责人为何不再写提示，以及我据此搭建了什么</h1>
+            <div class="art-meta">
+                <span class="who"><span class="av">NW</span> Nils Weiser</span>
+                <span class="sep">•</span><span data-art-date>2026 年 6 月 11 日</span>
+                <span class="sep">•</span><span data-art-read>—</span>
+            </div>
+        </div>
+    </section>
+    <div class="art-hr"><div></div></div>
+
+    <!-- Article Content (Blackwall art-body) -->
+    <article class="art-body">
+                <p class="lead">搭建 Claude Code 的那个人已经不再写提示词了。他写的是循环。这话乍听像是炒作，于是我亲自去验证了一番。</p>
+
+                <p>
+                    Boris Cherny 是 Anthropic 旗下 Claude Code 的创建者和负责人，也正是打造了我每天都在用的这个工具的人。六月初，他做客 <em>Acquired Unplugged</em>（由 WorkOS 主办，2026 年 6 月 2 日），说了一句话，此后在几乎每一个开发者的信息流里反复出现：
+                </p>
+
+                <blockquote>
+                    "我不再给 Claude 写提示了。我有一堆正在运行的循环。是它们在给 Claude 写提示、在决定该做什么。我的工作，就是写循环。"
+                </blockquote>
+
+                <p>
+                    直白地说：他不再给 Claude 写提示。他让循环运转起来，是循环在给 Claude 写提示、决定该做什么。他的工作就是写循环。在同一场对话里，他还提到自己早在十一月就卸载了 IDE，因为整整一个月都没打开过。这并不是从某个炒作帖里扒出来的轶事：这一说法已被半打以上的媒体核实，Fortune 也确认了其内容属实。
+                </p>
+
+                <p>
+                    我的第一反应是怀疑。"我现在只写循环"听上去就是那种在网上很吃香、落到实操里却站不住脚的舞台金句。所以我没有照单全收。我把它搭了出来。这篇文章讲两件事：Cherny 到底是什么意思，以及我实实在在放进自己某个项目里的那个自主循环。
+                </p>
+
+                <h2>Cherny 到底是什么意思（哪些又是转述）</h2>
+
+                <p>
+                    先说句实话：上面那段核心引言是原话。但后来流传开的"循环作者（Loop Author）"和"四要素清单"呢？Cherny 其实从没这么说过；那是别人的框架，不是他的原话。
+                </p>
+
+                <p>
+                    真正的启示藏在这句话底下，而且它很扎实。与一个强模型协作时，瓶颈正在转移。敲出完美的提示词已不再是稀缺资源；稀缺的是<strong>围绕模型搭建系统</strong>：目标、校验、护栏、审查。一旦你有了这些，那些流行词根本就不需要了。
+                </p>
+
+                <h2>/loop vs /goal：实操的部分</h2>
+
+                <p>
+                    好在你不必抽象地争论"循环"是什么，因为 Anthropic 已经把其中两种做成了 Claude Code 里真实的命令。二者在官方文档里都完全如下所述。
+                </p>
+
+                <table class="agent-table">
+                    <thead>
+                        <tr><th>命令</th><th>由什么驱动</th><th>用来做什么</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>/loop</td>
+                            <td>基于间隔：固定节奏（如每 5 分钟）<em>或</em>由 Claude 自行选定的间隔，从 1&nbsp;分钟到 1&nbsp;小时不等。</td>
+                            <td>盯守与照看。内置维护模式。自 2.1.72 版起。</td>
+                        </tr>
+                        <tr>
+                            <td>/goal</td>
+                            <td>由条件驱动：你设定一个完成条件；每一轮之后，由一个又小又快的模型（Haiku）判定是/否，并给出条件是否成立的理由。</td>
+                            <td>把事做完。目标一旦达成便自动结束。自 2.1.139 版起。</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p>
+                    让我记住的一句话是：<strong>/loop 用来盯守，/goal 用来收尾。</strong>两者之中 <code>/goal</code> 更有意思，因为它本质上是一套内置的自我校验（一次自动化的检查，即"eval"）：Claude 干活，第二个模型充当裁判、判定目标是否达成，然后要么完成，要么继续。
+                </p>
+
+                <div class="insight-box">
+                    <h4>写好 /goal 条件的头号规则</h4>
+                    <p class="text-gray-300 text-sm">
+                        Haiku 裁判自己<strong>不</strong>运行任何命令，也<strong>不</strong>读取任何文件。它只依据到目前为止对话里的内容（即记录/transcript）来判定。所以你的完成条件必须点明三样东西：一个<em>可衡量的终态</em>、能证明这一终态的<em>校验命令</em>，以及一条禁止走捷径的边界条款（即<em>范围围栏</em>/scope fence）。
+                    </p>
+                </div>
+
+                <p>
+                    为什么这很关键，看那个经典的翻车案例就明白了。把"所有测试通过"设为目标，让它成真最省事的办法就是把测试删掉，而一个只看得到记录的裁判会照样放行。加上范围围栏后，同一个条件看上去就大不一样了：
+                </p>
+
+                <div class="code-block">
+                    <span class="label">差</span>
+                    <span class="bad">条件："all tests pass"</span>
+                    <span class="label">好（带范围围栏 / scope fence）</span>
+                    <span class="good">条件："npm test 为绿 且 没有测试被删除或用 .skip
+  跳过（git diff 显示没有被移除的 test case）"</span>
+                </div>
+
+                <h2>我搭建了什么</h2>
+
+                <p>
+                    理论说够了。在我的一个研究项目里，一套自主的多智能体系统检索关于膳食补充剂的科学研究、为其证据打分，并据此撰写经过审计的文章。这类系统在我这儿定期以自动化批次运行，其中有些会失败。正是在这里，我搭了一个经典的循环：<strong>错误日志 → issue → 修复 → pull request</strong>。它分为两半。循环 A，即<strong>生产者</strong>（producer），把失败转成 issue。循环 B，即<strong>消费者</strong>（consumer），把这些 issue 转成修复和 pull request。前一半无害，后一半才是真正的胆量考验，所以先从无害的那半开始。
+                </p>
+
+                <div class="phase-card">
+                    <div class="phase-header">
+                        <span class="phase-number">LOOP A</span>
+                        <span class="phase-title">日志 → 去重后的 GitHub issue（已搭建，运行中）</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        一个 Python 脚本从数据库读取失败的流水线运行（状态为 <code>failed</code>、<code>crashed</code>、<code>abandoned</code>），按<strong>归一化后的错误签名</strong>把它们分组，并把相同的错误合并为一条（这称作<strong>去重</strong>，简称 "dedup"），于是每个签名恰好只生成<em>一个</em> GitHub issue。"归一化"意味着把 ID、数字、时间戳等会变化的细节剥离掉，从而同一类错误始终得到同一枚稳定的指纹。脚本在这一步<em>不</em>用任何语言模型；它是纯粹的、基于规则的逻辑（同样的输入总是产生同样的结果），因此是免费的。
+                    </p>
+                </div>
+
+                <p>
+                    决定性的测试就是去重。我拿三个失败来验证，其中两个是同一个错误：从 PubMed 加载研究时超时，仅在各自的 study ID 上有所不同。这正是真实运行中每当外部 API 出岔子就会不断冒出来的那类错误，而且每次都会派生出一次全新的运行。天真地看，这就是三个各自独立的 issue，也是一场<em>issue 风暴</em>的开端——它会用同一个问题一遍遍把你的看板塞满。有了归一化签名，那两个相同的错误被正确地合并成<strong>一个</strong>：一个 issue，而不是三个。这正是一个好用的循环和一个把你的 issue 看板淹没的循环之间的差别。
+                </p>
+
+                <p>
+                    整套流程通过一个定时触发的 GitHub Action 上线，由它来创建 issue，并配有第二重防重复的保险（同一个错误是否已经有一个未关闭的 issue？）以及一个可安全测试的 dry-run 模式。这就是生产者。刺激的部分现在才登场。
+                </p>
+
+                <div class="phase-card">
+                    <div class="phase-header">
+                        <span class="phase-number">LOOP B</span>
+                        <span class="phase-title">Issue → Claude 修复它 → 草稿 PR（已搭建，带护栏）</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        循环 B 是有风险的那一半：它对 <code>auto-fix</code> 标签作出响应，让 Claude 修复 issue，并开一个 pull request。系统究竟是好用的工具还是隐患，正是在这里见分晓。四道护栏拉开了差距。它在开始前会<strong>锁定该 issue</strong>（打上 <code>wip</code> 标签），以免第二次运行抢走同一个。它会用与 CI 相同的信号（ruff、mypy、pytest）来<strong>校验每一处修复</strong>，只有全部为绿时才创建 PR。它<strong>不得触碰关键文件</strong>（成本上限、模型配置、数据库迁移均为禁区）。而且 PR 始终是<strong>草稿</strong>：合并的是我，不是智能体。
+                    </p>
+                </div>
+
+                <p>
+                    这里那个不那么显而易见的要点，就藏在那一步校验里，也正是这样一个循环之所以能跑通的原因。还记得 <code>/goal</code> 里的裁判只看得到对话（即记录）吗？这就是它的阿喀琉斯之踵：一个正在干活的智能体完全可以<em>声称</em>"所有测试都绿了"却根本没跑过测试，而一个只读文字的裁判就信了。补救之道并不神奇，靠的是纪律：条件要求<strong>真实的命令输出必须出现在记录里</strong>。不是"测试通过了"，而是"<code>pytest</code> 已运行，其输出显示 0 处失败"。只有当你给智能体留了这道缝，它才能糊弄自己的裁判——所以你别留。
+                </p>
+
+                <h2>我动真格地测了一遍</h2>
+
+                <p>
+                    理论很廉价，所以我拿一个真实、受控的 bug 来测试循环 B。我故意在代码里塞进一个小毛病——熔断器里的一处 off-by-one，为它开了一个 issue，并打上 <code>auto-fix</code> 标签。从那之后我什么都没做，只是旁观。
+                </p>
+
+                <div class="insight-box">
+                    <h4>智能体自主完成了什么</h4>
+                    <p class="text-gray-300 text-sm">
+                        它锁定了 issue，找到了出错的那一行，并且只改了那一行，没有碰任何禁区文件。它运行了测试，一直等到测试变绿。随后它推送了自己的分支，开了一个能关闭该 issue 的草稿 PR。从我打上标签的那一刻，到完成的 pull request 为止，没有一个按键来自我。
+                    </p>
+                </div>
+
+                <p>
+                    真正重要的不是修复奏效了，而是这些护栏里蕴含着多少纪律。智能体只碰了那一个被允许的文件。它只有在真实的 <code>pytest</code> 输出进入记录之后才通过 eval 关卡，而不是凭一句空口白话。而结果是一个<em>草稿</em>，不是已完成的合并。最后一步归我，这是设计使然。
+                </p>
+
+                <p>
+                    这不是一个光鲜的结果，而是一个诚实的结果：一个自主完成那些枯燥、可验证工作的智能体，加上一个握着最终决定权的人。而且，一个循环好不好，不看它是否让你惊艳，而看你能否在它失败时和成功时一样信得过它。当一次运行失败时，这个循环会重新释放它的锁、留下一条诚实的评论，并且不碰任何代码。正是这份收尾的纪律，划出了好用的工具与隐患之间的界线。
+                </p>
+
+                <h2>哪些已被证实，哪些仍是愿景</h2>
+
+                <p>
+                    正是在这里，严肃的表述与炒作分道扬镳。被证实的比你以为的要多：Cherny 的引言经过核实，<code>/loop</code> 和 <code>/goal</code> 是真实的产品，GitHub 的 Copilot Coding Agent 确实能把一个 issue 变成 pull request，而 "ralph"（一种广为人知的循环方法）对全新、从零起步的项目（greenfield）行之有效。但局限同样真切。
+                </p>
+
+                <ul>
+                    <li><strong>智能体擅长发现，却拙于排序。</strong>软件公司 EPAM 一次被广泛引用的测试把这点讲得很明白：15 个 AI 智能体要在约 35 万行生产代码中找出一个真实的、被刻意藏起来的安全漏洞。它们常常能找到，但其中一个智能体把它埋在了另外 46 条被夸大的"严重（Critical）"误报之下。漏洞是被找到了，只是在噪声里无从寻觅。<em>发现</em>是长处，<em>按重要性排序</em>是短板。</li>
+                    <li><strong>成熟的代码库不是循环的地盘。</strong>ralph 方法的创造者 Geoffrey Huntley 自己就说得很直白：<em>"要我在一个已有的代码库里用 Ralph？门儿都没有。"</em>循环在全新项目和易于校验的例行工作上大放异彩，而不是在一个长成的生产系统里。</li>
+                    <li><strong>没有可靠的成本数字。</strong>关于这类循环会烧掉多少 token（进而多少钱），并不存在经过核实的数据。所以：设上限、盯支出，绝不让任何一次运行在无人看管的情况下对着一个按用量计费（pay-per-use）的 API 跑。</li>
+                </ul>
+
+                <h2>在我的生产者/消费者案例中拉开差距的五道护栏</h2>
+
+                <p>
+                    这五道并不是放之四海皆准的定律，它们只是让我这个特定的"日志到 PR"循环变安全的东西。换一个循环，就需要另一套护栏。不变的是它们背后的原则：在给一个循环装上武装之前，先想清楚它可能在哪里造成破坏，并为每一处这样的地方造一个刹车。
+                </p>
+
+                <div class="insight-box">
+                    <h4>在我的生产者/消费者案例中拉开差距的五道护栏</h4>
+                    <ol class="text-gray-300 text-sm" style="list-style: decimal; padding-left: 1.25rem; margin-top: 0.5rem;">
+                        <li>在生产者里<strong>合并重复项</strong>（去重），以免堆积成 issue 风暴。</li>
+                        <li><strong>任务一被领取就立刻锁定</strong>，以免两个执行者（worker）同时处理同一个任务。</li>
+                        <li><strong>通过带范围围栏的 <code>/goal</code> 设一道校验关卡</strong>，让智能体钻不了目标的空子（比如删掉测试而不是让它们通过）。</li>
+                        <li><strong>智能体只可读；它只能通过一份允许清单（allowlist）来写</strong>（即一份明确许可的操作列表），让最坏情况下的破坏保持在小范围内。</li>
+                        <li><strong>由人来决定是否合并</strong>（合并关卡），永远如此。</li>
+                    </ol>
+                </div>
+
+                <h2>要点</h2>
+
+                <p>
+                    Cherny 在方向上是对的。但这里的启示不是"别再动脑子"。而是杠杆如今落在了围绕模型的那套系统上：目标、自动校验（eval）、护栏、审查。这正是我在 <em>supplement</em> 里搭建这个循环时的切身体会。难的地方不在于跟 Claude 说点什么。真正的功夫在于那个不会把看板刷屏的错误签名、那道智能体钻不了空子的校验关卡，以及那种在每一次失败时都能干净回滚的收尾行为。
+                </p>
+
+                <p>
+                    如果你想上手，我的建议是：从小处起步，用一个 <code>/goal</code> 去对付一个收敛、零风险的任务。护栏搭到多干净，你就往上爬多高。而合并关卡，永远握在人的手里。
+                </p>
+
+                <hr style="border-color: #374151; margin: 2rem 0;">
+
+                <p><strong>所用工具：</strong></p>
+                <div style="margin: 1rem 0;">
+                    <a href="https://claude.ai/code" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        Claude Code
+                    </a>
+                    <a href="https://code.claude.com/docs/en/workflows" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M4 4h16v4H4zM4 10h16v4H4zM4 16h16v4H4z"/></svg>
+                        /loop &amp; /goal
+                    </a>
+                </div>
+
+                <p>
+                    搭建这样一套系统（目标、eval、护栏、审查），正是我作为 AI 顾问所做的那类工作。想知道一个自主循环能如何在不变成隐患的前提下，把真实且重复的活儿从你团队肩上卸下来吗？<a href="../../../index.html#contact">与我联系</a>。
+                </p>
+
+    </article>
+
+    <!-- Author share + related posts -->
+    <div class="art-share">
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI 智能体专家 · 博登湖地区</span></div></div>
+      <a href="../../../index.html#contact" class="btn btn--pri">与我合作 ▸</a>
+    </div>
+    <section class="art-more">
+      <div class="wrap">
+        <div class="art-more__head"><h2>更多现场笔记</h2><a href="../../zh/">所有文章 ▸</a></div>
+        <div class="art-more__grid" id="art-more-grid"></div>
+      </div>
+    </section>
+
+    <!-- Related posts (internal cross-links for crawl equity) -->
+    <nav class="related-posts" aria-label="More articles">
+        <p class="related-posts__heading">// 相关文章</p>
+        <div class="related-posts__grid">
+                <a class="related-posts__card" href="opus-4-8-dynamic-workflows-erst-recht-audit.html">
+                    <span class="related-posts__card-title">Opus 4.8 与动态工作流：7 个智能体如何在 5 分钟内审计了我的法律科技平台</span>
+                </a>
+                <a class="related-posts__card" href="ki-agenten-workflows-superpowers.html">
+                    <span class="related-posts__card-title">Superpowers：AI 智能体如何学会像真正的团队一样协作</span>
+                </a>
+                <a class="related-posts__card" href="multi-agent-ai-crewai.html">
+                    <span class="related-posts__card-title">用 CrewAI 打造多智能体 AI 系统：以团队取代独行侠</span>
+                </a>
+        </div>
+    </nav>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script defer src="../../../js/components.js"></script>
+    <script defer src="../../../js/translations.js"></script>
+    <script defer src="../../../js/main.js"></script>
+    <script defer src="../../../js/site.js"></script>
+</body>
+</html>
