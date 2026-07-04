@@ -411,8 +411,8 @@ function siteLang(){ return (typeof getCurrentLang === "function" ? getCurrentLa
 /* Base path so links from /blog/ and /blog/en/ resolve to the site root. */
 function siteBase(){
   var p = location.pathname;
-  if (p.includes("/blog/posts/de/") || p.includes("/blog/posts/en/")) return "../../../";
-  if (p.includes("/blog/en/")) return "../../";
+  if (p.includes("/blog/posts/de/") || p.includes("/blog/posts/en/") || p.includes("/blog/posts/zh/")) return "../../../";
+  if (p.includes("/blog/en/") || p.includes("/blog/zh/")) return "../../";
   if (p.includes("/blog/")) return "../";
   return "";
 }
