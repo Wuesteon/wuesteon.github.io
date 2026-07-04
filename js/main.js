@@ -10,8 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // is built into the mobile drawer by site.js (runs before DOMContentLoaded).
     // Delegate so it works even if a toggle is (re)created after this runs.
     document.addEventListener('click', (e) => {
-        const t = e.target.closest('#lang-toggle, #lang-toggle-mobile');
-        if (t) setLanguage(currentLang === 'de' ? 'en' : 'de');
+        const toggle = e.target.closest('#lang-toggle, #lang-toggle-mobile');
+        if (!toggle) return;
+        const span = e.target.closest('[data-lang]');
+        if (!span) return; // clicked a separator / chrome
+        const target = span.getAttribute('data-lang');
+        if (target && target !== currentLang) setLanguage(target);
     });
 
     // Footer year (fallback if components.js didn't set it)

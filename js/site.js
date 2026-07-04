@@ -550,7 +550,7 @@ function initMobileDrawer(){
   var mtog = document.createElement("button");
   mtog.id = "lang-toggle-mobile"; mtog.className = "lang-toggle"; mtog.setAttribute("aria-label","Toggle language");
   mtog.style.cssText = "margin-top:22px;align-self:flex-start;font-family:'Space Mono',monospace;background:none;border:0;color:var(--mut);cursor:pointer";
-  mtog.innerHTML = '<span class="lang-de-indicator active">DE</span> <span style="color:var(--mut)">|</span> <span class="lang-en-indicator">EN</span>';
+  mtog.innerHTML = '<span class="lang-de-indicator active" data-lang="de">DE</span> <span style="color:var(--mut)">|</span> <span class="lang-en-indicator" data-lang="en">EN</span> <span style="color:var(--mut)">|</span> <span class="lang-zh-indicator" data-lang="zh">中文</span>';
   panel.appendChild(mtog);
 
   function open(){ overlay.classList.add("open"); burger.classList.add("open"); document.body.classList.add("mnav-lock"); burger.setAttribute("aria-expanded","true"); }
