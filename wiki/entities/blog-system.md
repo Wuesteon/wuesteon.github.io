@@ -21,7 +21,7 @@ confidence: high
 
 ## Summary
 
-Bilingual blog: parallel DE/EN Blackwall listing pages and **16 posts per language** (32 total),
+Trilingual blog: parallel DE/EN/中文 Blackwall listing pages and **16 posts per language** (48 total),
 all restyled into the `.art-*` article layout. Listings render from the `POSTS` array in
 `js/site.js`; article pages self-enhance (read-time + related posts) via `enhanceArticle()`.
 
@@ -31,13 +31,16 @@ The blog is a static, hand-authored content tree. `blog/index.html` (DE) and `bl
 (EN) are the **Blackwall listing pages** — a `.blog-hero` with a glitch `.gtext` title, a
 `.blog-filter` row of category `.chip`s (ALL · AI SECURITY · AGENTS · CLAUDE CODE · CLAUDE ·
 RESEARCH · DEVELOPMENT), and an empty `#blog-list` grid. Individual articles live as standalone
-HTML in `blog/posts/de/` and `blog/posts/en/` (16 slugs per language, e.g.
+HTML in `blog/posts/de/`, `blog/posts/en/` and `blog/posts/zh/` (16 slugs per language, e.g.
 `agent-memory-poisoning-mem0`, `loops-statt-prompts-cherny`,
 `opus-4-8-dynamische-workflows-erst-recht-audit`, `karpathy-claude-md`, `multi-agent-ai-crewai`).
+The **zh** tree reuses the **EN** filename (ASCII slug); post `<head>`s + JSON-LD are Chinese
+(`inLanguage: "zh"`), bodies translated 2026-07-04.
 
-**Data-driven listings.** Both listing grids are populated at runtime by `js/site.js`: a single
-`POSTS` array holds the 16 posts (each with `id`, `cat`, and localized `de`/`en` objects carrying
-`href`, `title`, `excerpt`, `date`, `read`). `renderBlogList()` filters by the active `.chip`
+**Data-driven listings.** All listing grids are populated at runtime by `js/site.js`: a single
+`POSTS` array holds the 16 posts (each with `id`, `cat`, and localized `de`/`en`/`zh` objects
+carrying `href`, `title`, `excerpt`, `date`, `read`; `tcardHTML`/`enhanceArticle` fall back to the
+`en` object for a missing language). `renderBlogList()` filters by the active `.chip`
 category and maps each post through `tcardHTML()` into a `.tcard` (category badge, read-time,
 title, excerpt, date, arrow). The homepage feed reuses the same array (`renderHomeFeed()`, first
 3). Clicking a chip re-filters; toggling language re-renders via the `window.onLanguageChange`

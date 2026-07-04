@@ -32,18 +32,21 @@ Marketing data, analytics, SEO assets, and growth tracking for the personal port
 
 ## SEO
 
-- **Sitemap:** `sitemap.xml` — 37 URLs (home + blog DE/EN + 16 DE + 16 EN posts +
-  datenschutz + impressum), each with `xhtml:link` hreflang alternates. Submitted
-  in Google Search Console. Preserved unchanged through the Blackwall redesign.
+- **Sitemap:** `sitemap.xml` — 54 URLs (home + blog DE/EN/中文 indexes + 16 DE + 16 EN
+  + 16 中文 posts + datenschutz + impressum), each with `xhtml:link` hreflang alternates
+  (de/en/zh/x-default). Submitted in Google Search Console. Chinese (中文) added 2026-07-04.
 - **robots.txt:** present — `Allow: /`, disallows `/easter-egg/` + `/blackhole/`,
   references the sitemap.
-- **llms.txt:** `llms.txt` (curated index of site + all posts) and `llms-full.txt`
-  (full article text inlined) at site root, referenced from `robots.txt`. For
-  AI-assistant/GEO citation, not Google indexing. Regenerate after adding posts.
+- **llms.txt:** `llms.txt` (curated index of site + all posts, incl. a "Blog posts (Chinese)"
+  section) and `llms-full.txt` (full article text inlined) at site root, referenced from
+  `robots.txt`. For AI-assistant/GEO citation, not Google indexing. Regenerate after adding
+  posts. NOTE: `llms-full.txt` does not yet carry the 中文 bodies (deferred at the 2026-07-04
+  Chinese launch); add a zh full-text section post-launch if wanted.
 - **Meta:** title/description + canonical per page; OG + Twitter cards on homepage.
-- **Hreflang:** homepage is a single bilingual URL → `x-default` only (no de/en
-  pair, which previously caused duplicate-canonical errors). Blog indexes and all
-  posts carry de/en/x-default alternates that match the sitemap.
+- **Hreflang:** homepage is a single trilingual URL (DE/EN/中文 via in-page toggle) →
+  `x-default` only (no per-language pair, which previously caused duplicate-canonical
+  errors). Blog indexes and all posts carry de/en/zh/x-default alternates (x-default → DE)
+  that match the sitemap; the zh tree reuses the EN filenames.
 - **Schema markup (JSON-LD):**
   - Homepage: `@graph` with `Person` (`#person`, `jobTitle: "AI Agent Specialist"`,
     `knowsAbout` incl. AI Agents / AI Security / Prompt Injection Defense / Red Teaming,

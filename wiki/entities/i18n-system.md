@@ -10,7 +10,7 @@ related:
   - "[[main-interactions]]"
   - "[[i18n]]"
 created: 2026-06-01
-updated: 2026-07-03
+updated: 2026-07-04
 confidence: high
 ---
 
@@ -20,9 +20,15 @@ confidence: high
 
 ## Summary
 
-Client-side DE/EN translation dictionary plus language toggle and cross-language blog redirects,
-extended for the Blackwall redesign with ~70 `bw.*` keys, a `data-i18n-attr` attribute channel, an
-`onLanguageChange` hook, and a `slugMap` covering the 4 DE/EN posts with differing slugs.
+Client-side **DE/EN/中文 (zh)** translation dictionary plus a three-way language selector and
+cross-language blog redirects, extended for the Blackwall redesign with ~70 `bw.*` keys, a
+`data-i18n-attr` attribute channel, an `onLanguageChange` hook, and a `slugMap` covering the 4
+DE-vs-EN posts with differing slugs (zh reuses the EN filename). Chinese was added 2026-07-04 as a
+full third language: a complete `zh` dictionary (134 keys at parity with EN), `zh` cases in the
+JS-rendered content (`POSTS[].zh` in `site.js`, the Agent Scan pool/labels/verdict/scan-lines in
+`extras.js`), a `/blog/posts/zh/` tree (16 posts) + `/blog/zh/` index, and reciprocal hreflang.
+**Fallback is English, not German:** `getTranslation()` and the JS branches fall back to `en` for
+any missing `zh` value.
 
 ## Details
 
@@ -33,8 +39,9 @@ stats, services, about, contact, footer, blog, clients) it now carries the **Bla
 (`bw.svc.*`, incl. the invitation-only `bw.svc.3.gate`), stats, the client marquee, the breach
 sequence (`bw.breach.*`), the blog feed/hero (`bw.feed.*`, `bw.blog.*`), the two-path contact
 (`bw.contact.a.*` / `bw.contact.b.*`), the end-CTA (`bw.cta.*`), the footer, and the 404 page
-(`bw.404.*`). DE and EN are at **full parity** across the new keys. `currentLang` is initialized
-from the URL (EN if under `/blog/en/` or `/posts/en/`) else from `localStorage` (default `de`).
+(`bw.404.*`). DE, EN and **zh** are at **full parity** across the keys. `currentLang` is initialized
+from the URL (**zh** if under `/blog/zh/` or `/posts/zh/`; EN if under `/blog/en/` or `/posts/en/`)
+else from `localStorage` (default `de`).
 
 `setLanguage(lang)`:
 
