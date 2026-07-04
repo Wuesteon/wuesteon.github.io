@@ -205,7 +205,7 @@
         <div class="art-hero__in">
             <a class="art-back" href="../../zh/">◄ ALL POSTS</a>
             <div><span class="art-cat">AI Agents</span></div>
-            <h1 class="art-title">OpenClaw vs. NemoClaw: Why the Question Is Wrong</h1>
+            <h1 class="art-title">OpenClaw 对比 NemoClaw：为什么这个问题本身就问错了</h1>
             <div class="art-meta">
                 <span class="who"><span class="av">NW</span> Nils Weiser</span>
                 <span class="sep">•</span><span data-art-date>April 2, 2026</span>
@@ -217,178 +217,178 @@
 
     <!-- Article Content (Blackwall art-body) -->
     <article class="art-body">
-                <p class="lead">NemoClaw is not a competitor to OpenClaw, but a security wrapper that makes AI agents enterprise-ready.</p>
+                <p class="lead">NemoClaw 并不是 OpenClaw 的竞争对手，而是一层安全包装器，让 AI 智能体具备企业级可用性。</p>
 
                 <p>
-                    Autonomous AI agents are one of the most exciting trends in AI development. With tools like OpenClaw, language models can independently execute tasks, access files, and interact with external services. But this autonomy comes with significant security risks. This is exactly where NemoClaw comes in.
+                    自主 AI 智能体是 AI 发展中最激动人心的趋势之一。借助 OpenClaw 这类工具，语言模型能够自主执行任务、访问文件、并与外部服务交互。但这种自主性也带来了不容忽视的安全风险。而这正是 NemoClaw 登场的地方。
                 </p>
 
                 <blockquote>
-                    NemoClaw is not a competitor and not a replacement for OpenClaw. It is a security wrapper that runs OpenClaw in an enterprise-grade sandbox. The same agent, the same capabilities, just fully secured.
+                    NemoClaw 既不是竞争对手，也不是 OpenClaw 的替代品。它是一层安全包装器，让 OpenClaw 运行在企业级沙箱之中。同样的智能体、同样的能力，只是被完全加固过了。
                 </blockquote>
 
-                <h2>What Is OpenClaw?</h2>
+                <h2>什么是 OpenClaw？</h2>
 
                 <p>
-                    OpenClaw is currently the most popular open-source architecture for autonomous AI agents. It enables language models to independently execute tasks, use tools, and interact with the outside world. The architecture consists of five core components:
+                    OpenClaw 是目前最流行的自主 AI 智能体开源架构。它让语言模型能够自主执行任务、使用工具、并与外部世界交互。该架构由五个核心组件构成：
                 </p>
 
                 <ol>
-                    <li><strong>LLM Backbone:</strong> The language model as the agent's "brain" (Claude, GPT, Gemini, Llama, etc.)</li>
-                    <li><strong>Skills/Tools:</strong> Extensible capabilities like web search, file access, and code execution</li>
-                    <li><strong>Marketplace:</strong> A public marketplace for sharing and installing skills</li>
-                    <li><strong>MCP Protocol:</strong> Standardized communication between agent and tools</li>
-                    <li><strong>OpenShell:</strong> The runtime environment in which the agent operates</li>
+                    <li><strong>LLM Backbone：</strong>作为智能体“大脑”的语言模型（Claude、GPT、Gemini、Llama 等）</li>
+                    <li><strong>Skills/Tools：</strong>可扩展的能力，例如网页搜索、文件访问和代码执行</li>
+                    <li><strong>Marketplace：</strong>用于分享和安装 skill 的公开市场</li>
+                    <li><strong>MCP Protocol：</strong>智能体与工具之间的标准化通信</li>
+                    <li><strong>OpenShell：</strong>智能体运行所在的运行时环境</li>
                 </ol>
 
-                <h2>The Security Problem</h2>
+                <h2>安全问题</h2>
 
                 <p>
-                    Despite its popularity, OpenClaw has significant security risks in its default configuration. There are several critical vulnerabilities:
+                    尽管广受欢迎，OpenClaw 在默认配置下却存在不容忽视的安全风险。这里有几个严重的漏洞：
                 </p>
 
                 <ul>
-                    <li><strong>Over 300 malicious skills in the Marketplace:</strong> Harmful skills disguised as useful tools that steal API keys in the background and transmit data to external servers</li>
-                    <li><strong>Unrestricted network access:</strong> Any skill can make arbitrary outbound connections, without any control or logging</li>
-                    <li><strong>API keys in plaintext:</strong> Keys are sent directly in requests and are visible to malicious skills</li>
-                    <li><strong>Full file system access:</strong> The agent runs with full user permissions on the entire system</li>
-                    <li><strong>No audit logs:</strong> No default logging of actions</li>
-                    <li><strong>CVE-2026-25253:</strong> A documented remote code execution vulnerability <span class="risk-badge">Critical</span></li>
+                    <li><strong>Marketplace 中超过 300 个恶意 skill：</strong>这些有害的 skill 伪装成有用的工具，在后台窃取 API key 并将数据传输到外部服务器</li>
+                    <li><strong>不受限制的网络访问：</strong>任何 skill 都可以发起任意的对外连接，没有任何管控或日志记录</li>
+                    <li><strong>明文形式的 API key：</strong>密钥被直接放进请求中发送，对恶意 skill 完全可见</li>
+                    <li><strong>完整的文件系统访问权限：</strong>智能体以完整的用户权限运行在整个系统之上</li>
+                    <li><strong>没有审计日志：</strong>默认不记录任何操作</li>
+                    <li><strong>CVE-2026-25253：</strong>一个已被记录在案的远程代码执行漏洞 <span class="risk-badge">严重</span></li>
                 </ul>
 
-                <h2>What Is NemoClaw?</h2>
+                <h2>什么是 NemoClaw？</h2>
 
                 <p>
-                    NemoClaw is NVIDIA's answer to these security problems. Presented at the GTC conference in March 2026 by Jensen Huang, it is not an alternative to OpenClaw but a security infrastructure that wraps around it.
+                    NemoClaw 是 NVIDIA 对这些安全问题给出的答案。它于 2026 年 3 月由黄仁勋在 GTC 大会上发布，并不是 OpenClaw 的替代方案，而是一层包裹在它外面的安全基础设施。
                 </p>
 
                 <div class="analogy-box">
-                    <h4 style="color: #ff2a3c; margin-bottom: 0.75rem; font-weight: 600;">The Office Analogy</h4>
+                    <h4 style="color: #ff2a3c; margin-bottom: 0.75rem; font-weight: 600;">办公室类比</h4>
                     <div class="analogy-item">
                         <span class="analogy-label">OpenClaw</span>
-                        <span class="text-gray-300">The employee, intelligent and capable of completing tasks</span>
+                        <span class="text-gray-300">员工，聪明能干、能够完成任务</span>
                     </div>
                     <div class="analogy-item">
                         <span class="analogy-label">OpenShell</span>
-                        <span class="text-gray-300">The office building, the physical environment</span>
+                        <span class="text-gray-300">办公楼，也就是物理环境</span>
                     </div>
                     <div class="analogy-item">
                         <span class="analogy-label">NemoClaw</span>
-                        <span class="text-gray-300">The building management, sets access rules, monitors signals, controls entrances and exits</span>
+                        <span class="text-gray-300">楼宇管理方，设定门禁规则、监控信号、控制进出</span>
                     </div>
                 </div>
 
-                <h2>The Three Security Pillars of NemoClaw</h2>
+                <h2>NemoClaw 的三大安全支柱</h2>
 
                 <div class="security-card">
-                    <h4>1. Sandbox Isolation</h4>
+                    <h4>1. 沙箱隔离</h4>
                     <p>
-                        OpenClaw runs in an isolated container. File access is restricted to sandbox and temporary folders. Isolation happens at the kernel level (out-of-process architecture). Even if the agent is compromised, it cannot escape the sandbox.
+                        OpenClaw 运行在一个隔离的容器中。文件访问被限制在沙箱和临时文件夹之内。隔离发生在内核层面（out-of-process 架构）。即便智能体被攻破，它也无法逃出沙箱。
                     </p>
                 </div>
 
                 <div class="security-card">
-                    <h4>2. API Key Security</h4>
+                    <h4>2. API Key 安全</h4>
                     <p>
-                        API keys never enter the sandbox. An external gateway intercepts them and only injects them into outgoing requests when leaving the sandbox. Even a malicious skill cannot see the keys because they simply do not exist inside the sandbox.
+                        API key 永远不会进入沙箱。一个外部网关会拦截它们，只在请求离开沙箱对外发出时才注入。即便是恶意 skill 也看不到这些密钥，因为它们在沙箱内部根本不存在。
                     </p>
                 </div>
 
                 <div class="security-card">
-                    <h4>3. Network Policies (Deny-by-Default)</h4>
+                    <h4>3. 网络策略（默认拒绝）</h4>
                     <p>
-                        All network traffic is blocked by default. Allowed connections must be explicitly defined in a YAML policy file. All decisions are logged in real time. Additionally, personal data (PII) is automatically filtered out before leaving the sandbox.
+                        所有网络流量默认都被阻断。允许的连接必须在一个 YAML 策略文件中显式声明。所有决策都被实时记录下来。此外，个人数据（PII）在离开沙箱之前会被自动过滤掉。
                     </p>
                 </div>
 
-                <h2>Comparison at a Glance</h2>
+                <h2>一览式对比</h2>
 
                 <table class="comparison-table">
                     <thead>
                         <tr>
-                            <th>Feature</th>
-                            <th>OpenClaw (Default)</th>
+                            <th>特性</th>
+                            <th>OpenClaw（默认）</th>
                             <th>NemoClaw</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>File Access</strong></td>
-                            <td>Full user permissions <span class="risk-badge">Risk</span></td>
-                            <td>Sandbox + temp folders <span class="safe-badge">Secure</span></td>
+                            <td><strong>文件访问</strong></td>
+                            <td>完整用户权限 <span class="risk-badge">风险</span></td>
+                            <td>沙箱 + 临时文件夹 <span class="safe-badge">安全</span></td>
                         </tr>
                         <tr>
-                            <td><strong>Network Access</strong></td>
-                            <td>No restrictions <span class="risk-badge">Risk</span></td>
-                            <td>OS-level whitelist <span class="safe-badge">Secure</span></td>
+                            <td><strong>网络访问</strong></td>
+                            <td>没有任何限制 <span class="risk-badge">风险</span></td>
+                            <td>操作系统级白名单 <span class="safe-badge">安全</span></td>
                         </tr>
                         <tr>
-                            <td><strong>API Key Handling</strong></td>
-                            <td>Plaintext in requests <span class="risk-badge">Risk</span></td>
-                            <td>Gateway, never in sandbox <span class="safe-badge">Secure</span></td>
+                            <td><strong>API Key 处理</strong></td>
+                            <td>请求中以明文传递 <span class="risk-badge">风险</span></td>
+                            <td>经由网关，从不进入沙箱 <span class="safe-badge">安全</span></td>
                         </tr>
                         <tr>
-                            <td><strong>Data Privacy</strong></td>
-                            <td>Raw data is sent</td>
-                            <td>PII is filtered out</td>
+                            <td><strong>数据隐私</strong></td>
+                            <td>原始数据被直接发送</td>
+                            <td>PII 会被过滤掉</td>
                         </tr>
                         <tr>
-                            <td><strong>Audit Logging</strong></td>
-                            <td>No logging</td>
-                            <td>Real-time logging</td>
+                            <td><strong>审计日志</strong></td>
+                            <td>不记录日志</td>
+                            <td>实时记录日志</td>
                         </tr>
                         <tr>
-                            <td><strong>Installation</strong></td>
-                            <td>Simple, fast</td>
-                            <td>Docker-based, more complex</td>
+                            <td><strong>安装</strong></td>
+                            <td>简单、快速</td>
+                            <td>基于 Docker，更复杂</td>
                         </tr>
                         <tr>
-                            <td><strong>Operating System</strong></td>
-                            <td>Mac, Windows, Linux</td>
-                            <td>Primarily Linux (Ubuntu 22.04+)</td>
+                            <td><strong>操作系统</strong></td>
+                            <td>Mac、Windows、Linux</td>
+                            <td>主要是 Linux（Ubuntu 22.04+）</td>
                         </tr>
                         <tr>
-                            <td><strong>AI Models</strong></td>
-                            <td>All LLMs</td>
-                            <td>All LLMs (not tied to NVIDIA)</td>
+                            <td><strong>AI 模型</strong></td>
+                            <td>所有 LLM</td>
+                            <td>所有 LLM（不绑定 NVIDIA）</td>
                         </tr>
                     </tbody>
                 </table>
 
-                <h2>When to Use What?</h2>
+                <h2>什么时候用哪一个？</h2>
 
                 <p>
-                    <strong>OpenClaw alone</strong> is suitable for experiments and prototypes, learning projects, personal automation, and hobby projects without sensitive data. Setup is fast and works on all operating systems.
+                    <strong>单用 OpenClaw</strong> 适合做实验和原型、学习项目、个人自动化，以及不涉及敏感数据的业余项目。搭建起来很快，而且能在所有操作系统上运行。
                 </p>
 
                 <p>
-                    <strong>NemoClaw</strong> is recommended for production environments with customer data, workflows with sensitive business files, compliance-regulated companies, and scenarios where a security incident could cause real damage.
+                    <strong>NemoClaw</strong> 更适合涉及客户数据的生产环境、处理敏感业务文件的工作流、受合规监管的企业，以及那些一旦发生安全事故就会造成真实损失的场景。
                 </p>
 
                 <div class="warning-box">
-                    <h4>Important Limitations</h4>
+                    <h4>重要的局限</h4>
                     <p style="color: #d1d5db; margin: 0;">
-                        NemoClaw is still in <strong>alpha</strong>. Users report bugs, long response times (sometimes over two minutes), and instabilities. Retrofitting it onto existing OpenClaw setups is not possible, it requires a fresh installation. Officially, only Ubuntu 22.04+ is supported. Docker, Node.js v20+, and the NVIDIA OpenShell CLI must be installed on the system.
+                        NemoClaw 目前仍处于 <strong>alpha</strong> 阶段。用户反馈存在 bug、响应时间过长（有时超过两分钟）以及不稳定的情况。它无法叠加到已有的 OpenClaw 环境上，只能重新全新安装。官方仅支持 Ubuntu 22.04+。系统上必须安装 Docker、Node.js v20+ 以及 NVIDIA OpenShell CLI。
                     </p>
                 </div>
 
                 <p>
-                    Important to know: NemoClaw is <strong>not tied to NVIDIA</strong>. Claude, GPT, Gemini, Groq, and local models via Ollama all work. An NVIDIA GPU is not required either.
+                    需要知道的是：NemoClaw <strong>并不绑定 NVIDIA</strong>。Claude、GPT、Gemini、Groq，以及通过 Ollama 运行的本地模型都能正常工作。也不需要 NVIDIA 的 GPU。
                 </p>
 
-                <h2>Conclusion</h2>
+                <h2>结论</h2>
 
                 <p>
-                    The question "OpenClaw or NemoClaw?" is the wrong question. NemoClaw is not an alternative product but a security layer that makes OpenClaw safe for professional use.
+                    “OpenClaw 还是 NemoClaw？”这个问题本身就问错了。NemoClaw 并不是一个可替代的产品，而是一层安全层，让 OpenClaw 能够安全地用于专业场景。
                 </p>
 
                 <p>
-                    For individuals and hobbyists, OpenClaw alone remains the simplest choice. For companies deploying AI agents in production environments, NemoClaw offers a well-thought-out security approach. However, given its alpha status, it is advisable to follow its development before using it in production-critical systems.
+                    对个人和业余爱好者来说，单用 OpenClaw 仍然是最简单的选择。而对于要在生产环境中部署 AI 智能体的企业，NemoClaw 提供了一套经过深思熟虑的安全方案。不过考虑到它还处在 alpha 阶段，在把它用到关键的生产系统之前，建议先持续关注它的发展。
                 </p>
 
                 <hr style="border-color: #374151; margin: 2rem 0;">
 
-                <p><strong>Tools Used:</strong></p>
+                <p><strong>使用到的工具：</strong></p>
                 <div style="margin: 1rem 0;">
                     <span class="tool-badge">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
@@ -401,7 +401,7 @@
                 </div>
 
                 <p>
-                    Are you deploying AI agents in your company and need advice on security architecture? <a href="../../../index.html#contact">Get in touch</a>, I help with evaluation and implementation.
+                    正在公司里部署 AI 智能体，需要在安全架构上寻求建议？<a href="../../../index.html#contact">联系我</a>，我可以协助评估与落地实施。
                 </p>
 
     </article>
