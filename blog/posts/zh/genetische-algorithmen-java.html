@@ -214,12 +214,12 @@
     <section class="art-hero" data-screen-label="Article">
         <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
         <div class="art-hero__in">
-            <a class="art-back" href="../../zh/">◄ ALL POSTS</a>
-            <div><span class="art-cat">Algorithms</span></div>
-            <h1 class="art-title">Genetic Algorithms: Survival of the Bittest</h1>
+            <a class="art-back" href="../../zh/">◄ 所有文章</a>
+            <div><span class="art-cat">算法</span></div>
+            <h1 class="art-title">遗传算法：位串的适者生存</h1>
             <div class="art-meta">
                 <span class="who"><span class="av">NW</span> Nils Weiser</span>
-                <span class="sep">•</span><span data-art-date>December 1, 2024</span>
+                <span class="sep">•</span><span data-art-date>2024 年 12 月 1 日</span>
                 <span class="sep">•</span><span data-art-read>—</span>
             </div>
         </div>
@@ -228,57 +228,57 @@
 
     <!-- Article Content (Blackwall art-body) -->
     <article class="art-body">
-                <p class="lead">How nature solves complex problems and how we translate that into code. A practical introduction with Java.</p>
+                <p class="lead">自然如何解决复杂问题，以及我们如何把它转化为代码。一篇用 Java 讲解的实用入门。</p>
 
                 <p>
-                    Over billions of years, nature has developed a remarkably effective optimization process: evolution. Genetic algorithms (GA) transfer this principle into computer science and solve problems where classical algorithms fail.
+                    经过数十亿年，自然演化出了一套极为高效的优化过程：进化。遗传算法（GA）把这一原理迁移到计算机科学中，用来解决那些经典算法束手无策的问题。
                 </p>
 
-                <h2>The Basic Principle</h2>
+                <h2>基本原理</h2>
                 <p>
-                    Imagine you are searching for the best solution to a problem, but the solution space is enormous. Trying all possibilities would take years. Genetic algorithms take a different approach: they simulate evolution.
+                    设想你要为一个问题寻找最佳解，但解空间极其庞大。逐一尝试所有可能性需要耗费数年时间。遗传算法采用了另一种思路：它模拟进化。
                 </p>
 
                 <div class="step-grid">
                     <div class="step-card">
                         <div class="step-number">1</div>
-                        <div class="step-label">Population</div>
-                        <div class="step-desc">Random initial solutions</div>
+                        <div class="step-label">种群</div>
+                        <div class="step-desc">随机的初始解</div>
                     </div>
                     <div class="step-card">
                         <div class="step-number">2</div>
-                        <div class="step-label">Fitness</div>
-                        <div class="step-desc">Evaluation of each solution</div>
+                        <div class="step-label">适应度</div>
+                        <div class="step-desc">评估每个解</div>
                     </div>
                     <div class="step-card">
                         <div class="step-number">3</div>
-                        <div class="step-label">Selection</div>
-                        <div class="step-desc">The best survive</div>
+                        <div class="step-label">选择</div>
+                        <div class="step-desc">最优者存活</div>
                     </div>
                     <div class="step-card">
                         <div class="step-number">4</div>
-                        <div class="step-label">Crossover</div>
-                        <div class="step-desc">Combining parents</div>
+                        <div class="step-label">交叉</div>
+                        <div class="step-desc">组合父代</div>
                     </div>
                     <div class="step-card">
                         <div class="step-number">5</div>
-                        <div class="step-label">Mutation</div>
-                        <div class="step-desc">Random variation</div>
+                        <div class="step-label">变异</div>
+                        <div class="step-desc">随机变化</div>
                     </div>
                     <div class="step-card">
                         <div class="step-number">6</div>
-                        <div class="step-label">Repeat</div>
-                        <div class="step-desc">Until goal is reached</div>
+                        <div class="step-label">重复</div>
+                        <div class="step-desc">直到达成目标</div>
                     </div>
                 </div>
 
-                <h2>A Concrete Example</h2>
+                <h2>一个具体的例子</h2>
                 <p>
-                    Our goal: Find a binary string where all bits are set to 1. Sounds trivial? It is. But this simple example demonstrates all the concepts that work the same way for more complex problems.
+                    我们的目标：找到一个所有位都为 1 的二进制串。听起来很简单？确实如此。但这个简单的例子展示了所有概念，而这些概念在更复杂的问题中同样适用。
                 </p>
 
                 <p>
-                    <strong>The Individual:</strong> An array of 5 bits, randomly initialized with 0 or 1.
+                    <strong>个体：</strong>一个包含 5 个位的数组，用 0 或 1 随机初始化。
                 </p>
 
                 <div class="gene-visualization">
@@ -287,18 +287,18 @@
                     <div class="gene-bit gene-bit-1">1</div>
                     <div class="gene-bit gene-bit-0">0</div>
                     <div class="gene-bit gene-bit-1">1</div>
-                    <span style="color: #9ca3af; margin-left: 1rem; align-self: center;">Fitness: 3</span>
+                    <span style="color: #9ca3af; margin-left: 1rem; align-self: center;">适应度：3</span>
                 </div>
 
                 <p>
-                    <strong>The Fitness:</strong> Number of ones. Maximum is 5, then we have the perfect solution.
+                    <strong>适应度：</strong>1 的个数。最大值为 5，此时我们就得到了完美解。
                 </p>
 
-                <h2>The Implementation in Java</h2>
+                <h2>Java 中的实现</h2>
 
-                <h3>The Individual</h3>
+                <h3>个体</h3>
                 <p>
-                    Each individual represents a possible solution:
+                    每个个体代表一个可能的解：
                 </p>
 
                 <pre><code><span class="code-keyword">public class</span> <span class="code-function">Individual</span> {
@@ -322,9 +322,9 @@
     }
 }</code></pre>
 
-                <h3>The Population</h3>
+                <h3>种群</h3>
                 <p>
-                    A population manages multiple individuals:
+                    一个种群管理多个个体：
                 </p>
 
                 <pre><code><span class="code-keyword">public class</span> <span class="code-function">Population</span> {
@@ -350,9 +350,9 @@
     }
 }</code></pre>
 
-                <h3>Selection</h3>
+                <h3>选择</h3>
                 <p>
-                    The two best individuals are selected as parents. There are various selection methods like tournament or roulette. Here we use elitist selection: simple and effective.
+                    选出两个最优个体作为父代。选择方法有很多，比如锦标赛选择或轮盘赌选择。这里我们采用精英选择：简单而有效。
                 </p>
 
                 <pre><code><span class="code-keyword">public void</span> <span class="code-function">selection</span>() {
@@ -360,14 +360,14 @@
     secondFittest = population.<span class="code-function">getSecondFittest</span>();
 }</code></pre>
 
-                <h3>Crossover</h3>
+                <h3>交叉</h3>
                 <p>
-                    The core mechanism: At a random point, the genes of both parents are swapped. The genes up to the crossover point are exchanged between the parents.
+                    核心机制：在一个随机位置，交换两个父代的基因。交叉点之前的基因会在两个父代之间互换。
                 </p>
 
                 <div class="crossover-example">
                     <div class="crossover-row">
-                        <span class="crossover-label">Parent 1:</span>
+                        <span class="crossover-label">父代 1：</span>
                         <div class="gene-visualization" style="margin: 0;">
                             <div class="gene-bit gene-bit-1">1</div>
                             <div class="gene-bit gene-bit-0">0</div>
@@ -377,7 +377,7 @@
                         </div>
                     </div>
                     <div class="crossover-row">
-                        <span class="crossover-label">Parent 2:</span>
+                        <span class="crossover-label">父代 2：</span>
                         <div class="gene-visualization" style="margin: 0;">
                             <div class="gene-bit gene-bit-0">0</div>
                             <div class="gene-bit gene-bit-1">1</div>
@@ -387,10 +387,10 @@
                         </div>
                     </div>
                     <div style="text-align: center; margin: 1rem 0;">
-                        <span style="color: #fbbf24; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;">Crossover point: Position 2</span>
+                        <span style="color: #fbbf24; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;">交叉点：位置 2</span>
                     </div>
                     <div class="crossover-row">
-                        <span class="crossover-label">Child 1:</span>
+                        <span class="crossover-label">子代 1：</span>
                         <div class="gene-visualization" style="margin: 0;">
                             <div class="gene-bit gene-bit-0">0</div>
                             <div class="gene-bit gene-bit-1">1</div>
@@ -412,9 +412,9 @@
     }
 }</code></pre>
 
-                <h3>Mutation</h3>
+                <h3>变异</h3>
                 <p>
-                    Mutation prevents the algorithm from getting stuck in local optima. A random bit is flipped.
+                    变异防止算法陷入局部最优。随机翻转一个位。
                 </p>
 
                 <pre><code><span class="code-keyword">public void</span> <span class="code-function">mutation</span>() {
@@ -429,9 +429,9 @@
     }
 }</code></pre>
 
-                <h3>The Algorithm</h3>
+                <h3>算法</h3>
                 <p>
-                    Putting it all together: Iterate until the perfect solution is found.
+                    把一切组合起来：不断迭代，直到找到完美解。
                 </p>
 
                 <pre><code><span class="code-keyword">public static void</span> <span class="code-function">main</span>(String[] args) {
@@ -469,7 +469,7 @@
     System.out.<span class="code-function">println</span>(<span class="code-string">"Solution found in generation "</span> + generation);
 }</code></pre>
 
-                <h2>Typical Output</h2>
+                <h2>典型输出</h2>
 
                 <pre><code>Generation: 1  Fitness: 3
 Generation: 2  Fitness: 3
@@ -480,107 +480,107 @@ Solution found in generation 5
 Genes: [1, 1, 1, 1, 1]</code></pre>
 
                 <p>
-                    With only 5 generations and 10 individuals, the algorithm finds the perfect solution. For more complex problems it takes longer, but the principle remains identical.
+                    仅用 5 代、10 个个体，算法就找到了完美解。对于更复杂的问题会耗时更久，但原理完全相同。
                 </p>
 
-                <h2>Real-World Use Cases</h2>
+                <h2>真实世界的应用场景</h2>
                 <p>
-                    This simple example can be applied to complex problems:
+                    这个简单的例子可以推广到复杂问题上：
                 </p>
 
                 <div class="concept-card">
-                    <h4>Traveling Salesman Problem</h4>
-                    <p>Genes = order of cities. Fitness = total distance (minimize). Crossover = combining route segments.</p>
+                    <h4>旅行商问题</h4>
+                    <p>基因 = 城市的访问顺序。适应度 = 总路程（求最小）。交叉 = 组合路线片段。</p>
                 </div>
 
                 <div class="concept-card">
-                    <h4>Neural Network Training</h4>
-                    <p>Genes = network weights. Fitness = prediction accuracy. Evolution finds optimal weights without backpropagation.</p>
+                    <h4>神经网络训练</h4>
+                    <p>基因 = 网络权重。适应度 = 预测准确率。进化能在不使用反向传播的情况下找到最优权重。</p>
                 </div>
 
                 <div class="concept-card">
-                    <h4>Feature Selection</h4>
-                    <p>Genes = which features to use (0/1). Fitness = model performance. Automatically finds the most important features.</p>
+                    <h4>特征选择</h4>
+                    <p>基因 = 使用哪些特征（0/1）。适应度 = 模型表现。自动找出最重要的特征。</p>
                 </div>
 
                 <div class="concept-card">
-                    <h4>Scheduling</h4>
-                    <p>Genes = assignment of tasks to time slots. Fitness = deadline compliance, resource utilization.</p>
+                    <h4>排程调度</h4>
+                    <p>基因 = 任务到时间槽的分配。适应度 = 是否满足截止期限、资源利用率。</p>
                 </div>
 
-                <h2>Key Learnings</h2>
+                <h2>关键心得</h2>
 
                 <blockquote>
-                    "Genetic algorithms do not guarantee an optimal solution, but they often find a very good one in acceptable time."
+                    “遗传算法并不保证得到最优解，但它们往往能在可接受的时间内找到一个非常好的解。”
                 </blockquote>
 
-                <h3>1. Encoding is crucial</h3>
+                <h3>1. 编码至关重要</h3>
                 <p>
-                    How you represent the problem as genes determines success. Binary is simple, but permutations, floats, or complex structures are often more suitable.
+                    你如何把问题表示为基因，决定了成败。二进制编码很简单，但排列、浮点数或复杂结构往往更合适。
                 </p>
 
-                <h3>2. Balance between exploration and exploitation</h3>
+                <h3>2. 在探索与利用之间取得平衡</h3>
                 <p>
-                    Too much mutation = chaotic search. Too little = premature convergence. The right mutation rate is problem-specific.
+                    变异过多 = 搜索混乱无序。变异过少 = 过早收敛。合适的变异率因具体问题而异。
                 </p>
 
-                <h3>3. The fitness function is key</h3>
+                <h3>3. 适应度函数是关键</h3>
                 <p>
-                    A poor fitness function leads to poor solutions. Invest time in a precise evaluation function.
+                    糟糕的适应度函数会导致糟糕的解。请在打磨一个精确的评估函数上投入时间。
                 </p>
 
-                <h3>4. Maintain diversity</h3>
+                <h3>4. 保持多样性</h3>
                 <p>
-                    When all individuals become similar, evolution stagnates. Techniques like crowding or niching help.
+                    当所有个体都变得相似时，进化就会停滞。像拥挤（crowding）或小生境（niching）这样的技术会有所帮助。
                 </p>
 
-                <h2>Conclusion</h2>
+                <h2>结论</h2>
                 <p>
-                    Genetic algorithms are a powerful tool for optimization problems where the solution space is too large for exhaustive search. The implementation is surprisingly simple: population, fitness, selection, crossover, mutation. The art lies in the right encoding and the appropriate fitness function.
+                    对于解空间大到无法穷举搜索的优化问题，遗传算法是一件强大的工具。它的实现出人意料地简单：种群、适应度、选择、交叉、变异。真正的艺术在于恰当的编码和合适的适应度函数。
                 </p>
 
                 <p>
-                    The beauty of it: You don't need to understand what the optimal solution looks like. You only need to be able to evaluate how good a solution is. Evolution takes care of the rest.
+                    它的妙处在于：你无需理解最优解到底长什么样。你只需要能够评估一个解有多好。剩下的交给进化去完成。
                 </p>
 
                 <hr style="border-color: #374151; margin: 2rem 0;">
 
-                <p><strong>Technologies used:</strong></p>
+                <p><strong>所用技术：</strong></p>
                 <div style="margin: 1rem 0;">
                     <span class="tool-badge">Java</span>
-                    <span class="tool-badge">Evolutionary Computation</span>
+                    <span class="tool-badge">演化计算</span>
                 </div>
 
                 <p>
-                    Interested in optimization algorithms or AI-powered solutions? <a href="../../../index.html#contact">Get in touch</a>, I look forward to the conversation.
+                    对优化算法或 AI 驱动的解决方案感兴趣？<a href="../../../index.html#contact">联系我</a>，我期待与你交流。
                 </p>
 
     </article>
 
     <!-- Author share + related posts -->
     <div class="art-share">
-      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
-      <a href="../../../index.html#contact" class="btn btn--pri">WORK WITH ME ▸</a>
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI 智能体专家 · 博登湖地区</span></div></div>
+      <a href="../../../index.html#contact" class="btn btn--pri">与我合作 ▸</a>
     </div>
     <section class="art-more">
       <div class="wrap">
-        <div class="art-more__head"><h2>More field notes</h2><a href="../../zh/">ALL POSTS ▸</a></div>
+        <div class="art-more__head"><h2>更多现场笔记</h2><a href="../../zh/">所有文章 ▸</a></div>
         <div class="art-more__grid" id="art-more-grid"></div>
       </div>
     </section>
 
     <!-- Related posts (internal cross-links for crawl equity) -->
     <nav class="related-posts" aria-label="Related posts">
-        <p class="related-posts__heading">// Related posts</p>
+        <p class="related-posts__heading">// 相关文章</p>
         <div class="related-posts__grid">
                 <a class="related-posts__card" href="ki-modell-evaluation.html">
-                    <span class="related-posts__card-title">How We Found the Best AI Model for Legal Analysis</span>
+                    <span class="related-posts__card-title">我们如何为法律分析找到最佳 AI 模型</span>
                 </a>
                 <a class="related-posts__card" href="multi-agent-ai-crewai.html">
-                    <span class="related-posts__card-title">Multi-Agent AI Systems with CrewAI: Teams Instead of Solo Players</span>
+                    <span class="related-posts__card-title">用 CrewAI 构建多智能体 AI 系统：团队协作，而非单打独斗</span>
                 </a>
                 <a class="related-posts__card" href="mit-ai-hallucinations.html">
-                    <span class="related-posts__card-title">Did MIT solve AI hallucinations?</span>
+                    <span class="related-posts__card-title">MIT 解决了 AI 幻觉？</span>
                 </a>
         </div>
     </nav>
