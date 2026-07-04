@@ -153,12 +153,12 @@
     <section class="art-hero" data-screen-label="Article">
         <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
         <div class="art-hero__in">
-            <a class="art-back" href="../../zh/">◄ ALL POSTS</a>
-            <div><span class="art-cat">AI Agents</span></div>
-            <h1 class="art-title">Superpowers: How AI Agents Learn to Work Like Real Teams</h1>
+            <a class="art-back" href="../../zh/">◄ 所有文章</a>
+            <div><span class="art-cat">AI 智能体</span></div>
+            <h1 class="art-title">Superpowers：AI 智能体如何学会像真正的团队那样协作</h1>
             <div class="art-meta">
                 <span class="who"><span class="av">NW</span> Nils Weiser</span>
-                <span class="sep">•</span><span data-art-date>December 12, 2025</span>
+                <span class="sep">•</span><span data-art-date>2025 年 12 月 12 日</span>
                 <span class="sep">•</span><span data-art-read>—</span>
             </div>
         </div>
@@ -167,113 +167,113 @@
 
     <!-- Article Content (Blackwall art-body) -->
     <article class="art-body">
-                <p class="lead">A framework that teaches Claude Code reusable skills and orchestrates multi-stage development workflows.</p>
+                <p class="lead">一个让 Claude Code 掌握可复用技能、并编排多阶段开发工作流的框架。</p>
 
                 <p>
-                    What if an AI coding agent didn't just write code, but worked like an experienced developer? With documented best practices, consistent workflows, and the ability to learn from past projects?
+                    如果一个 AI 编码智能体不只是写代码，而是像一位经验丰富的开发者那样工作，会怎么样？带着记录成文的最佳实践、一致的工作流，以及从过往项目中学习的能力？
                 </p>
 
                 <p>
-                    The <strong><a href="https://github.com/obra/superpowers" target="_blank" rel="noopener noreferrer">Superpowers framework</a></strong> makes exactly that possible. A system that teaches AI agents reusable skills.
+                    <strong><a href="https://github.com/obra/superpowers" target="_blank" rel="noopener noreferrer">Superpowers 框架</a></strong>正是要实现这一点：一个教会 AI 智能体掌握可复用技能的系统。
                 </p>
 
-                <h2>The Core Idea</h2>
+                <h2>核心理念</h2>
 
                 <blockquote>
-                    "Skills give your agents superpowers. They are documented best practices that Claude learns and applies consistently."
+                    "技能赋予你的智能体超能力。它们是记录成文的最佳实践，Claude 会学会并始终如一地加以运用。"
                 </blockquote>
 
                 <p>
-                    What makes it special: there is a skill for creating new skills (<code>writing-skills</code>). When you find a solution you want to reuse, you can turn it into a new skill.
+                    它的独特之处在于：有一个专门用来创建新技能的技能（<code>writing-skills</code>）。当你找到一个想要复用的解决方案时，就可以把它变成一个新技能。
                 </p>
 
-                <h2>The Workflow</h2>
+                <h2>工作流</h2>
 
                 <div class="workflow-diagram">
                     <div class="phase-card">
                         <div class="phase-header">
                             <span class="phase-number">PHASE 1</span>
-                            <span class="phase-title">Brainstorming</span>
+                            <span class="phase-title">头脑风暴</span>
                         </div>
                         <p class="text-gray-400 text-sm">
-                            Claude analyzes the task, asks questions, and refines the idea through Socratic dialogue. No code changes -- just thinking and validating with the user.
+                            Claude 分析任务、提出问题，并通过苏格拉底式对话打磨想法。不改动任何代码——只是思考，并与用户一起验证。
                         </p>
                     </div>
 
                     <div class="phase-card">
                         <div class="phase-header">
                             <span class="phase-number">PHASE 2</span>
-                            <span class="phase-title">Git Worktree & Plan</span>
+                            <span class="phase-title">Git Worktree 与计划</span>
                         </div>
                         <p class="text-gray-400 text-sm">
-                            Claude creates an isolated git worktree on a new branch, runs the project setup, and creates a detailed implementation plan with 2-5 minute tasks.
+                            Claude 在一个新分支上创建隔离的 git worktree，运行项目初始化，并制定一份详细的实施计划，其中每个任务只需 2 到 5 分钟。
                         </p>
                     </div>
 
                     <div class="phase-card">
                         <div class="phase-header">
                             <span class="phase-number">PHASE 3</span>
-                            <span class="phase-title">Subagent Development</span>
+                            <span class="phase-title">子智能体开发</span>
                         </div>
                         <p class="text-gray-400 text-sm">
-                            Fresh subagents work through each task. Each goes through a two-stage review: first spec compliance, then code quality.
+                            全新的子智能体逐一处理每个任务。每一项都要经过两个阶段的评审：先看是否符合规格，再看代码质量。
                         </p>
                         <p class="text-gray-500 text-xs mt-2 italic">
-                            Alternatively: <code class="text-cyan-400/70">executing-plans</code> for batch execution with human checkpoints.
+                            或者：用 <code class="text-cyan-400/70">executing-plans</code> 进行批量执行，并在其中设置人工检查点。
                         </p>
                     </div>
 
                     <div class="phase-card">
                         <div class="phase-header">
                             <span class="phase-number">PHASE 4</span>
-                            <span class="phase-title">Branch Finishing</span>
+                            <span class="phase-title">收尾分支</span>
                         </div>
                         <p class="text-gray-400 text-sm">
-                            Verify tests, present options (Merge/PR/Keep/Discard), clean up worktree.
+                            验证测试、给出选项（合并 / PR / 保留 / 丢弃），并清理 worktree。
                         </p>
                     </div>
                 </div>
 
-                <h2>Subagents and Code Review</h2>
+                <h2>子智能体与代码评审</h2>
                 <p>
-                    One of the most powerful features: Claude can dispatch subagents that work autonomously while the main agent maintains the overview. Once complete, the changes are reviewed.
+                    最强大的特性之一：Claude 可以派出子智能体自主工作，同时主智能体把控全局。工作完成后，这些改动会接受评审。
                 </p>
 
                 <p>
-                    The model offers choices:
+                    这个模型提供了多种选择：
                 </p>
 
                 <ul>
-                    <li><strong>Supervised Mode:</strong> You observe every step</li>
-                    <li><strong>Autonomous Mode:</strong> Subagent works independently, you review the result</li>
-                    <li><strong>Hybrid:</strong> A mix depending on task complexity</li>
+                    <li><strong>监督模式：</strong>你观察每一步</li>
+                    <li><strong>自主模式：</strong>子智能体独立工作，你评审最终结果</li>
+                    <li><strong>混合模式：</strong>视任务复杂度而定的组合方式</li>
                 </ul>
 
-                <h2>Test-Driven Development</h2>
+                <h2>测试驱动开发</h2>
 
                 <div class="insight-box">
                     <h4>RED-GREEN-REFACTOR</h4>
                     <p class="text-gray-300 text-sm">
-                        Superpowers consistently follows TDD: write a test, failing, write code, success, commit. No test, no commit.
+                        Superpowers 始终贯彻 TDD：写测试、让它失败、写代码、让它通过、提交。没有测试，就不提交。
                     </p>
                 </div>
 
                 <p>
-                    The <code>test-driven-development</code> skill is not a recommendation but a workflow requirement. That is what sets Superpowers apart from other frameworks.
+                    <code>test-driven-development</code> 技能不是一条建议，而是工作流中的硬性要求。这正是 Superpowers 与其他框架拉开差距的地方。
                 </p>
 
-                <h2>Skill Creation</h2>
+                <h2>技能的创建</h2>
                 <p>
-                    What makes the framework special: it includes a skill for creating new skills (<code>writing-skills</code>). When you solve a problem and want to reuse the solution, you can generate a new skill from it directly.
+                    这个框架的独特之处在于：它自带一个用来创建新技能的技能（<code>writing-skills</code>）。当你解决了一个问题、想要复用这个方案时，可以直接由它生成一个新技能。
                 </p>
 
                 <p>
-                    Skills are simple Markdown files with YAML frontmatter. They can contain instructions, examples, checklists, and even scripts -- everything Claude needs to execute a task consistently.
+                    技能就是带有 YAML frontmatter 的简单 Markdown 文件。它们可以包含说明、示例、清单，甚至脚本——凡是 Claude 一致地执行任务所需要的一切。
                 </p>
 
-                <h2>Community Sharing</h2>
+                <h2>社区共享</h2>
                 <p>
-                    Superpowers is not just a local system. Skills can be shared via GitHub, enabling collaborative development:
+                    Superpowers 不只是一个本地系统。技能可以通过 GitHub 共享，从而支持协作式开发：
                 </p>
 
                 <pre><code><span class="code-comment"># Register marketplace</span>
@@ -283,24 +283,24 @@
 /plugin install superpowers@superpowers-marketplace</code></pre>
 
                 <p>
-                    Imagine: a performance optimization expert shares their skills. Anyone who installs them gets instant access to their best practices. Without having to go through the learning curve themselves.
+                    想象一下：一位性能优化专家把自己的技能分享出来。任何人只要安装，就能立刻用上他的最佳实践——而无需自己再走一遍那条学习曲线。
                 </p>
 
-                <h2>Why This Matters</h2>
+                <h2>为什么这很重要</h2>
                 <p>
-                    Superpowers shows where AI agent development is heading:
+                    Superpowers 揭示了 AI 智能体开发的走向：
                 </p>
 
                 <ol>
-                    <li><strong>Knowledge gets codified:</strong> Best practices are no longer just in people's heads, but in portable skills</li>
-                    <li><strong>Teams scale differently:</strong> Junior developers with good skills work like seniors</li>
-                    <li><strong>Consistency is guaranteed:</strong> No more "I did it differently" moments</li>
-                    <li><strong>Learning is accelerated:</strong> Make a mistake once, create a skill, never repeat it</li>
+                    <li><strong>知识被沉淀成文：</strong>最佳实践不再只装在人的脑子里，而是变成可携带的技能</li>
+                    <li><strong>团队的扩张方式变了：</strong>配备了好技能的初级开发者，也能像资深工程师那样工作</li>
+                    <li><strong>一致性得到保证：</strong>再也没有"我是换了种做法"这种时刻</li>
+                    <li><strong>学习被加速：</strong>犯一次错、做一个技能，然后再也不重蹈覆辙</li>
                 </ol>
 
                 <hr style="border-color: #374151; margin: 2rem 0;">
 
-                <p><strong>Tools used:</strong></p>
+                <p><strong>用到的工具：</strong></p>
                 <div style="margin: 1rem 0;">
                     <a href="https://claude.ai/code" target="_blank" rel="noopener noreferrer" class="tool-badge">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
@@ -313,35 +313,35 @@
                 </div>
 
                 <p>
-                    Interested in AI-powered development workflows for your team? <a href="../../../index.html#contact">Get in touch</a>. I help with implementing tailored solutions.
+                    想为你的团队引入 AI 驱动的开发工作流？<a href="../../../index.html#contact">联系我</a>。我可以帮你落地量身定制的解决方案。
                 </p>
 
     </article>
 
     <!-- Author share + related posts -->
     <div class="art-share">
-      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
-      <a href="../../../index.html#contact" class="btn btn--pri">WORK WITH ME ▸</a>
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI 智能体专家 · 博登湖地区</span></div></div>
+      <a href="../../../index.html#contact" class="btn btn--pri">与我合作 ▸</a>
     </div>
     <section class="art-more">
       <div class="wrap">
-        <div class="art-more__head"><h2>More field notes</h2><a href="../../zh/">ALL POSTS ▸</a></div>
+        <div class="art-more__head"><h2>更多现场笔记</h2><a href="../../zh/">所有文章 ▸</a></div>
         <div class="art-more__grid" id="art-more-grid"></div>
       </div>
     </section>
 
     <!-- Related posts (internal cross-links for crawl equity) -->
     <nav class="related-posts" aria-label="Related posts">
-        <p class="related-posts__heading">// Related posts</p>
+        <p class="related-posts__heading">// 相关文章</p>
         <div class="related-posts__grid">
                 <a class="related-posts__card" href="multi-agent-ai-crewai.html">
-                    <span class="related-posts__card-title">Multi-Agent AI Systems with CrewAI: Teams Instead of Solo Players</span>
+                    <span class="related-posts__card-title">用 CrewAI 打造多智能体 AI 系统：以团队取代单打独斗</span>
                 </a>
                 <a class="related-posts__card" href="anthropic-skills-guide.html">
-                    <span class="related-posts__card-title">Anthropic&#x27;s 33-Page Blueprint for Claude Skills</span>
+                    <span class="related-posts__card-title">Anthropic 为 Claude 技能写下的 33 页蓝图</span>
                 </a>
                 <a class="related-posts__card" href="claude-code-skills.html">
-                    <span class="related-posts__card-title">Claude Code Skills: The MCP Killer?</span>
+                    <span class="related-posts__card-title">Claude Code 技能：MCP 杀手？</span>
                 </a>
         </div>
     </nav>
