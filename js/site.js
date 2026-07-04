@@ -546,9 +546,9 @@ function initMobileDrawer(){
     if(a.classList.contains("on")) c.classList.add("on");
     panel.appendChild(c);
   });
-  // DE/EN toggle in the drawer (mirrors #lang-toggle; uses indicator classes)
+  // DE/EN/中文 toggle in the drawer (mirrors #lang-toggle; uses indicator classes)
   var mtog = document.createElement("button");
-  mtog.id = "lang-toggle-mobile"; mtog.className = "lang-toggle"; mtog.setAttribute("aria-label","Toggle language");
+  mtog.id = "lang-toggle-mobile"; mtog.className = "lang-toggle"; mtog.setAttribute("aria-label","Select language");
   mtog.style.cssText = "margin-top:22px;align-self:flex-start;font-family:'Space Mono',monospace;background:none;border:0;color:var(--mut);cursor:pointer";
   mtog.innerHTML = '<span class="lang-de-indicator active" data-lang="de">DE</span> <span style="color:var(--mut)">|</span> <span class="lang-en-indicator" data-lang="en">EN</span> <span style="color:var(--mut)">|</span> <span class="lang-zh-indicator" data-lang="zh">中文</span>';
   panel.appendChild(mtog);
