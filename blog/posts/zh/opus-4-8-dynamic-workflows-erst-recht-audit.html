@@ -178,9 +178,9 @@
     <section class="art-hero" data-screen-label="Article">
         <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
         <div class="art-hero__in">
-            <a class="art-back" href="../../zh/">◄ ALL POSTS</a>
+            <a class="art-back" href="../../zh/">◄ 所有文章</a>
             <div><span class="art-cat">Opus 4.8</span></div>
-            <h1 class="art-title">Opus 4.8 &amp; Dynamic Workflows: How 7 Agents Audited My Platform in 5 Minutes</h1>
+            <h1 class="art-title">Opus 4.8 与动态工作流：7 个智能体如何在 5 分钟内审计了我的平台</h1>
             <div class="art-meta">
                 <span class="who"><span class="av">NW</span> Nils Weiser</span>
                 <span class="sep">•</span><span data-art-date>May 31, 2026</span>
@@ -192,74 +192,74 @@
 
     <!-- Article Content (Blackwall art-body) -->
     <article class="art-body">
-                <p class="lead">Seven agents, a real legal-tech platform, five minutes. But that's not the story. The story is what it means that this is now possible.</p>
+                <p class="lead">七个智能体、一个真实的法律科技平台、五分钟。但这并不是故事的核心。真正的故事在于：这一切如今已成为可能，意味着什么。</p>
 
                 <p>
-                    On Friday evening I asked Claude to go through my AI legal-advice platform <strong>Erst Recht</strong> end to end — backend, database, payment flow, the lawyer-upgrade path, the whole machine. Instead of working through it step by step itself, Claude wrote a short script: <em>seven specialized agents, one per domain, all running at once.</em>
+                    周五晚上，我让 Claude 从头到尾把我的 AI 法律咨询平台 <strong>Erst Recht</strong> 过一遍——后端、数据库、支付流程、律师升级路径，整台机器。Claude 没有自己一步一步地去做，而是写了一个简短的脚本：<em>七个各司其职的专门智能体，一个领域一个，同时全部运行。</em>
                 </p>
 
                 <p>
-                    Five minutes and eleven seconds later I had a findings list sorted by severity that would have cost a single developer half a day. Among them: several critical findings, including a security-critical flaw a single pass would have missed — and it's exactly this one that best shows what this new way of working is about.
+                    五分十一秒之后，我拿到了一份按严重程度排序的问题清单——这份清单若让一个开发者独自完成，得花上半天时间。其中包括若干严重问题，甚至有一个安全关键的缺陷，单次扫描本会漏掉它——而恰恰是这一个，最能说明这种新工作方式到底是怎么回事。
                 </p>
 
                 <p>
-                    That's impressive. But it isn't the point. The point is what it <strong>makes possible</strong> that a model can now turn an entire plan into executable code and unleash a swarm of agents on it in parallel. That's exactly what <strong>Claude Opus 4.8</strong> and <strong>dynamic workflows</strong> have been about since May 28.
+                    这很惊艳。但这不是重点。重点在于它所<strong>带来的可能性</strong>：一个模型如今能把整份计划变成可执行的代码，并让一群智能体并行地扑上去。这正是 <strong>Claude Opus 4.8</strong> 和<strong>动态工作流</strong>自 5 月 28 日以来所要讲述的东西。
                 </p>
 
-                <h2>Opus 4.8 in one paragraph</h2>
+                <h2>一段话讲清 Opus 4.8</h2>
 
                 <p>
-                    Anthropic shipped <a href="https://www.anthropic.com/news/claude-opus-4-8" target="_blank" rel="noopener noreferrer">Opus 4.8</a> just 41 days after 4.7 — its fastest flagship cycle yet. One thing matters most to me: the model has become <em>more honest</em> as an agent. It lets code flaws slip through roughly four times less often, flags its own uncertainties, and makes fewer unsupported claims. On top of that come new "effort controls" (you choose how hard Claude thinks) and a cheaper fast mode. It sounds like detail polish — but it's exactly the foundation on which you'd trust an agent with a live product in the first place.
+                    Anthropic 在 4.7 之后仅 41 天就发布了 <a href="https://www.anthropic.com/news/claude-opus-4-8" target="_blank" rel="noopener noreferrer">Opus 4.8</a>——迄今为止最快的一次旗舰迭代周期。对我来说，最要紧的是一件事：这个模型作为智能体变得<em>更诚实</em>了。它放过代码缺陷的概率大约降到了原来的四分之一，会主动标出自己不确定的地方，也更少做出没有依据的断言。除此之外还新增了"用力控制"（你来决定 Claude 该想得多用力），以及一种更便宜的快速模式。这听上去像是细节上的打磨——但它恰恰是你愿意把一个上线产品交给智能体去处理的前提所在。
                 </p>
 
-                <h2>The real shift: the plan moves into the script</h2>
+                <h2>真正的转变：计划挪进了脚本里</h2>
 
                 <p>
-                    Until now, the ceiling for everything an AI agent could do autonomously was always the same: the <strong>context window</strong>. The agent held the plan in its head, and every intermediate result — every file read, every tool call — landed in that same window. Eventually it filled up and the agent lost the thread. Pulling in more helpers didn't help, because their results flowed back into that one memory too.
+                    到目前为止，一个 AI 智能体能自主完成的一切，其上限始终是同一个东西：<strong>上下文窗口</strong>。智能体把计划记在脑子里，而每一个中间结果——每一次文件读取、每一次工具调用——都落进同一个窗口里。窗口迟早会被填满，智能体也就丢了线头。拉更多帮手进来也没用，因为它们的结果同样会回流进那一块记忆里。
                 </p>
 
                 <p>
-                    <a href="https://code.claude.com/docs/en/workflows" target="_blank" rel="noopener noreferrer">Dynamic workflows</a> turn that around. Claude no longer writes the plan into its head but as a <strong>script</strong>: which agents run, in what order, what gets passed to whom. A runtime executes that script in the background while the intermediate results live in script variables — not in the model's context. Claude's memory holds only the finished answer at the end.
+                    <a href="https://code.claude.com/docs/en/workflows" target="_blank" rel="noopener noreferrer">动态工作流</a>把这一切反了过来。Claude 不再把计划写进脑子里，而是把它写成一段<strong>脚本</strong>：哪些智能体运行、以什么顺序运行、什么东西传给谁。一个运行时在后台执行这段脚本，而中间结果存活在脚本变量里——而不在模型的上下文里。到最后，Claude 的记忆里只留下那份完成的答案。
                 </p>
 
                 <blockquote>
-                    The plan moves out of the head and into code. That removes the limit that bounded everything before — and a single run can coordinate dozens to hundreds of agents (up to 16 at a time, 1,000 total).
+                    计划从脑子里挪出来，进到代码里。这就移除了此前束缚一切的那道上限——单次运行就能协调几十到几百个智能体（最多同时 16 个，总计 1,000 个）。
                 </blockquote>
 
                 <p>
-                    This is more than "the same, but faster." Because the plan is now code, it can enforce repeatable quality patterns: agents that <em>adversarially review</em> what other agents found before anything is reported. In my case, that became the decisive step.
+                    这不只是"同样的东西，但更快"。因为计划如今就是代码，它可以强制执行可复用的质量模式：让一些智能体在任何东西被上报之前，对其他智能体发现的问题进行<em>对抗性审查</em>。在我这个例子里，这一步成了决定性的关键。
                 </p>
 
-                <h2>My 5-minute proof</h2>
+                <h2>我的 5 分钟实证</h2>
 
                 <p>
-                    The workflow for Erst Recht had two phases:
+                    Erst Recht 的这套工作流分两个阶段：
                 </p>
 
                 <div class="workflow-diagram">
                     <div class="phase-card">
                         <div class="phase-header">
                             <span class="phase-number">PHASE 1</span>
-                            <span class="phase-title">Audit — 7 agents in parallel</span>
+                            <span class="phase-title">审计——7 个智能体并行</span>
                         </div>
                         <p class="text-gray-400 text-sm">
-                            Seven read-only agents, each owning a domain: backend API, database, lawyer upgrade, payment, frontend wiring, build/tests/dependencies, email. They only read — and all at the same time.
+                            七个只读智能体，每个负责一个领域：后端 API、数据库、律师升级、支付、前端接线、构建/测试/依赖、邮件。它们只读——而且全部同时进行。
                         </p>
                     </div>
                     <div class="phase-card">
                         <div class="phase-header">
                             <span class="phase-number">PHASE 2</span>
-                            <span class="phase-title">Synthesis</span>
+                            <span class="phase-title">综合</span>
                         </div>
                         <p class="text-gray-400 text-sm">
-                            The seven raw audits are distilled into a single findings list, prioritized by severity — the blueprint for the fixes that followed.
+                            七份原始审计被提炼成一份统一的问题清单，按严重程度排序——这就是随后修复工作的蓝图。
                         </p>
                     </div>
                 </div>
 
                 <table class="agent-table">
                     <thead>
-                        <tr><th>Agent</th><th>Tokens</th><th>Tools</th><th>Duration</th></tr>
+                        <tr><th>智能体</th><th>Tokens</th><th>工具</th><th>耗时</th></tr>
                     </thead>
                     <tbody>
                         <tr><td>backend-api</td><td>177.5k</td><td>36</td><td>4m 32s</td></tr>
@@ -273,50 +273,50 @@
                 </table>
 
                 <p>
-                    Here you can see the magic of parallel orchestration in black and white: add the agents up and that's roughly half an hour of work. But because they ran <strong>at the same time</strong>, the whole phase was done in <strong>5m 11s</strong> — exactly the slowest agent, nothing more. That's the difference between "one agent works through a long list" and "a swarm finishes it in the time of its slowest member."
+                    在这里，你能白纸黑字地看到并行编排的魔力：把这些智能体的耗时加起来，差不多是半个小时的工作量。但因为它们是<strong>同时</strong>运行的，整个阶段在 <strong>5 分 11 秒</strong>内就完成了——恰好等于最慢的那个智能体，一分不多。这就是"一个智能体逐条啃完一长串清单"和"一群智能体在其最慢成员所需的时间里就完成它"之间的差别。
                 </p>
 
-                <h2>Where the model distrusted itself</h2>
+                <h2>模型不信任自己的地方</h2>
 
                 <p>
-                    The most interesting moment came <em>after</em> the findings — and it belongs to exactly that security-critical flaw. The first fix for it looked clean. But on live verification against the actual system it turned out the fix was a shot in the dark. The root cause sat one level deeper than the first glance suggested — after the "fix" the problem was still exactly as it had been.
+                    最有意思的时刻出现在问题清单<em>之后</em>——而且它恰恰属于那个安全关键的缺陷。它的第一版修复看上去干净利落。但在针对真实系统进行现场验证时，事实证明那个修复不过是瞎蒙一枪。根因比第一眼看上去的要深一层——"修复"过后，问题依然分毫未动。
                 </p>
 
                 <div class="insight-box">
-                    <h4>Verification beats trust</h4>
+                    <h4>验证胜过信任</h4>
                     <p class="text-gray-300 text-sm">
-                        A normal audit would have checked the first fix off as done. Because the workflow tested every critical finding adversarially against live reality, the failure surfaced — and the problem was actually fixed, not just seemingly.
+                        一次寻常的审计会把第一版修复直接勾成"已完成"。正因为这套工作流对每一个严重问题都做了针对现场实况的对抗性测试，那次失败才浮出水面——问题这才被真正修好了，而不只是看起来修好了。
                     </p>
                 </div>
 
                 <p>
-                    This is where Opus 4.8's honesty and the structure of workflows mesh: a model more willing to admit "this looks done but isn't," inside a flow that gives that skepticism its own verification step. The end result was six commits on <code>main</code>, across security, the checkout flow, the lawyer upgrade and stale dependencies — every critical fix verified live once more before it was closed.
+                    这正是 Opus 4.8 的诚实与工作流结构相互咬合的地方：一个更愿意承认"这看着像做完了，其实没有"的模型，被放进一套为这种怀疑专门设了一道验证步骤的流程里。最终的结果是 <code>main</code> 上的六次提交，覆盖了安全、结账流程、律师升级和陈旧依赖——每一个严重修复在被关闭之前都再一次经过现场验证。
                 </p>
 
-                <h2>What this really unlocks</h2>
+                <h2>这真正打开了什么</h2>
 
                 <p>
-                    Forget my audit for a moment. Once "a plan plus a thousand agents" becomes normal, what shifts is which work is even conceivable in the first place:
+                    先把我这次审计放到一边。一旦"一份计划加上一千个智能体"成了常态，真正改变的是：哪些工作在一开始就变得可以设想了：
                 </p>
 
                 <ul>
-                    <li><strong>Tasks nobody touches today become doable.</strong> A migration across hundreds of thousands of lines, an audit of every single API route, a cleanup spanning an old repo — things you kept postponing because they were too big for one session.</li>
-                    <li><strong>Research that cross-checks itself.</strong> Instead of an answer that merely sounds plausible, agents fan a question out across several angles, fetch sources, and vote on which claim survives cross-checking. What fails is dropped before you ever see it.</li>
-                    <li><strong>Decisions from several minds.</strong> A hard architecture question can be drafted from three independent angles and weighed against each other before you commit — instead of endlessly spinning a single first draft.</li>
-                    <li><strong>Verification as the default.</strong> The built-in reflex to adversarially refute findings rather than believe them is exactly what saved my no-op fix. That becomes standard, not the exception.</li>
-                    <li><strong>Processes instead of prompts.</strong> A good workflow can be saved and run again and again. The one-off "go do this" becomes a repeatable routine — the branch review, the release check, the weekly audit, orchestrated identically every time.</li>
-                    <li><strong>A new role for the developer.</strong> You type fewer prompts and conduct more swarms. Especially for small teams and solo developers that means reach that used to take a whole department.</li>
+                    <li><strong>今天没人愿意碰的任务变得可行了。</strong>跨越几十万行代码的一次迁移、对每一条 API 路由逐一审计、横跨一个老仓库的一次清理——那些你一拖再拖、因为对一次会话来说太庞大了的事情。</li>
+                    <li><strong>会自我交叉核验的研究。</strong>不再是一个仅仅听上去合理的答案，而是让智能体把一个问题沿几个不同的角度铺开、去取来资料来源，并就哪个论断能经受住交叉核验进行投票。没能通过的，会在你看到之前就被丢掉。</li>
+                    <li><strong>来自多个头脑的决策。</strong>一个棘手的架构问题，可以从三个独立的角度分别起草、彼此相互权衡，然后你再拍板——而不是围着一份初稿没完没了地打转。</li>
+                    <li><strong>把验证当成默认项。</strong>那种内建的、宁可对抗性地去推翻发现、也不轻信它们的反射，正是它救了我那次"什么都没改"的修复。这会成为标准配置，而不再是例外。</li>
+                    <li><strong>用流程取代提示词。</strong>一套好的工作流可以被保存下来，一遍又一遍地跑。一次性的"去把这个做了"，变成了可复用的例行程序——分支评审、发布检查、每周审计，每一次都以完全相同的方式被编排出来。</li>
+                    <li><strong>开发者的一个新角色。</strong>你敲下的提示词更少，指挥的智能体群更多。尤其对小团队和单打独斗的开发者而言，这意味着过去要靠一整个部门才够得着的触达能力。</li>
                 </ul>
 
-                <h2>The honest flip side</h2>
+                <h2>诚实的另一面</h2>
 
                 <p>
-                    Dynamic workflows are a <strong>research preview</strong> — not a finished product. A swarm costs noticeably more tokens than the same task in conversation, and more agents aren't automatically better: for a small, well-scoped question a single agent is faster and cheaper. The lever only fires when a task breaks into many <em>independent</em> parts, spans more material than one context window can hold, and produces a result that tolerates cross-checking. That's exactly when — and only when — I reach for it.
+                    动态工作流是一次<strong>研究预览</strong>——不是一件成品。相比在对话里完成同样的任务，一个智能体群会明显多耗不少 token；而且智能体更多并不自动更好：对于一个小而边界清晰的问题，单个智能体更快也更便宜。只有当一个任务可以拆成许多<em>相互独立</em>的部分、涉及的材料多到超出一个上下文窗口所能容纳、并且产出的结果经得起交叉核验时，这根杠杆才会真正发力。恰恰在这种时候——也只有在这种时候——我才会动用它。
                 </p>
 
                 <hr style="border-color: #374151; margin: 2rem 0;">
 
-                <p><strong>Tools used:</strong></p>
+                <p><strong>用到的工具：</strong></p>
                 <div style="margin: 1rem 0;">
                     <a href="https://claude.ai/code" target="_blank" rel="noopener noreferrer" class="tool-badge">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
@@ -329,35 +329,35 @@
                 </div>
 
                 <p>
-                    <a href="https://erst-recht.com" target="_blank" rel="noopener noreferrer">Erst Recht</a> is my own legal-tech platform — and at the same time my testbed for exactly these workflows. Wondering how AI-driven multi-agent flows could take real work off your team's plate? <a href="../../../index.html#contact">Get in touch</a>.
+                    <a href="https://erst-recht.com" target="_blank" rel="noopener noreferrer">Erst Recht</a> 是我自己的法律科技平台——同时也是我专门用来实验这些工作流的试验场。想知道 AI 驱动的多智能体流程能怎样把实打实的工作从你团队肩上卸下来？<a href="../../../index.html#contact">与我联系</a>。
                 </p>
 
     </article>
 
     <!-- Author share + related posts -->
     <div class="art-share">
-      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
-      <a href="../../../index.html#contact" class="btn btn--pri">WORK WITH ME ▸</a>
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI 智能体专家 · 博登湖地区</span></div></div>
+      <a href="../../../index.html#contact" class="btn btn--pri">与我合作 ▸</a>
     </div>
     <section class="art-more">
       <div class="wrap">
-        <div class="art-more__head"><h2>More field notes</h2><a href="../../zh/">ALL POSTS ▸</a></div>
+        <div class="art-more__head"><h2>更多现场笔记</h2><a href="../../zh/">所有文章 ▸</a></div>
         <div class="art-more__grid" id="art-more-grid"></div>
       </div>
     </section>
 
     <!-- Related posts (internal cross-links for crawl equity) -->
     <nav class="related-posts" aria-label="More articles">
-        <p class="related-posts__heading">// More articles</p>
+        <p class="related-posts__heading">// 更多文章</p>
         <div class="related-posts__grid">
                 <a class="related-posts__card" href="ki-agenten-workflows-superpowers.html">
-                    <span class="related-posts__card-title">Superpowers: How AI Agents Learn to Work Like Real Teams</span>
+                    <span class="related-posts__card-title">Superpowers：AI 智能体如何学会像真正的团队一样协作</span>
                 </a>
                 <a class="related-posts__card" href="multi-agent-ai-crewai.html">
-                    <span class="related-posts__card-title">Multi-Agent AI Systems with CrewAI: Teams Instead of Lone Wolves</span>
+                    <span class="related-posts__card-title">用 CrewAI 构建多智能体 AI 系统：团队协作，而非单打独斗</span>
                 </a>
                 <a class="related-posts__card" href="claude-mythos-preview-zero-days.html">
-                    <span class="related-posts__card-title">Claude Mythos Preview: When AI Finds Zero-Days on Its Own</span>
+                    <span class="related-posts__card-title">Claude Mythos Preview：当 AI 自己发现零日漏洞</span>
                 </a>
         </div>
     </nav>
