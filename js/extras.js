@@ -41,69 +41,15 @@
   var out=document.getElementById('az-out'), con=document.getElementById('az-console'), report=document.getElementById('az-report');
   var REDUCED=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* localized agent-opportunity pool */
-  var POOL_EN=[
-    {t:'Customer Support Agent', d:'Deflect the repetitive tickets, answer 24/7 from your own docs, escalate only what matters.', fit:'hi'},
-    {t:'Lead Qualification Agent', d:'Reads every inbound enquiry, scores intent, and routes hot leads to you instantly.', fit:'hi'},
-    {t:'Document Processing', d:'Extract, summarise and file contracts, invoices and forms — no manual data entry.', fit:'md'},
-    {t:'Internal Knowledge Agent', d:'Your team asks in plain language, the agent answers from your internal docs & wiki.', fit:'md'},
-    {t:'Onboarding Agent', d:'Walks new customers or hires through setup automatically, adapting to each step.', fit:'hi'},
-    {t:'Content & SEO Agent', d:'Drafts and optimises pages in your brand voice, learned directly from your site.', fit:'md'},
-    {t:'Ops Monitoring Agent', d:'Watches your systems and pings you the moment something drifts — before users notice.', fit:'md'}
-  ];
-  var POOL_DE=[
-    {t:'Kundensupport-Agent', d:'Fängt die wiederkehrenden Tickets ab, antwortet rund um die Uhr aus deinen eigenen Docs, eskaliert nur, was zählt.', fit:'hi'},
-    {t:'Lead-Qualifizierungs-Agent', d:'Liest jede eingehende Anfrage, bewertet die Absicht und leitet heiße Leads sofort an dich weiter.', fit:'hi'},
-    {t:'Dokumenten-Verarbeitung', d:'Extrahiert, fasst zusammen und legt Verträge, Rechnungen und Formulare ab — ohne manuelle Dateneingabe.', fit:'md'},
-    {t:'Internes Wissens-Agent', d:'Dein Team fragt in normaler Sprache, der Agent antwortet aus euren internen Docs & Wiki.', fit:'md'},
-    {t:'Onboarding-Agent', d:'Führt neue Kunden oder Mitarbeitende automatisch durch das Setup und passt sich jedem Schritt an.', fit:'hi'},
-    {t:'Content- & SEO-Agent', d:'Entwirft und optimiert Seiten in deiner Markenstimme — direkt von deiner Website gelernt.', fit:'md'},
-    {t:'Ops-Monitoring-Agent', d:'Überwacht deine Systeme und meldet sich, sobald etwas abweicht — bevor Nutzer es merken.', fit:'md'}
-  ];
-  var POOL_ZH=[
-    {t:'客户支持智能体', d:'拦截重复性工单，7×24 小时基于你自己的文档作答，只把真正要紧的升级给你。', fit:'hi'},
-    {t:'线索资格评估智能体', d:'读取每一条进线咨询，评估意向，并把热门线索即时转给你。', fit:'hi'},
-    {t:'文档处理', d:'提取、总结并归档合同、发票与表单——无需手动录入。', fit:'md'},
-    {t:'内部知识智能体', d:'团队用日常语言提问，智能体基于你们的内部文档与 Wiki 作答。', fit:'md'},
-    {t:'入职引导智能体', d:'自动带领新客户或新员工完成设置，逐步适配每一步。', fit:'hi'},
-    {t:'内容与 SEO 智能体', d:'以你的品牌口吻起草并优化页面——直接从你的网站学习而来。', fit:'md'},
-    {t:'运维监控智能体', d:'监视你的系统，一旦有异常立即提醒你——在用户察觉之前。', fit:'md'}
-  ];
-  function pool(){ var l=lang(); return l==='de' ? POOL_DE : (l==='zh' ? POOL_ZH : POOL_EN); }
+  /* Impact label for an opportunity card (ops text itself comes from the backend). */
   function label(fit){
     var l=lang();
     if(l==='de') return fit==='hi' ? 'HOHER IMPACT' : 'MITTLERER IMPACT';
     if(l==='zh') return fit==='hi' ? '高影响' : '中等影响';
     return fit==='hi' ? 'HIGH IMPACT' : 'MEDIUM IMPACT';
   }
-  function verdictText(score){
-    var l=lang();
-    if(l==='de') return score>=88
-      ? 'Starker Fit. Diese drei Agenten würden sich schnell bezahlt machen.'
-      : 'Guter Fit. Hier würden Agenten den größten Hebel schaffen.';
-    if(l==='zh') return score>=88
-      ? '高度契合。这三个智能体会很快收回成本。'
-      : '契合良好。智能体在这里能创造最大杠杆。';
-    return score>=88
-      ? 'Strong fit. These three agents would pay for themselves fast.'
-      : 'Good fit. Here’s where agents would create the most leverage.';
-  }
 
-  function hash(s){ var h=0; for(var i=0;i<s.length;i++){ h=(h*31 + s.charCodeAt(i))>>>0; } return h; }
   function cleanDomain(v){ return v.trim().replace(/^https?:\/\//i,'').replace(/^www\./i,'').replace(/\/.*$/,'').toLowerCase(); }
-
-  /* ---- BACKEND HOOK ----------------------------------------------------
-     Replace with a call to your scraper/analysis API, e.g.:
-       const res = await fetch('/api/scan?url='+encodeURIComponent(domain));
-       return await res.json();  // { score, verdict, ops:[{t,d,fit}] }
-     For now it deterministically simulates a plausible result per domain. */
-  function stubCompany(domain){
-    var P=pool();
-    var h=hash(domain), picks=[], used={}, i=0;
-    while(picks.length<3 && i<40){ var idx=(h+i*7)%P.length; if(!used[idx]){ used[idx]=1; picks.push(P[idx]); } i++; }
-    var score=78 + (h%18);
-    return { score:score, ops:picks, verdict: verdictText(score) };
-  }
 
   function scanLines(domain){
     if(lang()==='de') return [
@@ -133,24 +79,40 @@
   }
 
   var SCAN_ENDPOINT = 'https://scan.waiser.dev/api/scan';
+  var currentDomain = '';   // set at submit time; used to template block copy
+  function t(key){ return (typeof getTranslation==='function') ? getTranslation(key) : ''; }
+
+  // Route purely off HTTP status + the JSON `error` code / `blocked`/`source` fields.
+  // NEVER fabricate: a non-2xx becomes a soft (honest-message) error, not a fake report.
   function fetchScan(domain){
     var ctrl = new AbortController();
-    var timer = setTimeout(function(){ ctrl.abort(); }, 28000); // Time budget: client abort 28s (above ~26s backend worst case: scrape 8 + guard 6 + analysis 12)
+    var timer = setTimeout(function(){ ctrl.abort(); }, 30000); // client abort; per-tier budget is server-side (see Phase B)
     return fetch(SCAN_ENDPOINT+'?url='+encodeURIComponent(domain)+'&lang='+lang(), { signal: ctrl.signal })
       .then(function(res){
         clearTimeout(timer);
-        // 451 (blocked), 422 (thin), 429 (rate/daily limit) → soft: show an honest
-        // message instead of a report, and DON'T fall back to the fake stub.
-        if(res.status===451||res.status===422||res.status===429){
-          return res.json().then(function(b){
-            var e=new Error('soft'); e.soft=true; e.status=res.status; e.code=b.error; e.message=softMessage(res.status, b);
-            throw e;
-          });
+        return res.json().then(function(b){ return { status: res.status, ok: res.ok, body: b || {} }; },
+                              function(){ return { status: res.status, ok: res.ok, body: {} }; });
+      })
+      .then(function(r){
+        var b = r.body;
+        // 2xx → a real result (live / rendered / knowledge). finish() renders it; the
+        // knowledge banner is driven by b.source === 'knowledge'.
+        if(r.status>=200 && r.status<300){ return b; }
+        // rate/daily limit / thin → honest soft message (existing behavior).
+        if(r.status===451 || r.status===422 || r.status===429){
+          var e=new Error('soft'); e.soft=true; e.status=r.status; e.code=b.error; e.message=softMessage(r.status, b); throw e;
         }
-        if(!res.ok){ var e=new Error('http '+res.status); e.status=res.status; throw e; }
-        return res.json();
+        // bot-protection block (DataDome et al.): FETCH_FAILED / BLOCKED / any blocked:true.
+        // Honest, protector-aware message + a personal-outreach CTA — never a fake result.
+        if(b.error==='FETCH_FAILED' || b.error==='BLOCKED' || b.blocked===true){
+          var eb=new Error('blocked'); eb.soft=true; eb.status=r.status; eb.code='BLOCKED_SITE';
+          eb.blocked=true; eb.message=blockedMessage(b.protector); throw eb;
+        }
+        // anything else non-2xx (500/502 with no useful body) → honest "unavailable".
+        var e2=new Error('unavailable'); e2.soft=true; e2.status=r.status; e2.code='UNAVAILABLE'; e2.message=unavailableMessage(); throw e2;
       });
   }
+
   // Honest, localized copy for the soft-error cases (block / thin / limits).
   function softMessage(status, body){
     var l=lang();
@@ -171,31 +133,75 @@
     return "This site can't be scanned.";
   }
 
+  // Bot-protection block: name the protector only when the backend proved it.
+  function blockedMessage(protector){
+    var l=lang(), key = protector ? 'bw.scan.blocked.named' : 'bw.scan.blocked.generic', tmpl = t(key);
+    if(tmpl) return tmpl.replace('{protector}', protector || '').replace('{domain}', currentDomain);
+    if(l==='de') return protector
+      ? ('Diese Seite sitzt hinter Bot-Schutz ('+protector+') — automatisierte Analysen werden blockiert. Genau solche Fälle schaue ich mir persönlich an — buch dir ein Gespräch.')
+      : 'Diese Seite blockiert automatisierte Analysen (Bot-Schutz). Genau solche Fälle schaue ich mir persönlich an — buch dir ein Gespräch.';
+    if(l==='zh') return protector
+      ? ('该网站位于机器人防护（'+protector+'）之后——自动分析被拦截。这类情况我会亲自来看——欢迎预约通话。')
+      : '该网站屏蔽了自动分析（机器人防护）。这类情况我会亲自来看——欢迎预约通话。';
+    return protector
+      ? ('This site sits behind bot protection ('+protector+') — automated scans are blocked. I look at cases like this personally — book a call.')
+      : 'This site blocks automated scanning (bot protection). I look at cases like this personally — book a call.';
+  }
+
+  // Backend/service unreachable (network error, edge 5xx with no useful body).
+  function unavailableMessage(){
+    var l=lang(), tmpl=t('bw.scan.unavailable');
+    if(tmpl) return tmpl;
+    if(l==='de') return 'Der Live-Scan ist gerade nicht erreichbar. Bitte später erneut versuchen — oder direkt ein Gespräch buchen.';
+    if(l==='zh') return '实时扫描暂时不可用。请稍后再试——或直接预约一次通话。';
+    return "The live scan is temporarily unavailable. Please try again later — or just book a call.";
+  }
+
+  // Mandatory honesty banner for public-knowledge results.
+  function knowledgeBanner(){
+    var l=lang(), tmpl=t('bw.scan.banner.knowledge');
+    if(tmpl) return tmpl;
+    if(l==='de') return 'Diese Website blockiert automatisierte Analysen — daher basiert dieses Ergebnis auf öffentlich verfügbaren Informationen, nicht auf einem Live-Scan.';
+    if(l==='zh') return '该网站屏蔽了自动扫描——因此本结果基于公开可得的信息，而非对网站的实时扫描。';
+    return "This site blocks automated scanning — so this result is based on publicly available information, not a live scan of the site.";
+  }
+  function bookCtaLabel(){
+    var l=lang(), tmpl=t('bw.scan.blocked.cta');
+    if(tmpl) return tmpl;
+    return l==='de' ? 'GESPRÄCH BUCHEN ▸' : (l==='zh' ? '预约通话 ▸' : 'BOOK A CALL ▸');
+  }
+
+  var banner=document.getElementById('az-banner');
+  function hideBanner(){ if(banner){ banner.style.display='none'; banner.textContent=''; } }
+
   form.addEventListener('submit', function(e){
     e.preventDefault();
     var domain=cleanDomain(urlEl.value);
     if(!domain || domain.indexOf('.')<1){ urlEl.focus(); return; }
+    currentDomain=domain;
     var scanning = lang()==='de' ? 'SCANNE…' : (lang()==='zh' ? '扫描中…' : 'SCANNING…');
     var runLabel = (typeof getTranslation==='function') ? getTranslation('bw.scan.run') : 'RUN SCAN ▸';
     runBtn.disabled=true; runBtn.textContent=scanning;
-    out.style.display='block'; report.style.display='none'; con.style.display='block'; con.innerHTML='';
+    out.style.display='block'; report.style.display='none'; con.style.display='block'; con.innerHTML=''; hideBanner();
+    // Non-2xx and network errors are ALL turned into honest soft errors by fetchScan
+    // (blocked → protector-aware CTA; else → "unavailable"). Nothing fabricated here.
     var scanP = fetchScan(domain).catch(function(err){
-      if(err && err.soft){ throw err; }              // 451/422 → show honest message, no stub
+      if(err && err.soft){ throw err; }
       if(typeof umami!=='undefined'){ try{ umami.track('scan-fallback',{status:err&&err.status}); }catch(e){} }
-      console.warn('[scan] fallback', err && (err.status||err.message));
-      return stubCompany(domain);                     // network/other → graceful fake
+      console.warn('[scan] unavailable', err && (err.status||err.message));
+      var e2=new Error('unavailable'); e2.soft=true; e2.code='UNAVAILABLE'; e2.message=unavailableMessage(); throw e2;
     });
     var doneMsg = lang()==='de' ? '✓ Analyse abgeschlossen' : (lang()==='zh' ? '✓ 分析完成' : '✓ analysis complete');
-    var animP;
+    var animP, cancelAnim=null;
     if(REDUCED){
       con.innerHTML='<span class="c">'+(lang()==='de'?'Scanne…':(lang()==='zh'?'扫描中…':'Scanning…'))+'</span>';
       animP=Promise.resolve();
     } else {
-      // The typing animation is cosmetic. It resolves either when it finishes
-      // naturally OR after a wall-clock cap — so a throttled background tab (where
-      // chained setTimeouts are slowed to ~1Hz) can never hold the result hostage.
+      // The typing animation is cosmetic. It resolves when it finishes naturally, after
+      // a wall-clock cap, OR the moment the fetch settles (so a fast error paints at once).
       animP=new Promise(function(resolve){
         var done=false, fin=function(){ if(done) return; done=true; resolve(); };
+        cancelAnim=fin;
         var LINES=scanLines(domain), buf='', li=0, ci=0;
         (function type(){
           if(done) return;
@@ -209,17 +215,21 @@
         setTimeout(fin, 9000); // hard cap: never let the animation block finish()
       });
     }
+    // Settle the animation as soon as the fetch settles (success OR error), so the
+    // honest message isn't held hostage — or clobbered — by the ~9s typing loop.
+    scanP.then(function(){ if(cancelAnim) cancelAnim(); }, function(){ if(cancelAnim) cancelAnim(); });
+
     Promise.all([scanP, animP]).then(function(r){
       if(REDUCED){ con.innerHTML='<span class="g">'+doneMsg+'</span>'; }
       finish(domain, r[0], runLabel);
     }).catch(function(err){
-      // soft cases (451 blocked / 422 thin / 429 rate or daily limit): show an honest
-      // message instead of a report; never render the fake stub here.
-      var msg=err.message||(lang()==='de'?'Diese Seite kann nicht gescannt werden.':(lang()==='zh'?'该网站无法被扫描。':'This site can\'t be scanned.'));
+      // Honest message instead of a report; never fabricated. Blocked + daily-limit
+      // also get a "book a call" CTA.
+      hideBanner();
+      var msg=err.message||unavailableMessage();
       var html='<span class="h">'+msg+'</span>';
-      if(err.code==='DAILY_LIMIT'){
-        var cta=lang()==='de'?'GESPRÄCH BUCHEN ▸':(lang()==='zh'?'预约通话 ▸':'BOOK A CALL ▸');
-        html+='<div style="margin-top:14px"><a href="#contact" class="btn btn--pri">'+cta+'</a></div>';
+      if(err.code==='BLOCKED_SITE' || err.code==='DAILY_LIMIT'){
+        html+='<div style="margin-top:14px"><a href="#contact" class="btn btn--pri">'+bookCtaLabel()+'</a></div>';
       }
       con.innerHTML=html;
       runBtn.disabled=false; runBtn.textContent=runLabel;
@@ -228,6 +238,11 @@
 
   function finish(domain, data, runLabel){
     runBtn.disabled=false; runBtn.textContent=runLabel || 'RUN SCAN ▸';
+    // Mandatory honesty banner when the result came from public knowledge, not a live scan.
+    if(banner){
+      if(data.source==='knowledge'){ banner.textContent=knowledgeBanner(); banner.style.display='block'; }
+      else { hideBanner(); }
+    }
     document.getElementById('az-target').textContent=domain;
     document.getElementById('az-verdict').textContent=data.verdict;
     var opsWrap=document.getElementById('az-ops');
