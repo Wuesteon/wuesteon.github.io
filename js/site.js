@@ -437,7 +437,7 @@ function tcardHTML(p, context){
 /* render home feed (first 3) */
 function renderHomeFeed(){
   var homeFeed = document.getElementById("home-feed");
-  if(homeFeed) homeFeed.innerHTML = POSTS.slice(0,3).map(tcardHTML).join("");
+  if(homeFeed) homeFeed.innerHTML = POSTS.slice(0,3).map(function(p){ return tcardHTML(p); }).join("");
 }
 renderHomeFeed();
 
@@ -496,7 +496,7 @@ var __blogFilterCat = "ALL";
 function renderBlogList(){
   var blogList = document.getElementById("blog-list");
   if(!blogList) return;
-  blogList.innerHTML = POSTS.filter(p=>__blogFilterCat==="ALL"||p.cat===__blogFilterCat).map(tcardHTML).join("");
+  blogList.innerHTML = POSTS.filter(p=>__blogFilterCat==="ALL"||p.cat===__blogFilterCat).map(function(p){ return tcardHTML(p); }).join("");
   attachTilt();
 }
 (function(){
