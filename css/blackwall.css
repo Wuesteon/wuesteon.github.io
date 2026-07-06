@@ -362,6 +362,7 @@ body.mnav-lock{ overflow:hidden; }
 .az-console{ font-family:"Space Mono",monospace; font-size:13px; line-height:1.9; white-space:pre-wrap; color:#c9ccd6; border-top:1px solid var(--line); padding-top:18px; }
 .az-console .p{ color:var(--red); } .az-console .g{ color:#3ad17a; } .az-console .c{ color:var(--mut); } .az-console .h{ color:var(--hot); }
 .azcur{ display:inline-block; width:8px; height:1em; background:var(--red); vertical-align:-2px; animation:blink 1s steps(1) infinite; }
+.az-banner{ display:none; margin-top:20px; padding:12px 16px; border:1px solid rgba(255,90,104,.35); border-left:3px solid var(--hot); border-radius:10px; background:rgba(255,42,60,.06); font-family:"Space Grotesk",sans-serif; font-size:13px; line-height:1.55; color:#e8d7d9; }
 .az-report{ display:none; margin-top:20px; }
 .az-report__head{ display:flex; align-items:center; justify-content:space-between; gap:20px; padding-bottom:22px; border-bottom:1px solid var(--line); }
 .az-target{ font-family:"Chakra Petch",sans-serif; font-weight:700; font-size:26px; color:#fff; margin-top:8px; word-break:break-all; }
