@@ -29,6 +29,15 @@ Marketing data, analytics, SEO assets, and growth tracking for the personal port
     (`blog/index.html`, `blog/en/index.html`), the legal pages
     (`datenschutz.html`, `impressum.html`), `404.html`, and `easter-egg/`
   - Dashboard: https://cloud.umami.is/analytics/eu/websites/d04784b7-9e58-43ad-b71b-73328369d474
+  - **Custom events** (2026-07, beyond default pageviews): `cta-book-call` /
+    `cta-email-pitch` (homepage contact CTAs, via `data-umami-event`),
+    `lang-switch` (`{lang}` payload, fires once per user-initiated DE/EN/中文
+    toggle, not on page load), `scroll-75-home` / `scroll-100-home` and
+    `scroll-75-article` / `scroll-100-article` (scroll-depth, namespaced by
+    page type so homepage engagement and article read-depth don't blend),
+    `related-post-click` (`{post: <slug>}`, in-article "art-more" related-post
+    links only — not the home feed or blog index cards). Tracking helper:
+    `trackEvent()` in `js/main.js`.
 
 ## SEO
 

@@ -417,11 +417,14 @@ function siteBase(){
   return "";
 }
 
-function tcardHTML(p){
+function tcardHTML(p, context){
   var lang = siteLang();
   var L = p[lang] || p.en;
   var href = siteBase() + L.href;
-  return `<a class="tcard" href="${href}" data-cat="${p.cat}">
+  var track = context === "related"
+    ? ` data-umami-event="related-post-click" data-umami-event-post="${p.id}"`
+    : "";
+  return `<a class="tcard" href="${href}" data-cat="${p.cat}"${track}>
     <div class="tcard__grid"></div>
     <div class="tcard__spec"></div>
     <div class="tcard__top"><span class="tcard__cat">${p.cat}</span><span class="tcard__read">${L.read}</span></div>
@@ -434,7 +437,7 @@ function tcardHTML(p){
 /* render home feed (first 3) */
 function renderHomeFeed(){
   var homeFeed = document.getElementById("home-feed");
-  if(homeFeed) homeFeed.innerHTML = POSTS.slice(0,3).map(tcardHTML).join("");
+  if(homeFeed) homeFeed.innerHTML = POSTS.slice(0,3).map(function(p){ return tcardHTML(p); }).join("");
 }
 renderHomeFeed();
 
@@ -457,7 +460,7 @@ function enhanceArticle(){
   if(grid){
     var more = [];
     for(var i=1;i<=3;i++){ more.push(POSTS[(idx+i) % POSTS.length]); }
-    grid.innerHTML = more.map(tcardHTML).join("");
+    grid.innerHTML = more.map(function(p){ return tcardHTML(p, "related"); }).join("");
     if(typeof attachTilt === "function") attachTilt();
   }
 }
@@ -493,7 +496,7 @@ var __blogFilterCat = "ALL";
 function renderBlogList(){
   var blogList = document.getElementById("blog-list");
   if(!blogList) return;
-  blogList.innerHTML = POSTS.filter(p=>__blogFilterCat==="ALL"||p.cat===__blogFilterCat).map(tcardHTML).join("");
+  blogList.innerHTML = POSTS.filter(p=>__blogFilterCat==="ALL"||p.cat===__blogFilterCat).map(function(p){ return tcardHTML(p); }).join("");
   attachTilt();
 }
 (function(){
