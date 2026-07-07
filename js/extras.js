@@ -258,6 +258,12 @@
       return '<div class="op"><span class="op__fit '+o.fit+'">'+label(o.fit)+'</span><div class="op__t">'+esc(o.t)+'</div><div class="op__d">'+esc(o.d)+'</div></div>';
     }).join('');
     report.style.display='block';
+    var reasonsWrap=document.getElementById('az-reasons');
+    if(reasonsWrap){
+      reasonsWrap.innerHTML=(Array.isArray(data.reasons)?data.reasons:[]).map(function(r){
+        return '<li>'+esc(r)+'</li>';
+      }).join('');
+    }
     var scoreEl=document.getElementById('az-score'), target=data.score, t0=null;
     if(REDUCED){ scoreEl.textContent=target; } else {
       (function anim(ts){ if(!t0)t0=ts; var p=Math.min(1,(ts-t0)/900); scoreEl.textContent=Math.round(p*target); if(p<1) requestAnimationFrame(anim); })(performance.now());

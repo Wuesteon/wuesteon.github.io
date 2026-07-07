@@ -370,6 +370,9 @@ body.mnav-lock{ overflow:hidden; }
 .az-score__n{ font-family:"Chakra Petch",sans-serif; font-weight:700; font-size:52px; line-height:1; color:var(--red); text-shadow:0 0 26px rgba(255,42,60,.5); }
 .az-score__n::after{ content:"%"; font-size:24px; color:var(--hot); }
 .az-score__l{ font-family:"Space Mono",monospace; font-size:10.5px; letter-spacing:.14em; color:var(--mut); margin-top:4px; }
+.az-reasons{ list-style:none; margin:10px 0 0; padding:0; text-align:left; display:inline-block; }
+.az-reasons li{ font-size:11px; line-height:1.6; color:var(--mut); white-space:nowrap; }
+.az-reasons li::before{ content:"✓ "; color:var(--red); }
 .az-ops{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:22px 0; }
 @media(max-width:720px){ .az-ops{ grid-template-columns:1fr; } }
 .op{ border:1px solid var(--line); border-radius:12px; padding:20px; background:rgba(255,255,255,.02); opacity:0; transform:translateY(14px); }
