@@ -41,6 +41,14 @@
   var out=document.getElementById('az-out'), con=document.getElementById('az-console'), report=document.getElementById('az-report');
   var REDUCED=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ops text (t/d) is model-generated and reflects scraped page content — never
+     trust it as HTML. Escape before interpolating into innerHTML. */
+  function esc(s){
+    return String(s==null?'':s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
   /* Impact label for an opportunity card (ops text itself comes from the backend). */
   function label(fit){
     var l=lang();
@@ -247,7 +255,7 @@
     document.getElementById('az-verdict').textContent=data.verdict;
     var opsWrap=document.getElementById('az-ops');
     opsWrap.innerHTML=data.ops.map(function(o){
-      return '<div class="op"><span class="op__fit '+o.fit+'">'+label(o.fit)+'</span><div class="op__t">'+o.t+'</div><div class="op__d">'+o.d+'</div></div>';
+      return '<div class="op"><span class="op__fit '+o.fit+'">'+label(o.fit)+'</span><div class="op__t">'+esc(o.t)+'</div><div class="op__d">'+esc(o.d)+'</div></div>';
     }).join('');
     report.style.display='block';
     var scoreEl=document.getElementById('az-score'), target=data.score, t0=null;
