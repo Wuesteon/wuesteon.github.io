@@ -60,6 +60,10 @@
   function cleanDomain(v){ return v.trim().replace(/^https?:\/\//i,'').replace(/^www\./i,'').replace(/\/.*$/,'').toLowerCase(); }
 
   function scanLines(domain){
+    // domain is user-typed and gets built into con.innerHTML character-by-character
+    // by the typing loop below — must be escaped here, at the one place all three
+    // language variants pull it in, rather than at each call site.
+    domain = esc(domain);
     if(lang()==='de') return [
       {c:'p',x:'$ waiser scan '},{c:'w',x:domain},{nl:1},
       {c:'c',x:'  öffentliche Seiten laden ...... '},{c:'g',x:'ok'},{nl:1},
@@ -144,7 +148,11 @@
   // Bot-protection block: name the protector only when the backend proved it.
   function blockedMessage(protector){
     var l=lang(), key = protector ? 'bw.scan.blocked.named' : 'bw.scan.blocked.generic', tmpl = t(key);
-    if(tmpl) return tmpl.replace('{protector}', protector || '').replace('{domain}', currentDomain);
+    // protector is backend-controlled (detectProtector allowlist); domain is
+    // user-typed and reaches innerHTML via con.innerHTML — must be escaped even
+    // though no current translation string uses {domain} (defense against the
+    // next template that does).
+    if(tmpl) return tmpl.replace('{protector}', esc(protector || '')).replace('{domain}', esc(currentDomain));
     if(l==='de') return protector
       ? ('Diese Seite sitzt hinter Bot-Schutz ('+protector+') — automatisierte Analysen werden blockiert. Genau solche Fälle schaue ich mir persönlich an — buch dir ein Gespräch.')
       : 'Diese Seite blockiert automatisierte Analysen (Bot-Schutz). Genau solche Fälle schaue ich mir persönlich an — buch dir ein Gespräch.';
@@ -245,6 +253,13 @@
   });
 
   function finish(domain, data, runLabel){
+    // A 2xx with an unusable body (proxy/CDN edge case, or a backend regression)
+    // must degrade to the honest "unavailable" message, never a raw JS error
+    // string — thrown here so it flows into the same soft-error .catch as any
+    // other failure (never fabricate, never leak an internal error to the visitor).
+    if(!data || !Array.isArray(data.ops) || typeof data.verdict!=='string' || typeof data.score!=='number'){
+      var e=new Error('unavailable'); e.soft=true; e.code='UNAVAILABLE'; e.message=unavailableMessage(); throw e;
+    }
     runBtn.disabled=false; runBtn.textContent=runLabel || 'RUN SCAN ▸';
     // Mandatory honesty banner when the result came from public knowledge, not a live scan.
     if(banner){
