@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 搜索的灵丹妙药：科学究竟怎么说 GEO</title>
+    <meta name="description" content="作为付费服务的 GEO 在很大程度上尚未被证实。研究（arXiv、普林斯顿的研究、Fishkin 的 2961 条提示）到底证明了什么关于 AI 可见性的事实，又有什么只是灵丹妙药式的噱头。">
+    <link rel="canonical" href="https://waiser.dev/blog/posts/zh/geo-wundermittel-wissenschaft.html">
+    <link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/geo-wundermittel-wissenschaft.html">
+    <link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/geo-wundermittel-wissenschaft.html">
+    <link rel="alternate" hreflang="zh" href="https://waiser.dev/blog/posts/zh/geo-wundermittel-wissenschaft.html">
+    <link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/geo-wundermittel-wissenschaft.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="AI 搜索的灵丹妙药：科学究竟怎么说 GEO">
+    <meta property="og:description" content="作为付费服务的 GEO 在很大程度上尚未被证实。研究到底证明了什么关于 AI 可见性的事实，又有什么只是灵丹妙药式的噱头。">
+    <meta property="og:url" content="https://waiser.dev/blog/posts/zh/geo-wundermittel-wissenschaft.html">
+    <meta property="og:image" content="https://waiser.dev/og-default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI 搜索的灵丹妙药：科学究竟怎么说 GEO">
+    <meta name="twitter:description" content="作为付费服务的 GEO 在很大程度上尚未被证实。研究到底证明了什么关于 AI 可见性的事实，又有什么只是灵丹妙药式的噱头。">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "AI 搜索的灵丹妙药：科学究竟怎么说 GEO",
+      "description": "作为付费服务的 GEO 在很大程度上尚未被证实。研究（arXiv、普林斯顿的研究、Fishkin 的 2961 条提示）到底证明了什么关于 AI 可见性的事实，又有什么只是灵丹妙药式的噱头。",
+      "datePublished": "2026-07-08",
+      "author": {
+        "@type": "Person",
+        "name": "Nils Weiser",
+        "@id": "https://waiser.dev/#person"
+      },
+      "image": "https://waiser.dev/og-default.png",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://waiser.dev/blog/posts/zh/geo-wundermittel-wissenschaft.html"
+      },
+      "inLanguage": "zh",
+      "@id": "https://waiser.dev/blog/posts/zh/geo-wundermittel-wissenschaft.html#article",
+      "publisher": {
+        "@id": "https://waiser.dev/#person"
+      },
+      "dateModified": "2026-07-08"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://waiser.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "博客",
+          "item": "https://waiser.dev/blog/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "AI 搜索的灵丹妙药",
+          "item": "https://waiser.dev/blog/posts/zh/geo-wundermittel-wissenschaft.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+
+    <!-- TODO: replace with prebuilt static tailwind.css before scaling traffic; see CLAUDE.md -->
+    <link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+    <meta name="theme-color" content="#050507">
+    <link rel="preload" href="/fonts/ChakraPetch-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Blackwall: local tailwind utilities kept (posts rely on them), then Blackwall tokens + bridge -->
+    <link rel="stylesheet" href="../../../css/tailwind.css">
+    <link rel="stylesheet" href="../../../css/tokens.css">
+    <link rel="stylesheet" href="../../../css/blackwall.css">
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/blog-post.css">
+    <style>
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .stat-card {
+            background: rgba(255, 42, 60, 0.05);
+            border: 1px solid rgba(255, 42, 60, 0.2);
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            color: #ff2a3c;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(55, 65, 81, 0.5);
+            vertical-align: top;
+        }
+        .comparison-table th {
+            background: rgba(255, 42, 60, 0.1);
+            color: #ff2a3c;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .comparison-table td {
+            color: #d1d5db;
+        }
+        .comparison-table tr:hover td {
+            background: rgba(255, 42, 60, 0.05);
+        }
+        .verdict-good { color: #3ad17a; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+        .verdict-bad { color: #ff2a3c; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+        .caveat-card {
+            background: rgba(236, 72, 153, 0.05);
+            border-left: 3px solid #ec4899;
+            border-radius: 6px;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+        }
+        .caveat-card h4 {
+            color: #ec4899;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .caveat-card.good { border-left-color: #3ad17a; }
+        .caveat-card.good h4 { color: #3ad17a; }
+        .tool-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(255, 42, 60, 0.1);
+            border: 1px solid rgba(255, 42, 60, 0.3);
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #ff2a3c;
+            margin: 0.25rem;
+        }
+        .jump-shortcut {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+            padding: 1rem 1.25rem;
+            border: 1px solid rgba(255, 42, 60, 0.2);
+            border-left: 3px solid #ff2a3c;
+            border-radius: 8px;
+            background: rgba(255, 42, 60, 0.04);
+        }
+        .jump-shortcut__label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #9ca3af;
+        }
+        .jump-shortcut .btn--sec {
+            margin-left: auto;
+        }
+        @media (max-width: 560px) {
+            .jump-shortcut .btn--sec { margin-left: 0; }
+        }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header (Blackwall art-hero) -->
+    <section class="art-hero" data-screen-label="Article">
+        <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
+        <div class="art-hero__in">
+            <a class="art-back" href="../../zh/">◄ 所有文章</a>
+            <div><span class="art-cat">GEO / AI SEO</span></div>
+            <h1 class="art-title">AI 搜索的灵丹妙药</h1>
+            <div class="art-meta">
+                <span class="who"><span class="av">NW</span> Nils Weiser</span>
+                <span class="sep">•</span><span data-art-date>2026 年 7 月 8 日</span>
+                <span class="sep">•</span><span data-art-read>12 分钟</span>
+            </div>
+        </div>
+    </section>
+    <div class="art-hr"><div></div></div>
+
+    <!-- Article Content (Blackwall art-body) -->
+    <article class="art-body">
+                <p class="lead">GEO，即"生成式引擎优化"（Generative Engine Optimization），被吹捧为一门新学科，宣称能让你在 ChatGPT、Perplexity 和 Google AI Overviews 中被引用，如今正被当作付费服务出售。简而言之：流量的迁移是真实的；而几乎所有以"GEO 策略"名义卖给你去应对它的东西，都不是真的。</p>
+
+                <p>
+                    先把老实话摆在前面：没有任何一套 GEO 打法，能带来比早在 GEO 这个词出现之前就已存在的两件事更多的收益：<strong>写出有分量、有据可查的内容</strong>，以及<strong>做扎实的技术性 SEO</strong>。除此之外的一切，要么是爬虫层面的管道疏通，要么是早已被推翻的老套路，要么干脆就是编造的数字。
+                </p>
+
+                <!-- Shortcut: springt direkt zur Evidenz-Übersicht -->
+                <div class="jump-shortcut">
+                    <span class="jump-shortcut__label">// 时间不多？</span>
+                    <a href="#evidenz-vs-wundermittel" class="btn btn--sec">直接看总览：证据 vs. 灵丹妙药 <span aria-hidden="true">↓</span></a>
+                </div>
+
+                <h2>流量迁移是真实的，这才是真正的核心</h2>
+                <p>
+                    先从<em>正确</em>的部分说起。从经典的蓝色链接式搜索，转向由 AI 合成的答案，这种迁移是可测量的，而且规模巨大：
+                </p>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">−25 %</div>
+                        <div class="stat-label">到 2026 年经典搜索量（Gartner 预测）</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">−58 %</div>
+                        <div class="stat-label">出现 AI Overviews 时对第 1 名的点击（Ahrefs）</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">~25 亿</div>
+                        <div class="stat-label">通过 ChatGPT 每天的提示数</div>
+                    </div>
+                </div>
+
+                <p>
+                    Ahrefs 测得，当一条 AI Overview 被展示时，最靠前的自然结果的点击率会被压低 58%（2025 年底），而仅仅八个月前这一数字还是 34.5%。曲线陡峭上扬。今天若只为排到第 1 名而优化，就是在为一个正在收缩的窗口优化。到此为止，这种警觉都有其道理。错误恰恰始于之后：即假定这个新窗口能用与 SERP 相同的工具去"优化"。
+                </p>
+
+                <h2>为什么 GEO 没有可测量的载体</h2>
+
+                <p>
+                    经典 SEO 始终有一个可观测的产出：一个带有位置排名、可供追踪的结果页面。两个人、同一个查询、同一个地点，得到的几乎是同一个 SERP。这正是排名追踪之所以说得通的根基。
+                </p>
+
+                <p>
+                    LLM 的输出没有这个载体。答案取决于采样温度、模型版本、提示的确切措辞、用户上下文、检索策略，以及一个不断变化的索引。同一个查询执行两次，得到的引用来源就不同。根本<strong>不存在一个可以固定下来的"引用排名"（Citation Rank）</strong>，有的只是一个概率分布。
+                </p>
+
+                <p>
+                    相关数字令人清醒。一项分析将 AI 引用的月度之间波动定在 40–60%，而这还是在内容毫无改动的情况下。ZipTie 发现，ChatGPT 与 Perplexity 之间有 89% 的引用是不同的，而只有 18% 的品牌能同时出现在三大 AI 平台上。所以你优化的不是一个位置，而是一片闪烁不定的噪声。
+                </p>
+
+                <h2>普林斯顿的研究到底证明了什么</h2>
+
+                <p>
+                    这个词的学术源头是 Aggarwal 等人的论文 <a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener noreferrer">"GEO: Generative Engine Optimization"</a>（普林斯顿/佐治亚理工/AI2/IIT Delhi，发表于 ACM KDD 2024，DOI 10.1145/3637528.3671900）。它是每一个 GEO 销售页面最常引用的依据，而在这个过程中，它几乎无一例外地被曲解了。
+                </p>
+
+                <p>
+                    这项研究做了什么：用一个由 10000 条查询组成的基准，去测试一个复刻 Bing Chat 的系统。它报告的结果是：
+                </p>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">+41 %</div>
+                        <div class="stat-label">加入统计数据带来的被引用概率</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">+28 %</div>
+                        <div class="stat-label">来自专家引述</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">30–40 %</div>
+                        <div class="stat-label">来自第三方来源的佐证</div>
+                    </div>
+                </div>
+
+                <p>
+                    听上去像是"GEO 有效"的铁证。但有两条从不会出现在任何销售页面上的保留意见：
+                </p>
+
+                <p>
+                    <strong>第一：</strong>这些是来自受控环境的基准测试产物，在生产环境中并不存在。那个复刻出来的"生成式引擎"足够确定性，才能产生可测量的提升。而在真正的 ChatGPT 中，情况恰恰相反（见上文）。
+                </p>
+
+                <p>
+                    <strong>第二</strong>，也是精彩的部分：SandboxSEO 指出，那三种"获胜"技巧（统计数据、引述、来源）全都<em>增加了内容</em>，而六种无效的技巧只是把现有文本重新措辞了一遍。因此这个提升很可能不过是<strong>内容密度</strong>，而非什么"优化魔法"。换句话说：这项研究主要证明的，是更多有分量、有据可查的内容有帮助，而这恰恰是好内容本来就具备的东西。
+                </p>
+
+                <p>
+                    与此相印证的是 Semrush 对跨越 3 个 LLM、历时 13 周的 230000 条提示所做的分析：在经典搜索中排名靠前的域名，也更频繁地被 AI 引用。ZipTie 的限定条件是：单凭域名权威度（Domain Authority）只能解释约 18% 的引用波动。它有帮助，但它不是一个杠杆，而是优质内容的一个副产品。
+                </p>
+
+                <h2>那些在称量烟雾的仪表盘</h2>
+
+                <p>
+                    如今在"AI 可见性追踪"上的年度花费已经超过 1 亿美元，分散在数百个仪表盘上，它们向你许诺一个"在 AI 中的排名位置"。而相关研究结论明确：这个位置并不存在。
+                </p>
+
+                <p>
+                    Rand Fishkin 与 Patrick O'Donnell（Gumshoe.ai）在 2026 年 1 月招募了约 600 名志愿者，让 12 条品牌推荐类提示总共通过 ChatGPT、Claude 和 Google 的 AI 运行了 2961 次（<a href="https://sparktoro.com/blog/new-research-ais-are-highly-inconsistent-when-recommending-brands-or-products-marketers-should-take-care-when-tracking-ai-visibility/" target="_blank" rel="noopener noreferrer">SparkToro 研究</a>）。结果是：向一个 AI 询问 100 次品牌推荐，两次得到同一份列表的概率低于 1:100；两次得到顺序相同的同一份列表则更接近 1:1000。Fishkin 对任何给出"在 AI 中排名位置"的工具的结论是：<em>"full of baloney"（满口胡说）</em>。
+                </p>
+
+                <p>
+                    学术界也印证了这一点。一项 arXiv 研究 <a href="https://arxiv.org/abs/2604.07585" target="_blank" rel="noopener noreferrer">"Don't Measure Once"</a> 发现，在同一提示下、几分钟之内，来源重叠度（Jaccard）仅为 0.32–0.43。这些数值表明，仅内部随机性一项就能解释绝大部分的不稳定。另一篇论文 <a href="https://arxiv.org/abs/2603.08924" target="_blank" rel="noopener noreferrer">"Quantifying Uncertainty in AI Visibility"</a> 的措辞更为强硬：生成式引擎的引用指标是<strong>随机变量，而非固定值</strong>。单次测量所带有的、未被量化的不确定性，大到足以让常见的结论失效。Ahrefs 的数字也吻合这一图景：对于同一个查询，Google 的 AI Mode 与 AI Overviews 有 87% 引用的是不同的来源。
+                </p>
+
+                <h3>唯一稳定的信号</h3>
+
+                <p>
+                    Fishkin 发现了恰好<em>一件</em>在顺序不断被重新洗牌时仍保持稳定的事：<strong>"考虑集"（Consideration Set）</strong>，也就是模型据以选取的那一批品牌的池子。是否属于这个池子是可以估计的，但只能缓慢地通过 60–100 次运行得出。这是唯一有效的信号。去测量<strong>归属</strong>，而不是排名。
+                </p>
+
+                <h3>"错误窗口"问题</h3>
+
+                <p>
+                    而即便是这项测量，大多数工具也测错了地方：它们查询的是廉价的供应商 API。但 GPT-经-API ≠ ChatGPT。这款消费级产品拥有记忆、自定义指令、历史记录、账户上下文、地理位置，以及一套自己的系统提示。超过 90% 的每周 ChatGPT 用户处于免费层级，而免费层级触发的搜索和引用都比工具所探测的付费层级更少。提示量的数字则大多是编造的，要么是从微小的点击流面板建模而来，要么是从 Google 关键词反推得出。Steve Toth 和 William Alvarez 称 Profound 的提示量为"scam（骗局）"；Conductor 则把任何 AI 提示量指标都定性为根本上具有误导性。
+                </p>
+
+                <h2 id="evidenz-vs-wundermittel">证据支持的，与灵丹妙药式的噱头</h2>
+
+                <p>
+                    这里是贯穿全文的那道分界。左边是有可靠证据支持的；右边是被兜售、却从未被干净地证实过的。
+                </p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>证据支持的</th>
+                            <th>灵丹妙药</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="verdict-good">✓</span> 在 <code>robots.txt</code> 中放行 AI 检索爬虫（OAI-SearchBot、Claude-SearchBot、Claude-User、PerplexityBot）</td>
+                            <td><span class="verdict-bad">✗</span> 把 <code>llms.txt</code> 当作 GEO 战术：SE Ranking 对逾 30 万个域名<em>未</em>发现相关性；Google 不支持它（Illyes）</td>
+                        </tr>
+                        <tr>
+                            <td><span class="verdict-good">✓</span> 在服务端渲染内容（爬虫不会可靠地执行 JS）</td>
+                            <td><span class="verdict-bad">✗</span> 一刀切地屏蔽所有 AI 机器人（Rutgers/Wharton，2025 年 12 月：相比放行爬取的同行，流量 −23%）</td>
+                        </tr>
+                        <tr>
+                            <td><span class="verdict-good">✓</span> 为提取而结构化，清晰的标题、答案前置（AI Overviews 有 55% 引用自内容前 30% 的部分）</td>
+                            <td><span class="verdict-bad">✗</span> 来自代理机构和工具的被引用保证</td>
+                        </tr>
+                        <tr>
+                            <td><span class="verdict-good">✓</span> 有据可查的统计数据（+41%）、专家引述（+28%）、内联的第三方来源（30–40%，在较弱的页面上最高可达 115%）</td>
+                            <td><span class="verdict-bad">✗</span> 把 Schema 当作万能杠杆（Search Atlas，2024 年 12 月：在 OpenAI、Gemini、Perplexity 上均无相关性）</td>
+                        </tr>
+                        <tr>
+                            <td><span class="verdict-good">✓</span> 自有研究／专有数据（ZipTie：高数据密度带来的每 URL 引用量，是目录式列表的 4.31 倍）</td>
+                            <td><span class="verdict-bad">✗</span> 没有方法论的供应商提升统计</td>
+                        </tr>
+                        <tr>
+                            <td><span class="verdict-good">✓</span> 通过经典 SEO 维护域名权威度（Semrush；但仅解释约 18% 的波动）</td>
+                            <td><span class="verdict-bad">✗</span> 声称能给出精确的引用份额排名的"AI 可见性"工具</td>
+                        </tr>
+                        <tr>
+                            <td><span class="verdict-good">✓</span> Schema 标记，仅对 Bing Copilot 得到确认（Microsoft/Canel，SMX 慕尼黑 2025 年 3 月），且很可能对 Google AI Overviews 有效（Search Liaison，2025 年 4 月）</td>
+                            <td><span class="verdict-bad">✗</span> 追踪排名而非归属（见 Fishkin）</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p>
+                    关于 <code>llms.txt</code> 的争论，Kai Spriestersbach 给出了最贴切的比喻：这就好比一家餐厅拿出一份菜单，上面写着它会在下厨前先去读别家餐厅的菜单。John Mueller 把它比作已被停用的 meta keywords 标签；Semrush 在 Search Engine Land 上现场测试了一次：没有任何效果。
+                </p>
+
+                <h2>这对你的网站意味着什么</h2>
+
+                <p>
+                    不必恐慌性地去买一份 GEO 顾问合约。基于证据的做法成本低、多数是一次性的，而且几乎完全等同于优秀的技术性 SEO 加上优质内容。具体来说：
+                </p>
+
+                <div class="caveat-card good">
+                    <h4>1 · 把 Bing 的管道疏通做好</h4>
+                    <p class="text-gray-300 text-sm">
+                        ChatGPT 的实时搜索主要跑在 Bing 索引上（Seer Interactive：87% 的 ChatGPT 引用与 Bing 顶部结果重合，与 Google 只有 56%）。所以：验证 Bing Webmaster Tools，接入 IndexNow，在 <code>robots.txt</code> 中放行 OAI-SearchBot。Bing 免费的 AI 效果报告（自 2026 年 2 月起）会给你真实数据，而不是供应商的估算。
+                    </p>
+                </div>
+
+                <div class="caveat-card good">
+                    <h4>2 · 输出静态 HTML</h4>
+                    <p class="text-gray-300 text-sm">
+                        解析率从静态 HTML 的 94% 骤降到客户端渲染 JS 的 23%。一个纯粹的 React／Vue 外壳，在 AI 爬虫眼中就像一张空白页面。（本站正是因此而采用静态方案。）
+                    </p>
+                </div>
+
+                <div class="caveat-card good">
+                    <h4>3 · 在源头上纠正错误信息</h4>
+                    <p class="text-gray-300 text-sm">
+                        Tow Center/哥伦比亚大学发现，在 1600 条查询中，AI 搜索有超过 60% 无法检索到正确的引用信息。在你去追逐"可见性"之前：先确保关于你的可检索信息本身是准确的。
+                    </p>
+                </div>
+
+                <div class="caveat-card good">
+                    <h4>4 · 测量归属，而非排名</h4>
+                    <p class="text-gray-300 text-sm">
+                        如果你真要测量：每条提示跑 60–100 次，并去看你的品牌<em>是否</em>出现在考虑集里，而不是排在第几"名"。其余的一切，都不过是配了漂亮坐标轴标签的噪声。
+                    </p>
+                </div>
+
+                <div class="caveat-card good">
+                    <h4>5 · 赢得第三方提及</h4>
+                    <p class="text-gray-300 text-sm">
+                        SE Ranking：拥有逾 32000 个引荐域名的页面，被引用的频率是引荐域名不足 200 个页面的 3.5 倍。赢得的口碑胜过任何页面上的小把戏。顺带一提：机器发起的"扇出"（fan-out）查询胜出——ALM Corp 发现，这些机器生成的子问题中有 95% 几乎没有任何人类搜索量。
+                    </p>
+                </div>
+
+                <h2>这块蛋糕到底有多大？</h2>
+
+                <p>
+                    最后说说量级，免得有人把预算分配错了。据 Cloudflare Radar，2026 年 5 月聊天机器人合计占搜索引荐流量的 0.29%，而 Google 为 87.6%。流量迁移是真实的，但它今天仍然很小。
+                </p>
+
+                <p>
+                    但让它依旧值得关注的微妙之处在于：据 Similarweb，ChatGPT 引荐流量的转化率为 7.1%，只有付费搜索比它更高。而约 70% 的 AI 访问是不带引荐来源到达的，因而被错误地记为直接访问。所以这个渠道虽小，却高价值，且被系统性地低估了。正因如此，那套成本低、基于证据的做法才值得，而昂贵的 GEO 顾问合约则不值。
+                </p>
+
+                <hr style="border-color: #374151; margin: 2rem 0;">
+
+                <p><strong>来源：</strong></p>
+                <div style="margin: 1rem 0;">
+                    <a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        arXiv 2311.09735 (KDD '24)
+                    </a>
+                    <a href="https://arxiv.org/abs/2603.08924" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        arXiv 2603.08924
+                    </a>
+                    <a href="https://arxiv.org/abs/2604.07585" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        arXiv 2604.07585
+                    </a>
+                    <a href="https://sparktoro.com/blog/new-research-ais-are-highly-inconsistent-when-recommending-brands-or-products-marketers-should-take-care-when-tracking-ai-visibility/" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        SparkToro / Gumshoe
+                    </a>
+                    <a href="https://betterthangood.xyz/blog/geo-practice-versus-snake-oil/" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        betterthangood.xyz (Iain)
+                    </a>
+                </div>
+
+                <p>
+                    你正在搭建那种"能否以及如何被生成式引擎找到"至关重要的 AI 系统，或者想知道一份 GEO 报价里究竟有多少真本事？<a href="../../../#contact">我们聊聊。</a>我打造能干真活的智能体，也会诚实地告诉你，哪里是真本事，哪里是灵丹妙药式的噱头。
+                </p>
+
+    </article>
+
+    <!-- Author share + related posts -->
+    <div class="art-share">
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI 智能体专家 · 博登湖地区</span></div></div>
+      <a href="../../../#contact" class="btn btn--pri">与我合作 ▸</a>
+    </div>
+    <section class="art-more">
+      <div class="wrap">
+        <div class="art-more__head"><h2>更多现场笔记</h2><a href="../../zh/">所有文章 ▸</a></div>
+        <div class="art-more__grid" id="art-more-grid"></div>
+      </div>
+    </section>
+
+    <!-- Related posts (internal cross-links for crawl equity) -->
+    <nav class="related-posts" aria-label="Related posts">
+        <p class="related-posts__heading">// 相关文章</p>
+        <div class="related-posts__grid">
+                <a class="related-posts__card" href="mit-ai-hallucinations.html">
+                    <span class="related-posts__card-title">MIT 解决了 AI 幻觉？新的校准奖励研究究竟证明了什么</span>
+                </a>
+                <a class="related-posts__card" href="ki-modell-evaluation.html">
+                    <span class="related-posts__card-title">我们如何为法律分析找到最佳 AI 模型</span>
+                </a>
+                <a class="related-posts__card" href="ambient-ai-the-next-ai-generation.html">
+                    <span class="related-posts__card-title">环境 AI：为什么下一代 AI 不作答，而是察觉</span>
+                </a>
+        </div>
+    </nav>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script defer src="../../../js/components.js"></script>
+    <script defer src="../../../js/translations.js"></script>
+    <script defer src="../../../js/main.js"></script>
+    <script defer src="../../../js/site.js"></script>
+</body>
+</html>

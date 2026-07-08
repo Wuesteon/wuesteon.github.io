@@ -4,6 +4,31 @@ const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 /* ---------------- content: real posts, DE/EN localized ---------------- */
 const POSTS = [
   {
+    id: "geo-wundermittel-wissenschaft",
+    cat: "RESEARCH",
+    de: {
+      href: "blog/posts/de/geo-wundermittel-wissenschaft.html",
+      title: "Wundermittel für die KI-Suche: Was die Wissenschaft über GEO sagt",
+      excerpt: "GEO als bezahlte Disziplin ist zum großen Teil unbewiesen. Was die Forschung (arXiv, die Princeton-Studie, Fishkins 2.961 Prompts) wirklich über KI-Sichtbarkeit belegt, und was schlicht Wundermittel ist.",
+      date: "08 JUL 2026",
+      read: "12 MIN"
+    },
+    en: {
+      href: "blog/posts/en/geo-wundermittel-wissenschaft.html",
+      title: "Snake oil for AI search: what the science says about GEO",
+      excerpt: "GEO as a paid discipline is largely unproven. What the research (arXiv, the Princeton study, Fishkin's 2,961 prompts) actually shows about AI visibility, and what's just snake oil.",
+      date: "08 JUL 2026",
+      read: "12 MIN"
+    },
+    zh: {
+      href: "blog/posts/zh/geo-wundermittel-wissenschaft.html",
+      title: "AI 搜索的灵丹妙药：科学究竟怎么说 GEO",
+      excerpt: "GEO 作为一门付费学科，大部分并未得到证实。研究（arXiv、普林斯顿研究、Fishkin 的 2,961 次提示）究竟证明了关于 AI 可见性的什么，以及什么只是灵丹妙药式的噱头。",
+      date: "08 JUL 2026",
+      read: "12 MIN"
+    }
+  },
+  {
     id: "agent-memory-poisoning-mem0",
     cat: "AI SECURITY",
     de: {
@@ -420,6 +445,7 @@ function siteBase(){
 function tcardHTML(p, context){
   var lang = siteLang();
   var L = p[lang] || p.en;
+  if(!L) return "";                            // post not available in this language (e.g. DE-only)
   var href = siteBase() + L.href;
   var track = context === "related"
     ? ` data-umami-event="related-post-click" data-umami-event-post="${p.id}"`
@@ -434,10 +460,16 @@ function tcardHTML(p, context){
   </a>`;
 }
 
+/* posts available in the current language (falls back to en) */
+function postsForLang(){
+  var lang = siteLang();
+  return POSTS.filter(function(p){ return p[lang] || p.en; });
+}
+
 /* render home feed (first 3) */
 function renderHomeFeed(){
   var homeFeed = document.getElementById("home-feed");
-  if(homeFeed) homeFeed.innerHTML = POSTS.slice(0,3).map(function(p){ return tcardHTML(p); }).join("");
+  if(homeFeed) homeFeed.innerHTML = postsForLang().slice(0,3).map(function(p){ return tcardHTML(p); }).join("");
 }
 renderHomeFeed();
 
@@ -452,14 +484,20 @@ function enhanceArticle(){
   var file = location.pathname.split("/").pop();
   var lang = siteLang();
   var idx = POSTS.findIndex(function(p){
-    return (p.de.href.split("/").pop() === file) || (p.en.href.split("/").pop() === file);
+    return (p.de && p.de.href.split("/").pop() === file) ||
+           (p.en && p.en.href.split("/").pop() === file) ||
+           (p.zh && p.zh.href.split("/").pop() === file);
   });
   if(idx < 0) return;
   var post = POSTS[idx];
-  if(readEl){ readEl.textContent = (post[lang] || post.en).read; }
+  if(readEl){ readEl.textContent = (post[lang] || post.en || post.de).read; }
   if(grid){
+    // related pool: only posts available in the current language; pick the 3 following this one
+    var pool = postsForLang();
+    var self = pool.findIndex(function(p){ return p.id === post.id; });
+    if(self < 0) self = 0;
     var more = [];
-    for(var i=1;i<=3;i++){ more.push(POSTS[(idx+i) % POSTS.length]); }
+    for(var i=1;i<pool.length && more.length<3;i++){ more.push(pool[(self+i) % pool.length]); }
     grid.innerHTML = more.map(function(p){ return tcardHTML(p, "related"); }).join("");
     if(typeof attachTilt === "function") attachTilt();
   }
@@ -496,7 +534,7 @@ var __blogFilterCat = "ALL";
 function renderBlogList(){
   var blogList = document.getElementById("blog-list");
   if(!blogList) return;
-  blogList.innerHTML = POSTS.filter(p=>__blogFilterCat==="ALL"||p.cat===__blogFilterCat).map(function(p){ return tcardHTML(p); }).join("");
+  blogList.innerHTML = postsForLang().filter(p=>__blogFilterCat==="ALL"||p.cat===__blogFilterCat).map(function(p){ return tcardHTML(p); }).join("");
   attachTilt();
 }
 (function(){
