@@ -1,0 +1,31 @@
+name: IndexNow
+
+# Notify IndexNow (Bing/Yandex/Seznam — and thus ChatGPT search, which retrieves
+# from Bing) whenever published content changes. GitHub Pages deploys from `main`
+# on push; we wait briefly so the live sitemap reflects the new content before
+# submitting it.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**/*.html'
+      - 'sitemap.xml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: indexnow
+  cancel-in-progress: false
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Wait for GitHub Pages to publish
+        run: sleep 90
+      - name: Ping IndexNow
+        run: bash tools/indexnow-submit.sh
