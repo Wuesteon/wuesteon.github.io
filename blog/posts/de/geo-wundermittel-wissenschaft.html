@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="de" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wundermittel für die KI-Suche: Was die Wissenschaft über GEO sagt</title>
+    <meta name="description" content="GEO als bezahlte Disziplin ist zum großen Teil unbewiesen. Was die Forschung (arXiv, die Princeton-Studie, Fishkins 2.961 Prompts) wirklich über KI-Sichtbarkeit belegt und was bloßes Wundermittel ist.">
+    <link rel="canonical" href="https://waiser.dev/blog/posts/de/geo-wundermittel-wissenschaft.html">
+    <link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/geo-wundermittel-wissenschaft.html">
+    <link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/geo-wundermittel-wissenschaft.html">
+    <link rel="alternate" hreflang="zh" href="https://waiser.dev/blog/posts/zh/geo-wundermittel-wissenschaft.html">
+    <link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/geo-wundermittel-wissenschaft.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Wundermittel für die KI-Suche: Was die Wissenschaft wirklich über GEO sagt">
+    <meta property="og:description" content="GEO als bezahlte Disziplin ist zum großen Teil unbewiesen. Was die Forschung wirklich über KI-Sichtbarkeit belegt, und was bloßes Wundermittel ist.">
+    <meta property="og:url" content="https://waiser.dev/blog/posts/de/geo-wundermittel-wissenschaft.html">
+    <meta property="og:image" content="https://waiser.dev/og-default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Wundermittel für die KI-Suche: Was die Wissenschaft wirklich über GEO sagt">
+    <meta name="twitter:description" content="GEO als bezahlte Disziplin ist zum großen Teil unbewiesen. Was die Forschung wirklich über KI-Sichtbarkeit belegt, und was bloßes Wundermittel ist.">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Wundermittel für die KI-Suche: Was die Wissenschaft wirklich über GEO sagt",
+      "description": "GEO als bezahlte Disziplin ist zum großen Teil unbewiesen. Was die Forschung (arXiv, die Princeton-Studie, Fishkins 2.961 Prompts) wirklich über KI-Sichtbarkeit belegt und was bloßes Wundermittel ist.",
+      "datePublished": "2026-07-08",
+      "author": {
+        "@type": "Person",
+        "name": "Nils Weiser",
+        "@id": "https://waiser.dev/#person"
+      },
+      "image": "https://waiser.dev/og-default.png",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://waiser.dev/blog/posts/de/geo-wundermittel-wissenschaft.html"
+      },
+      "inLanguage": "de",
+      "@id": "https://waiser.dev/blog/posts/de/geo-wundermittel-wissenschaft.html#article",
+      "publisher": {
+        "@id": "https://waiser.dev/#person"
+      },
+      "dateModified": "2026-07-08"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Startseite",
+          "item": "https://waiser.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://waiser.dev/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Wundermittel für die KI-Suche",
+          "item": "https://waiser.dev/blog/posts/de/geo-wundermittel-wissenschaft.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+
+    <!-- TODO: replace with prebuilt static tailwind.css before scaling traffic; see CLAUDE.md -->
+    <link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+    <meta name="theme-color" content="#050507">
+    <link rel="preload" href="/fonts/ChakraPetch-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Blackwall: local tailwind utilities kept (posts rely on them), then Blackwall tokens + bridge -->
+    <link rel="stylesheet" href="../../../css/tailwind.css">
+    <link rel="stylesheet" href="../../../css/tokens.css">
+    <link rel="stylesheet" href="../../../css/blackwall.css">
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/blog-post.css">
+    <style>
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .stat-card {
+            background: rgba(255, 42, 60, 0.05);
+            border: 1px solid rgba(255, 42, 60, 0.2);
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            color: #ff2a3c;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(55, 65, 81, 0.5);
+            vertical-align: top;
+        }
+        .comparison-table th {
+            background: rgba(255, 42, 60, 0.1);
+            color: #ff2a3c;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .comparison-table td {
+            color: #d1d5db;
+        }
+        .comparison-table tr:hover td {
+            background: rgba(255, 42, 60, 0.05);
+        }
+        .verdict-good { color: #3ad17a; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+        .verdict-bad { color: #ff2a3c; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+        .caveat-card {
+            background: rgba(236, 72, 153, 0.05);
+            border-left: 3px solid #ec4899;
+            border-radius: 6px;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+        }
+        .caveat-card h4 {
+            color: #ec4899;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .caveat-card.good { border-left-color: #3ad17a; }
+        .caveat-card.good h4 { color: #3ad17a; }
+        .tool-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(255, 42, 60, 0.1);
+            border: 1px solid rgba(255, 42, 60, 0.3);
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #ff2a3c;
+            margin: 0.25rem;
+        }
+        .jump-shortcut {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+            padding: 1rem 1.25rem;
+            border: 1px solid rgba(255, 42, 60, 0.2);
+            border-left: 3px solid #ff2a3c;
+            border-radius: 8px;
+            background: rgba(255, 42, 60, 0.04);
+        }
+        .jump-shortcut__label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #9ca3af;
+        }
+        .jump-shortcut .btn--sec {
+            margin-left: auto;
+        }
+        @media (max-width: 560px) {
+            .jump-shortcut .btn--sec { margin-left: 0; }
+        }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header (Blackwall art-hero) -->
+    <section class="art-hero" data-screen-label="Article">
+        <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
+        <div class="art-hero__in">
+            <a class="art-back" href="../../">◄ ALLE POSTS</a>
+            <div><span class="art-cat">GEO / AI SEO</span></div>
+            <h1 class="art-title">Wundermittel für die KI-Suche</h1>
+            <div class="art-meta">
+                <span class="who"><span class="av">NW</span> Nils Weiser</span>
+                <span class="sep">•</span><span data-art-date>08. Jul 2026</span>
+                <span class="sep">•</span><span data-art-read>12 MIN</span>
+            </div>
+        </div>
+    </section>
+    <div class="art-hr"><div></div></div>
+
+    <!-- Article Content (Blackwall art-body) -->
+    <article class="art-body">
+                <p class="lead">GEO, „Generative Engine Optimization", ist die angebliche neue Disziplin, um in ChatGPT, Perplexity und Google AI Overviews zitiert zu werden, und wird gerade als bezahlte Dienstleistung verkauft. Die Kurzfassung: Die Traffic-Verschiebung ist echt. Fast alles, was man dagegen als „GEO-Strategie" verkauft, ist es nicht.</p>
+
+                <p>
+                    Die ehrliche Antwort vorweg: Es gibt kein GEO-Playbook, das mehr bringt als zwei Dinge, die es schon vor dem Wort GEO gab: <strong>substanzielle, gut belegte Inhalte schreiben</strong> und <strong>solides technisches SEO machen</strong>. Alles darüber hinaus ist entweder Crawler-Klempnerei, längst widerlegte Taktik oder schlicht erfundene Zahlen.
+                </p>
+
+                <!-- Shortcut: springt direkt zur Evidenz-Übersicht -->
+                <div class="jump-shortcut">
+                    <span class="jump-shortcut__label">// Wenig Zeit?</span>
+                    <a href="#evidenz-vs-wundermittel" class="btn btn--sec">Direkt zur Übersicht: Evidenz vs. Wundermittel <span aria-hidden="true">↓</span></a>
+                </div>
+
+                <h2>Der Traffic-Shift ist echt, das ist der wahre Kern</h2>
+                <p>
+                    Fangen wir mit dem an, was <em>stimmt</em>. Die Verschiebung weg von der klassischen blauen-Links-Suche hin zu synthetisierten KI-Antworten ist messbar und groß:
+                </p>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">−25 %</div>
+                        <div class="stat-label">klass. Suchvolumen bis 2026 (Gartner-Prognose)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">−58 %</div>
+                        <div class="stat-label">Klicks auf Platz 1 bei AI Overviews (Ahrefs)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">~2,5 Mrd.</div>
+                        <div class="stat-label">Prompts/Tag über ChatGPT</div>
+                    </div>
+                </div>
+
+                <p>
+                    Ahrefs maß, dass eine ausgespielte AI Overview die Klickrate auf das oberste organische Ergebnis um 58 % drückt (Ende 2025), gegenüber 34,5 % nur acht Monate zuvor. Die Kurve zeigt steil nach oben. Wer heute nur auf Rang 1 optimiert, optimiert auf ein schrumpfendes Fenster. So weit, so berechtigt der Alarm. Der Fehler beginnt erst danach: bei der Annahme, dass sich dieses neue Fenster mit denselben Werkzeugen „optimieren" lässt wie eine SERP.
+                </p>
+
+                <h2>Warum GEO kein messbares Substrat hat</h2>
+
+                <p>
+                    Klassisches SEO hatte immer einen beobachtbaren Output: eine Ergebnisseite mit Positionen, die man tracken konnte. Zwei Leute, gleiche Query, gleicher Ort ergeben praktisch dieselbe SERP. Das ist die Grundlage, auf der Ranking-Tracking überhaupt Sinn ergibt.
+                </p>
+
+                <p>
+                    LLM-Ausgaben haben dieses Substrat nicht. Die Antwort hängt ab von Sampling-Temperatur, Modellversion, exakter Prompt-Formulierung, Nutzerkontext, Retrieval-Strategie und einem sich ständig ändernden Index. Dieselbe Query zweimal ausgeführt liefert unterschiedliche Zitate. Es gibt <strong>keinen „Citation Rank"</strong>, den man festhalten könnte, nur eine Wahrscheinlichkeitsverteilung.
+                </p>
+
+                <p>
+                    Die Zahlen dazu sind ernüchternd. Eine Analyse setzte die Monat-zu-Monat-Varianz bei KI-Zitaten auf 40–60 %, ganz ohne Inhaltsänderung. ZipTie fand, dass 89 % der Zitate zwischen ChatGPT und Perplexity unterschiedlich sind und nur 18 % der Marken gleichzeitig über alle drei großen KI-Plattformen auftauchen. Man optimiert also nicht auf eine Position, sondern auf ein flackerndes Rauschen.
+                </p>
+
+                <h2>Was die Princeton-Studie wirklich zeigt</h2>
+
+                <p>
+                    Der akademische Ursprung des Begriffs ist die Arbeit von Aggarwal et al., <a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener noreferrer">„GEO: Generative Engine Optimization"</a> (Princeton/Georgia Tech/AI2/IIT Delhi, veröffentlicht auf der ACM KDD 2024, DOI 10.1145/3637528.3671900). Sie ist die meistzitierte Grundlage jeder GEO-Verkaufsseite, und wird dabei fast durchgängig falsch dargestellt.
+                </p>
+
+                <p>
+                    Was die Studie tat: ein Benchmark aus 10.000 Queries gegen ein System, das Bing Chat nachbaute. Was sie berichtet:
+                </p>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">+41 %</div>
+                        <div class="stat-label">Zitier-Wahrscheinlichkeit durch Statistiken</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">+28 %</div>
+                        <div class="stat-label">durch Experten-Zitate</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">30–40 %</div>
+                        <div class="stat-label">durch Drittquellen-Belege</div>
+                    </div>
+                </div>
+
+                <p>
+                    Klingt nach dem Beweis, dass „GEO funktioniert". Zwei Vorbehalte, die auf keiner Verkaufsseite stehen:
+                </p>
+
+                <p>
+                    <strong>Erstens:</strong> Das sind Benchmark-Artefakte aus einer kontrollierten Umgebung, die es in Produktion nicht gibt. Der nachgebaute „Generative Engine" ist deterministisch genug, um überhaupt messbare Lifts zu erzeugen. Genau das ist bei echtem ChatGPT nicht der Fall (siehe oben).
+                </p>
+
+                <p>
+                    <strong>Zweitens</strong>, und das ist der schöne Teil: SandboxSEO wies darauf hin, dass die drei „Gewinner"-Techniken (Statistiken, Zitate, Quellen) alle <em>Inhalt hinzufügten</em>, während die sechs wirkungslosen Techniken nur bestehenden Text umformulierten. Der Lift könnte also schlicht <strong>Inhaltsdichte</strong> sein und keine „Optimierungsmagie". Anders gesagt: Die Studie belegt vor allem, dass mehr substanzieller, belegter Inhalt hilft, genau die Sache, die guter Content sowieso hat.
+                </p>
+
+                <p>
+                    Passend dazu die Semrush-Analyse von 230.000 Prompts über 3 LLMs und 13 Wochen: Domains, die in der klassischen Suche gut ranken, werden auch häufiger von KI zitiert. ZipTies Einschränkung: Domain Authority allein erklärt nur etwa 18 % der Zitier-Varianz. Es hilft, aber es ist kein Hebel, sondern ein Nebeneffekt guter Substanz.
+                </p>
+
+                <h2>Dashboards, die Rauch wiegen</h2>
+
+                <p>
+                    Die Ausgaben für „AI Visibility Tracking" laufen inzwischen jährlich jenseits von 100 Millionen Dollar, verteilt auf hunderte Dashboards, die dir eine „Ranking-Position in der KI" versprechen. Die Forschung dazu ist eindeutig: Diese Position existiert nicht.
+                </p>
+
+                <p>
+                    Rand Fishkin und Patrick O'Donnell (Gumshoe.ai) rekrutierten im Januar 2026 rund 600 Freiwillige und ließen 12 Marken-Empfehlungs-Prompts insgesamt 2.961-mal durch ChatGPT, Claude und Googles KI laufen (<a href="https://sparktoro.com/blog/new-research-ais-are-highly-inconsistent-when-recommending-brands-or-products-marketers-should-take-care-when-tracking-ai-visibility/" target="_blank" rel="noopener noreferrer">SparkToro-Studie</a>). Das Ergebnis: Fragt man eine KI 100-mal nach Markenempfehlungen, liegt die Chance auf zweimal dieselbe Liste unter 1:100; auf dieselbe Liste in derselben Reihenfolge näher an 1:1.000. Fishkins Fazit über jedes Tool, das eine „Ranking-Position in der KI" ausgibt: <em>„full of baloney"</em>.
+                </p>
+
+                <p>
+                    Die akademische Seite bestätigt das. Eine arXiv-Untersuchung, <a href="https://arxiv.org/abs/2604.07585" target="_blank" rel="noopener noreferrer">„Don't Measure Once"</a>, fand bei identischem Prompt binnen Minuten eine Quellen-Überlappung (Jaccard) von nur 0,32–0,43. Diese Werte zeigen, dass allein die interne Stochastik den größten Teil der Instabilität erklärt. Eine zweite Arbeit, <a href="https://arxiv.org/abs/2603.08924" target="_blank" rel="noopener noreferrer">„Quantifying Uncertainty in AI Visibility"</a>, formuliert es hart: Zitier-Metriken generativer Engines sind <strong>Zufallsvariablen, keine festen Werte</strong>. Eine einzelne Messung trägt eine unquantifizierte Unsicherheit, die groß genug ist, um übliche Schlussfolgerungen zu invalidieren. Ahrefs' Zahl passt ins Bild: Googles AI Mode und AI Overviews zitieren bei derselben Query zu 87 % unterschiedliche Quellen.
+                </p>
+
+                <h3>Das eine stabile Signal</h3>
+
+                <p>
+                    Fishkin fand genau <em>eine</em> Sache, die stabil blieb, während sich die Reihenfolge dauernd neu würfelte: das <strong>„Consideration Set"</strong>, also der Pool an Marken, aus dem das Modell überhaupt schöpft. Die Zugehörigkeit zu diesem Pool lässt sich schätzen, aber nur langsam über 60–100 Läufe. Das ist das einzige valide Signal. Miss die <strong>Zugehörigkeit</strong>, nicht den Rang.
+                </p>
+
+                <h3>Das „falsche Fenster"-Problem</h3>
+
+                <p>
+                    Und selbst diese Messung machen die meisten Tools an der falschen Stelle: Sie fragen billige Vendor-APIs ab. Aber GPT-über-die-API ≠ ChatGPT. Das Consumer-Produkt hat Memory, Custom Instructions, Verlauf, Account-Kontext, Standort und einen eigenen System-Prompt. Über 90 % der wöchentlichen ChatGPT-Nutzer sind auf dem Free-Tier, das weniger Suchen und weniger Zitate auslöst als die bezahlten Tiers, die die Tools abtasten. Prompt-Volumen-Zahlen sind obendrein meist erfunden, entweder aus winzigen Clickstream-Panels modelliert oder auf Google-Keywords zurückgerechnet. Steve Toth und William Alvarez nannten Profounds Prompt-Volumina einen „scam"; Conductor bezeichnete jede KI-Prompt-Volumen-Metrik als grundsätzlich irreführend.
+                </p>
+
+                <h2 id="evidenz-vs-wundermittel">Was die Evidenz stützt und was Wundermittel ist</h2>
+
+                <p>
+                    Hier die Trennung, die den ganzen Artikel zusammenfasst. Links steht, wofür es belastbare Belege gibt; rechts, was verkauft, aber nie sauber belegt wurde.
+                </p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Was die Evidenz stützt</th>
+                            <th>Wundermittel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="verdict-good">✓</span> KI-Retrieval-Crawler in <code>robots.txt</code> zulassen (OAI-SearchBot, Claude-SearchBot, Claude-User, PerplexityBot)</td>
+                            <td><span class="verdict-bad">✗</span> <code>llms.txt</code> als GEO-Taktik: SE Ranking fand über 300.000 Domains <em>keine</em> Korrelation; Google unterstützt es nicht (Illyes)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="verdict-good">✓</span> Inhalte server-seitig rendern (Crawler führen JS nicht zuverlässig aus)</td>
+                            <td><span class="verdict-bad">✗</span> Pauschal alle KI-Bots blocken (Rutgers/Wharton, Dez. 2025: −23 % Traffic ggü. Peers, die crawlen ließen)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="verdict-good">✓</span> Für Extraktion strukturieren, klare Headings, Antwort oben (AI Overviews zitieren zu 55 % aus den ersten 30 % des Inhalts)</td>
+                            <td><span class="verdict-bad">✗</span> Zitier-Garantien von Agenturen und Tools</td>
+                        </tr>
+                        <tr>
+                            <td><span class="verdict-good">✓</span> Belegte Statistiken (+41 %), Experten-Zitate (+28 %), Drittquellen inline (30–40 %, bei schwächeren Seiten bis 115 %)</td>
+                            <td><span class="verdict-bad">✗</span> Schema als universeller Hebel (Search Atlas, Dez. 2024: keine Korrelation über OpenAI, Gemini, Perplexity)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="verdict-good">✓</span> Eigene Forschung / proprietäre Daten (ZipTie: hohe Daten-Dichte bringt 4,31× mehr Zitate pro URL als Verzeichnis-Listings)</td>
+                            <td><span class="verdict-bad">✗</span> Vendor-Lift-Statistiken ohne Methodik</td>
+                        </tr>
+                        <tr>
+                            <td><span class="verdict-good">✓</span> Domain Authority per klassischem SEO pflegen (Semrush; erklärt aber nur ~18 % der Varianz)</td>
+                            <td><span class="verdict-bad">✗</span> „AI Visibility"-Tools mit präziser Citation-Share-Rangfolge</td>
+                        </tr>
+                        <tr>
+                            <td><span class="verdict-good">✓</span> Schema-Markup, bestätigt nur für Bing Copilot (Microsoft/Canel, SMX München 3/2025) und wahrscheinlich Google AI Overviews (Search Liaison, 4/2025)</td>
+                            <td><span class="verdict-bad">✗</span> Rang statt Zugehörigkeit tracken (siehe Fishkin)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p>
+                    Zur <code>llms.txt</code>-Debatte hat Kai Spriestersbach das treffendste Bild geliefert: Es ist, als hätte ein Restaurant eine Speisekarte mit dem Hinweis, es lese vor dem Kochen die Speisekarten anderer Restaurants. John Mueller verglich sie mit dem eingestellten Meta-Keywords-Tag; Semrush testete eine live auf Search Engine Land: kein Effekt.
+                </p>
+
+                <h2>Was das für deine Website heißt</h2>
+
+                <p>
+                    Kein Panikkauf eines GEO-Retainers nötig. Das evidenzbasierte Vorgehen ist günstig, größtenteils einmalig und deckt sich fast vollständig mit gutem technischem SEO und gutem Content. Konkret:
+                </p>
+
+                <div class="caveat-card good">
+                    <h4>1 · Die Bing-Klempnerei erledigen</h4>
+                    <p class="text-gray-300 text-sm">
+                        ChatGPTs Live-Suche läuft überwiegend auf dem Bing-Index (Seer Interactive: 87 % der ChatGPT-Zitate deckten sich mit Bing-Top-Ergebnissen, nur 56 % mit Google). Also: Bing Webmaster Tools verifizieren, IndexNow verdrahten, OAI-SearchBot in <code>robots.txt</code> zulassen. Bings kostenloser AI-Performance-Report (seit Feb. 2026) zeigt dir echte Daten statt Vendor-Schätzungen.
+                    </p>
+                </div>
+
+                <div class="caveat-card good">
+                    <h4>2 · Statisches HTML ausliefern</h4>
+                    <p class="text-gray-300 text-sm">
+                        Die Parse-Rate bricht von 94 % bei statischem HTML auf 23 % bei client-gerendertem JS ein. Eine reine React-/Vue-Shell sieht für einen KI-Crawler aus wie eine leere Seite. (Diese Site hier ist genau deshalb statisch.)
+                    </p>
+                </div>
+
+                <div class="caveat-card good">
+                    <h4>3 · Falsche Infos an der Quelle korrigieren</h4>
+                    <p class="text-gray-300 text-sm">
+                        Das Tow Center/Columbia fand, dass KI-Suche in über 60 % von 1.600 Queries die korrekte Zitier-Information nicht abrufen konnte. Bevor du „Sichtbarkeit" jagst: Stelle sicher, dass das, was über dich abrufbar ist, überhaupt stimmt.
+                    </p>
+                </div>
+
+                <div class="caveat-card good">
+                    <h4>4 · Zugehörigkeit messen, nicht Rang</h4>
+                    <p class="text-gray-300 text-sm">
+                        Wenn du überhaupt misst: 60–100 Läufe pro Prompt, und schau, <em>ob</em> deine Marke im Consideration Set auftaucht, nicht auf welchem „Platz". Alles andere ist Rauschen mit hübscher Achsenbeschriftung.
+                    </p>
+                </div>
+
+                <div class="caveat-card good">
+                    <h4>5 · Drittanbieter-Erwähnungen verdienen</h4>
+                    <p class="text-gray-300 text-sm">
+                        SE Ranking: Seiten mit über 32.000 verweisenden Domains werden 3,5× häufiger zitiert als solche mit unter 200. Earned Media schlägt jede On-Page-Spielerei. Nebenbei: Die „Fan-out"-Queries der Maschine gewinnen: ALM Corp fand, dass 95 % dieser maschinellen Teilfragen nahezu kein menschliches Suchvolumen haben.
+                    </p>
+                </div>
+
+                <h2>Wie groß ist der Preis überhaupt?</h2>
+
+                <p>
+                    Zum Schluss die Größenordnung, damit niemand das Budget falsch verteilt. Laut Cloudflare Radar lag der kombinierte Chatbot-Anteil im Mai 2026 bei 0,29 % der Such-Referrals, gegenüber 87,6 % für Google. Der Traffic-Shift ist real, aber er ist heute noch klein.
+                </p>
+
+                <p>
+                    Die Nuance, die ihn trotzdem interessant macht: ChatGPT-Referrals konvertieren laut Similarweb mit 7,1 %, nur bezahlte Suche liegt höher. Und rund 70 % der KI-Besuche kommen ohne Referrer an und werden fälschlich als Direktzugriff verbucht. Der Kanal ist also klein, aber hochwertig und systematisch unterschätzt. Genau deshalb lohnt sich das günstige, evidenzbasierte Vorgehen, der teure GEO-Retainer aber nicht.
+                </p>
+
+                <hr style="border-color: #374151; margin: 2rem 0;">
+
+                <p><strong>Quellen:</strong></p>
+                <div style="margin: 1rem 0;">
+                    <a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        arXiv 2311.09735 (KDD '24)
+                    </a>
+                    <a href="https://arxiv.org/abs/2603.08924" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        arXiv 2603.08924
+                    </a>
+                    <a href="https://arxiv.org/abs/2604.07585" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        arXiv 2604.07585
+                    </a>
+                    <a href="https://sparktoro.com/blog/new-research-ais-are-highly-inconsistent-when-recommending-brands-or-products-marketers-should-take-care-when-tracking-ai-visibility/" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        SparkToro / Gumshoe
+                    </a>
+                    <a href="https://betterthangood.xyz/blog/geo-practice-versus-snake-oil/" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        betterthangood.xyz (Iain)
+                    </a>
+                </div>
+
+                <p>
+                    Baust du an KI-Systemen, in denen es darauf ankommt, ob und wie du von generativen Engines gefunden wirst, oder willst du wissen, was von einem GEO-Angebot wirklich trägt? <a href="../../../#contact">Lass uns sprechen.</a> Ich baue Agenten, die echte Arbeit erledigen, und ich sage dir ehrlich, wo Substanz aufhört und Wundermittel anfängt.
+                </p>
+
+    </article>
+
+    <!-- Author share + related posts -->
+    <div class="art-share">
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
+      <a href="../../../#contact" class="btn btn--pri">MIT MIR ARBEITEN ▸</a>
+    </div>
+    <section class="art-more">
+      <div class="wrap">
+        <div class="art-more__head"><h2>Weitere Field Notes</h2><a href="../../">ALLE POSTS ▸</a></div>
+        <div class="art-more__grid" id="art-more-grid"></div>
+      </div>
+    </section>
+
+    <!-- Related posts (internal cross-links for crawl equity) -->
+    <nav class="related-posts" aria-label="Weitere Artikel">
+        <p class="related-posts__heading">// Weitere Artikel</p>
+        <div class="related-posts__grid">
+                <a class="related-posts__card" href="mit-ai-halluzinationen.html">
+                    <span class="related-posts__card-title">MIT löst KI-Halluzinationen? Was die neue Calibration-Reward-Forschung wirklich zeigt</span>
+                </a>
+                <a class="related-posts__card" href="ki-modell-evaluation.html">
+                    <span class="related-posts__card-title">Wie wir das beste KI-Modell für rechtliche Analysen gefunden haben</span>
+                </a>
+                <a class="related-posts__card" href="ambient-ai-die-naechste-ki-generation.html">
+                    <span class="related-posts__card-title">Ambient AI: Warum die nächste KI-Generation nicht antwortet, sondern bemerkt</span>
+                </a>
+        </div>
+    </nav>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script defer src="../../../js/components.js"></script>
+    <script defer src="../../../js/translations.js"></script>
+    <script defer src="../../../js/main.js"></script>
+    <script defer src="../../../js/site.js"></script>
+</body>
+</html>

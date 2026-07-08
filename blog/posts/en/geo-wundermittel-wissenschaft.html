@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake oil for AI search: what the science says about GEO</title>
+    <meta name="description" content="GEO as a paid discipline is largely unproven. What the research (arXiv, the Princeton study, Fishkin's 2,961 prompts) actually proves about AI visibility, and what's just snake oil.">
+    <link rel="canonical" href="https://waiser.dev/blog/posts/en/geo-wundermittel-wissenschaft.html">
+    <link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/geo-wundermittel-wissenschaft.html">
+    <link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/geo-wundermittel-wissenschaft.html">
+    <link rel="alternate" hreflang="zh" href="https://waiser.dev/blog/posts/zh/geo-wundermittel-wissenschaft.html">
+    <link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/geo-wundermittel-wissenschaft.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Snake oil for AI search: what the science actually says about GEO">
+    <meta property="og:description" content="GEO as a paid discipline is largely unproven. What the research actually proves about AI visibility, and what's just snake oil.">
+    <meta property="og:url" content="https://waiser.dev/blog/posts/en/geo-wundermittel-wissenschaft.html">
+    <meta property="og:image" content="https://waiser.dev/og-default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Snake oil for AI search: what the science actually says about GEO">
+    <meta name="twitter:description" content="GEO as a paid discipline is largely unproven. What the research actually proves about AI visibility, and what's just snake oil.">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Snake oil for AI search: what the science actually says about GEO",
+      "description": "GEO as a paid discipline is largely unproven. What the research (arXiv, the Princeton study, Fishkin's 2,961 prompts) actually proves about AI visibility, and what's just snake oil.",
+      "datePublished": "2026-07-08",
+      "author": {
+        "@type": "Person",
+        "name": "Nils Weiser",
+        "@id": "https://waiser.dev/#person"
+      },
+      "image": "https://waiser.dev/og-default.png",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://waiser.dev/blog/posts/en/geo-wundermittel-wissenschaft.html"
+      },
+      "inLanguage": "en",
+      "@id": "https://waiser.dev/blog/posts/en/geo-wundermittel-wissenschaft.html#article",
+      "publisher": {
+        "@id": "https://waiser.dev/#person"
+      },
+      "dateModified": "2026-07-08"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://waiser.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://waiser.dev/blog/en/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Snake oil for AI search",
+          "item": "https://waiser.dev/blog/posts/en/geo-wundermittel-wissenschaft.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+
+    <!-- TODO: replace with prebuilt static tailwind.css before scaling traffic; see CLAUDE.md -->
+    <link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+    <meta name="theme-color" content="#050507">
+    <link rel="preload" href="/fonts/ChakraPetch-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Blackwall: local tailwind utilities kept (posts rely on them), then Blackwall tokens + bridge -->
+    <link rel="stylesheet" href="../../../css/tailwind.css">
+    <link rel="stylesheet" href="../../../css/tokens.css">
+    <link rel="stylesheet" href="../../../css/blackwall.css">
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/blog-post.css">
+    <style>
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .stat-card {
+            background: rgba(255, 42, 60, 0.05);
+            border: 1px solid rgba(255, 42, 60, 0.2);
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            color: #ff2a3c;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(55, 65, 81, 0.5);
+            vertical-align: top;
+        }
+        .comparison-table th {
+            background: rgba(255, 42, 60, 0.1);
+            color: #ff2a3c;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .comparison-table td {
+            color: #d1d5db;
+        }
+        .comparison-table tr:hover td {
+            background: rgba(255, 42, 60, 0.05);
+        }
+        .verdict-good { color: #3ad17a; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+        .verdict-bad { color: #ff2a3c; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+        .caveat-card {
+            background: rgba(236, 72, 153, 0.05);
+            border-left: 3px solid #ec4899;
+            border-radius: 6px;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+        }
+        .caveat-card h4 {
+            color: #ec4899;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .caveat-card.good { border-left-color: #3ad17a; }
+        .caveat-card.good h4 { color: #3ad17a; }
+        .tool-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(255, 42, 60, 0.1);
+            border: 1px solid rgba(255, 42, 60, 0.3);
+            border-radius: 9999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #ff2a3c;
+            margin: 0.25rem;
+        }
+        .jump-shortcut {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+            padding: 1rem 1.25rem;
+            border: 1px solid rgba(255, 42, 60, 0.2);
+            border-left: 3px solid #ff2a3c;
+            border-radius: 8px;
+            background: rgba(255, 42, 60, 0.04);
+        }
+        .jump-shortcut__label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #9ca3af;
+        }
+        .jump-shortcut .btn--sec {
+            margin-left: auto;
+        }
+        @media (max-width: 560px) {
+            .jump-shortcut .btn--sec { margin-left: 0; }
+        }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header (Blackwall art-hero) -->
+    <section class="art-hero" data-screen-label="Article">
+        <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
+        <div class="art-hero__in">
+            <a class="art-back" href="../../en/">◄ ALL POSTS</a>
+            <div><span class="art-cat">GEO / AI SEO</span></div>
+            <h1 class="art-title">Snake oil for AI search</h1>
+            <div class="art-meta">
+                <span class="who"><span class="av">NW</span> Nils Weiser</span>
+                <span class="sep">•</span><span data-art-date>Jul 8, 2026</span>
+                <span class="sep">•</span><span data-art-read>12 MIN</span>
+            </div>
+        </div>
+    </section>
+    <div class="art-hr"><div></div></div>
+
+    <!-- Article Content (Blackwall art-body) -->
+    <article class="art-body">
+                <p class="lead">GEO, "Generative Engine Optimization", is the supposed new discipline for getting cited in ChatGPT, Perplexity, and Google AI Overviews, and it's currently being sold as a paid service. The short version: the traffic shift is real. Almost everything sold as a "GEO strategy" to counter it is not.</p>
+
+                <p>
+                    The honest answer up front: there is no GEO playbook that does more than two things that existed long before the word GEO: <strong>writing substantial, well-sourced content</strong> and <strong>doing solid technical SEO</strong>. Everything beyond that is either crawler plumbing, long-debunked tactics, or simply invented numbers.
+                </p>
+
+                <!-- Shortcut: jumps straight to the evidence overview -->
+                <div class="jump-shortcut">
+                    <span class="jump-shortcut__label">// Short on time?</span>
+                    <a href="#evidenz-vs-wundermittel" class="btn btn--sec">Jump to the overview: evidence vs. snake oil <span aria-hidden="true">↓</span></a>
+                </div>
+
+                <h2>The traffic shift is real, that's the true core</h2>
+                <p>
+                    Let's start with what's <em>true</em>. The shift away from classic blue-links search toward synthesized AI answers is measurable and large:
+                </p>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">−25 %</div>
+                        <div class="stat-label">classic search volume by 2026 (Gartner forecast)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">−58 %</div>
+                        <div class="stat-label">clicks on position 1 with AI Overviews (Ahrefs)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">~2.5 bn</div>
+                        <div class="stat-label">prompts/day via ChatGPT</div>
+                    </div>
+                </div>
+
+                <p>
+                    Ahrefs measured that a displayed AI Overview cuts the click rate on the top organic result by 58% (end of 2025), versus 34.5% just eight months earlier. The curve points steeply upward. Anyone optimizing only for position 1 today is optimizing for a shrinking window. So far, the alarm is justified. The mistake starts only afterward: with the assumption that this new window can be "optimized" with the same tools as a SERP.
+                </p>
+
+                <h2>Why GEO has no measurable substrate</h2>
+
+                <p>
+                    Classic SEO always had an observable output: a results page with positions you could track. Two people, same query, same location produce practically the same SERP. That's the foundation on which ranking tracking makes any sense at all.
+                </p>
+
+                <p>
+                    LLM outputs don't have that substrate. The answer depends on sampling temperature, model version, exact prompt wording, user context, retrieval strategy, and a constantly changing index. Run the same query twice and you get different citations. There is <strong>no "citation rank"</strong> you could pin down, only a probability distribution.
+                </p>
+
+                <p>
+                    The numbers here are sobering. One analysis put the month-to-month variance in AI citations at 40–60%, with no content change at all. ZipTie found that 89% of citations differ between ChatGPT and Perplexity, and only 18% of brands show up simultaneously across all three major AI platforms. So you're not optimizing for a position, but for a flickering noise.
+                </p>
+
+                <h2>What the Princeton study actually shows</h2>
+
+                <p>
+                    The academic origin of the term is the work by Aggarwal et al., <a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener noreferrer">"GEO: Generative Engine Optimization"</a> (Princeton/Georgia Tech/AI2/IIT Delhi, published at ACM KDD 2024, DOI 10.1145/3637528.3671900). It's the most-cited foundation of every GEO sales page, and it's almost consistently misrepresented in the process.
+                </p>
+
+                <p>
+                    What the study did: a benchmark of 10,000 queries against a system that reconstructed Bing Chat. What it reports:
+                </p>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">+41 %</div>
+                        <div class="stat-label">citation probability from statistics</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">+28 %</div>
+                        <div class="stat-label">from expert quotes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">30–40 %</div>
+                        <div class="stat-label">from third-party citations</div>
+                    </div>
+                </div>
+
+                <p>
+                    Sounds like proof that "GEO works". Two caveats that appear on no sales page:
+                </p>
+
+                <p>
+                    <strong>First:</strong> these are benchmark artifacts from a controlled environment that doesn't exist in production. The reconstructed "generative engine" is deterministic enough to produce measurable lifts at all. That is exactly not the case with real ChatGPT (see above).
+                </p>
+
+                <p>
+                    <strong>Second</strong>, and this is the fun part: SandboxSEO pointed out that the three "winner" techniques (statistics, quotes, sources) all <em>added content</em>, while the six ineffective techniques merely reworded existing text. So the lift might simply be <strong>content density</strong> and not "optimization magic". Put differently: the study mainly proves that more substantial, sourced content helps, exactly the thing good content has anyway.
+                </p>
+
+                <p>
+                    Fittingly, the Semrush analysis of 230,000 prompts across 3 LLMs and 13 weeks: domains that rank well in classic search are also cited more often by AI. ZipTie's caveat: domain authority alone explains only about 18% of citation variance. It helps, but it's not a lever, it's a side effect of good substance.
+                </p>
+
+                <h2>Dashboards that weigh smoke</h2>
+
+                <p>
+                    Spending on "AI visibility tracking" now runs beyond 100 million dollars a year, spread across hundreds of dashboards that promise you a "ranking position in AI". The research on this is unambiguous: that position doesn't exist.
+                </p>
+
+                <p>
+                    In January 2026, Rand Fishkin and Patrick O'Donnell (Gumshoe.ai) recruited around 600 volunteers and ran 12 brand-recommendation prompts a total of 2,961 times through ChatGPT, Claude, and Google's AI (<a href="https://sparktoro.com/blog/new-research-ais-are-highly-inconsistent-when-recommending-brands-or-products-marketers-should-take-care-when-tracking-ai-visibility/" target="_blank" rel="noopener noreferrer">SparkToro study</a>). The result: ask an AI for brand recommendations 100 times, and the chance of getting the same list twice is below 1:100; the same list in the same order closer to 1:1,000. Fishkin's verdict on any tool that outputs a "ranking position in AI": <em>"full of baloney"</em>.
+                </p>
+
+                <p>
+                    The academic side confirms it. An arXiv investigation, <a href="https://arxiv.org/abs/2604.07585" target="_blank" rel="noopener noreferrer">"Don't Measure Once"</a>, found a source overlap (Jaccard) of only 0.32–0.43 for an identical prompt within minutes. These values show that internal stochasticity alone explains most of the instability. A second paper, <a href="https://arxiv.org/abs/2603.08924" target="_blank" rel="noopener noreferrer">"Quantifying Uncertainty in AI Visibility"</a>, puts it bluntly: citation metrics of generative engines are <strong>random variables, not fixed values</strong>. A single measurement carries an unquantified uncertainty large enough to invalidate common conclusions. Ahrefs' number fits the picture: Google's AI Mode and AI Overviews cite 87% different sources for the same query.
+                </p>
+
+                <h3>The one stable signal</h3>
+
+                <p>
+                    Fishkin found exactly <em>one</em> thing that stayed stable while the order kept getting reshuffled: the <strong>"consideration set"</strong>, the pool of brands the model draws from in the first place. Membership in that pool can be estimated, but only slowly, over 60–100 runs. That's the only valid signal. Measure <strong>membership</strong>, not rank.
+                </p>
+
+                <h3>The "wrong window" problem</h3>
+
+                <p>
+                    And most tools even take that measurement in the wrong place: they query cheap vendor APIs. But GPT-via-API ≠ ChatGPT. The consumer product has memory, custom instructions, history, account context, location, and its own system prompt. Over 90% of weekly ChatGPT users are on the free tier, which triggers fewer searches and fewer citations than the paid tiers the tools sample. On top of that, prompt-volume figures are mostly made up, either modeled from tiny clickstream panels or back-calculated from Google keywords. Steve Toth and William Alvarez called Profound's prompt volumes a "scam"; Conductor described any AI prompt-volume metric as fundamentally misleading.
+                </p>
+
+                <h2 id="evidenz-vs-wundermittel">What the evidence supports and what's snake oil</h2>
+
+                <p>
+                    Here's the split that sums up the entire article. On the left, what there's solid evidence for; on the right, what gets sold but was never cleanly proven.
+                </p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>What the evidence supports</th>
+                            <th>Snake oil</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="verdict-good">✓</span> Allow AI retrieval crawlers in <code>robots.txt</code> (OAI-SearchBot, Claude-SearchBot, Claude-User, PerplexityBot)</td>
+                            <td><span class="verdict-bad">✗</span> <code>llms.txt</code> as a GEO tactic: SE Ranking found <em>no</em> correlation across 300,000 domains; Google doesn't support it (Illyes)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="verdict-good">✓</span> Render content server-side (crawlers don't reliably execute JS)</td>
+                            <td><span class="verdict-bad">✗</span> Blocking all AI bots wholesale (Rutgers/Wharton, Dec. 2025: −23% traffic vs. peers that allowed crawling)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="verdict-good">✓</span> Structure for extraction, clear headings, answer up top (AI Overviews cite 55% from the first 30% of the content)</td>
+                            <td><span class="verdict-bad">✗</span> Citation guarantees from agencies and tools</td>
+                        </tr>
+                        <tr>
+                            <td><span class="verdict-good">✓</span> Sourced statistics (+41%), expert quotes (+28%), third-party sources inline (30–40%, up to 115% on weaker pages)</td>
+                            <td><span class="verdict-bad">✗</span> Schema as a universal lever (Search Atlas, Dec. 2024: no correlation across OpenAI, Gemini, Perplexity)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="verdict-good">✓</span> Original research / proprietary data (ZipTie: high data density yields 4.31× more citations per URL than directory listings)</td>
+                            <td><span class="verdict-bad">✗</span> Vendor lift statistics without methodology</td>
+                        </tr>
+                        <tr>
+                            <td><span class="verdict-good">✓</span> Maintain domain authority via classic SEO (Semrush; but explains only ~18% of the variance)</td>
+                            <td><span class="verdict-bad">✗</span> "AI visibility" tools with precise citation-share rankings</td>
+                        </tr>
+                        <tr>
+                            <td><span class="verdict-good">✓</span> Schema markup, confirmed only for Bing Copilot (Microsoft/Canel, SMX Munich 3/2025) and probably Google AI Overviews (Search Liaison, 4/2025)</td>
+                            <td><span class="verdict-bad">✗</span> Tracking rank instead of membership (see Fishkin)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p>
+                    On the <code>llms.txt</code> debate, Kai Spriestersbach delivered the aptest image: it's as if a restaurant had a menu noting that it reads other restaurants' menus before cooking. John Mueller compared it to the discontinued meta keywords tag; Semrush tested one live on Search Engine Land: no effect.
+                </p>
+
+                <h2>What this means for your website</h2>
+
+                <p>
+                    No panic-buying a GEO retainer required. The evidence-based approach is cheap, mostly one-time, and overlaps almost entirely with good technical SEO and good content. Concretely:
+                </p>
+
+                <div class="caveat-card good">
+                    <h4>1 · Do the Bing plumbing</h4>
+                    <p class="text-gray-300 text-sm">
+                        ChatGPT's live search runs mostly on the Bing index (Seer Interactive: 87% of ChatGPT citations matched Bing top results, only 56% Google). So: verify Bing Webmaster Tools, wire up IndexNow, allow OAI-SearchBot in <code>robots.txt</code>. Bing's free AI performance report (since Feb. 2026) shows you real data instead of vendor estimates.
+                    </p>
+                </div>
+
+                <div class="caveat-card good">
+                    <h4>2 · Serve static HTML</h4>
+                    <p class="text-gray-300 text-sm">
+                        The parse rate collapses from 94% for static HTML to 23% for client-rendered JS. A pure React/Vue shell looks like an empty page to an AI crawler. (This site here is static for exactly that reason.)
+                    </p>
+                </div>
+
+                <div class="caveat-card good">
+                    <h4>3 · Fix wrong information at the source</h4>
+                    <p class="text-gray-300 text-sm">
+                        The Tow Center/Columbia found that AI search couldn't retrieve the correct citation information in over 60% of 1,600 queries. Before you chase "visibility": make sure that what's retrievable about you is even correct in the first place.
+                    </p>
+                </div>
+
+                <div class="caveat-card good">
+                    <h4>4 · Measure membership, not rank</h4>
+                    <p class="text-gray-300 text-sm">
+                        If you measure at all: 60–100 runs per prompt, and look at <em>whether</em> your brand shows up in the consideration set, not in which "spot". Everything else is noise with a pretty axis label.
+                    </p>
+                </div>
+
+                <div class="caveat-card good">
+                    <h4>5 · Earn third-party mentions</h4>
+                    <p class="text-gray-300 text-sm">
+                        SE Ranking: pages with over 32,000 referring domains are cited 3.5× more often than those with under 200. Earned media beats any on-page trickery. As an aside: the machine's "fan-out" queries are what matter: ALM Corp found that 95% of these machine sub-questions have almost no human search volume.
+                    </p>
+                </div>
+
+                <h2>How big is the prize anyway?</h2>
+
+                <p>
+                    Finally, the order of magnitude, so nobody misallocates the budget. According to Cloudflare Radar, the combined chatbot share in May 2026 was 0.29% of search referrals, versus 87.6% for Google. The traffic shift is real, but today it's still small.
+                </p>
+
+                <p>
+                    The nuance that makes it interesting anyway: ChatGPT referrals convert at 7.1% according to Similarweb, only paid search is higher. And around 70% of AI visits arrive without a referrer and get wrongly logged as direct traffic. So the channel is small, but high-value and systematically underestimated. That's exactly why the cheap, evidence-based approach is worth it, but the expensive GEO retainer is not.
+                </p>
+
+                <hr style="border-color: #374151; margin: 2rem 0;">
+
+                <p><strong>Sources:</strong></p>
+                <div style="margin: 1rem 0;">
+                    <a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        arXiv 2311.09735 (KDD '24)
+                    </a>
+                    <a href="https://arxiv.org/abs/2603.08924" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        arXiv 2603.08924
+                    </a>
+                    <a href="https://arxiv.org/abs/2604.07585" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        arXiv 2604.07585
+                    </a>
+                    <a href="https://sparktoro.com/blog/new-research-ais-are-highly-inconsistent-when-recommending-brands-or-products-marketers-should-take-care-when-tracking-ai-visibility/" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        SparkToro / Gumshoe
+                    </a>
+                    <a href="https://betterthangood.xyz/blog/geo-practice-versus-snake-oil/" target="_blank" rel="noopener noreferrer" class="tool-badge">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        betterthangood.xyz (Iain)
+                    </a>
+                </div>
+
+                <p>
+                    Are you building AI systems where whether and how you're found by generative engines matters, or do you want to know what actually holds up in a GEO offer? <a href="../../../#contact">Let's talk.</a> I build agents that do real work, and I'll tell you honestly where substance ends and snake oil begins.
+                </p>
+
+    </article>
+
+    <!-- Author share + related posts -->
+    <div class="art-share">
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
+      <a href="../../../#contact" class="btn btn--pri">WORK WITH ME ▸</a>
+    </div>
+    <section class="art-more">
+      <div class="wrap">
+        <div class="art-more__head"><h2>More field notes</h2><a href="../../en/">ALL POSTS ▸</a></div>
+        <div class="art-more__grid" id="art-more-grid"></div>
+      </div>
+    </section>
+
+    <!-- Related posts (internal cross-links for crawl equity) -->
+    <nav class="related-posts" aria-label="Related posts">
+        <p class="related-posts__heading">// Related posts</p>
+        <div class="related-posts__grid">
+                <a class="related-posts__card" href="mit-ai-hallucinations.html">
+                    <span class="related-posts__card-title">Did MIT solve AI hallucinations? What the new calibration-reward research actually shows</span>
+                </a>
+                <a class="related-posts__card" href="ki-modell-evaluation.html">
+                    <span class="related-posts__card-title">How We Found the Best AI Model for Legal Analysis</span>
+                </a>
+                <a class="related-posts__card" href="ambient-ai-the-next-ai-generation.html">
+                    <span class="related-posts__card-title">Ambient AI: Why the Next Generation Doesn't Answer, It Notices</span>
+                </a>
+        </div>
+    </nav>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script defer src="../../../js/components.js"></script>
+    <script defer src="../../../js/translations.js"></script>
+    <script defer src="../../../js/main.js"></script>
+    <script defer src="../../../js/site.js"></script>
+</body>
+</html>

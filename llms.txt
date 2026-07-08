@@ -19,6 +19,7 @@
 
 ## Blog posts (English)
 
+- [Snake oil for AI search: what the science actually says about GEO](https://waiser.dev/blog/posts/en/geo-wundermittel-wissenschaft.html): GEO ("Generative Engine Optimization" / AI SEO) as a paid discipline is largely unproven. What the research (the Princeton/Aggarwal study (KDD 2024), arXiv work on measurement variance, Fishkin's 2,961 prompts) actually shows about AI visibility, what's snake oil (llms.txt, blanket bot-blocking, rank tracking), and the cheap, evidence-based program for your own site.
 - [Opus 4.8 & Dynamic Workflows: How 7 Agents Audited My Legal-Tech Platform in 5 Minutes](https://waiser.dev/blog/posts/en/opus-4-8-dynamic-workflows-erst-recht-audit.html): A first-hand report on Claude Opus 4.8 and dynamic workflows. Seven agents audited the Erst Recht legal-tech platform in parallel in 5m 11s and surfaced several critical findings. What it means that the plan now moves from the context window into a script — and what a swarm of up to 1,000 agents unlocks.
 - [Ambient AI: Why the Next Generation Doesn't Answer – It Notices](https://waiser.dev/blog/posts/en/ambient-ai-the-next-ai-generation.html): As long as we pay AI per request, we only build one shape of it: vending machines that react to a coin drop. The interesting shape is the janitor who notices on his own when something is off. What changes when the unit of compute flips.
 - [Anthropic's 33-Page Blueprint for Claude Skills](https://waiser.dev/blog/posts/en/anthropic-skills-guide.html): Anthropic published a 33-page guide on building Claude Skills. What's actually inside, how progressive disclosure works, and why skills quietly replace prompt engineering.
@@ -36,6 +37,7 @@
 
 ## Blog posts (German)
 
+- [Wundermittel für die KI-Suche: Was die Wissenschaft wirklich über GEO sagt](https://waiser.dev/blog/posts/de/geo-wundermittel-wissenschaft.html): GEO ("Generative Engine Optimization" / AI SEO) als bezahlte Disziplin ist zum großen Teil unbewiesen. Was die Forschung (die Princeton/Aggarwal-Studie (KDD 2024), arXiv-Arbeiten zur Mess-Varianz, Fishkins 2.961 Prompts) wirklich über KI-Sichtbarkeit belegt, was Wundermittel ist (llms.txt, pauschales Bot-Blocking, Rang-Tracking), und das billige, evidenzbasierte Programm für die eigene Website.
 - [Opus 4.8 & dynamische Workflows: Wie 7 Agents meine Legal-Tech-Plattform in 5 Minuten auditiert haben](https://waiser.dev/blog/posts/de/opus-4-8-dynamische-workflows-erst-recht-audit.html): Ein Erfahrungsbericht zu Claude Opus 4.8 und dynamischen Workflows. Sieben Agents auditierten die Legal-Tech-Plattform Erst Recht parallel in 5m 11s und fanden mehrere kritische Schwachstellen. Was es bedeutet, dass der Plan jetzt aus dem Kontextfenster in ein Skript wandert – und was ein Schwarm von bis zu 1.000 Agents aufschließt.
 - [Ambient AI: Warum die nächste KI-Generation nicht antwortet, sondern bemerkt](https://waiser.dev/blog/posts/de/ambient-ai-die-naechste-ki-generation.html): Solange wir KI pro Anfrage bezahlen, bauen wir nur eine Form davon: Automaten, die auf Münzwurf reagieren. Die interessantere Form ist der Hausmeister, der von selbst merkt, wenn etwas nicht stimmt. Was sich ändert, wenn die Recheneinheit kippt.
 - [Anthropics 33-Seiten-Blueprint für Claude Skills](https://waiser.dev/blog/posts/de/anthropic-skills-guide.html): Anthropic hat einen 33-seitigen Leitfaden zum Bau von Claude Skills veröffentlicht. Was darin steht, wie Progressive Disclosure funktioniert und warum Skills mehr sind als bessere Prompts.
@@ -53,6 +55,7 @@
 
 ## Blog posts (Chinese)
 
+- [AI 搜索的灵丹妙药：科学究竟怎么说 GEO](https://waiser.dev/blog/posts/zh/geo-wundermittel-wissenschaft.html): 作为付费学科的 GEO（"Generative Engine Optimization" / AI SEO）大部分并未得到证实。研究（普林斯顿/Aggarwal 研究（KDD 2024）、关于测量方差的 arXiv 论文、Fishkin 的 2,961 次提示）究竟证明了关于 AI 可见性的什么，什么是灵丹妙药式的噱头（llms.txt、一刀切封禁爬虫、排名追踪），以及适用于自己网站的低成本、有证据支撑的方案。
 - [Opus 4.8 与动态工作流：5 分钟内 7 个智能体](https://waiser.dev/blog/posts/zh/opus-4-8-dynamic-workflows-erst-recht-audit.html): 七个智能体、一个真实的法律科技平台、五分钟。Claude 如今能把计划铸成脚本并让智能体群并行运行意味着什么——以及为何验证改变了一切。
 - [环境 AI：为何下一代 AI 不是回答，而是察觉](https://waiser.dev/blog/posts/zh/ambient-ai-the-next-ai-generation.html): 只要我们还按次为 AI 付费，就只能造出它的一种形态。更有意思的是那个会自己发现异常的门房——而 2026 年正是它在经济上变得可行的一年。
 - [Anthropic 关于 Claude Skills 的 33 页蓝图](https://waiser.dev/blog/posts/zh/anthropic-skills-guide.html): 一份官方指南，展示如何在不写一行代码的情况下教会 Claude 如何工作。里面真正讲了什么，以及为何 Skills 正在悄然取代提示工程。

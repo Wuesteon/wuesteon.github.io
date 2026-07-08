@@ -1,15 +1,19 @@
 // Shared components for header and footer
 
 function getHeader(basePath = '', activePage = '', useAnchorLinks = false) {
-    // On homepage, use anchor links; on other pages, use full paths
-    const homeLink = useAnchorLinks ? '#home' : `${basePath}index.html`;
-    const servicesLink = useAnchorLinks ? '#services' : `${basePath}index.html#services`;
-    const contactLink = useAnchorLinks ? '#contact' : `${basePath}index.html#contact`;
+    // On homepage, use anchor links; on other pages, link to the homepage
+    // directory (clean URL). On root-level subpages basePath is '' so fall back
+    // to './' to avoid an empty href that would otherwise resolve to the
+    // current page (or a same-page anchor).
+    const homeBase = basePath || './';
+    const homeLink = useAnchorLinks ? '#home' : homeBase;
+    const servicesLink = useAnchorLinks ? '#services' : `${homeBase}#services`;
+    const contactLink = useAnchorLinks ? '#contact' : `${homeBase}#contact`;
     const isEnglishBlog = window.location.pathname.includes('/blog/en/') || window.location.pathname.includes('/posts/en/');
     const blogLink = isEnglishBlog ? `${basePath}blog/en/` : `${basePath}blog/`;
 
-    const scanLink = useAnchorLinks ? '#scan' : `${basePath}index.html#scan`;
-    const securityLink = useAnchorLinks ? '#security' : `${basePath}index.html#security`;
+    const scanLink = useAnchorLinks ? '#scan' : `${homeBase}#scan`;
+    const securityLink = useAnchorLinks ? '#security' : `${homeBase}#security`;
     const blogOn = activePage === 'blog' ? ' on' : '';
 
     // Blackwall nav. IDs #lang-toggle / #lang-de / #lang-en preserved so the
@@ -37,6 +41,7 @@ function getHeader(basePath = '', activePage = '', useAnchorLinks = false) {
 }
 
 function getFooter(basePath = '') {
+    const homeBase = basePath || './';
     const blogLink = (window.location.pathname.includes('/blog/en/') || window.location.pathname.includes('/posts/en/'))
         ? `${basePath}blog/en/` : `${basePath}blog/`;
     // Blackwall footer. Preserves #currentYear, socials, the #black-hole-trigger
@@ -47,7 +52,7 @@ function getFooter(basePath = '') {
             <span class="foot__brand"><img class="foot__mark" src="${basePath}logos/mark.svg" alt="" width="22" height="22" aria-hidden="true"><span class="wm">w<span class="ai">AI</span>ser<span class="tld">.dev</span> · Nils Weiser</span></span>
             <div class="foot__links">
                 <a href="${blogLink}" data-i18n="nav.blog">Blog</a>
-                <a href="${basePath}index.html#services" data-i18n="nav.services">Services</a>
+                <a href="${homeBase}#services" data-i18n="nav.services">Services</a>
                 <a href="${basePath}impressum.html">Impressum</a>
                 <a href="${basePath}datenschutz.html">Datenschutz</a>
                 <a href="https://github.com/Wuesteon" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>
