@@ -288,7 +288,7 @@
 function heroReveal(){
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(typeof gsap==='undefined' || reduce){
-    ['.mh__sub','.mh__cta','.mh__proof'].forEach(function(s){
+    ['.mh__sub','.mh__cta','.mh__proof','.scrollcue'].forEach(function(s){
       var el=document.querySelector(s); if(el) el.style.opacity='1';
     });
     return;
@@ -296,6 +296,7 @@ function heroReveal(){
   gsap.to('.mh__sub',{opacity:1,duration:.7,delay:1.4});
   gsap.to('.mh__cta',{opacity:1,duration:.7,delay:1.6});
   gsap.to('.mh__proof',{opacity:1,duration:.7,delay:1.9});
+  gsap.to('.scrollcue',{opacity:1,duration:.8,delay:2.1});
 }
 if(document.readyState==='complete'){ heroReveal(); }
 else { window.addEventListener('load', heroReveal); }

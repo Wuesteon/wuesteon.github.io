@@ -593,12 +593,7 @@ window.addEventListener("load", ()=>{
   if(typeof gsap === "undefined") return;
   gsap.registerPlugin(ScrollTrigger);
 
-  const heroIn = document.querySelector(".hero__in, .mh__in");
-  if(heroIn && !REDUCED){
-    gsap.to(".hero__sub",{opacity:1,duration:.8,delay:1.5});
-    gsap.to(".hero__cta",{opacity:1,duration:.8,delay:1.7});
-    gsap.to(".scrollcue",{opacity:1,duration:.8,delay:2.1});
-  } else if(heroIn){ gsap.set([".hero__sub",".hero__cta",".scrollcue"],{opacity:1}); }
+  // Hero reveal (sub/cta/proof/scrollcue) lives on the page — see index.html heroReveal.
 
   // progress + nav
   gsap.to(".progress",{width:"100%",ease:"none",scrollTrigger:{start:0,end:"max",scrub:.3}});
