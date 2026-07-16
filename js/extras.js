@@ -94,6 +94,12 @@
   var currentDomain = '';   // set at submit time; used to template block copy
   function t(key){ return (typeof getTranslation==='function') ? getTranslation(key) : ''; }
 
+  // Umami: never send the typed domain (privacy). Prefer trackEvent() from main.js.
+  function trackScan(name, data){
+    if(typeof trackEvent==='function'){ trackEvent(name, data); return; }
+    if(typeof umami!=='undefined' && umami.track){ try{ umami.track(name, data); }catch(e){} }
+  }
+
   // Route purely off HTTP status + the JSON `error` code / `blocked`/`source` fields.
   // NEVER fabricate: a non-2xx becomes a soft (honest-message) error, not a fake report.
   function fetchScan(domain){
@@ -195,6 +201,7 @@
     var domain=cleanDomain(urlEl.value);
     if(!domain || domain.indexOf('.')<1){ urlEl.focus(); return; }
     currentDomain=domain;
+    trackScan('scan-submit', { lang: lang() });
     var scanning = lang()==='de' ? 'SCANNE…' : (lang()==='zh' ? '扫描中…' : 'SCANNING…');
     var runLabel = (typeof getTranslation==='function') ? getTranslation('bw.scan.run') : 'RUN SCAN ▸';
     runBtn.disabled=true; runBtn.textContent=scanning;
@@ -203,9 +210,8 @@
     // (blocked → protector-aware CTA; else → "unavailable"). Nothing fabricated here.
     var scanP = fetchScan(domain).catch(function(err){
       if(err && err.soft){ throw err; }
-      if(typeof umami!=='undefined'){ try{ umami.track('scan-fallback',{status:err&&err.status}); }catch(e){} }
       console.warn('[scan] unavailable', err && (err.status||err.message));
-      var e2=new Error('unavailable'); e2.soft=true; e2.code='UNAVAILABLE'; e2.message=unavailableMessage(); throw e2;
+      var e2=new Error('unavailable'); e2.soft=true; e2.code='UNAVAILABLE'; e2.status=err&&err.status; e2.message=unavailableMessage(); throw e2;
     });
     var doneMsg = lang()==='de' ? '✓ Analyse abgeschlossen' : (lang()==='zh' ? '✓ 分析完成' : '✓ analysis complete');
     var animP, cancelAnim=null;
@@ -241,6 +247,11 @@
     }).catch(function(err){
       // Honest message instead of a report; never fabricated. Blocked + daily-limit
       // also get a "book a call" CTA.
+      trackScan('scan-error', {
+        code: (err && err.code) || 'UNAVAILABLE',
+        status: err && err.status,
+        lang: lang()
+      });
       hideBanner();
       var msg=err.message||unavailableMessage();
       var html='<span class="h">'+msg+'</span>';
@@ -260,6 +271,7 @@
     if(!data || !Array.isArray(data.ops) || typeof data.verdict!=='string' || typeof data.score!=='number'){
       var e=new Error('unavailable'); e.soft=true; e.code='UNAVAILABLE'; e.message=unavailableMessage(); throw e;
     }
+    trackScan('scan-success', { source: data.source || 'live', lang: lang() });
     runBtn.disabled=false; runBtn.textContent=runLabel || 'RUN SCAN ▸';
     // Mandatory honesty banner when the result came from public knowledge, not a live scan.
     if(banner){
