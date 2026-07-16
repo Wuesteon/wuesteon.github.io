@@ -59,39 +59,36 @@
 
   function cleanDomain(v){ return v.trim().replace(/^https?:\/\//i,'').replace(/^www\./i,'').replace(/\/.*$/,'').toLowerCase(); }
 
+  // Neutral progress lines — TRUE whether or not the live fetch succeeds (a
+  // bot-walled site yields a public-knowledge result, so no line may assert a
+  // successful fetch/parse). The completion/"ok" claims are gone; the console
+  // holds on a working line until the REAL fetch settles (see submit handler).
+  // domain is user-typed → escaped here, the single chokepoint before innerHTML.
   function scanLines(domain){
-    // domain is user-typed and gets built into con.innerHTML character-by-character
-    // by the typing loop below — must be escaped here, at the one place all three
-    // language variants pull it in, rather than at each call site.
     domain = esc(domain);
     if(lang()==='de') return [
       {c:'p',x:'$ waiser scan '},{c:'w',x:domain},{nl:1},
-      {c:'c',x:'  öffentliche Seiten laden ...... '},{c:'g',x:'ok'},{nl:1},
-      {c:'c',x:'  Inhalt & Struktur parsen ...... '},{c:'g',x:'ok'},{nl:1},
-      {c:'c',x:'  Stack & Workflows erkennen .... '},{c:'g',x:'ok'},{nl:1},
-      {c:'c',x:'  Agent-Chancen kartieren ....... '},{c:'h',x:'3 gefunden'},{nl:1},
-      {c:'g',x:'✓ Analyse abgeschlossen'}
+      {c:'c',x:'  Seite abrufen …'},{nl:1},
+      {c:'c',x:'  Seite & Struktur prüfen …'},{nl:1},
+      {c:'c',x:'  Agent-Chancen kartieren …'},{nl:1}
     ];
     if(lang()==='zh') return [
       {c:'p',x:'$ waiser scan '},{c:'w',x:domain},{nl:1},
-      {c:'c',x:'  加载公开页面 ............. '},{c:'g',x:'ok'},{nl:1},
-      {c:'c',x:'  解析内容与结构 ........... '},{c:'g',x:'ok'},{nl:1},
-      {c:'c',x:'  识别技术栈与工作流 ....... '},{c:'g',x:'ok'},{nl:1},
-      {c:'c',x:'  梳理智能体机会 ........... '},{c:'h',x:'找到 3 个'},{nl:1},
-      {c:'g',x:'✓ 分析完成'}
+      {c:'c',x:'  访问网站 …'},{nl:1},
+      {c:'c',x:'  检查网站与结构 …'},{nl:1},
+      {c:'c',x:'  梳理智能体机会 …'},{nl:1}
     ];
     return [
       {c:'p',x:'$ waiser scan '},{c:'w',x:domain},{nl:1},
-      {c:'c',x:'  fetching public pages ......... '},{c:'g',x:'ok'},{nl:1},
-      {c:'c',x:'  parsing content & structure ... '},{c:'g',x:'ok'},{nl:1},
-      {c:'c',x:'  detecting stack & workflows ... '},{c:'g',x:'ok'},{nl:1},
-      {c:'c',x:'  mapping agent opportunities ... '},{c:'h',x:'3 found'},{nl:1},
-      {c:'g',x:'✓ analysis complete'}
+      {c:'c',x:'  reaching site …'},{nl:1},
+      {c:'c',x:'  checking site & structure …'},{nl:1},
+      {c:'c',x:'  mapping agent opportunities …'},{nl:1}
     ];
   }
 
   var SCAN_ENDPOINT = 'https://scan.waiser.dev/api/scan';
   var currentDomain = '';   // set at submit time; used to template block copy
+  var runSeq = 0; // increments per submit; stale runs bail (concurrent-submit guard)
   function t(key){ return (typeof getTranslation==='function') ? getTranslation(key) : ''; }
 
   // Umami: never send the typed domain (privacy). Prefer trackEvent() from main.js.
@@ -179,6 +176,31 @@
     return "The live scan is temporarily unavailable. Please try again later — or just book a call.";
   }
 
+  // Final console line, derived from the REAL result. Honest-by-default: the
+  // green ✓ + "live analysis" wording is reserved for a genuine live/rendered
+  // scan; knowledge/unknown/undefined → the terse public-knowledge line (the
+  // full disclosure lives in the report banner). Keys have inline fallbacks so a
+  // missing translation never blanks the line.
+  function finalLine(source){
+    var live = (source==='live' || source==='rendered');
+    var key = live ? 'bw.scan.final.live' : 'bw.scan.final.knowledge';
+    var tmpl = t(key); if(tmpl) return tmpl;
+    var l=lang();
+    if(live){
+      if(l==='de') return '✓ Live-Analyse abgeschlossen';
+      if(l==='zh') return '✓ 实时分析完成';
+      return '✓ live analysis complete';
+    }
+    if(l==='de') return '· Ergebnis aus öffentlichem Wissen (kein Live-Scan)';
+    if(l==='zh') return '· 结果基于公开信息（非实时扫描）';
+    return '· result from public knowledge (no live scan)';
+  }
+
+  // Write to the polite aria-live region (SR-only). Never announces "complete"
+  // until called from the settle path.
+  var liveEl = document.getElementById('az-live');
+  function announce(text){ if(liveEl){ liveEl.textContent = text; } }
+
   // Mandatory honesty banner for public-knowledge results.
   function knowledgeBanner(){
     var l=lang(), tmpl=t('bw.scan.banner.knowledge');
@@ -206,61 +228,104 @@
     var runLabel = (typeof getTranslation==='function') ? getTranslation('bw.scan.run') : 'RUN SCAN ▸';
     runBtn.disabled=true; runBtn.textContent=scanning;
     out.style.display='block'; report.style.display='none'; con.style.display='block'; con.innerHTML=''; hideBanner();
-    // Non-2xx and network errors are ALL turned into honest soft errors by fetchScan
-    // (blocked → protector-aware CTA; else → "unavailable"). Nothing fabricated here.
+    var run = ++runSeq;
+    var stopped = false;               // set true the instant the fetch settles
+    var typingDone = false, result = null, settledErr = null;
+    announce((function(){
+      var tmpl=t('bw.scan.aria.scanning');
+      var d=esc(domain);
+      if(tmpl) return tmpl.replace('{domain}', d);
+      return (lang()==='de'?'Scanne ':(lang()==='zh'?'正在扫描 ':'Scanning '))+d;
+    })());
+
     var scanP = fetchScan(domain).catch(function(err){
       if(err && err.soft){ throw err; }
       console.warn('[scan] unavailable', err && (err.status||err.message));
       var e2=new Error('unavailable'); e2.soft=true; e2.code='UNAVAILABLE'; e2.status=err&&err.status; e2.message=unavailableMessage(); throw e2;
     });
-    var doneMsg = lang()==='de' ? '✓ Analyse abgeschlossen' : (lang()==='zh' ? '✓ 分析完成' : '✓ analysis complete');
-    var animP, cancelAnim=null;
+
+    // Safety net: just past fetchScan's 30s AbortController. If the fetch somehow
+    // never settles, route to the honest error — NEVER to a fake completion.
+    var safety = setTimeout(function(){
+      if(stopped || run!==runSeq) return;
+      settledErr = { soft:true, code:'UNAVAILABLE', message:unavailableMessage() };
+      onSettled();
+    }, 33000);
+
+    function paintFinal(){
+      if(run!==runSeq) return;
+      runBtn.disabled=false; runBtn.textContent=runLabel;
+      if(settledErr){
+        var msg=settledErr.message||unavailableMessage();
+        var html='<span class="h">'+msg+'</span>';
+        if(settledErr.code==='BLOCKED_SITE' || settledErr.code==='DAILY_LIMIT'){
+          html+='<div style="margin-top:14px"><a href="#contact" class="btn btn--pri">'+bookCtaLabel()+'</a></div>';
+        }
+        con.innerHTML=html; hideBanner(); announce(msg);
+        trackScan('scan-error', { code: settledErr.code||'UNAVAILABLE', status: settledErr.status, lang: lang() });
+        return;
+      }
+      // success: render the report, then the honest final console line.
+      try {
+        finish(domain, result, runLabel);
+      } catch(e){
+        // finish() throws a soft error on an unusable 2xx body — treat as error.
+        settledErr = (e && e.soft) ? e : { soft:true, code:'UNAVAILABLE', message:unavailableMessage() };
+        return paintFinal();
+      }
+      var fl = finalLine(result && result.source);
+      var cls = (result && (result.source==='live'||result.source==='rendered')) ? 'g' : 'c';
+      con.innerHTML += '\n<span class="'+cls+'">'+esc(fl)+'</span>';
+      announce(fl);
+    }
+
+    // Resolution gate: paint the final state only when BOTH the fetch has settled
+    // AND the neutral typing has finished (or been short-circuited). A warm/cached
+    // fetch that resolves mid-typing short-circuits typing (see the loop below).
+    function onSettled(){
+      if(run!==runSeq || stopped){ if(run!==runSeq) return; }
+      stopped = true; clearTimeout(safety);
+      if(typingDone) paintFinal();
+      // else: the typing loop, seeing `stopped`, will jump to paintFinal().
+    }
+
+    scanP.then(function(data){ result=data; onSettled(); },
+               function(err){ settledErr=err; onSettled(); });
+
     if(REDUCED){
       con.innerHTML='<span class="c">'+(lang()==='de'?'Scanne…':(lang()==='zh'?'扫描中…':'Scanning…'))+'</span>';
-      animP=Promise.resolve();
+      typingDone = true;
+      if(stopped) paintFinal(); // fetch may have already settled
     } else {
-      // The typing animation is cosmetic. It resolves when it finishes naturally, after
-      // a wall-clock cap, OR the moment the fetch settles (so a fast error paints at once).
-      animP=new Promise(function(resolve){
-        var done=false, fin=function(){ if(done) return; done=true; resolve(); };
-        cancelAnim=fin;
-        var LINES=scanLines(domain), buf='', li=0, ci=0;
-        (function type(){
-          if(done) return;
-          if(li>=LINES.length){ con.innerHTML=buf; return setTimeout(fin, 300); }
-          var L=LINES[li];
-          if(L.nl){ buf+='\n'; li++; ci=0; return setTimeout(type, 90); }
-          var txt=L.x;
-          if(ci<txt.length){ if(ci===0){ buf+='<span class="'+L.c+'">'; } buf+=txt[ci]; ci++; con.innerHTML=buf+'</span><span class="azcur"></span>'; setTimeout(type, txt[ci-1]==='.'?10:16); }
-          else { buf+='</span>'; li++; ci=0; setTimeout(type, 60); }
-        })();
-        setTimeout(fin, 9000); // hard cap: never let the animation block finish()
-      });
-    }
-    // Settle the animation as soon as the fetch settles (success OR error), so the
-    // honest message isn't held hostage — or clobbered — by the ~9s typing loop.
-    scanP.then(function(){ if(cancelAnim) cancelAnim(); }, function(){ if(cancelAnim) cancelAnim(); });
-
-    Promise.all([scanP, animP]).then(function(r){
-      if(REDUCED){ con.innerHTML='<span class="g">'+doneMsg+'</span>'; }
-      finish(domain, r[0], runLabel);
-    }).catch(function(err){
-      // Honest message instead of a report; never fabricated. Blocked + daily-limit
-      // also get a "book a call" CTA.
-      trackScan('scan-error', {
-        code: (err && err.code) || 'UNAVAILABLE',
-        status: err && err.status,
-        lang: lang()
-      });
-      hideBanner();
-      var msg=err.message||unavailableMessage();
-      var html='<span class="h">'+msg+'</span>';
-      if(err.code==='BLOCKED_SITE' || err.code==='DAILY_LIMIT'){
-        html+='<div style="margin-top:14px"><a href="#contact" class="btn btn--pri">'+bookCtaLabel()+'</a></div>';
+      var LINES=scanLines(domain), buf='', li=0, ci=0, workingShown=false, slowTimer=null;
+      var WORK = t('bw.scan.working') || (lang()==='de'?'mit KI analysieren':(lang()==='zh'?'使用 AI 分析中':'analysing with AI'));
+      var SLOW = t('bw.scan.workingSlow') || (lang()==='de'?'das kann bei größeren Seiten ein paar Sekunden dauern …':(lang()==='zh'?'较大的网站可能需要几秒钟 …':'this can take a few seconds for larger sites …'));
+      function showWorking(){
+        if(workingShown) return; workingShown=true;
+        con.innerHTML = buf + '<span class="c">  '+esc(WORK)+' </span><span class="azcur"></span>';
+        slowTimer = setTimeout(function(){
+          if(stopped || run!==runSeq || typingDone===false) {}
+          if(!stopped && run===runSeq){ con.innerHTML = buf + '<span class="c">  '+esc(WORK)+'</span>\n<span class="c">  '+esc(SLOW)+' </span><span class="azcur"></span>'; }
+        }, 4000);
       }
-      con.innerHTML=html;
-      runBtn.disabled=false; runBtn.textContent=runLabel;
-    });
+      (function type(){
+        if(run!==runSeq) return;                 // superseded by a newer submit
+        if(stopped){                             // fetch already settled → finish now
+          if(slowTimer) clearTimeout(slowTimer);
+          typingDone = true; con.innerHTML = buf; return paintFinal();
+        }
+        if(li>=LINES.length){                    // typed lines done → working phase
+          typingDone = true; showWorking();
+          if(stopped){ if(slowTimer) clearTimeout(slowTimer); con.innerHTML = buf; return paintFinal(); }
+          return; // hold; scanP settling (onSettled) will paint the final state
+        }
+        var L=LINES[li];
+        if(L.nl){ buf+='\n'; li++; ci=0; return setTimeout(type, 90); }
+        var txt=L.x;
+        if(ci<txt.length){ if(ci===0){ buf+='<span class="'+L.c+'">'; } buf+=txt[ci]; ci++; con.innerHTML=buf+'</span><span class="azcur"></span>'; setTimeout(type, txt[ci-1]==='.'?10:16); }
+        else { buf+='</span>'; li++; ci=0; setTimeout(type, 60); }
+      })();
+    }
   });
 
   function finish(domain, data, runLabel){
