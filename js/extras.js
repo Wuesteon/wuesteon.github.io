@@ -233,10 +233,11 @@
     var typingDone = false, result = null, settledErr = null;
     var slowTimer = null;              // pending "still working / slow" timer (non-REDUCED path); hoisted so onSettled can clear it
     announce((function(){
+      // announce() writes via textContent (never innerHTML) → NO escaping: escaping
+      // here would make a screen reader read an '&' domain as "&amp;".
       var tmpl=t('bw.scan.aria.scanning');
-      var d=esc(domain);
-      if(tmpl) return tmpl.replace('{domain}', d);
-      return (lang()==='de'?'Scanne ':(lang()==='zh'?'正在扫描 ':'Scanning '))+d;
+      if(tmpl) return tmpl.replace('{domain}', domain);
+      return (lang()==='de'?'Scanne ':(lang()==='zh'?'正在扫描 ':'Scanning '))+domain;
     })());
 
     var scanP = fetchScan(domain).catch(function(err){
