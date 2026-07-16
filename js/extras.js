@@ -231,6 +231,7 @@
     var run = ++runSeq;
     var stopped = false;               // set true the instant the fetch settles
     var typingDone = false, result = null, settledErr = null;
+    var slowTimer = null;              // pending "still working / slow" timer (non-REDUCED path); hoisted so onSettled can clear it
     announce((function(){
       var tmpl=t('bw.scan.aria.scanning');
       var d=esc(domain);
@@ -283,8 +284,9 @@
     // AND the neutral typing has finished (or been short-circuited). A warm/cached
     // fetch that resolves mid-typing short-circuits typing (see the loop below).
     function onSettled(){
-      if(run!==runSeq || stopped){ if(run!==runSeq) return; }
+      if(stopped || run!==runSeq) return;
       stopped = true; clearTimeout(safety);
+      if(slowTimer) clearTimeout(slowTimer);
       if(typingDone) paintFinal();
       // else: the typing loop, seeing `stopped`, will jump to paintFinal().
     }
@@ -297,14 +299,13 @@
       typingDone = true;
       if(stopped) paintFinal(); // fetch may have already settled
     } else {
-      var LINES=scanLines(domain), buf='', li=0, ci=0, workingShown=false, slowTimer=null;
+      var LINES=scanLines(domain), buf='', li=0, ci=0, workingShown=false;
       var WORK = t('bw.scan.working') || (lang()==='de'?'mit KI analysieren':(lang()==='zh'?'使用 AI 分析中':'analysing with AI'));
       var SLOW = t('bw.scan.workingSlow') || (lang()==='de'?'das kann bei größeren Seiten ein paar Sekunden dauern …':(lang()==='zh'?'较大的网站可能需要几秒钟 …':'this can take a few seconds for larger sites …'));
       function showWorking(){
         if(workingShown) return; workingShown=true;
         con.innerHTML = buf + '<span class="c">  '+esc(WORK)+' </span><span class="azcur"></span>';
         slowTimer = setTimeout(function(){
-          if(stopped || run!==runSeq || typingDone===false) {}
           if(!stopped && run===runSeq){ con.innerHTML = buf + '<span class="c">  '+esc(WORK)+'</span>\n<span class="c">  '+esc(SLOW)+' </span><span class="azcur"></span>'; }
         }, 4000);
       }
