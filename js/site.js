@@ -4,6 +4,31 @@ const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 /* ---------------- content: real posts, DE/EN localized ---------------- */
 const POSTS = [
   {
+    id: "futureclass-zeitloses-wissen",
+    cat: "DEVELOPMENT",
+    de: {
+      href: "blog/posts/de/futureclass-zeitloses-wissen.html",
+      title: "Zeitloses Wissen, AI-native trainiert: Warum ich FutureClass gebaut habe",
+      excerpt: "Carnegie, Machiavelli, Le Bon: Die menschliche Natur hat sich nicht geändert — nur das Gewand der Wörter. Warum Lesen nicht Können ist, und wie FutureClass zeitloses Wissen mit AI Practice Labs trainierbar macht.",
+      date: "16 JUL 2026",
+      read: "5 MIN"
+    },
+    en: {
+      href: "blog/posts/en/futureclass-zeitloses-wissen.html",
+      title: "Timeless knowledge, trained AI-native: why I built FutureClass",
+      excerpt: "Carnegie, Machiavelli, Le Bon: human nature hasn't changed — only the garment of words. Why reading isn't mastery, and how FutureClass makes timeless knowledge trainable with AI Practice Labs.",
+      date: "16 JUL 2026",
+      read: "5 MIN"
+    },
+    zh: {
+      href: "blog/posts/zh/futureclass-zeitloses-wissen.html",
+      title: "永恒的知识，AI 原生训练：我为什么打造 FutureClass",
+      excerpt: "卡耐基、马基雅维利、勒庞：人性从未改变——变的只是言辞的外衣。为什么阅读不等于掌握，以及 FutureClass 如何用 AI 练习实验室让永恒的知识变得可训练。",
+      date: "16 JUL 2026",
+      read: "5 MIN"
+    }
+  },
+  {
     id: "geo-wundermittel-wissenschaft",
     cat: "RESEARCH",
     de: {
