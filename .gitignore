@@ -25,5 +25,9 @@ CLAUDE.md
 
 /blog/linkedin_posts
 scratchpad/
+
+# Social media drafts — local-only, never publish to the Pages-served repo
+docs/marketing/linkedin/
+docs/marketing/x/
 .superpowers/
 scratchpad-phaseA.html
