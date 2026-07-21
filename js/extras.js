@@ -196,6 +196,16 @@
     return '· result from public knowledge (no live scan)';
   }
 
+  // Honest cache marker: a repeat scan returns in <1s, which reads as "broken"
+  // next to the ~20s hint — say WHY it was fast instead of faking a scan.
+  function cachedLine(){
+    var tmpl = t('bw.scan.final.cached'); if(tmpl) return tmpl;
+    var l=lang();
+    if(l==='de') return '· Ergebnis aus dem Cache (kürzlich gescannt)';
+    if(l==='zh') return '· 缓存结果（近期已扫描）';
+    return '· cached result (scanned recently)';
+  }
+
   // Write to the polite aria-live region (SR-only). Never announces "complete"
   // until called from the settle path.
   var liveEl = document.getElementById('az-live');
@@ -230,6 +240,12 @@
     out.style.display='block'; report.style.display='none'; con.style.display='block'; con.innerHTML=''; hideBanner();
     var run = ++runSeq;
     var stopped = false;               // set true the instant the fetch settles
+    // Minimum console-reveal: a cache hit settles in <300ms and used to cut the
+    // typed line at "$ waiser scan " — glitchy and untrustworthy-fast. Hold the
+    // final paint ~1.8s so the command line finishes typing. This is pacing of
+    // a result we already have (the cached line says why it was fast), NOT a
+    // fake scan — never extend it to simulate work. Reduced motion: instant.
+    var revealAt = Date.now() + (REDUCED ? 0 : 1800);
     var typingDone = false, result = null, settledErr = null;
     var slowTimer = null;              // pending "still working / slow" timer (non-REDUCED path); hoisted so onSettled can clear it
     announce((function(){
@@ -278,7 +294,9 @@
       var fl = finalLine(result && result.source);
       var cls = (result && (result.source==='live'||result.source==='rendered')) ? 'g' : 'c';
       con.innerHTML += '\n<span class="'+cls+'">'+esc(fl)+'</span>';
-      announce(fl);
+      var isCached = !!(result && result.cached === true);
+      if(isCached){ con.innerHTML += '\n<span class="c">'+esc(cachedLine())+'</span>'; }
+      announce(isCached ? fl + ' — ' + cachedLine() : fl);
     }
 
     // Resolution gate: paint the final state only when BOTH the fetch has settled
@@ -288,8 +306,13 @@
       if(stopped || run!==runSeq) return;
       stopped = true; clearTimeout(safety);
       if(slowTimer) clearTimeout(slowTimer);
-      if(typingDone) paintFinal();
-      // else: the typing loop, seeing `stopped`, will jump to paintFinal().
+      if(typingDone){
+        var rem = Math.max(0, revealAt - Date.now());
+        if(rem) setTimeout(function(){ if(run===runSeq) paintFinal(); }, rem);
+        else paintFinal();
+      }
+      // else: the typing loop, seeing `stopped`, will finish out the reveal
+      // hold and jump to paintFinal().
     }
 
     scanP.then(function(data){ result=data; onSettled(); },
@@ -312,13 +335,19 @@
       }
       (function type(){
         if(run!==runSeq) return;                 // superseded by a newer submit
-        if(stopped){                             // fetch already settled → finish now
+        if(stopped && Date.now()>=revealAt){     // settled AND past the reveal hold → finish now
           if(slowTimer) clearTimeout(slowTimer);
           typingDone = true; con.innerHTML = buf; return paintFinal();
         }
         if(li>=LINES.length){                    // typed lines done → working phase
-          typingDone = true; showWorking();
-          if(stopped){ if(slowTimer) clearTimeout(slowTimer); con.innerHTML = buf; return paintFinal(); }
+          typingDone = true;
+          if(stopped){                           // settled mid-hold: no fake "analysing" — wait out the hold, then paint
+            if(slowTimer) clearTimeout(slowTimer);
+            var rem = Math.max(0, revealAt - Date.now());
+            con.innerHTML = buf;
+            return rem ? void setTimeout(function(){ if(run===runSeq) paintFinal(); }, rem) : paintFinal();
+          }
+          showWorking();
           return; // hold; scanP settling (onSettled) will paint the final state
         }
         var L=LINES[li];
@@ -338,7 +367,7 @@
     if(!data || !Array.isArray(data.ops) || typeof data.verdict!=='string' || typeof data.score!=='number'){
       var e=new Error('unavailable'); e.soft=true; e.code='UNAVAILABLE'; e.message=unavailableMessage(); throw e;
     }
-    trackScan('scan-success', { source: data.source || 'live', lang: lang() });
+    trackScan('scan-success', { source: data.source || 'live', cached: data.cached === true, lang: lang() });
     runBtn.disabled=false; runBtn.textContent=runLabel || 'RUN SCAN ▸';
     // Mandatory honesty banner when the result came from public knowledge, not a live scan.
     if(banner){
