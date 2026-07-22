@@ -36,7 +36,15 @@ Marketing data, analytics, SEO assets, and growth tracking for the personal port
     `scroll-75-article` / `scroll-100-article` (scroll-depth, namespaced by
     page type so homepage engagement and article read-depth don't blend),
     `related-post-click` (`{post: <slug>}`, in-article "art-more" related-post
-    links only — not the home feed or blog index cards). Tracking helper:
+    links only — not the home feed or blog index cards), Agent Scan funnel
+    (`js/extras.js`): `scan-submit` (`{lang}` — valid form submit),
+    `scan-success` (`{source, lang}` — rendered report; `source` is
+    `live` / `rendered` / `knowledge`), `scan-error` (`{code, status, lang}` —
+    soft failures: `BLOCKED_SITE`, `DAILY_LIMIT`, rate-limit, `UNAVAILABLE`,
+    bad 2xx body), `cta-scan-book-call` (2026-07-22, `data-umami-event` with
+    `source: scan-report | scan-blocked` — the post-scan "book a call" CTA in
+    the report block and the blocked/daily-limit console CTA; measures the
+    scan→call funnel step). Typed domains are never sent. Tracking helper:
     `trackEvent()` in `js/main.js`.
 
 ## SEO

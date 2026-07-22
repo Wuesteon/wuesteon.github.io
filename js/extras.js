@@ -277,7 +277,7 @@
         var msg=settledErr.message||unavailableMessage();
         var html='<span class="h">'+msg+'</span>';
         if(settledErr.code==='BLOCKED_SITE' || settledErr.code==='DAILY_LIMIT'){
-          html+='<div style="margin-top:14px"><a href="#contact" class="btn btn--pri">'+bookCtaLabel()+'</a></div>';
+          html+='<div style="margin-top:14px"><a href="#contact" class="btn btn--pri" data-umami-event="cta-scan-book-call" data-umami-event-source="scan-blocked">'+bookCtaLabel()+'</a></div>';
         }
         con.innerHTML=html; hideBanner(); announce(msg);
         trackScan('scan-error', { code: settledErr.code||'UNAVAILABLE', status: settledErr.status, lang: lang() });
