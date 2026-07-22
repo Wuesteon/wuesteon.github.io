@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>247 Papers Later: Agent Security Is a Systems Problem, Not a Text Problem</title>
+    <meta name="description" content="A 2026 Systematization of Knowledge digests 247 agent-security papers and reaches one conclusion: individual defenses work but don't compose, we measure the wrong things, and agent security is a systems-engineering discipline that happens to have an LLM at its core.">
+    <link rel="canonical" href="https://waiser.dev/blog/posts/en/agent-security-247-paper-sok.html">
+    <link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/agent-security-247-paper-sok.html">
+    <link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/agent-security-247-paper-sok.html">
+    <link rel="alternate" hreflang="zh" href="https://waiser.dev/blog/posts/zh/agent-security-247-paper-sok.html">
+    <link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/agent-security-247-paper-sok.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="247 Papers Later: Agent Security Is a Systems Problem, Not a Text Problem">
+    <meta property="og:description" content="A 2026 Systematization of Knowledge digests 247 agent-security papers: individual defenses work but don't compose, we measure the wrong things, and agent security is a systems-engineering discipline with an LLM at its core.">
+    <meta property="og:url" content="https://waiser.dev/blog/posts/en/agent-security-247-paper-sok.html">
+    <meta property="og:image" content="https://waiser.dev/og-default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="247 Papers Later: Agent Security Is a Systems Problem, Not a Text Problem">
+    <meta name="twitter:description" content="A 2026 Systematization of Knowledge digests 247 agent-security papers: individual defenses work but don't compose, and agent security is a systems-engineering discipline with an LLM at its core.">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "247 Papers Later: Agent Security Is a Systems Problem, Not a Text Problem",
+      "description": "A 2026 Systematization of Knowledge digests 247 agent-security papers and reaches one conclusion: individual defenses work but don't compose, we measure the wrong things, and agent security is a systems-engineering discipline that happens to have an LLM at its core.",
+      "datePublished": "2026-07-22",
+      "author": {
+        "@type": "Person",
+        "name": "Nils Weiser",
+        "@id": "https://waiser.dev/#person"
+      },
+      "image": "https://waiser.dev/og-default.png",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://waiser.dev/blog/posts/en/agent-security-247-paper-sok.html"
+      },
+      "inLanguage": "en",
+      "@id": "https://waiser.dev/blog/posts/en/agent-security-247-paper-sok.html#article",
+      "publisher": {
+        "@id": "https://waiser.dev/#person"
+      },
+      "dateModified": "2026-07-22"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://waiser.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://waiser.dev/blog/en/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "247 Papers Later: Agent Security Is a Systems Problem",
+          "item": "https://waiser.dev/blog/posts/en/agent-security-247-paper-sok.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+
+    <link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+    <meta name="theme-color" content="#050507">
+    <link rel="preload" href="/fonts/ChakraPetch-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Blackwall: local tailwind utilities kept (posts rely on them), then Blackwall tokens + bridge -->
+    <link rel="stylesheet" href="../../../css/tailwind.css">
+    <link rel="stylesheet" href="../../../css/tokens.css">
+    <link rel="stylesheet" href="../../../css/blackwall.css">
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/blog-post.css">
+    <style>
+        .pillar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .pillar-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+        .pillar-card h4 {
+            color: #38bdf8;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .pillar-card p {
+            color: #d1d5db;
+            font-size: 0.85rem;
+            margin: 0;
+        }
+        .warning-box {
+            background: rgba(251, 191, 36, 0.08);
+            border-left: 3px solid #fbbf24;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .warning-box h4 {
+            color: #fbbf24;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .lifecycle-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.25rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .lifecycle-list li {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: #cbd5e1;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 9999px;
+            padding: 0.3rem 0.8rem;
+        }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header (Blackwall art-hero) -->
+    <section class="art-hero" data-screen-label="Article">
+        <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
+        <div class="art-hero__in">
+            <a class="art-back" href="../../en/">◄ ALL POSTS</a>
+            <div><span class="art-cat">Research</span></div>
+            <h1 class="art-title">247 Papers Later: Agent Security Is a Systems Problem, Not a Text Problem</h1>
+            <div class="art-meta">
+                <span class="who"><span class="av">NW</span> Nils Weiser</span>
+                <span class="sep">•</span><span data-art-date>22 JUL 2026</span>
+                <span class="sep">•</span><span data-art-read>—</span>
+            </div>
+        </div>
+    </section>
+    <div class="art-hr"><div></div></div>
+
+    <!-- Article Content (Blackwall art-body) -->
+    <article class="art-body">
+                <p class="lead">Every few months a research field produces a paper that isn't a new result so much as a new map — a survey that steps back, reads everything, and tells you what the whole territory actually looks like. For AI agent security, that paper arrived in 2026: a Systematization of Knowledge (SoK) that digests <strong>247 papers</strong> published between 2023 and 2026.</p>
+
+                <p>If you only read one thing to get oriented in this space, I'd argue it should be this. Its central claim is deceptively simple, and I keep coming back to it:</p>
+
+                <blockquote>
+                    Once a language model is wired into a loop that plans, calls tools, keeps memory, and acts on the outside world, security stops being about unsafe text and becomes a software-and-systems problem.
+                </blockquote>
+
+                <p>That sentence quietly reframes the entire field. For years the dominant mental model of "AI safety" was about outputs — will the model say something harmful? The SoK argues that framing is a category error the moment you deploy an agent. The interesting failures aren't in what the model <em>says</em>; they're in how untrusted information becomes a control decision, how that decision meets delegated authority, and how persistent state changes the security properties of the whole system over time.</p>
+
+                <h2>The lifecycle, not the incident</h2>
+
+                <p>The most useful contribution of the survey is that it stops cataloguing attacks in isolation and instead maps them onto the <strong>agentic lifecycle</strong> — eight phases where things can go wrong:</p>
+
+                <ul class="lifecycle-list">
+                    <li>input handling</li>
+                    <li>planning</li>
+                    <li>decision-making</li>
+                    <li>tool execution</li>
+                    <li>output generation</li>
+                    <li>memory &amp; state</li>
+                    <li>monitoring</li>
+                    <li>multi-agent coordination</li>
+                </ul>
+
+                <p>This matters because it changes the question you ask. Instead of "is this output safe?" you ask "at which phase did untrusted input acquire the authority to cause harm?" A prompt injection isn't a single event; it's a chain that starts in input handling, survives planning, and cashes out at tool execution. Threat-modeling the lifecycle shows you where a boundary could have stopped it.</p>
+
+                <h2>The finding that should worry defenders</h2>
+
+                <p>Here's the part that I think deserves the most attention. The survey looked at the defenses the field has produced — guardrails, privilege controls, isolation, provenance tracking — and found that individually, they mostly work. The problem is <strong>composition</strong>: they "do not cleanly add up." Each defense assumes a different trust model, and when you stack them, the assumptions don't line up into a coherent whole. You can bolt together four reasonable defenses and still leave a seam an attacker walks through.</p>
+
+                <p>This is a genuinely important insight, and it's the kind of thing only a survey can surface, because you can't see it from inside any single paper. Every individual defense looks fine. The gap is in the spaces between them.</p>
+
+                <h2>We're also measuring the wrong things</h2>
+
+                <p>The second uncomfortable finding is about benchmarks. Most agent-security evaluations measure single-turn, bounded success rates — did the attack work, yes or no, in one shot. But real agents run for a long time, carry state across sessions, and coordinate with other agents.</p>
+
+                <div class="warning-box">
+                    <h4>The under-measured risks</h4>
+                    <p>The survey argues we're systematically under-measuring exactly the risks that matter most in deployment: long-horizon behavior, stateful memory corruption, and multi-agent propagation. And almost nobody jointly measures safety alongside utility, latency, and cost — which is how you end up with "secure" designs no one actually ships because they're too slow or too useless.</p>
+                </div>
+
+                <h2>Where the field should go</h2>
+
+                <p>The survey lands on four pillars for building agents that are secure by construction rather than by patching:</p>
+
+                <div class="pillar-grid">
+                    <div class="pillar-card">
+                        <h4>// Explicit trust boundaries</h4>
+                        <p>Know where trusted authority ends and untrusted input begins — and enforce it structurally.</p>
+                    </div>
+                    <div class="pillar-card">
+                        <h4>// Principled least privilege</h4>
+                        <p>Scope authority per-action, not per-agent. Don't hand one agent everything it can touch.</p>
+                    </div>
+                    <div class="pillar-card">
+                        <h4>// Provenance-tracked state</h4>
+                        <p>Know where every piece of memory came from, so poisoned state can't launder into trusted context.</p>
+                    </div>
+                    <div class="pillar-card">
+                        <h4>// Deployment-realistic evaluation</h4>
+                        <p>Measure long-horizon, stateful, multi-agent behavior — and safety alongside utility, latency, and cost.</p>
+                    </div>
+                </div>
+
+                <p>None of those are surprising if you come from systems security — and that's exactly the point. The message of 247 papers, distilled, is that agent security is a systems-engineering discipline that happens to have a language model at its core, and the sooner the field treats it that way, the faster it'll make real progress.</p>
+
+                <p>What I like about survey papers like this one is that they're a cheap way to buy perspective. Reading one SoK won't make you a researcher, but it will inoculate you against the two most common mistakes in this space: thinking the model is the whole problem, and thinking a single clever defense is the whole solution.</p>
+
+                <hr style="border-color: rgba(255,255,255,0.08); margin: 2.5rem 0;">
+
+                <p class="text-sm text-gray-500">
+                    <em>Sources: <a href="https://www.llm-hacking.com/hacks/agent-security-lifecycle-sok.md/" target="_blank" rel="noopener">Toward Secure LLM Agents — a 247-paper SoK</a>; <a href="https://arxiv.org/abs/2604.23338" target="_blank" rel="noopener">A Systematic Survey of Security Threats and Defenses in LLM-Based AI Agents (arXiv 2604.23338)</a>; <a href="https://arxiv.org/abs/2606.08661" target="_blank" rel="noopener">Data Agents Under Attack (arXiv 2606.08661)</a>.</em>
+                </p>
+
+    </article>
+
+    <!-- Author share + related posts -->
+    <div class="art-share">
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
+      <a href="https://calendly.com/nils-weiser-kn/30min" target="_blank" rel="noopener" class="btn btn--pri">WORK WITH ME ▸</a>
+    </div>
+    <section class="art-more">
+      <div class="wrap">
+        <div class="art-more__head"><h2>More field notes</h2><a href="../../en/">ALL POSTS ▸</a></div>
+        <div class="art-more__grid" id="art-more-grid"></div>
+      </div>
+    </section>
+
+    <!-- Related posts (internal cross-links for crawl equity) -->
+    <nav class="related-posts" aria-label="Related posts">
+        <p class="related-posts__heading">// Related posts</p>
+        <div class="related-posts__grid">
+                <a class="related-posts__card" href="ai-agent-defense-playbook.html">
+                    <span class="related-posts__card-title">The Defense Playbook for AI Agents Is Finally Taking Shape</span>
+                </a>
+                <a class="related-posts__card" href="lethal-trifecta-ai-agents.html">
+                    <span class="related-posts__card-title">The Lethal Trifecta: Why 98% of AI Agents Are Sitting Ducks</span>
+                </a>
+                <a class="related-posts__card" href="ai-agents-attack-surface-2026.html">
+                    <span class="related-posts__card-title">The Year AI Agents Became the Attack Surface</span>
+                </a>
+        </div>
+    </nav>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script defer src="../../../js/components.js"></script>
+    <script defer src="../../../js/translations.js"></script>
+    <script defer src="../../../js/main.js"></script>
+    <script defer src="../../../js/site.js"></script>
+</body>
+</html>

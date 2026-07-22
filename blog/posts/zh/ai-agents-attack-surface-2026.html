@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 智能体成为攻击面的这一年</title>
+    <meta name="description" content="GuardFall、AutoJack、GitHub 供应链攻击、劫持成功率高达 85% 的伪造漏洞报告：2026 年的智能体安全研究读起来就像一份渗透测试报告。为什么「长了手的软件」改变了一切。">
+    <link rel="canonical" href="https://waiser.dev/blog/posts/zh/ai-agents-attack-surface-2026.html">
+    <link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/ki-agenten-angriffsflaeche-2026.html">
+    <link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/ai-agents-attack-surface-2026.html">
+    <link rel="alternate" hreflang="zh" href="https://waiser.dev/blog/posts/zh/ai-agents-attack-surface-2026.html">
+    <link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/ki-agenten-angriffsflaeche-2026.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="AI 智能体成为攻击面的这一年">
+    <meta property="og:description" content="GuardFall、AutoJack、GitHub 供应链攻击、劫持成功率高达 85% 的伪造漏洞报告：2026 年的智能体安全研究读起来就像一份渗透测试报告。">
+    <meta property="og:url" content="https://waiser.dev/blog/posts/zh/ai-agents-attack-surface-2026.html">
+    <meta property="og:image" content="https://waiser.dev/og-default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI 智能体成为攻击面的这一年">
+    <meta name="twitter:description" content="GuardFall、AutoJack、GitHub 供应链攻击、劫持成功率高达 85% 的伪造漏洞报告：2026 年的智能体安全研究读起来就像一份渗透测试报告。">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "AI 智能体成为攻击面的这一年",
+      "description": "GuardFall、AutoJack、GitHub 供应链攻击、劫持成功率高达 85% 的伪造漏洞报告：2026 年的智能体安全研究读起来就像一份渗透测试报告。为什么「长了手的软件」改变了一切。",
+      "datePublished": "2026-07-22",
+      "author": {
+        "@type": "Person",
+        "name": "Nils Weiser",
+        "@id": "https://waiser.dev/#person"
+      },
+      "image": "https://waiser.dev/og-default.png",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://waiser.dev/blog/posts/zh/ai-agents-attack-surface-2026.html"
+      },
+      "inLanguage": "zh",
+      "@id": "https://waiser.dev/blog/posts/zh/ai-agents-attack-surface-2026.html#article",
+      "publisher": {
+        "@id": "https://waiser.dev/#person"
+      },
+      "dateModified": "2026-07-22"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://waiser.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://waiser.dev/blog/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "AI 智能体成为攻击面的这一年",
+          "item": "https://waiser.dev/blog/posts/zh/ai-agents-attack-surface-2026.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+
+    <link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+    <meta name="theme-color" content="#050507">
+    <link rel="preload" href="/fonts/ChakraPetch-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Blackwall: local tailwind utilities kept (posts rely on them), then Blackwall tokens + bridge -->
+    <link rel="stylesheet" href="../../../css/tailwind.css">
+    <link rel="stylesheet" href="../../../css/tokens.css">
+    <link rel="stylesheet" href="../../../css/blackwall.css">
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/blog-post.css">
+    <style>
+        .exploit-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 42, 60, 0.2);
+            border-radius: 8px;
+            padding: 1.25rem 1.5rem;
+            margin: 1rem 0;
+        }
+        .exploit-card h4 {
+            color: #ff2a3c;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .exploit-card p {
+            color: #d1d5db;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        .warning-box {
+            background: rgba(251, 191, 36, 0.08);
+            border-left: 3px solid #fbbf24;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .warning-box h4 {
+            color: #fbbf24;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .defense-box {
+            background: rgba(52, 211, 153, 0.08);
+            border-left: 3px solid #34d399;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .defense-box h4 {
+            color: #34d399;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .takeaways {
+            list-style: none;
+            padding: 0;
+            margin: 0.75rem 0 0;
+        }
+        .takeaways li {
+            position: relative;
+            padding-left: 1.4rem;
+            margin: 0.4rem 0;
+            color: #d1d5db;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .takeaways li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #34d399;
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header (Blackwall art-hero) -->
+    <section class="art-hero" data-screen-label="Article">
+        <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
+        <div class="art-hero__in">
+            <a class="art-back" href="../../zh/">◄ 所有文章</a>
+            <div><span class="art-cat">AI Security</span></div>
+            <h1 class="art-title">AI 智能体成为攻击面的这一年</h1>
+            <div class="art-meta">
+                <span class="who"><span class="av">NW</span> Nils Weiser</span>
+                <span class="sep">•</span><span data-art-date>22 JUL 2026</span>
+                <span class="sep">•</span><span data-art-read>—</span>
+            </div>
+        </div>
+    </section>
+    <div class="art-hr"><div></div></div>
+
+    <!-- Article Content (Blackwall art-body) -->
+    <article class="art-body">
+                <p class="lead">在过去很长一段时间里，「AI 安全」大多意味着让某个聊天机器人说出它本不该说的话。那会令人尴尬，偶尔也危险，但它的影响是有边界的，最糟糕的情形，也不过是屏幕上出现一段糟糕的文字。这个时代结束了。</p>
+
+                <p>2026 年年中涌现的研究，谈的是另一个问题：当一个语言模型被接入一个会规划、会调用工具、会保留记忆、会对外部世界采取行动的循环时，会发生什么？一旦这一步发生，模型就不再是一个文本生成器。它变成了一件长了手的软件。</p>
+
+                <p><strong>而长了手的软件，是可以被诱导去动手的。</strong></p>
+
+                <div class="defense-box">
+                    <h4>要点速览</h4>
+                    <ul class="takeaways">
+                        <li>新增的脆弱点不是模型本身，而是整个智能体循环，这个循环本身成了攻击面。</li>
+                        <li>2026 年带来的是有成功率的具名漏洞，而非空泛的「对齐失败」之争：GuardFall、AutoJack、GitHub 供应链、Bug 报告劫持。</li>
+                        <li>根源：LLM 无法可靠地把指令和数据区分开，这没法靠打补丁解决。</li>
+                        <li>解决之道不是更好的提示词，而是一个权限问题，其答案早在 LLM 出现之前就有了。</li>
+                    </ul>
+                </div>
+
+                <h2>这些攻击变得具体了</h2>
+
+                <p>近来这一波智能体安全研究，最令人瞩目的一点是它已经变得多么具体。这不再是围绕「对齐失败」的空泛焦虑，而是一个个有名有姓、附带成功率的漏洞利用，正是你在一份传统渗透测试报告里会看到的那种东西。</p>
+
+                <p>在七月的这些综述里，有几项特别引起了我的注意：</p>
+
+                <div class="exploit-card">
+                    <h4>// GuardFall —— 编码智能体的命令守卫被攻破</h4>
+                    <p>许多流行的开源编码智能体采用基于模式匹配的命令守卫（本质上是一份白名单），会在命令进入 shell 执行前先检查一遍。研究者证明，一些古老的 shell 引号技巧就能绕过这些守卫，让被注入的提示以操作者本人的权限抵达 bash。这道护栏看上去一直运转良好，直到它突然失效为止。</p>
+                </div>
+
+                <div class="exploit-card">
+                    <h4>// AutoJack —— 智能体沦为攻击者的远程 shell</h4>
+                    <p>由微软记录在案的 AutoJack，是一条针对 AutoGen Studio 的利用链。它把智能体的浏览能力武器化，用来触达运行在 localhost 上的特权服务，并在宿主机上实现代码执行，整个过程无需任何用户参与。</p>
+                </div>
+
+                <div class="exploit-card">
+                    <h4>// GitHub 供应链攻击 —— 你审查的是干净代码，智能体跑的却是别的东西</h4>
+                    <p>一个看上去人畜无害的代码仓库，会触发智能体去执行安装脚本，而这些脚本会在<em>运行时</em>拉取一段反弹 shell 载荷。由于恶意行为只在智能体运行代码时才现形，它对代码审查和静态扫描器都是不可见的。凡是在用编码智能体的人，都该为这一项感到不安。</p>
+                </div>
+
+                <div class="exploit-card">
+                    <h4>// 伪造漏洞报告劫持 —— 成功率约 85%</h4>
+                    <p>攻击者的指令被埋进 Sentry 的错误报告里。当一个编码智能体被指向某个错误让它「去修复」时，它读取并执行的却是被注入的那些指令：据报道，这一手法在各大主流平台上的成功率约为 85%。你的可观测性流水线，就此变成了一条注入通道。</p>
+                </div>
+
+                <p>四种不同的攻击，一个共同的模式：模型从未在传统意义上被「黑掉」，它是被说服的，被它本就会读取并信任的内容说服；而这种说服停留得最久的地方，就是智能体的记忆。</p>
+
+                <h2>记忆是新的前沿</h2>
+
+                <p>从长期来看，我觉得最有意思的一种攻击是记忆投毒。一个无状态的智能体，会在会话结束的那一刻就忘掉一次注入。但智能体正越来越多地保留持久记忆（笔记、习得的偏好、检索到的上下文），而这份记忆，正是攻击者可以埋下某样东西、留待日后收割的地方。</p>
+
+                <p>近来针对这一点的系统性研究表明，那些「激进」写入记忆的智能体（即遇到什么就急着存下来的那种）极易被利用，而现有的提示注入防御几乎完全触及不到这个问题。我自己也<a href="agent-memory-poisoning-mem0.html">亲手跑过这些实验</a>：两条再普通不过的聊天消息，就足以攻破一个经过加固的智能体。</p>
+
+                <div class="warning-box">
+                    <h4>令人不安的推论</h4>
+                    <p>我们为了让智能体更好用而不断添加的那些特性，比如更长的记忆、更高的自主性、更多的工具访问权，恰恰就是那些会扩大影响范围（爆炸半径）的特性。在这里，「更有用」和「更易受攻击」是同一个动作。</p>
+                </div>
+
+                <h2>为什么这和普通的应用安全不一样</h2>
+
+                <p>你大可以说，这些都算不上新东西。shell 注入、供应链攻击、存储型载荷，都已经有几十年历史了。你说对了一半。真正全新的地方在于：这个易受攻击的组件<em>会把自然语言当作指令来解读，而且无法可靠地区分指令和数据</em>。传统的解析器有一套语法；它知道命令和字符串的区别。而语言模型把两者都当作不加区分的文本来处理，然后做出一个判断。那个判断本身就是漏洞，而你没法像修补缓冲区溢出那样去修补它。</p>
+
+                <p>这也正是为什么如此多的防御研究都在收敛到同一个结论：你没办法把模型本身变得足够可信，所以你必须在它<em>周围</em>构筑边界：对工具施加最小权限、隔离不可信内容，并把每一个智能体都当成一个可能已被攻陷的内部人员来对待。2026 年这条防线具体长什么样，我写在了 <a href="ai-agent-defense-playbook.html">《AI 智能体的防御手册》</a> 里。</p>
+
+                <h2>如果今天有人要部署一个智能体，我会告诉他什么</h2>
+
+                <p>假设你的智能体读取的任何内容（一个网页、一份错误日志、一个代码仓库、一个文件）都可能携带指令，而且你的智能体有时候真的会照着执行。然后去问那个唯一重要的问题：</p>
+
+                <blockquote>如果它真的照做了，它究竟能造成什么后果？</blockquote>
+
+                <p>如果答案里包含「执行任意 shell 命令」或者「用我的凭证发起对外网络调用」，那你面对的就不是一个提示注入问题，而是一个权限问题。而权限问题，早在大语言模型出现之前就已经有了成熟的解法。</p>
+
+                <p>今年的研究，读起来就像任何一个新平台的早期阶段：一阵精巧攻击的集中爆发，一场手忙脚乱的防御补救，以及一个缓慢的觉悟：那些古老的安全原则依然成立，只不过它们如今得被瞄准一个非常古怪的新组件。</p>
+
+                <div class="defense-box">
+                    <h4>一点说明</h4>
+                    <p>我构建自主 AI 智能体，也针对这些攻击对它们进行加固（红队测试、提示注入防御、在一场提示注入挑战赛中获得第 2 名）。如果你已经（或计划）让一个智能体上生产，并且想知道它在最坏情况下真正能造成什么后果：<a href="https://calendly.com/nils-weiser-kn/30min" target="_blank" rel="noopener">聊聊吧</a>。</p>
+                </div>
+
+                <hr style="border-color: rgba(255,255,255,0.08); margin: 2.5rem 0;">
+
+                <p class="text-sm text-gray-500">
+                    <em>来源：<a href="https://adversa.ai/blog/top-agentic-ai-security-resources-july-2026/" target="_blank" rel="noopener">Adversa AI — Top Agentic AI Security Resources, July 2026</a>；<a href="https://www.helpnetsecurity.com/2026/07/15/check-point-ai-security-report-2026/" target="_blank" rel="noopener">Check Point AI Security Report 2026 (via Help Net Security)</a>。</em>
+                </p>
+
+    </article>
+
+    <!-- Author share + related posts -->
+    <div class="art-share">
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI 智能体专家 · 博登湖地区</span></div></div>
+      <a href="https://calendly.com/nils-weiser-kn/30min" target="_blank" rel="noopener" class="btn btn--pri">与我合作 ▸</a>
+    </div>
+    <section class="art-more">
+      <div class="wrap">
+        <div class="art-more__head"><h2>更多现场笔记</h2><a href="../../zh/">所有文章 ▸</a></div>
+        <div class="art-more__grid" id="art-more-grid"></div>
+      </div>
+    </section>
+
+    <!-- Related posts (internal cross-links for crawl equity) -->
+    <nav class="related-posts" aria-label="相关文章">
+        <p class="related-posts__heading">// 相关文章</p>
+        <div class="related-posts__grid">
+                <a class="related-posts__card" href="lethal-trifecta-ai-agents.html">
+                    <span class="related-posts__card-title">致命三要素：为什么 98% 的 AI 智能体都是活靶子</span>
+                </a>
+                <a class="related-posts__card" href="agent-memory-poisoning-mem0.html">
+                    <span class="related-posts__card-title">我们用 2 条消息给一个"有安全意识"的 AI 智能体投毒</span>
+                </a>
+                <a class="related-posts__card" href="ai-agent-defense-playbook.html">
+                    <span class="related-posts__card-title">AI 智能体的防御手册终于开始成形</span>
+                </a>
+        </div>
+    </nav>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script defer src="../../../js/components.js"></script>
+    <script defer src="../../../js/translations.js"></script>
+    <script defer src="../../../js/main.js"></script>
+    <script defer src="../../../js/site.js"></script>
+</body>
+</html>

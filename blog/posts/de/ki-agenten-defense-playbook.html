@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="de" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Das Defense Playbook für KI-Agenten nimmt endlich Form an</title>
+    <meta name="description" content="Zero Trust für Agenten, interne Agenten als Insider Threats behandeln und die ersten zertifizierten Defenses gegen Memory Poisoning. Drei Frameworks aus 2026, die einen Instinkt teilen: Hör auf, dem Modell zu vertrauen, verkleinere, was du vertrauen musst.">
+    <link rel="canonical" href="https://waiser.dev/blog/posts/de/ki-agenten-defense-playbook.html">
+    <link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/ki-agenten-defense-playbook.html">
+    <link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/ai-agent-defense-playbook.html">
+    <link rel="alternate" hreflang="zh" href="https://waiser.dev/blog/posts/zh/ai-agent-defense-playbook.html">
+    <link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/ki-agenten-defense-playbook.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Das Defense Playbook für KI-Agenten nimmt endlich Form an">
+    <meta property="og:description" content="Zero Trust für Agenten, interne Agenten als Insider Threats behandeln und die ersten zertifizierten Defenses gegen Memory Poisoning. Drei Frameworks aus 2026, die einen Instinkt teilen: verkleinere, was du vertrauen musst.">
+    <meta property="og:url" content="https://waiser.dev/blog/posts/de/ki-agenten-defense-playbook.html">
+    <meta property="og:image" content="https://waiser.dev/og-default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Das Defense Playbook für KI-Agenten nimmt endlich Form an">
+    <meta name="twitter:description" content="Zero Trust für Agenten, interne Agenten als Insider Threats behandeln und die ersten zertifizierten Defenses gegen Memory Poisoning. Drei Frameworks aus 2026, die einen Instinkt teilen: verkleinere, was du vertrauen musst.">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Das Defense Playbook für KI-Agenten nimmt endlich Form an",
+      "description": "Zero Trust für Agenten, interne Agenten als Insider Threats behandeln und die ersten zertifizierten Defenses gegen Memory Poisoning. Drei Frameworks aus 2026, die einen Instinkt teilen: Hör auf, dem Modell zu vertrauen, verkleinere, was du vertrauen musst.",
+      "datePublished": "2026-07-22",
+      "author": {
+        "@type": "Person",
+        "name": "Nils Weiser",
+        "@id": "https://waiser.dev/#person"
+      },
+      "image": "https://waiser.dev/og-default.png",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://waiser.dev/blog/posts/de/ki-agenten-defense-playbook.html"
+      },
+      "inLanguage": "de",
+      "@id": "https://waiser.dev/blog/posts/de/ki-agenten-defense-playbook.html#article",
+      "publisher": {
+        "@id": "https://waiser.dev/#person"
+      },
+      "dateModified": "2026-07-22"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Startseite",
+          "item": "https://waiser.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://waiser.dev/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Das Defense Playbook für KI-Agenten nimmt endlich Form an",
+          "item": "https://waiser.dev/blog/posts/de/ki-agenten-defense-playbook.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+
+    <link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+    <meta name="theme-color" content="#050507">
+    <link rel="preload" href="/fonts/ChakraPetch-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Blackwall: local tailwind utilities kept (posts rely on them), then Blackwall tokens + bridge -->
+    <link rel="stylesheet" href="../../../css/tailwind.css">
+    <link rel="stylesheet" href="../../../css/tokens.css">
+    <link rel="stylesheet" href="../../../css/blackwall.css">
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/blog-post.css">
+    <style>
+        .defense-box {
+            background: rgba(52, 211, 153, 0.08);
+            border-left: 3px solid #34d399;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .defense-box h4 {
+            color: #34d399;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .defense-box p { color: #d1d5db; font-size: 0.9rem; margin: 0; }
+        .highlight-box {
+            background: rgba(56, 189, 248, 0.08);
+            border-left: 3px solid #38bdf8;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .highlight-box h4 {
+            color: #38bdf8;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .highlight-box p { color: #d1d5db; font-size: 0.9rem; margin: 0; }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header (Blackwall art-hero) -->
+    <section class="art-hero" data-screen-label="Article">
+        <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
+        <div class="art-hero__in">
+            <a class="art-back" href="../../">◄ ALLE POSTS</a>
+            <div><span class="art-cat">AI Security</span></div>
+            <h1 class="art-title">Das Defense Playbook für KI-Agenten nimmt endlich Form an</h1>
+            <div class="art-meta">
+                <span class="who"><span class="av">NW</span> Nils Weiser</span>
+                <span class="sep">•</span><span data-art-date>22 JUL 2026</span>
+                <span class="sep">•</span><span data-art-read>—</span>
+            </div>
+        </div>
+    </section>
+    <div class="art-hr"><div></div></div>
+
+    <!-- Article Content (Blackwall art-body) -->
+    <article class="art-body">
+                <p class="lead">Der Großteil der Berichterstattung über KI-Agent-Security in diesem Jahr drehte sich um Angriffe — clevere Exploits, alarmierende Erfolgsquoten, universelle Jailbreaks. Das ist der spaßige Teil beim Schreiben. Aber leise hat die defensive Seite aufgeholt, und die Frameworks, die 2026 entstehen, sind interessanter als der übliche „Füg ein Guardrail hinzu"-Rat.</p>
+
+                <p>Sie teilen einen gemeinsamen Instinkt: <strong>Hör auf, das Modell vertrauenswürdig machen zu wollen, und fang an einzudämmen, was passiert, wenn es das nicht ist.</strong> Hier sind drei Entwicklungen, die man kennen sollte.</p>
+
+                <h2>1. Zero Trust, gerichtet auf die eigenen Agenten</h2>
+
+                <p>Anthropic veröffentlichte ein Framework, das <strong>Zero-Trust</strong>-Prinzipien auf KI-Agenten anwendet, und das Framing ist der Punkt. Zero Trust in der klassischen Security bedeutet „never trust, always verify" — man gewährt Zugriff nicht danach, woher ein Request kommt, sondern authentifiziert und autorisiert jede Aktion. Auf Agenten angewandt bedeutet es, den eigenen Agent so zu behandeln, wie man jeden anderen untrusted Akteur innerhalb des eigenen Perimeters behandeln würde.</p>
+
+                <p>Das Framework nimmt die vier Failure Modes in Angriff, die in der Forschung immer wieder auftauchen: Prompt Injection, Tool Poisoning, Identity Abuse und Memory Poisoning. Was ich überzeugend finde, ist der Identity-Aspekt. Ein Agent aggregiert oft die Credentials und Permissions von allem, was er anfassen kann, was ihn zu einem einzelnen, saftigen Punkt für Privilege Escalation macht. Zero Trust sagt: Lass es nicht zu. Skaliere seine Autorität pro Aktion, verifiziere jeden Tool-Call und geh davon aus, dass jeder einzelne Schritt adversarial sein könnte.</p>
+
+                <div class="defense-box">
+                    <h4>Agentic SOAR</h4>
+                    <p>Das Framework bringt außerdem ein „agentic SOAR" ins Spiel — Security Orchestration and Automated Response auf Agentenverhalten anzusetzen, sodass Missbrauch zur Laufzeit erkannt wird und nicht erst in einer Post-mortem-Analyse.</p>
+                </div>
+
+                <h2>2. Deine Agenten als Insider Threats behandeln</h2>
+
+                <p>Die <strong>AI Control Roadmap</strong> von Google DeepMind nimmt eine noch provokantere Haltung ein: Geh davon aus, dass deine internen Agenten misaligned sein könnten, und designe so, als würdest du dich gegen einen Insider Threat verteidigen.</p>
+
+                <p>Das ist Defense-in-Depth für eine Welt, in der man dem, was man gebaut hat, nicht voll vertrauen kann. Statt zu fragen „Ist dieser Agent sicher?" und zu hoffen, dass die Antwort ja lautet, baut man geschichtete Controls, die halten, <em>selbst wenn er es nicht ist</em> — Monitoring, eingeschränkte Permissions und die Annahme, dass der Agent irgendwann gegen deine Interessen handeln könnte. Es ist ein Mindset-Wechsel von Alignment (den Agent das Richtige wollen lassen) zu Control (ihn außerstande setzen, das Falsche zu tun, selbst wenn er es will).</p>
+
+                <div class="highlight-box">
+                    <h4>Ein seltsam beruhigendes Detail</h4>
+                    <p>Die meisten der beobachteten Anomalien kamen aus <strong>Übereifer statt aus echter adversarialer Absicht</strong> — Agenten, die zu viel, zu hilfsbereit taten, keine Agenten, die Ränke schmieden. Das ist ein hoffnungsvoller Datenpunkt darüber, wo wir heute stehen. Aber die ganze Prämisse der Roadmap ist, dass man die Controls baut, <em>bevor</em> sich das ändert, nicht danach.</p>
+                </div>
+
+                <h2>3. Zertifizierte Defenses gegen Memory Poisoning</h2>
+
+                <p>Die Entwicklung, über die ich mich am meisten freue, ist das Aufkommen <em>zertifizierter</em> Defenses für Agent-Memory — denn „zertifiziert" bedeutet in der Security etwas Spezifisches und Seltenes.</p>
+
+                <p>Memory Poisoning ist einer der übelsten Agent-Angriffe: Korrumpiere das persistente Memory eines Agents einmal, und er kann sich über künftige Sessions hinweg falsch verhalten, lange nachdem die ursprüngliche Injection weg ist. (Ich habe <a href="agent-memory-poisoning-mem0.html">gezeigt, wie billig das ist</a> — zwei Chat-Nachrichten.) Die meisten Defenses dagegen sind heuristisch — sie legen die Latte höher, bieten aber keine Garantien. Dieses Jahr brachte zwei, die weiter gehen. <strong>Non-Malleable Memory Authority</strong> bindet Memory mit maschinengeprüften Garantien an seinen Ursprung und treibt Berichten zufolge Memory-Laundering-Angriffe auf eine Erfolgsquote von null. Und <strong>SMSR</strong> (Signed Memory with Smoothed Retrieval) wird als die erste <em>zertifizierte</em> Defense gegen Multi-Session-Memory-Poisoning beschrieben, mit bewiesenen Robustheitsschranken statt empirischer „wir konnten es nicht knacken"-Aussagen.</p>
+
+                <div class="highlight-box">
+                    <h4>Warum „zertifiziert" wichtig ist</h4>
+                    <p>Eine empirische Defense sagt „wir haben uns angestrengt und es hat gehalten". Eine zertifizierte Defense kommt mit einer mathematischen Schranke — einem Beweis, dass der Angriff innerhalb eines definierten Threat-Modells eine bekannte Erfolgsquote <em>nicht</em> überschreiten kann. Das ist der Unterschied zwischen einem Schloss, das noch nie geknackt wurde, und einem Schloss mit einem Beweis, dass es nicht geknackt werden kann. Von Letzterem brauchen wir in der AI Security sehr viel mehr.</p>
+                </div>
+
+                <h2>Der rote Faden</h2>
+
+                <p>Liest man diese drei zusammen, entsteht eine kohärente Philosophie. Niemand, der es ernst meint, setzt darauf, das Modell selbst vertrauenswürdig zu machen. Zero Trust verifiziert jede Aktion. Die AI Control Roadmap nimmt Misalignment an und baut Controls, die es überstehen. Zertifizierte Memory-Defenses hören auf, persistentem Zustand zu vertrauen, und fangen an, Schranken darüber zu beweisen. Der gemeinsame Zug ist, <strong>zu verkleinern, was man vertrauen muss</strong>, und verifizierbare Grenzen um den Rest zu ziehen.</p>
+
+                <p>Das ist kein Zufall — es ist dieselbe Lektion, zu der das ganze Feld aus jeder Richtung konvergiert. Man sichert einen Agent nicht, indem man ihn gut macht. Man sichert ihn, indem man sicherstellt, dass er nicht viel Schaden anrichten kann, wenn er schlecht ist.</p>
+
+                <hr style="border-color: rgba(255,255,255,0.08); margin: 2.5rem 0;">
+
+                <p class="text-sm text-gray-500">
+                    <em>Quellen: <a href="https://adversa.ai/blog/top-agentic-ai-security-resources-july-2026/" target="_blank" rel="noopener">Adversa AI — Top Agentic AI Security Resources, July 2026</a> (Anthropic Zero Trust for AI Agents; Google DeepMind AI Control Roadmap v0.1; Non-Malleable Memory Authority; SMSR certified memory defense).</em>
+                </p>
+
+    </article>
+
+    <!-- Author share + related posts -->
+    <div class="art-share">
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
+      <a href="https://calendly.com/nils-weiser-kn/30min" target="_blank" rel="noopener" class="btn btn--pri">MIT MIR ARBEITEN ▸</a>
+    </div>
+    <section class="art-more">
+      <div class="wrap">
+        <div class="art-more__head"><h2>Weitere Field Notes</h2><a href="../../">ALLE POSTS ▸</a></div>
+        <div class="art-more__grid" id="art-more-grid"></div>
+      </div>
+    </section>
+
+    <!-- Related posts (internal cross-links for crawl equity) -->
+    <nav class="related-posts" aria-label="Weitere Artikel">
+        <p class="related-posts__heading">// Weitere Artikel</p>
+        <div class="related-posts__grid">
+                <a class="related-posts__card" href="lethal-trifecta-ki-agenten.html">
+                    <span class="related-posts__card-title">Die Lethal Trifecta: Warum 98 % der KI-Agenten wehrlos sind</span>
+                </a>
+                <a class="related-posts__card" href="agent-security-247-paper-sok.html">
+                    <span class="related-posts__card-title">247 Paper später: Agent Security ist ein Systemproblem</span>
+                </a>
+                <a class="related-posts__card" href="ki-agenten-angriffsflaeche-2026.html">
+                    <span class="related-posts__card-title">Das Jahr, in dem KI-Agenten zur Angriffsfläche wurden</span>
+                </a>
+        </div>
+    </nav>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script defer src="../../../js/components.js"></script>
+    <script defer src="../../../js/translations.js"></script>
+    <script defer src="../../../js/main.js"></script>
+    <script defer src="../../../js/site.js"></script>
+</body>
+</html>

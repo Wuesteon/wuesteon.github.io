@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>读完 247 篇论文之后：智能体安全是一个系统问题，而非文本问题</title>
+    <meta name="description" content="2026 年的一篇「知识系统化」（SoK）综述消化了 247 篇智能体安全论文，得出一个结论：单点防御各自有效却无法组合，我们衡量的是错误的东西，而智能体安全是一门恰好以大语言模型为核心的系统工程学科。">
+    <link rel="canonical" href="https://waiser.dev/blog/posts/zh/agent-security-247-paper-sok.html">
+    <link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/agent-security-247-paper-sok.html">
+    <link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/agent-security-247-paper-sok.html">
+    <link rel="alternate" hreflang="zh" href="https://waiser.dev/blog/posts/zh/agent-security-247-paper-sok.html">
+    <link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/agent-security-247-paper-sok.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="读完 247 篇论文之后：智能体安全是一个系统问题，而非文本问题">
+    <meta property="og:description" content="2026 年的一篇「知识系统化」（SoK）综述消化了 247 篇智能体安全论文：单点防御各自有效却无法组合，我们衡量的是错误的东西，而智能体安全是一门以大语言模型为核心的系统工程学科。">
+    <meta property="og:url" content="https://waiser.dev/blog/posts/zh/agent-security-247-paper-sok.html">
+    <meta property="og:image" content="https://waiser.dev/og-default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="读完 247 篇论文之后：智能体安全是一个系统问题，而非文本问题">
+    <meta name="twitter:description" content="2026 年的一篇「知识系统化」（SoK）综述消化了 247 篇智能体安全论文：单点防御各自有效却无法组合，而智能体安全是一门以大语言模型为核心的系统工程学科。">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "读完 247 篇论文之后：智能体安全是一个系统问题，而非文本问题",
+      "description": "2026 年的一篇「知识系统化」（SoK）综述消化了 247 篇智能体安全论文，得出一个结论：单点防御各自有效却无法组合，我们衡量的是错误的东西，而智能体安全是一门恰好以大语言模型为核心的系统工程学科。",
+      "datePublished": "2026-07-22",
+      "author": {
+        "@type": "Person",
+        "name": "Nils Weiser",
+        "@id": "https://waiser.dev/#person"
+      },
+      "image": "https://waiser.dev/og-default.png",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://waiser.dev/blog/posts/zh/agent-security-247-paper-sok.html"
+      },
+      "inLanguage": "zh",
+      "@id": "https://waiser.dev/blog/posts/zh/agent-security-247-paper-sok.html#article",
+      "publisher": {
+        "@id": "https://waiser.dev/#person"
+      },
+      "dateModified": "2026-07-22"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://waiser.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://waiser.dev/blog/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "读完 247 篇论文之后：智能体安全是一个系统问题",
+          "item": "https://waiser.dev/blog/posts/zh/agent-security-247-paper-sok.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+
+    <link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+    <meta name="theme-color" content="#050507">
+    <link rel="preload" href="/fonts/ChakraPetch-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Blackwall: local tailwind utilities kept (posts rely on them), then Blackwall tokens + bridge -->
+    <link rel="stylesheet" href="../../../css/tailwind.css">
+    <link rel="stylesheet" href="../../../css/tokens.css">
+    <link rel="stylesheet" href="../../../css/blackwall.css">
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/blog-post.css">
+    <style>
+        .pillar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .pillar-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+        .pillar-card h4 {
+            color: #38bdf8;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .pillar-card p {
+            color: #d1d5db;
+            font-size: 0.85rem;
+            margin: 0;
+        }
+        .warning-box {
+            background: rgba(251, 191, 36, 0.08);
+            border-left: 3px solid #fbbf24;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .warning-box h4 {
+            color: #fbbf24;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .lifecycle-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.25rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .lifecycle-list li {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: #cbd5e1;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 9999px;
+            padding: 0.3rem 0.8rem;
+        }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header (Blackwall art-hero) -->
+    <section class="art-hero" data-screen-label="Article">
+        <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
+        <div class="art-hero__in">
+            <a class="art-back" href="../../zh/">◄ 所有文章</a>
+            <div><span class="art-cat">Research</span></div>
+            <h1 class="art-title">读完 247 篇论文之后：智能体安全是一个系统问题，而非文本问题</h1>
+            <div class="art-meta">
+                <span class="who"><span class="av">NW</span> Nils Weiser</span>
+                <span class="sep">•</span><span data-art-date>22 JUL 2026</span>
+                <span class="sep">•</span><span data-art-read>—</span>
+            </div>
+        </div>
+    </section>
+    <div class="art-hr"><div></div></div>
+
+    <!-- Article Content (Blackwall art-body) -->
+    <article class="art-body">
+                <p class="lead">每隔几个月，某个研究领域就会产出一篇论文——它与其说是一个新结果，不如说是一张新地图：一篇后退一步、读遍一切、然后告诉你整片疆域究竟长什么样的综述。对于 AI 智能体安全而言，那篇论文在 2026 年到来了：一篇「知识系统化」（Systematization of Knowledge，SoK），它消化了 2023 到 2026 年间发表的 <strong>247 篇论文</strong>。</p>
+
+                <p>如果你只打算读一样东西来在这个领域里找到方向，我会说那就该是它。它的核心论断简单得有些出人意料，而我一直反复回味：</p>
+
+                <blockquote>
+                    一旦一个语言模型被接入一个会规划、会调用工具、会保留记忆、会对外部世界采取行动的循环，安全就不再关乎不安全的文本，而变成了一个软件与系统层面的问题。
+                </blockquote>
+
+                <p>这句话不动声色地重构了整个领域。多年来，「AI 安全」占主导地位的心智模型都是围绕输出的——模型会不会说出有害的话？而这篇 SoK 论证道：一旦你部署了一个智能体，那套框架就成了一个范畴错误。真正有意思的失败并不在模型<em>说了什么</em>；它们藏在这些地方——不可信信息如何变成一个控制决策，那个决策又如何撞上被委派出去的权限，以及持久状态如何随着时间的推移改变了整个系统的安全性质。</p>
+
+                <h2>看的是生命周期，而不是那一次事故</h2>
+
+                <p>这篇综述最有用的贡献在于，它不再孤立地为攻击编目录，而是把它们映射到<strong>智能体生命周期</strong>上——那是可能出岔子的八个阶段：</p>
+
+                <ul class="lifecycle-list">
+                    <li>输入处理</li>
+                    <li>规划</li>
+                    <li>决策</li>
+                    <li>工具执行</li>
+                    <li>输出生成</li>
+                    <li>记忆与状态</li>
+                    <li>监控</li>
+                    <li>多智能体协调</li>
+                </ul>
+
+                <p>这之所以重要，是因为它改变了你所提的那个问题。你不再问「这个输出安全吗？」，而是问「不可信输入究竟在哪个阶段获得了足以造成危害的权限？」一次提示注入并不是一个单一事件；它是一条链——始于输入处理，熬过规划，最终在工具执行环节兑现。对整个生命周期进行威胁建模，会让你看清一道边界原本可以在哪里把它拦下来。</p>
+
+                <h2>那个该让防御者担忧的发现</h2>
+
+                <p>下面这一部分，我认为最值得关注。这篇综述审视了整个领域已经产出的那些防御手段——护栏、权限控制、隔离、来源追踪——发现它们单独拿出来，大多是奏效的。问题出在<strong>组合</strong>上：它们「无法干净利落地叠加成整体」。每一种防御都假设了一套不同的信任模型，而当你把它们堆在一起时，这些假设并不会对齐成一个自洽的整体。你可以把四种看似合理的防御拼装到一起，却依然给攻击者留下一道能长驱直入的接缝。</p>
+
+                <p>这是一个真正重要的洞见，而它恰恰是只有综述才能揭示出来的那类东西——因为你站在任何一篇单独的论文内部，都看不见它。每一种单点防御看上去都没毛病。缺口，就藏在它们彼此之间的空隙里。</p>
+
+                <h2>我们衡量的也是错误的东西</h2>
+
+                <p>第二个令人不适的发现，关乎基准测试。大多数智能体安全评估衡量的都是单轮、有边界的成功率——攻击成功了吗，是或否，一击定胜负。但真实的智能体会长时间运行，会跨会话携带状态，还会与其他智能体协同。</p>
+
+                <div class="warning-box">
+                    <h4>那些被低估衡量的风险</h4>
+                    <p>这篇综述论证道：我们正在系统性地低估恰恰在部署中最要紧的那些风险——长时程行为、有状态的记忆被污染，以及多智能体间的传播。而且几乎没有人会把安全性和效用、延迟、成本放在一起联合衡量——正是这样，你才会造出一堆没人真正上线的「安全」设计，因为它们要么太慢，要么太没用。</p>
+                </div>
+
+                <h2>这个领域该往哪里走</h2>
+
+                <p>这篇综述最终落在四根支柱上，用以构建那种从设计之初就安全、而非靠打补丁才安全的智能体：</p>
+
+                <div class="pillar-grid">
+                    <div class="pillar-card">
+                        <h4>// 显式的信任边界</h4>
+                        <p>清楚地知道可信权限在哪里终结、不可信输入从哪里开始——并从结构上强制执行这条界线。</p>
+                    </div>
+                    <div class="pillar-card">
+                        <h4>// 有原则的最小权限</h4>
+                        <p>按「每个动作」而非「每个智能体」来界定权限范围。别把一个智能体能碰到的一切都一股脑交给它。</p>
+                    </div>
+                    <div class="pillar-card">
+                        <h4>// 可追溯来源的状态</h4>
+                        <p>清楚地知道每一份记忆来自何处，这样被投毒的状态就无法「洗白」进可信的上下文里。</p>
+                    </div>
+                    <div class="pillar-card">
+                        <h4>// 贴近部署实况的评估</h4>
+                        <p>去衡量长时程、有状态、多智能体的行为——并把安全性和效用、延迟、成本放在一起衡量。</p>
+                    </div>
+                </div>
+
+                <p>如果你出身于系统安全，这四点没有一个会让你感到意外——而这恰恰就是重点。247 篇论文提炼出来的讯息是：智能体安全是一门恰好以语言模型为核心的系统工程学科，而这个领域越早这样看待它，就越能更快地取得真正的进展。</p>
+
+                <p>我喜欢像这样的综述论文，是因为它们是一种廉价地买到全局视角的方式。读一篇 SoK 并不会把你变成研究者，但它会让你对这个领域里最常见的两种错误产生免疫：以为模型就是问题的全部，以及以为某个单一而精巧的防御就是解法的全部。</p>
+
+                <hr style="border-color: rgba(255,255,255,0.08); margin: 2.5rem 0;">
+
+                <p class="text-sm text-gray-500">
+                    <em>来源：<a href="https://www.llm-hacking.com/hacks/agent-security-lifecycle-sok.md/" target="_blank" rel="noopener">Toward Secure LLM Agents — a 247-paper SoK</a>；<a href="https://arxiv.org/abs/2604.23338" target="_blank" rel="noopener">A Systematic Survey of Security Threats and Defenses in LLM-Based AI Agents (arXiv 2604.23338)</a>；<a href="https://arxiv.org/abs/2606.08661" target="_blank" rel="noopener">Data Agents Under Attack (arXiv 2606.08661)</a>。</em>
+                </p>
+
+    </article>
+
+    <!-- Author share + related posts -->
+    <div class="art-share">
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI 智能体专家 · 博登湖地区</span></div></div>
+      <a href="https://calendly.com/nils-weiser-kn/30min" target="_blank" rel="noopener" class="btn btn--pri">与我合作 ▸</a>
+    </div>
+    <section class="art-more">
+      <div class="wrap">
+        <div class="art-more__head"><h2>更多现场笔记</h2><a href="../../zh/">所有文章 ▸</a></div>
+        <div class="art-more__grid" id="art-more-grid"></div>
+      </div>
+    </section>
+
+    <!-- Related posts (internal cross-links for crawl equity) -->
+    <nav class="related-posts" aria-label="相关文章">
+        <p class="related-posts__heading">// 相关文章</p>
+        <div class="related-posts__grid">
+                <a class="related-posts__card" href="ai-agent-defense-playbook.html">
+                    <span class="related-posts__card-title">AI 智能体的防御手册终于开始成形</span>
+                </a>
+                <a class="related-posts__card" href="lethal-trifecta-ai-agents.html">
+                    <span class="related-posts__card-title">致命三要素：为什么 98% 的 AI 智能体都是活靶子</span>
+                </a>
+                <a class="related-posts__card" href="ai-agents-attack-surface-2026.html">
+                    <span class="related-posts__card-title">AI 智能体成为攻击面的这一年</span>
+                </a>
+        </div>
+    </nav>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script defer src="../../../js/components.js"></script>
+    <script defer src="../../../js/translations.js"></script>
+    <script defer src="../../../js/main.js"></script>
+    <script defer src="../../../js/site.js"></script>
+</body>
+</html>

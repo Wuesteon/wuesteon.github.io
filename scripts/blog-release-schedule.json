@@ -1,0 +1,35 @@
+{
+  "_comment": "Staggered blog release schedule. The blog-drip cloud routine (or scripts/release-post.py) publishes the post whose date matches today (UTC). 'id' matches the POSTS[].id in js/site.js. Order: threats -> why -> research -> defense.",
+  "timezone_note": "Dates are the intended go-live day. The routine runs 08:00 UTC (= 09:00 CET / 10:00 CEST) and releases any post whose release_date <= today and published:false.",
+  "posts": [
+    {
+      "id": "ai-agents-attack-surface-2026",
+      "release_date": "2026-07-22",
+      "status": "published"
+    },
+    {
+      "id": "lethal-trifecta-ai-agents",
+      "release_date": "2026-07-23",
+      "status": "scheduled",
+      "de_file": "blog/posts/de/lethal-trifecta-ki-agenten.html",
+      "en_file": "blog/posts/en/lethal-trifecta-ai-agents.html",
+      "zh_file": "blog/posts/zh/lethal-trifecta-ai-agents.html"
+    },
+    {
+      "id": "agent-security-247-paper-sok",
+      "release_date": "2026-07-24",
+      "status": "scheduled",
+      "de_file": "blog/posts/de/agent-security-247-paper-sok.html",
+      "en_file": "blog/posts/en/agent-security-247-paper-sok.html",
+      "zh_file": "blog/posts/zh/agent-security-247-paper-sok.html"
+    },
+    {
+      "id": "ai-agent-defense-playbook",
+      "release_date": "2026-07-27",
+      "status": "scheduled",
+      "de_file": "blog/posts/de/ki-agenten-defense-playbook.html",
+      "en_file": "blog/posts/en/ki-agenten-defense-playbook.html",
+      "zh_file": "blog/posts/zh/ai-agent-defense-playbook.html"
+    }
+  ]
+}

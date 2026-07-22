@@ -551,6 +551,9 @@ function setLanguage(lang) {
       "loops-statt-prompts-cherny.html": "loops-not-prompts-cherny.html",
       "opus-4-8-dynamische-workflows-erst-recht-audit.html":
         "opus-4-8-dynamic-workflows-erst-recht-audit.html",
+      "ki-agenten-angriffsflaeche-2026.html":
+        "ai-agents-attack-surface-2026.html",
+      "lethal-trifecta-ki-agenten.html": "lethal-trifecta-ai-agents.html",
     },
     enToDe: {
       "mit-ai-hallucinations.html": "mit-ai-halluzinationen.html",
@@ -559,6 +562,9 @@ function setLanguage(lang) {
       "loops-not-prompts-cherny.html": "loops-statt-prompts-cherny.html",
       "opus-4-8-dynamic-workflows-erst-recht-audit.html":
         "opus-4-8-dynamische-workflows-erst-recht-audit.html",
+      "ai-agents-attack-surface-2026.html":
+        "ki-agenten-angriffsflaeche-2026.html",
+      "lethal-trifecta-ai-agents.html": "lethal-trifecta-ki-agenten.html",
     },
     // zh reuses EN filenames
     deToZh: {
@@ -568,6 +574,9 @@ function setLanguage(lang) {
       "loops-statt-prompts-cherny.html": "loops-not-prompts-cherny.html",
       "opus-4-8-dynamische-workflows-erst-recht-audit.html":
         "opus-4-8-dynamic-workflows-erst-recht-audit.html",
+      "ki-agenten-angriffsflaeche-2026.html":
+        "ai-agents-attack-surface-2026.html",
+      "lethal-trifecta-ki-agenten.html": "lethal-trifecta-ai-agents.html",
     },
     enToZh: {}, // en and zh share filenames — identity
     zhToDe: {
@@ -577,6 +586,9 @@ function setLanguage(lang) {
       "loops-not-prompts-cherny.html": "loops-statt-prompts-cherny.html",
       "opus-4-8-dynamic-workflows-erst-recht-audit.html":
         "opus-4-8-dynamische-workflows-erst-recht-audit.html",
+      "ai-agents-attack-surface-2026.html":
+        "ki-agenten-angriffsflaeche-2026.html",
+      "lethal-trifecta-ai-agents.html": "lethal-trifecta-ki-agenten.html",
     },
     zhToEn: {}, // identity
   };

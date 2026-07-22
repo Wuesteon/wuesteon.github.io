@@ -2010,6 +2010,92 @@ Genes: [1, 1, 1, 1, 1]
 
 ---
 
+## The Year AI Agents Became the Attack Surface
+
+URL: https://waiser.dev/blog/posts/en/ai-agents-attack-surface-2026.html
+Published: 2026-07-22
+
+For a while, "AI security" mostly meant getting a chatbot to say something it shouldn't. That era is over. The research coming out in mid-2026 is about a different problem: what happens when a language model is wired into a loop that plans, calls tools, keeps memory, and acts on the outside world.
+
+Embarrassing, occasionally dangerous, but bounded — the worst case of the chatbot era was bad text on a screen. Once a model is wired into an agentic loop, it stops being a text generator and becomes a piece of software with hands. And software with hands can be tricked into using them.
+
+The attacks got specific. The most striking thing about the recent wave of agent-security research is how concrete it has become. This isn't abstract hand-wringing about "misalignment." These are named exploits with success rates, the kind of thing you'd expect from a traditional pentest report.
+
+GuardFall targets coding agents: many popular open-source coding agents use pattern-based command guards — essentially an allowlist that inspects a command before it runs in the shell. Researchers showed that legacy shell-quoting tricks defeat those guards, letting an injected prompt reach bash with the operator's own authority.
+
+AutoJack, documented by Microsoft, is an exploit chain against AutoGen Studio. It weaponizes an agent's browsing capability to reach privileged services running on localhost and achieve code execution on the host machine — with no user in the loop.
+
+The GitHub supply-chain attack: a benign-looking repository triggers the agent to execute setup scripts, which fetch a reverse-shell payload at runtime. Because the malicious behavior only materializes when the agent runs the code, it's invisible to code review and to static scanners.
+
+Fake bug report hijacking plants attacker instructions inside Sentry error reports. When a coding agent is pointed at the error to "fix it," it reads and executes the injected instructions instead — reportedly around an 85% success rate across major platforms.
+
+Memory is the new frontier. A stateless agent forgets an injection the moment the session ends. But agents increasingly keep persistent memory, and that memory is a place an attacker can plant something that pays off later. The features we're adding to make agents more useful — longer memory, more autonomy, more tool access — are exactly the features that expand the blast radius.
+
+Why this is different from normal appsec: the vulnerable component interprets natural language as instructions and cannot reliably tell instructions from data. A traditional parser has a grammar; a language model processes command and string as undifferentiated text and makes a judgment call. That judgment is the vulnerability, and you can't patch it the way you patch a buffer overflow. So the defensive research converges on building boundaries around the model — least privilege on tools, isolation of untrusted content, treating every agent as a potentially-compromised insider.
+
+What I'd tell anyone deploying an agent today: assume any content your agent reads can carry instructions, and that your agent will sometimes follow them. Then ask the only question that matters — if it does, what can it actually do? If the answer includes "run arbitrary shell commands" or "make outbound network calls with my credentials," you have a privilege problem, and privilege problems have solutions that predate LLMs entirely.
+
+Sources: Adversa AI — Top Agentic AI Security Resources, July 2026; Check Point AI Security Report 2026.
+
+---
+
+## The Lethal Trifecta: Why 98% of AI Agents Are Sitting Ducks
+
+URL: https://waiser.dev/blog/posts/en/lethal-trifecta-ai-agents.html
+Published: 2026-07-22
+
+There's a security concept that has quietly become the single most useful lens for thinking about AI agents. Simon Willison called it the lethal trifecta, and the 2026 research keeps proving him right.
+
+An AI agent becomes dangerous when it combines three capabilities: (1) access to private data — your files, emails, database, secrets; (2) exposure to untrusted content — a web page, document, email, or bug report an attacker could influence; and (3) the ability to communicate externally — send an email, make an API call, hit a URL. Each one alone is fine. But put all three together and you've built a machine that an attacker can instruct, via the untrusted content, to take your private data and ship it out the door. The agent does this willingly, because it can't reliably tell your instructions apart from the attacker's.
+
+The number that should stop you: a recent Cloud Security Alliance research note assessed production AI agents and found that 98% of them combine all three legs of the trifecta. And a separate methodology — the AI Risk Quadrant — scored 100 production agents on attack surface and blast radius and found that only 11% passed. The other 89% were deployed in a state where a successful injection could do real damage.
+
+Why it's so hard to avoid: the trifecta isn't carelessness, it's what "useful" looks like. You want your agent to have your data, read real-world content, and act. The three capabilities that create the vulnerability are the same three that create the value — capability and safety are, in practice, inversely correlated. As long as the model reads instructions and data as the same kind of text, the trifecta remains lethal no matter how capable the model gets.
+
+Breaking the triangle: the only durable fix is to remove one leg of the trifecta for any given task. Cut external communication for agents that touch sensitive data (if it can't send anything out, it can't exfiltrate). Cut private-data access for agents that must read untrusted content (let the web-browsing agent browse; don't hand it the keys). Cut untrusted content by validating, sandboxing, or quarantining anything from outside a trust boundary before the agent with real authority sees it. These are least privilege, network segmentation, and trust boundaries — the oldest ideas in security. You cannot prompt your way out of the lethal trifecta. You have to architect your way out.
+
+Sources: Simon Willison — The lethal trifecta for AI agents; Adversa AI — Top Agentic AI Security Resources, July 2026.
+
+---
+
+## 247 Papers Later: Agent Security Is a Systems Problem, Not a Text Problem
+
+URL: https://waiser.dev/blog/posts/en/agent-security-247-paper-sok.html
+Published: 2026-07-22
+
+For AI agent security, the map-not-a-result paper arrived in 2026: a Systematization of Knowledge (SoK) that digests 247 papers published between 2023 and 2026. Its central claim: once a language model is wired into a loop that plans, calls tools, keeps memory, and acts on the outside world, security stops being about unsafe text and becomes a software-and-systems problem. The interesting failures aren't in what the model says; they're in how untrusted information becomes a control decision, how that decision meets delegated authority, and how persistent state changes the security properties of the whole system over time.
+
+The lifecycle, not the incident: the survey maps attacks onto the agentic lifecycle — eight phases where things can go wrong: input handling, planning, decision-making, tool execution, output generation, memory and state management, monitoring, and multi-agent coordination. Instead of "is this output safe?" you ask "at which phase did untrusted input acquire the authority to cause harm?"
+
+The finding that should worry defenders: individually, the defenses the field has produced mostly work. The problem is composition — they "do not cleanly add up." Each defense assumes a different trust model, and when you stack them, the assumptions don't line up. You can bolt together four reasonable defenses and still leave a seam an attacker walks through.
+
+We're also measuring the wrong things: most evaluations measure single-turn, bounded success rates. But real agents run for a long time, carry state across sessions, and coordinate with other agents. The survey argues we systematically under-measure long-horizon behavior, stateful memory corruption, and multi-agent propagation — and almost nobody jointly measures safety alongside utility, latency, and cost.
+
+Where the field should go: four pillars for building agents that are secure by construction — explicit trust boundaries, principled least privilege, provenance-tracked state, and deployment-realistic evaluation. The message of 247 papers, distilled: agent security is a systems-engineering discipline that happens to have a language model at its core.
+
+Sources: Toward Secure LLM Agents — a 247-paper SoK; A Systematic Survey of Security Threats and Defenses in LLM-Based AI Agents (arXiv 2604.23338); Data Agents Under Attack (arXiv 2606.08661).
+
+---
+
+## The Defense Playbook for AI Agents Is Finally Taking Shape
+
+URL: https://waiser.dev/blog/posts/en/ai-agent-defense-playbook.html
+Published: 2026-07-22
+
+Most of the AI agent security coverage this year has been about attacks. But the defensive side has been catching up, and the 2026 frameworks share a common instinct: stop trying to make the model trustworthy, and start containing what happens when it isn't.
+
+1. Zero Trust, pointed at your own agents. Anthropic published a framework applying Zero Trust principles to AI agents. Zero Trust means "never trust, always verify" — you authenticate and authorize every action. Applied to agents, it means treating your own agent the way you'd treat any other untrusted actor inside your perimeter. It tackles the four recurring failure modes: prompt injection, tool poisoning, identity abuse, and memory poisoning. An agent often aggregates the credentials and permissions of everything it can touch, making it a single point of privilege escalation. Zero Trust scopes its authority per-action and verifies each tool call. The framework also floats an "agentic SOAR" — security orchestration and automated response for agent behavior, catching misuse at runtime.
+
+2. Treating your agents as insider threats. Google DeepMind's AI Control Roadmap: assume your internal agents might be misaligned, and design as if defending against an insider threat. Build layered controls that hold up even if the agent isn't safe — monitoring, constrained permissions, and the assumption the agent may act against your interests. A mindset shift from alignment (make the agent want the right thing) to control (make it unable to do the wrong thing). Reassuringly, most observed anomalies came from overeagerness rather than genuine adversarial intent — but the premise is to build the controls before that changes.
+
+3. Certified defenses against memory poisoning. Corrupt an agent's persistent memory once, and it can misbehave across future sessions. Most defenses are heuristic. This year brought two that go further: non-malleable memory authority binds memory to its origin with machine-checked guarantees and reportedly drives memory-laundering attacks to a zero success rate; and SMSR (Signed Memory with Smoothed Retrieval) is described as the first certified defense against multi-session memory poisoning, with proven robustness bounds. An empirical defense says "we tried hard and it held." A certified defense comes with a mathematical bound — a proof the attack cannot exceed a known success rate within a defined threat model.
+
+The through-line: nobody serious is betting on making the model itself trustworthy. The common move is to shrink what you have to trust and put verifiable boundaries around the rest. You don't secure an agent by making it good. You secure it by making sure it can't do much harm when it's bad.
+
+Sources: Adversa AI — Top Agentic AI Security Resources, July 2026 (Anthropic Zero Trust for AI Agents; Google DeepMind AI Control Roadmap v0.1; Non-Malleable Memory Authority; SMSR certified memory defense).
+
+---
+
 # German posts
 
 ## Opus 4.8 & dynamische Workflows: Wie 7 Agents meine Plattform in 5 Minuten auditiert haben

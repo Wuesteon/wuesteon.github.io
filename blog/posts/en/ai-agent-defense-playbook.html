@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Defense Playbook for AI Agents Is Finally Taking Shape</title>
+    <meta name="description" content="Zero Trust for agents, treating internal agents as insider threats, and the first certified defenses against memory poisoning. Three 2026 frameworks that share one instinct: stop trusting the model, shrink what you have to trust.">
+    <link rel="canonical" href="https://waiser.dev/blog/posts/en/ai-agent-defense-playbook.html">
+    <link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/ki-agenten-defense-playbook.html">
+    <link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/ai-agent-defense-playbook.html">
+    <link rel="alternate" hreflang="zh" href="https://waiser.dev/blog/posts/zh/ai-agent-defense-playbook.html">
+    <link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/ki-agenten-defense-playbook.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="The Defense Playbook for AI Agents Is Finally Taking Shape">
+    <meta property="og:description" content="Zero Trust for agents, treating internal agents as insider threats, and the first certified defenses against memory poisoning. Three 2026 frameworks that share one instinct: shrink what you have to trust.">
+    <meta property="og:url" content="https://waiser.dev/blog/posts/en/ai-agent-defense-playbook.html">
+    <meta property="og:image" content="https://waiser.dev/og-default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Defense Playbook for AI Agents Is Finally Taking Shape">
+    <meta name="twitter:description" content="Zero Trust for agents, treating internal agents as insider threats, and the first certified defenses against memory poisoning. Three 2026 frameworks that share one instinct: shrink what you have to trust.">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "The Defense Playbook for AI Agents Is Finally Taking Shape",
+      "description": "Zero Trust for agents, treating internal agents as insider threats, and the first certified defenses against memory poisoning. Three 2026 frameworks that share one instinct: stop trusting the model, shrink what you have to trust.",
+      "datePublished": "2026-07-22",
+      "author": {
+        "@type": "Person",
+        "name": "Nils Weiser",
+        "@id": "https://waiser.dev/#person"
+      },
+      "image": "https://waiser.dev/og-default.png",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://waiser.dev/blog/posts/en/ai-agent-defense-playbook.html"
+      },
+      "inLanguage": "en",
+      "@id": "https://waiser.dev/blog/posts/en/ai-agent-defense-playbook.html#article",
+      "publisher": {
+        "@id": "https://waiser.dev/#person"
+      },
+      "dateModified": "2026-07-22"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://waiser.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://waiser.dev/blog/en/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "The Defense Playbook for AI Agents Is Finally Taking Shape",
+          "item": "https://waiser.dev/blog/posts/en/ai-agent-defense-playbook.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+
+    <link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+    <meta name="theme-color" content="#050507">
+    <link rel="preload" href="/fonts/ChakraPetch-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Blackwall: local tailwind utilities kept (posts rely on them), then Blackwall tokens + bridge -->
+    <link rel="stylesheet" href="../../../css/tailwind.css">
+    <link rel="stylesheet" href="../../../css/tokens.css">
+    <link rel="stylesheet" href="../../../css/blackwall.css">
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/blog-post.css">
+    <style>
+        .defense-box {
+            background: rgba(52, 211, 153, 0.08);
+            border-left: 3px solid #34d399;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .defense-box h4 {
+            color: #34d399;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .defense-box p { color: #d1d5db; font-size: 0.9rem; margin: 0; }
+        .highlight-box {
+            background: rgba(56, 189, 248, 0.08);
+            border-left: 3px solid #38bdf8;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .highlight-box h4 {
+            color: #38bdf8;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .highlight-box p { color: #d1d5db; font-size: 0.9rem; margin: 0; }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header (Blackwall art-hero) -->
+    <section class="art-hero" data-screen-label="Article">
+        <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
+        <div class="art-hero__in">
+            <a class="art-back" href="../../en/">◄ ALL POSTS</a>
+            <div><span class="art-cat">AI Security</span></div>
+            <h1 class="art-title">The Defense Playbook for AI Agents Is Finally Taking Shape</h1>
+            <div class="art-meta">
+                <span class="who"><span class="av">NW</span> Nils Weiser</span>
+                <span class="sep">•</span><span data-art-date>22 JUL 2026</span>
+                <span class="sep">•</span><span data-art-read>—</span>
+            </div>
+        </div>
+    </section>
+    <div class="art-hr"><div></div></div>
+
+    <!-- Article Content (Blackwall art-body) -->
+    <article class="art-body">
+                <p class="lead">Most of the AI agent security coverage this year has been about attacks — clever exploits, alarming success rates, universal jailbreaks. That's the fun part to write about. But quietly, the defensive side has been catching up, and the frameworks emerging in 2026 are more interesting than the usual "add a guardrail" advice.</p>
+
+                <p>They share a common instinct: <strong>stop trying to make the model trustworthy, and start containing what happens when it isn't.</strong> Here are three developments worth knowing.</p>
+
+                <h2>1. Zero Trust, pointed at your own agents</h2>
+
+                <p>Anthropic published a framework applying <strong>Zero Trust</strong> principles to AI agents, and the framing is the point. Zero Trust in traditional security means "never trust, always verify" — you don't grant access based on where a request comes from, you authenticate and authorize every action. Applied to agents, it means treating your own agent the way you'd treat any other untrusted actor inside your perimeter.</p>
+
+                <p>The framework tackles the four failure modes that keep showing up in the research: prompt injection, tool poisoning, identity abuse, and memory poisoning. What I find compelling is the identity angle. An agent often aggregates the credentials and permissions of everything it can touch, which makes it a single, juicy point of privilege escalation. Zero Trust says: don't let it. Scope its authority per-action, verify each tool call, and assume any given step could be adversarial.</p>
+
+                <div class="defense-box">
+                    <h4>Agentic SOAR</h4>
+                    <p>The framework also floats an "agentic SOAR" — bringing security orchestration and automated response to bear on agent behavior, so misuse gets caught at runtime rather than in a post-mortem.</p>
+                </div>
+
+                <h2>2. Treating your agents as insider threats</h2>
+
+                <p>Google DeepMind's <strong>AI Control Roadmap</strong> takes an even more provocative stance: assume your internal agents might be misaligned, and design as if you're defending against an insider threat.</p>
+
+                <p>This is defense-in-depth for a world where you can't fully trust the thing you built. Instead of asking "is this agent safe?" and hoping the answer is yes, you build layered controls that hold up <em>even if it isn't</em> — monitoring, constrained permissions, and the assumption that the agent may, at some point, act against your interests. It's a mindset shift from alignment (make the agent want the right thing) to control (make it unable to do the wrong thing even if it wants to).</p>
+
+                <div class="highlight-box">
+                    <h4>An oddly reassuring detail</h4>
+                    <p>Most of the anomalies they observed came from <strong>overeagerness rather than genuine adversarial intent</strong> — agents doing too much, too helpfully, not agents plotting. That's a hopeful data point about where we are today. But the roadmap's whole premise is that you build the controls <em>before</em> that changes, not after.</p>
+                </div>
+
+                <h2>3. Certified defenses against memory poisoning</h2>
+
+                <p>The development I'm most excited about is the arrival of <em>certified</em> defenses for agent memory — because "certified" means something specific and rare in security.</p>
+
+                <p>Memory poisoning is one of the nastiest agent attacks: corrupt an agent's persistent memory once, and it can misbehave across future sessions, long after the original injection is gone. (I've <a href="agent-memory-poisoning-mem0.html">demonstrated how cheap this is</a> — two chat messages.) Most defenses against it are heuristic — they raise the bar but offer no guarantees. This year brought two that go further. <strong>Non-malleable memory authority</strong> binds memory to its origin with machine-checked guarantees and reportedly drives memory-laundering attacks to a zero success rate. And <strong>SMSR</strong> (Signed Memory with Smoothed Retrieval) is described as the first <em>certified</em> defense against multi-session memory poisoning, with proven robustness bounds rather than empirical "we couldn't break it" claims.</p>
+
+                <div class="highlight-box">
+                    <h4>Why "certified" matters</h4>
+                    <p>An empirical defense says "we tried hard and it held." A certified defense comes with a mathematical bound — a proof that within a defined threat model, the attack <em>cannot</em> exceed a known success rate. That's the difference between a lock that's never been picked and a lock with a proof it can't be. We need a lot more of the latter in AI security.</p>
+                </div>
+
+                <h2>The through-line</h2>
+
+                <p>Read these three together and a coherent philosophy emerges. Nobody serious is betting on making the model itself trustworthy. Zero Trust verifies every action. The AI Control Roadmap assumes misalignment and builds controls that survive it. Certified memory defenses stop trusting persistent state and start proving bounds on it. The common move is to <strong>shrink what you have to trust</strong> and put verifiable boundaries around the rest.</p>
+
+                <p>That's not a coincidence — it's the same lesson the whole field is converging on from every direction. You don't secure an agent by making it good. You secure it by making sure it can't do much harm when it's bad.</p>
+
+                <hr style="border-color: rgba(255,255,255,0.08); margin: 2.5rem 0;">
+
+                <p class="text-sm text-gray-500">
+                    <em>Sources: <a href="https://adversa.ai/blog/top-agentic-ai-security-resources-july-2026/" target="_blank" rel="noopener">Adversa AI — Top Agentic AI Security Resources, July 2026</a> (Anthropic Zero Trust for AI Agents; Google DeepMind AI Control Roadmap v0.1; Non-Malleable Memory Authority; SMSR certified memory defense).</em>
+                </p>
+
+    </article>
+
+    <!-- Author share + related posts -->
+    <div class="art-share">
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
+      <a href="https://calendly.com/nils-weiser-kn/30min" target="_blank" rel="noopener" class="btn btn--pri">WORK WITH ME ▸</a>
+    </div>
+    <section class="art-more">
+      <div class="wrap">
+        <div class="art-more__head"><h2>More field notes</h2><a href="../../en/">ALL POSTS ▸</a></div>
+        <div class="art-more__grid" id="art-more-grid"></div>
+      </div>
+    </section>
+
+    <!-- Related posts (internal cross-links for crawl equity) -->
+    <nav class="related-posts" aria-label="Related posts">
+        <p class="related-posts__heading">// Related posts</p>
+        <div class="related-posts__grid">
+                <a class="related-posts__card" href="lethal-trifecta-ai-agents.html">
+                    <span class="related-posts__card-title">The Lethal Trifecta: Why 98% of AI Agents Are Sitting Ducks</span>
+                </a>
+                <a class="related-posts__card" href="agent-security-247-paper-sok.html">
+                    <span class="related-posts__card-title">247 Papers Later: Agent Security Is a Systems Problem</span>
+                </a>
+                <a class="related-posts__card" href="ai-agents-attack-surface-2026.html">
+                    <span class="related-posts__card-title">The Year AI Agents Became the Attack Surface</span>
+                </a>
+        </div>
+    </nav>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script defer src="../../../js/components.js"></script>
+    <script defer src="../../../js/translations.js"></script>
+    <script defer src="../../../js/main.js"></script>
+    <script defer src="../../../js/site.js"></script>
+</body>
+</html>

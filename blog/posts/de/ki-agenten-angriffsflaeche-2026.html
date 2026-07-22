@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="de" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Das Jahr, in dem KI-Agenten zur Angriffsfläche wurden</title>
+    <meta name="description" content="2026 wurde der KI-Agent selbst zur Angriffsfläche: GuardFall, AutoJack, GitHub-Supply-Chain-Angriffe und Bug-Report-Hijacking mit ~85 % Erfolgsquote. Warum ein Agent „Software mit Händen“ ist – und die alten Privileg-Probleme neu gelten.">
+    <link rel="canonical" href="https://waiser.dev/blog/posts/de/ki-agenten-angriffsflaeche-2026.html">
+    <link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/ki-agenten-angriffsflaeche-2026.html">
+    <link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/ai-agents-attack-surface-2026.html">
+    <link rel="alternate" hreflang="zh" href="https://waiser.dev/blog/posts/zh/ai-agents-attack-surface-2026.html">
+    <link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/ki-agenten-angriffsflaeche-2026.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Das Jahr, in dem KI-Agenten zur Angriffsfläche wurden">
+    <meta property="og:description" content="2026 wurde der KI-Agent selbst zur Angriffsfläche: GuardFall, AutoJack, Supply-Chain-Angriffe und Bug-Report-Hijacking mit ~85 % Erfolgsquote. Benannte Exploits mit Erfolgsquoten – wie ein Pentest-Report.">
+    <meta property="og:url" content="https://waiser.dev/blog/posts/de/ki-agenten-angriffsflaeche-2026.html">
+    <meta property="og:image" content="https://waiser.dev/og-default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Das Jahr, in dem KI-Agenten zur Angriffsfläche wurden">
+    <meta name="twitter:description" content="2026 wurde der KI-Agent selbst zur Angriffsfläche: GuardFall, AutoJack, Supply-Chain-Angriffe und Bug-Report-Hijacking mit ~85 % Erfolgsquote. Benannte Exploits mit Erfolgsquoten – wie ein Pentest-Report.">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Das Jahr, in dem KI-Agenten zur Angriffsfläche wurden",
+      "description": "2026 wurde der KI-Agent selbst zur Angriffsfläche: GuardFall, AutoJack, GitHub-Supply-Chain-Angriffe und Bug-Report-Hijacking mit ~85 % Erfolgsquote. Warum ein Agent „Software mit Händen“ ist – und die alten Privileg-Probleme neu gelten.",
+      "datePublished": "2026-07-22",
+      "author": {
+        "@type": "Person",
+        "name": "Nils Weiser",
+        "@id": "https://waiser.dev/#person"
+      },
+      "image": "https://waiser.dev/og-default.png",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://waiser.dev/blog/posts/de/ki-agenten-angriffsflaeche-2026.html"
+      },
+      "inLanguage": "de",
+      "@id": "https://waiser.dev/blog/posts/de/ki-agenten-angriffsflaeche-2026.html#article",
+      "publisher": {
+        "@id": "https://waiser.dev/#person"
+      },
+      "dateModified": "2026-07-22"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Startseite",
+          "item": "https://waiser.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://waiser.dev/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Das Jahr, in dem KI-Agenten zur Angriffsfläche wurden",
+          "item": "https://waiser.dev/blog/posts/de/ki-agenten-angriffsflaeche-2026.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+
+    <link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+    <meta name="theme-color" content="#050507">
+    <link rel="preload" href="/fonts/ChakraPetch-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Blackwall: local tailwind utilities kept (posts rely on them), then Blackwall tokens + bridge -->
+    <link rel="stylesheet" href="../../../css/tailwind.css">
+    <link rel="stylesheet" href="../../../css/tokens.css">
+    <link rel="stylesheet" href="../../../css/blackwall.css">
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/blog-post.css">
+    <style>
+        .exploit-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 42, 60, 0.2);
+            border-radius: 8px;
+            padding: 1.25rem 1.5rem;
+            margin: 1rem 0;
+        }
+        .exploit-card h4 {
+            color: #ff2a3c;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .exploit-card p {
+            color: #d1d5db;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        .warning-box {
+            background: rgba(251, 191, 36, 0.08);
+            border-left: 3px solid #fbbf24;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .warning-box h4 {
+            color: #fbbf24;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .defense-box {
+            background: rgba(52, 211, 153, 0.08);
+            border-left: 3px solid #34d399;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .defense-box h4 {
+            color: #34d399;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .takeaways {
+            list-style: none;
+            padding: 0;
+            margin: 0.75rem 0 0;
+        }
+        .takeaways li {
+            position: relative;
+            padding-left: 1.4rem;
+            margin: 0.4rem 0;
+            color: #d1d5db;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .takeaways li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #34d399;
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header (Blackwall art-hero) -->
+    <section class="art-hero" data-screen-label="Article">
+        <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
+        <div class="art-hero__in">
+            <a class="art-back" href="../../">◄ ALLE POSTS</a>
+            <div><span class="art-cat">AI Security</span></div>
+            <h1 class="art-title">Das Jahr, in dem KI-Agenten zur Angriffsfläche wurden</h1>
+            <div class="art-meta">
+                <span class="who"><span class="av">NW</span> Nils Weiser</span>
+                <span class="sep">•</span><span data-art-date>22 JUL 2026</span>
+                <span class="sep">•</span><span data-art-read>—</span>
+            </div>
+        </div>
+    </section>
+    <div class="art-hr"><div></div></div>
+
+    <!-- Article Content (Blackwall art-body) -->
+    <article class="art-body">
+                <p class="lead">Eine Zeit lang bedeutete „AI Security“ vor allem, einen Chatbot dazu zu bringen, etwas zu sagen, was er nicht sollte. Peinlich, gelegentlich gefährlich, aber begrenzt. Der Worst Case war schlechter Text auf einem Bildschirm. Diese Ära ist vorbei.</p>
+
+                <p>Die Forschung, die Mitte 2026 erscheint, dreht sich um ein anderes Problem: Was passiert, wenn ein Sprachmodell in eine Schleife eingebunden wird, die plant, Tools aufruft, Memory behält und in der Außenwelt handelt? Sobald das geschieht, hört das Modell auf, ein Textgenerator zu sein. Es wird zu einem Stück Software mit Händen.</p>
+
+                <p><strong>Und Software mit Händen kann man dazu verleiten, sie zu benutzen.</strong></p>
+
+                <div class="defense-box">
+                    <h4>Das Wichtigste in Kürze</h4>
+                    <ul class="takeaways">
+                        <li>Nicht das Modell ist neu verwundbar, sondern der ganze Agent-Loop. Er wird selbst zur Angriffsfläche.</li>
+                        <li>2026 brachte benannte Exploits mit Erfolgsquoten statt vager „Misalignment“-Debatten: GuardFall, AutoJack, GitHub-Supply-Chain, Bug-Report-Hijacking.</li>
+                        <li>Die Wurzel: Ein Sprachmodell kann Anweisungen nicht zuverlässig von Daten trennen. Das lässt sich nicht wegpatchen.</li>
+                        <li>Die Lösung ist keine bessere Prompt-Formulierung, sondern ein Privileg-Problem. Und Privileg-Probleme haben Antworten, die es lange vor LLMs gab.</li>
+                    </ul>
+                </div>
+
+                <h2>Die Angriffe wurden konkret</h2>
+
+                <p>Das Auffälligste an der jüngsten Welle der Agent-Security-Forschung ist, wie konkret sie geworden ist. Das ist kein abstraktes Händeringen über „Misalignment“. Das sind benannte Exploits mit Erfolgsquoten, also die Art von Sache, die man aus einem klassischen Pentest-Report erwartet. Vier davon sind mir aus den Juli-Zusammenfassungen besonders im Gedächtnis geblieben:</p>
+
+                <div class="exploit-card">
+                    <h4>// GuardFall — Command-Guards von Coding-Agents ausgehebelt</h4>
+                    <p>Viele populäre Open-Source-Coding-Agents nutzen musterbasierte Command-Guards, im Grunde eine Allowlist, die einen Befehl prüft, bevor er in der Shell läuft. Forscher zeigten, dass klassische Shell-Quoting-Tricks diese Guards aushebeln und einen injizierten Prompt mit der Autorität des Operators an die bash durchreichen. Das Guardrail sieht funktionsfähig aus, bis zu dem Moment, in dem es das nicht mehr ist.</p>
+                </div>
+
+                <div class="exploit-card">
+                    <h4>// AutoJack — der Agent als Remote-Shell des Angreifers</h4>
+                    <p>Von Microsoft dokumentiert, ist AutoJack eine Exploit-Kette gegen AutoGen Studio. Sie macht die Browsing-Fähigkeit eines Agents zur Waffe, erreicht privilegierte Dienste auf localhost und erzielt Code-Ausführung auf der Host-Maschine, ganz ohne User in the Loop. Der Agent ist die Remote-Shell des Angreifers.</p>
+                </div>
+
+                <div class="exploit-card">
+                    <h4>// GitHub-Supply-Chain-Angriff — du reviewst sauberen Code, der Agent führt etwas anderes aus</h4>
+                    <p>Ein harmlos aussehendes Repository bringt den Agent dazu, Setup-Skripte auszuführen, die zur <em>Laufzeit</em> ein Reverse-Shell-Payload nachladen. Weil das bösartige Verhalten erst entsteht, wenn der Agent den Code ausführt, ist es für Code Review und statische Scanner unsichtbar. Du prüfst sauberen Code, ausgeführt wird etwas anderes. Genau der Punkt, der jeden, der einen Coding-Agent nutzt, unruhig machen sollte.</p>
+                </div>
+
+                <div class="exploit-card">
+                    <h4>// Hijacking über gefälschte Bug-Reports — ~85 % Erfolgsquote</h4>
+                    <p>Angreifer-Anweisungen, platziert in Sentry-Error-Reports. Wenn ein Coding-Agent auf den Fehler angesetzt wird, um ihn „zu fixen“, liest und führt er stattdessen die injizierten Anweisungen aus. Berichten zufolge mit rund 85 % Erfolgsquote über die großen Plattformen hinweg. Deine Observability-Pipeline wird zum Injection-Kanal.</p>
+                </div>
+
+                <p>Vier verschiedene Angriffe, ein gemeinsames Muster: In keinem Fall wird das Modell „gehackt“ im klassischen Sinn. Es wird überredet, und zwar von Inhalten, die es ohnehin liest und für vertrauenswürdig hält. Ein Ort, an dem sich diese Überredung besonders lange hält, ist das Gedächtnis des Agents.</p>
+
+                <h2>Memory ist die neue Frontier</h2>
+
+                <p>Der Angriff, den ich langfristig am interessantesten finde, ist Memory Poisoning. Ein zustandsloser Agent vergisst eine Injection in dem Moment, in dem die Session endet. Aber Agenten behalten zunehmend persistentes Memory: Notizen, gelernte Präferenzen, abgerufener Kontext. Und dieses Memory ist ein Ort, an dem ein Angreifer etwas platzieren kann, das sich erst Sessions später auszahlt.</p>
+
+                <p>Die jüngste systematische Arbeit dazu zeigte, dass „aggressive“ memory-schreibende Agenten, also die, die eifrig speichern, was ihnen begegnet, hochgradig ausnutzbar sind und dass bestehende Prompt-Injection-Defenses das Problem kaum berühren. Ich habe <a href="agent-memory-poisoning-mem0.html">diese Experimente selbst durchgeführt</a>: Zwei ganz gewöhnliche Chat-Nachrichten genügten, um einen gehärteten Agent umzudrehen.</p>
+
+                <div class="warning-box">
+                    <h4>Die unbequeme Implikation</h4>
+                    <p>Die Features, die wir hinzufügen, um Agenten nützlicher zu machen, also längeres Memory, mehr Autonomie, mehr Tool-Zugriff, sind genau die Features, die den Blast Radius vergrößern. Nützlicher und angreifbarer sind hier dieselbe Bewegung.</p>
+                </div>
+
+                <h2>Warum das anders ist als klassisches AppSec</h2>
+
+                <p>Man könnte argumentieren, nichts davon sei neu. Shell Injection, Supply-Chain-Angriffe und gespeicherte Payloads sind Jahrzehnte alt. Und man hätte halb recht. Wirklich neu ist, dass die verwundbare Komponente <em>natürliche Sprache als Anweisungen interpretiert und Anweisungen nicht zuverlässig von Daten unterscheiden kann</em>.</p>
+
+                <p>Ein klassischer Parser hat eine Grammatik; er kennt den Unterschied zwischen einem Befehl und einem String. Ein Sprachmodell verarbeitet beides als undifferenzierten Text und fällt ein Urteil. Dieses Urteil ist die Schwachstelle. Und man kann sie nicht patchen, wie man einen Buffer Overflow patcht.</p>
+
+                <p>Deshalb konvergiert so viel der defensiven Forschung zur selben Schlussfolgerung: Man kann das Modell selbst nicht vertrauenswürdig genug machen, also muss man Grenzen <em>um es herum</em> bauen. Least Privilege bei Tools, Isolation von untrusted Content und die Behandlung jedes Agents als potenziell kompromittierten Insider. Wie diese Verteidigungslinie 2026 konkret aussieht, habe ich im <a href="ki-agenten-defense-playbook.html">Defense Playbook für KI-Agenten</a> aufgeschrieben.</p>
+
+                <h2>Was ich jedem raten würde, der heute einen Agent deployt</h2>
+
+                <p>Geh davon aus, dass jeder Inhalt, den dein Agent liest, ob Webseite, Error-Log, Repo oder Datei, Anweisungen enthalten kann und dass dein Agent ihnen manchmal folgen wird. Dann stell die einzige Frage, die zählt:</p>
+
+                <blockquote>Wenn er das tut: Was kann er tatsächlich anrichten?</blockquote>
+
+                <p>Wenn die Antwort „beliebige Shell-Befehle ausführen“ oder „ausgehende Netzwerkaufrufe mit meinen Credentials machen“ enthält, dann hast du kein Prompt-Injection-Problem, sondern ein Privileg-Problem. Und Privileg-Probleme haben Lösungen, die es lange vor LLMs gab.</p>
+
+                <p>Die Forschung dieses Jahres liest sich wie die Frühzeit jeder neuen Plattform: ein Schwall cleverer Angriffe, ein Wettlauf um Defenses und die langsame Erkenntnis, dass die alten Sicherheitsprinzipien immer noch gelten. Sie müssen nur auf eine sehr fremdartige neue Komponente gerichtet werden.</p>
+
+                <div class="defense-box">
+                    <h4>In eigener Sache</h4>
+                    <p>Ich baue autonome KI-Agenten und härte sie gegen genau diese Angriffe ab (Red-Teaming, Prompt-Injection-Defense, 2. Platz in einer Prompt-Injection-Challenge). Wenn du einen Agent in Produktion hast oder planst und wissen willst, was er im Ernstfall wirklich anrichten kann: <a href="https://calendly.com/nils-weiser-kn/30min" target="_blank" rel="noopener">Lass uns reden</a>.</p>
+                </div>
+
+                <hr style="border-color: rgba(255,255,255,0.08); margin: 2.5rem 0;">
+
+                <p class="text-sm text-gray-500">
+                    <em>Quellen: <a href="https://adversa.ai/blog/top-agentic-ai-security-resources-july-2026/" target="_blank" rel="noopener">Adversa AI — Top Agentic AI Security Resources, July 2026</a>; <a href="https://www.helpnetsecurity.com/2026/07/15/check-point-ai-security-report-2026/" target="_blank" rel="noopener">Check Point AI Security Report 2026 (via Help Net Security)</a>.</em>
+                </p>
+
+    </article>
+
+    <!-- Author share + related posts -->
+    <div class="art-share">
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI Agent Specialist · Bodenseeraum</span></div></div>
+      <a href="https://calendly.com/nils-weiser-kn/30min" target="_blank" rel="noopener" class="btn btn--pri">MIT MIR ARBEITEN ▸</a>
+    </div>
+    <section class="art-more">
+      <div class="wrap">
+        <div class="art-more__head"><h2>Weitere Field Notes</h2><a href="../../">ALLE POSTS ▸</a></div>
+        <div class="art-more__grid" id="art-more-grid"></div>
+      </div>
+    </section>
+
+    <!-- Related posts (internal cross-links for crawl equity) -->
+    <nav class="related-posts" aria-label="Weitere Artikel">
+        <p class="related-posts__heading">// Weitere Artikel</p>
+        <div class="related-posts__grid">
+                <a class="related-posts__card" href="lethal-trifecta-ki-agenten.html">
+                    <span class="related-posts__card-title">Die Lethal Trifecta: Warum 98 % der KI-Agenten wehrlos sind</span>
+                </a>
+                <a class="related-posts__card" href="agent-memory-poisoning-mem0.html">
+                    <span class="related-posts__card-title">KI-Agent in 2 Nachrichten vergiftet – Memory Poisoning mit Mem0</span>
+                </a>
+                <a class="related-posts__card" href="ki-agenten-defense-playbook.html">
+                    <span class="related-posts__card-title">Das Defense Playbook für KI-Agenten nimmt endlich Form an</span>
+                </a>
+        </div>
+    </nav>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script defer src="../../../js/components.js"></script>
+    <script defer src="../../../js/translations.js"></script>
+    <script defer src="../../../js/main.js"></script>
+    <script defer src="../../../js/site.js"></script>
+</body>
+</html>

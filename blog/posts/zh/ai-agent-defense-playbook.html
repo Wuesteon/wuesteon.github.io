@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 智能体的防御手册终于开始成形</title>
+    <meta name="description" content="面向智能体的零信任、把内部智能体当作内部威胁来对待，以及首批针对记忆投毒的「可证明」防御。2026 年的三套框架，共享同一种直觉：别再信任模型，缩小你不得不去信任的那部分。">
+    <link rel="canonical" href="https://waiser.dev/blog/posts/zh/ai-agent-defense-playbook.html">
+    <link rel="alternate" hreflang="de" href="https://waiser.dev/blog/posts/de/ki-agenten-defense-playbook.html">
+    <link rel="alternate" hreflang="en" href="https://waiser.dev/blog/posts/en/ai-agent-defense-playbook.html">
+    <link rel="alternate" hreflang="zh" href="https://waiser.dev/blog/posts/zh/ai-agent-defense-playbook.html">
+    <link rel="alternate" hreflang="x-default" href="https://waiser.dev/blog/posts/de/ki-agenten-defense-playbook.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="AI 智能体的防御手册终于开始成形">
+    <meta property="og:description" content="面向智能体的零信任、把内部智能体当作内部威胁来对待，以及首批针对记忆投毒的「可证明」防御。2026 年的三套框架，共享同一种直觉：缩小你不得不去信任的那部分。">
+    <meta property="og:url" content="https://waiser.dev/blog/posts/zh/ai-agent-defense-playbook.html">
+    <meta property="og:image" content="https://waiser.dev/og-default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI 智能体的防御手册终于开始成形">
+    <meta name="twitter:description" content="面向智能体的零信任、把内部智能体当作内部威胁来对待，以及首批针对记忆投毒的「可证明」防御。2026 年的三套框架，共享同一种直觉：缩小你不得不去信任的那部分。">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "headline": "AI 智能体的防御手册终于开始成形",
+      "description": "面向智能体的零信任、把内部智能体当作内部威胁来对待，以及首批针对记忆投毒的「可证明」防御。2026 年的三套框架，共享同一种直觉：别再信任模型，缩小你不得不去信任的那部分。",
+      "datePublished": "2026-07-22",
+      "author": {
+        "@type": "Person",
+        "name": "Nils Weiser",
+        "@id": "https://waiser.dev/#person"
+      },
+      "image": "https://waiser.dev/og-default.png",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://waiser.dev/blog/posts/zh/ai-agent-defense-playbook.html"
+      },
+      "inLanguage": "zh",
+      "@id": "https://waiser.dev/blog/posts/zh/ai-agent-defense-playbook.html#article",
+      "publisher": {
+        "@id": "https://waiser.dev/#person"
+      },
+      "dateModified": "2026-07-22"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://waiser.dev/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://waiser.dev/blog/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "AI 智能体的防御手册终于开始成形",
+          "item": "https://waiser.dev/blog/posts/zh/ai-agent-defense-playbook.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+
+    <link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+    <meta name="theme-color" content="#050507">
+    <link rel="preload" href="/fonts/ChakraPetch-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceGrotesk-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/SpaceMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Blackwall: local tailwind utilities kept (posts rely on them), then Blackwall tokens + bridge -->
+    <link rel="stylesheet" href="../../../css/tailwind.css">
+    <link rel="stylesheet" href="../../../css/tokens.css">
+    <link rel="stylesheet" href="../../../css/blackwall.css">
+    <link rel="stylesheet" href="../../../css/styles.css">
+    <link rel="stylesheet" href="../../../css/blog-post.css">
+    <style>
+        .defense-box {
+            background: rgba(52, 211, 153, 0.08);
+            border-left: 3px solid #34d399;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .defense-box h4 {
+            color: #34d399;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .defense-box p { color: #d1d5db; font-size: 0.9rem; margin: 0; }
+        .highlight-box {
+            background: rgba(56, 189, 248, 0.08);
+            border-left: 3px solid #38bdf8;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .highlight-box h4 {
+            color: #38bdf8;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .highlight-box p { color: #d1d5db; font-size: 0.9rem; margin: 0; }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="d04784b7-9e58-43ad-b71b-73328369d474"></script>
+</head>
+<body class="bg-gray-950 text-gray-100">
+
+    <div id="header-placeholder"></div>
+
+    <!-- Article Header (Blackwall art-hero) -->
+    <section class="art-hero" data-screen-label="Article">
+        <div class="hero__glow" style="bottom:auto; top:-4%; opacity:.4"></div>
+        <div class="art-hero__in">
+            <a class="art-back" href="../../zh/">◄ 所有文章</a>
+            <div><span class="art-cat">AI Security</span></div>
+            <h1 class="art-title">AI 智能体的防御手册终于开始成形</h1>
+            <div class="art-meta">
+                <span class="who"><span class="av">NW</span> Nils Weiser</span>
+                <span class="sep">•</span><span data-art-date>22 JUL 2026</span>
+                <span class="sep">•</span><span data-art-read>—</span>
+            </div>
+        </div>
+    </section>
+    <div class="art-hr"><div></div></div>
+
+    <!-- Article Content (Blackwall art-body) -->
+    <article class="art-body">
+                <p class="lead">今年关于 AI 智能体安全的报道，大多都在讲攻击——精巧的漏洞利用、触目惊心的成功率、通用越狱。那是写起来最带劲的部分。但与此同时，防御的这一侧一直在悄悄追赶，而 2026 年浮现出来的这些框架，比那套老掉牙的「加一道护栏」建议要有意思得多。</p>
+
+                <p>它们共享同一种直觉：<strong>别再试图让模型变得可信，转而去控制它不可信时会发生什么。</strong>下面是三项值得了解的进展。</p>
+
+                <h2>1. 把零信任瞄准你自己的智能体</h2>
+
+                <p>Anthropic 发布了一套把<strong>零信任</strong>（Zero Trust）原则应用于 AI 智能体的框架，而这套框架的取景角度本身就是关键。传统安全里的零信任意味着「永不信任，始终验证」——你不会仅凭一个请求来自何处就授予它访问权，而是对每一个动作都进行认证与授权。把它应用到智能体上，就意味着：像对待你边界之内任何其他不可信主体那样，去对待你自己的智能体。</p>
+
+                <p>这套框架直面了研究里反复出现的四种失效模式：提示注入、工具投毒、身份滥用，以及记忆投毒。我觉得最有说服力的是身份这个角度。一个智能体往往会把它能触及的一切的凭证与权限聚合于一身，这就让它成了一个单一而诱人的权限提升入口。零信任说：别让它这样。按「每个动作」来界定它的权限范围，对每一次工具调用都进行验证，并假设任何一个步骤都可能是对抗性的。</p>
+
+                <div class="defense-box">
+                    <h4>智能体化 SOAR</h4>
+                    <p>这套框架还抛出了一个「智能体化 SOAR」的设想——把安全编排与自动化响应（SOAR）用到智能体行为上，好让滥用在运行时就被抓住，而不是等到事后复盘才发现。</p>
+                </div>
+
+                <h2>2. 把你的智能体当作内部威胁来对待</h2>
+
+                <p>Google DeepMind 的 <strong>AI 控制路线图</strong>（AI Control Roadmap）采取了一种更为激进的立场：假设你的内部智能体可能是失对齐的，并按照你正在防范一个内部威胁那样去做设计。</p>
+
+                <p>这是一种为「你无法完全信任你亲手造出来的东西」的世界而设的纵深防御。你不再问「这个智能体安全吗？」然后指望答案是肯定的，而是构建起分层的控制——即便答案是否定的，它们<em>依然</em>成立：监控、受约束的权限，以及这样一个假设——智能体或许会在某一刻，做出违背你利益的事。这是一种心态上的转变，从对齐（让智能体想要正确的东西）转向控制（让它即便想做错事，也做不成）。</p>
+
+                <div class="highlight-box">
+                    <h4>一个出人意料地令人安心的细节</h4>
+                    <p>他们观察到的大多数异常，源自的是<strong>过度积极，而非真正的对抗性意图</strong>——是智能体做得太多、帮忙帮过了头，而不是智能体在密谋算计。就我们当下所处的位置而言，这是一个令人抱有希望的数据点。但这份路线图的整个前提就在于：你要在这一切改变<em>之前</em>就把控制建好，而不是等它变了之后再补。</p>
+                </div>
+
+                <h2>3. 针对记忆投毒的「可证明」防御</h2>
+
+                <p>我最为之振奋的一项进展，是智能体记忆的<em>可证明</em>（certified）防御的到来——因为在安全领域里，「可证明」意味着某种既具体又稀有的东西。</p>
+
+                <p>记忆投毒是最阴险的智能体攻击之一：只要把一个智能体的持久记忆污染一次，它就能在此后的多次会话里持续行为失常，哪怕最初那次注入早已消失无踪。（我已经<a href="agent-memory-poisoning-mem0.html">演示过这有多廉价</a>——两条聊天消息。）针对它的大多数防御都是启发式的——它们抬高了门槛，却不提供任何保证。今年出现了两项走得更远的成果。<strong>不可篡改的记忆权限</strong>（Non-malleable memory authority）用机器可验证的保证把记忆绑定到它的来源之上，据报道能把「记忆洗白」类攻击的成功率压到零。而 <strong>SMSR</strong>（Signed Memory with Smoothed Retrieval，带平滑检索的签名记忆）则被描述为首个针对跨会话记忆投毒的<em>可证明</em>防御——它带有经过证明的鲁棒性界限，而不是那种「我们没能攻破它」的经验之谈。</p>
+
+                <div class="highlight-box">
+                    <h4>为什么「可证明」很重要</h4>
+                    <p>一个经验型防御说的是「我们竭尽全力，它扛住了」。而一个可证明的防御，附带的是一个数学界限——一份证明，证明在一个界定好的威胁模型内，攻击<em>不可能</em>超过某个已知的成功率。这就是「一把从没被撬开过的锁」和「一把有证明撬不开的锁」之间的区别。在 AI 安全里，我们需要多得多的后者。</p>
+                </div>
+
+                <h2>贯穿其中的那条主线</h2>
+
+                <p>把这三项放在一起读，一套自洽的哲学就浮现出来了。没有一个正经人还在指望把模型本身变得可信。零信任验证每一个动作。AI 控制路线图假设失对齐，并构建起能挺过它的控制。可证明的记忆防御不再信任持久状态，转而去为它证明界限。它们共同的招式，就是<strong>缩小你不得不去信任的那部分</strong>，并在其余部分周围竖起可验证的边界。</p>
+
+                <p>这并非巧合——这正是整个领域从各个方向共同收敛到的同一条教训。你不是靠把一个智能体变好来保护它的安全。你是靠确保它变坏时也造不成多大危害，来保护它的安全。</p>
+
+                <hr style="border-color: rgba(255,255,255,0.08); margin: 2.5rem 0;">
+
+                <p class="text-sm text-gray-500">
+                    <em>来源：<a href="https://adversa.ai/blog/top-agentic-ai-security-resources-july-2026/" target="_blank" rel="noopener">Adversa AI — Top Agentic AI Security Resources, July 2026</a>（Anthropic Zero Trust for AI Agents；Google DeepMind AI Control Roadmap v0.1；Non-Malleable Memory Authority；SMSR 可证明记忆防御）。</em>
+                </p>
+
+    </article>
+
+    <!-- Author share + related posts -->
+    <div class="art-share">
+      <div class="art-share__who"><span class="av">NW</span><div><b>Nils Weiser</b><span>AI 智能体专家 · 博登湖地区</span></div></div>
+      <a href="https://calendly.com/nils-weiser-kn/30min" target="_blank" rel="noopener" class="btn btn--pri">与我合作 ▸</a>
+    </div>
+    <section class="art-more">
+      <div class="wrap">
+        <div class="art-more__head"><h2>更多现场笔记</h2><a href="../../zh/">所有文章 ▸</a></div>
+        <div class="art-more__grid" id="art-more-grid"></div>
+      </div>
+    </section>
+
+    <!-- Related posts (internal cross-links for crawl equity) -->
+    <nav class="related-posts" aria-label="相关文章">
+        <p class="related-posts__heading">// 相关文章</p>
+        <div class="related-posts__grid">
+                <a class="related-posts__card" href="lethal-trifecta-ai-agents.html">
+                    <span class="related-posts__card-title">致命三要素：为什么 98% 的 AI 智能体都是活靶子</span>
+                </a>
+                <a class="related-posts__card" href="agent-security-247-paper-sok.html">
+                    <span class="related-posts__card-title">读完 247 篇论文之后：智能体安全是一个系统问题</span>
+                </a>
+                <a class="related-posts__card" href="ai-agents-attack-surface-2026.html">
+                    <span class="related-posts__card-title">AI 智能体成为攻击面的这一年</span>
+                </a>
+        </div>
+    </nav>
+
+    <div id="footer-placeholder"></div>
+    <div id="back-to-top-placeholder"></div>
+
+    <script defer src="../../../js/components.js"></script>
+    <script defer src="../../../js/translations.js"></script>
+    <script defer src="../../../js/main.js"></script>
+    <script defer src="../../../js/site.js"></script>
+</body>
+</html>

@@ -4,6 +4,109 @@ const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 /* ---------------- content: real posts, DE/EN localized ---------------- */
 const POSTS = [
   {
+    id: "ai-agents-attack-surface-2026",
+    cat: "AI SECURITY",
+    de: {
+      href: "blog/posts/de/ki-agenten-angriffsflaeche-2026.html",
+      title: "Das Jahr, in dem KI-Agenten zur Angriffsfläche wurden",
+      excerpt: "GuardFall, AutoJack, GitHub-Supply-Chain-Angriffe, Bug-Report-Hijacking mit ~85 % Erfolgsquote: Die Agent-Security-Forschung 2026 liest sich wie ein Pentest-Report. Warum der Agent selbst zur Angriffsfläche wird.",
+      date: "22 JUL 2026",
+      read: "7 MIN"
+    },
+    en: {
+      href: "blog/posts/en/ai-agents-attack-surface-2026.html",
+      title: "The Year AI Agents Became the Attack Surface",
+      excerpt: "GuardFall, AutoJack, GitHub supply-chain attacks, fake bug reports with 85% hijack rates: the 2026 agent-security research reads like a pentest report. Why software with hands changes everything.",
+      date: "22 JUL 2026",
+      read: "6 MIN"
+    },
+    zh: {
+      href: "blog/posts/zh/ai-agents-attack-surface-2026.html",
+      title: "AI 智能体成为攻击面的一年",
+      excerpt: "GuardFall、AutoJack、GitHub 供应链攻击、劫持成功率达 85% 的伪造 Bug 报告：2026 年的智能体安全研究读起来像一份渗透测试报告。为何\"长了手的软件\"改变了一切。",
+      date: "22 JUL 2026",
+      read: "6 MIN"
+    }
+  },
+  {
+    id: "lethal-trifecta-ai-agents",
+    cat: "AI SECURITY",
+    published: false, // scheduled: 2026-07-23 (blog-drip routine flips this)
+    de: {
+      href: "blog/posts/de/lethal-trifecta-ki-agenten.html",
+      title: "Die Lethal Trifecta: Warum 98 % der KI-Agenten wehrlos sind",
+      excerpt: "Private Daten + nicht vertrauenswürdige Inhalte + externe Kommunikation: 98 % der Produktions-Agenten vereinen alle drei Beine der Lethal Trifecta, nur 11 % bestehen die Blast-Radius-Prüfung. Man kann sich nicht heraus-prompten – nur heraus-architektieren.",
+      date: "22 JUL 2026",
+      read: "6 MIN"
+    },
+    en: {
+      href: "blog/posts/en/lethal-trifecta-ai-agents.html",
+      title: "The Lethal Trifecta: Why 98% of AI Agents Are Sitting Ducks",
+      excerpt: "Private data + untrusted content + external communication: 98% of production agents combine all three legs of the lethal trifecta, only 11% pass a blast-radius check. You can't prompt your way out — only architect your way out.",
+      date: "22 JUL 2026",
+      read: "6 MIN"
+    },
+    zh: {
+      href: "blog/posts/zh/lethal-trifecta-ai-agents.html",
+      title: "致命三要素：为何 98% 的 AI 智能体束手待毙",
+      excerpt: "私有数据 + 不可信内容 + 对外通信：98% 的生产环境智能体集齐了致命三要素的三条腿，只有 11% 通过了影响范围评估。你无法靠提示词脱身——只能靠架构脱身。",
+      date: "22 JUL 2026",
+      read: "6 MIN"
+    }
+  },
+  {
+    id: "agent-security-247-paper-sok",
+    cat: "RESEARCH",
+    published: false, // scheduled: 2026-07-24 (blog-drip routine flips this)
+    de: {
+      href: "blog/posts/de/agent-security-247-paper-sok.html",
+      title: "247 Paper später: Agent Security ist ein Systemproblem, kein Textproblem",
+      excerpt: "Eine SoK aus 2026 verdichtet 247 Agent-Security-Paper zu einem Befund: Einzelne Defenses funktionieren, aber komponieren nicht, wir messen die falschen Dinge, und Agent Security ist eine Systems-Engineering-Disziplin mit einem LLM im Kern.",
+      date: "22 JUL 2026",
+      read: "6 MIN"
+    },
+    en: {
+      href: "blog/posts/en/agent-security-247-paper-sok.html",
+      title: "247 Papers Later: Agent Security Is a Systems Problem",
+      excerpt: "A 2026 Systematization of Knowledge digests 247 agent-security papers: individual defenses work but don't compose, we measure the wrong things, and agent security is a systems-engineering discipline with an LLM at its core.",
+      date: "22 JUL 2026",
+      read: "6 MIN"
+    },
+    zh: {
+      href: "blog/posts/zh/agent-security-247-paper-sok.html",
+      title: "读完 247 篇论文：智能体安全是系统问题，而非文本问题",
+      excerpt: "2026 年的一篇知识系统化（SoK）梳理了 247 篇智能体安全论文：单个防御各自有效却无法叠加，我们测量的是错误的东西，智能体安全是一门以 LLM 为核心的系统工程学科。",
+      date: "22 JUL 2026",
+      read: "6 MIN"
+    }
+  },
+  {
+    id: "ai-agent-defense-playbook",
+    cat: "AI SECURITY",
+    published: false, // scheduled: 2026-07-27 (blog-drip routine flips this)
+    de: {
+      href: "blog/posts/de/ki-agenten-defense-playbook.html",
+      title: "Das Defense Playbook für KI-Agenten nimmt endlich Form an",
+      excerpt: "Zero Trust für Agenten, interne Agenten als Insider-Bedrohung behandeln und die ersten zertifizierten Defenses gegen Memory Poisoning. Drei Frameworks aus 2026 mit einem gemeinsamen Instinkt: Vertraue dem Modell nicht, verkleinere das, was du vertrauen musst.",
+      date: "22 JUL 2026",
+      read: "5 MIN"
+    },
+    en: {
+      href: "blog/posts/en/ai-agent-defense-playbook.html",
+      title: "The Defense Playbook for AI Agents Is Finally Taking Shape",
+      excerpt: "Zero Trust for agents, treating internal agents as insider threats, and the first certified defenses against memory poisoning. Three 2026 frameworks that share one instinct: shrink what you have to trust.",
+      date: "22 JUL 2026",
+      read: "5 MIN"
+    },
+    zh: {
+      href: "blog/posts/zh/ai-agent-defense-playbook.html",
+      title: "AI 智能体的防御手册终于成形",
+      excerpt: "面向智能体的零信任、把内部智能体当作内部威胁来对待，以及首批针对记忆投毒的可证明防御。2026 年的三个框架共享同一直觉：别信任模型，缩小你必须信任的范围。",
+      date: "22 JUL 2026",
+      read: "5 MIN"
+    }
+  },
+  {
     id: "futureclass-zeitloses-wissen",
     cat: "DEVELOPMENT",
     de: {
@@ -485,10 +588,12 @@ function tcardHTML(p, context){
   </a>`;
 }
 
-/* posts available in the current language (falls back to en) */
+/* posts available in the current language (falls back to en).
+   Staged posts carry published:false and are hidden from all listings until
+   their scheduled release (the blog-drip cloud routine flips the flag). */
 function postsForLang(){
   var lang = siteLang();
-  return POSTS.filter(function(p){ return p[lang] || p.en; });
+  return POSTS.filter(function(p){ return (p.published !== false) && (p[lang] || p.en); });
 }
 
 /* render home feed (first 3) */
