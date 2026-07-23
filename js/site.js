@@ -31,26 +31,25 @@ const POSTS = [
   {
     id: "lethal-trifecta-ai-agents",
     cat: "AI SECURITY",
-    published: false, // scheduled: 2026-07-23 (blog-drip routine flips this)
     de: {
       href: "blog/posts/de/lethal-trifecta-ki-agenten.html",
       title: "Die Lethal Trifecta: Warum 98 % der KI-Agenten wehrlos sind",
       excerpt: "Private Daten + nicht vertrauenswürdige Inhalte + externe Kommunikation: 98 % der Produktions-Agenten vereinen alle drei Beine der Lethal Trifecta, nur 11 % bestehen die Blast-Radius-Prüfung. Man kann sich nicht heraus-prompten – nur heraus-architektieren.",
-      date: "22 JUL 2026",
+      date: "23 JUL 2026",
       read: "6 MIN"
     },
     en: {
       href: "blog/posts/en/lethal-trifecta-ai-agents.html",
       title: "The Lethal Trifecta: Why 98% of AI Agents Are Sitting Ducks",
       excerpt: "Private data + untrusted content + external communication: 98% of production agents combine all three legs of the lethal trifecta, only 11% pass a blast-radius check. You can't prompt your way out — only architect your way out.",
-      date: "22 JUL 2026",
+      date: "23 JUL 2026",
       read: "6 MIN"
     },
     zh: {
       href: "blog/posts/zh/lethal-trifecta-ai-agents.html",
       title: "致命三要素：为何 98% 的 AI 智能体束手待毙",
       excerpt: "私有数据 + 不可信内容 + 对外通信：98% 的生产环境智能体集齐了致命三要素的三条腿，只有 11% 通过了影响范围评估。你无法靠提示词脱身——只能靠架构脱身。",
-      date: "22 JUL 2026",
+      date: "23 JUL 2026",
       read: "6 MIN"
     }
   },

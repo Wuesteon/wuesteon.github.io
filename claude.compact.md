@@ -3,9 +3,17 @@
 <!-- Maintained by the Cowork scheduled task "blog-compact-index" (Mon+Thu, English summaries). -->
 <!-- Fallback only: python3 scripts/build-compact.py (overwrites hand-written summaries with German meta descriptions). -->
 
-Compact index of all blog posts (19 total, newest first).
+Compact index of all blog posts (20 total, newest first).
 DE is the canonical language; EN/ZH translations live under
 `blog/posts/en/` and `blog/posts/zh/` (ZH reuses the EN slug).
+
+## The Lethal Trifecta: Why 98% of AI Agents Are Sitting Ducks
+
+- **Date:** 2026-07-23
+- **File:** `blog/posts/de/lethal-trifecta-ki-agenten.html`
+- **Link:** [/blog/posts/de/lethal-trifecta-ki-agenten.html](https://waiser.dev/blog/posts/de/lethal-trifecta-ki-agenten.html)
+- **Languages:** de, en, zh
+- **Summary:** 98% of production AI agents combine all three legs of Simon Willison's lethal trifecta — private data access, exposure to untrusted content, and external communication — yet only 11% pass a blast-radius assessment. Argues you cannot prompt your way out of this combination; you have to architect your way out, by breaking one of the three legs rather than trying to filter or guard the model's behavior.
 
 ## The Year AI Agents Became the Attack Surface
 
