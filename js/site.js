@@ -56,26 +56,25 @@ const POSTS = [
   {
     id: "agent-security-247-paper-sok",
     cat: "RESEARCH",
-    published: false, // scheduled: 2026-07-24 (blog-drip routine flips this)
     de: {
       href: "blog/posts/de/agent-security-247-paper-sok.html",
       title: "247 Paper später: Agent Security ist ein Systemproblem, kein Textproblem",
       excerpt: "Eine SoK aus 2026 verdichtet 247 Agent-Security-Paper zu einem Befund: Einzelne Defenses funktionieren, aber komponieren nicht, wir messen die falschen Dinge, und Agent Security ist eine Systems-Engineering-Disziplin mit einem LLM im Kern.",
-      date: "22 JUL 2026",
+      date: "24 JUL 2026",
       read: "6 MIN"
     },
     en: {
       href: "blog/posts/en/agent-security-247-paper-sok.html",
       title: "247 Papers Later: Agent Security Is a Systems Problem",
       excerpt: "A 2026 Systematization of Knowledge digests 247 agent-security papers: individual defenses work but don't compose, we measure the wrong things, and agent security is a systems-engineering discipline with an LLM at its core.",
-      date: "22 JUL 2026",
+      date: "24 JUL 2026",
       read: "6 MIN"
     },
     zh: {
       href: "blog/posts/zh/agent-security-247-paper-sok.html",
       title: "读完 247 篇论文：智能体安全是系统问题，而非文本问题",
       excerpt: "2026 年的一篇知识系统化（SoK）梳理了 247 篇智能体安全论文：单个防御各自有效却无法叠加，我们测量的是错误的东西，智能体安全是一门以 LLM 为核心的系统工程学科。",
-      date: "22 JUL 2026",
+      date: "24 JUL 2026",
       read: "6 MIN"
     }
   },

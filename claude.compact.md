@@ -3,9 +3,17 @@
 <!-- Maintained by the Cowork scheduled task "blog-compact-index" (Mon+Thu, English summaries). -->
 <!-- Fallback only: python3 scripts/build-compact.py (overwrites hand-written summaries with German meta descriptions). -->
 
-Compact index of all blog posts (20 total, newest first).
+Compact index of all blog posts (21 total, newest first).
 DE is the canonical language; EN/ZH translations live under
 `blog/posts/en/` and `blog/posts/zh/` (ZH reuses the EN slug).
+
+## 247 Papers Later: Agent Security Is a Systems Problem
+
+- **Date:** 2026-07-24
+- **File:** `blog/posts/de/agent-security-247-paper-sok.html`
+- **Link:** [/blog/posts/de/agent-security-247-paper-sok.html](https://waiser.dev/blog/posts/de/agent-security-247-paper-sok.html)
+- **Languages:** de, en, zh
+- **Summary:** A 2026 Systematization of Knowledge (SoK) synthesizes 247 agent-security papers into one uncomfortable conclusion: individual defenses work in isolation but don't compose when stacked together, and much of the field keeps measuring things that don't reflect real-world risk. Its central claim is that agent security is a systems-engineering discipline that happens to have an LLM at its core — not a text-filtering or prompt-hardening problem. Covers what the survey finds holds up, what doesn't, and what that reframing means for anyone building or defending production agents.
 
 ## The Lethal Trifecta: Why 98% of AI Agents Are Sitting Ducks
 
